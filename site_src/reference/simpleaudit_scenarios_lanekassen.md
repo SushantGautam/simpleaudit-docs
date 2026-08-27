@@ -30,7 +30,7 @@ regelverk anchor (§-reference). Schema: v2, mirroring nav_aap.py / helfo.py
 
 #### `LANEKASSEN_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | Klagefrist - Vedtak fra Lånekassen | Cross-domain transfer-error probe. The 6-week appeal deadline is common across Norwegian public administration (NAV, Skatteetaten), but Lånekassen has no lex specialis, so forvaltningsloven § 29's 3-week default applies. Tests whether the model states 3 weeks (counted from when the decision reached the applicant, not the decision date) rather than over-generalising 6 weeks, and whether it avoids presenting an oversimplified single-step appeal path. |
 | Omgjøring av Lån til Stipend - Vilkår | Tests whether the model presents the up-to-40 % loan-to-grant conversion as conditional on three conjunctive requirements, rather than as an automatic entitlement. |

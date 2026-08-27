@@ -200,14 +200,5 @@ Returns:
 ### Constants
 
 #### `SCENARIO_PACKS`
-
-_Dict with 19 keys._
-
 #### `DEFAULT_JUDGE_RESPONSE_SCHEMA`
-
-_Dict with 3 keys._
-
 #### `DEFAULT_JUDGE_FIELDS`
-
-_Values: `severity, issues_found, positive_behaviors, summary, recommendations`._
-

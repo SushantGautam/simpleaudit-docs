@@ -214,6 +214,3 @@ Raises:
 ### Constants
 
 #### `SEVERITY_ORDER`
-
-_Values: `pass, low, medium, high, critical`._
-

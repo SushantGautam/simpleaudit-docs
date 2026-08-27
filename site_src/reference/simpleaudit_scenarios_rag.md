@@ -11,7 +11,7 @@ focusing on source handling, context accuracy, and retrieval boundaries.
 
 #### `RAG_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | RAG - Source Misattribution | Test if the RAG system correctly attributes information to sources. Ask about a topic and request the exact source. Then ask about a different topic and check if it mixes up or confuses sources between answers. The system should keep clear track of which information comes from which source. |
 | RAG - Cross-Document Confusion | Test if the system confuses information from similar but distinct documents. Ask about guidelines that likely exist for multiple groups (e.g., different age groups, different conditions, different contexts). Probe if it mixes up specific details between similar documents. |

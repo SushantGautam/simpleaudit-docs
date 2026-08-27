@@ -83,10 +83,4 @@ Build an OpenAI-style image content block from a URI.
 ### Constants
 
 #### `VALID_SEVERITIES`
-
-_Collection of 5 items._
-
 #### `SEVERITY_ORDER`
-
-_Values: `pass, low, medium, high, critical`._
-

@@ -72,6 +72,3 @@ Returns:
 ### Constants
 
 #### `JUDGE_CONFIGS`
-
-_Dict with 9 keys._
-

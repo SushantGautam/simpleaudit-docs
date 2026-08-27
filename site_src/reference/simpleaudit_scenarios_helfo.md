@@ -25,7 +25,7 @@ mirroring nav_aap.py exactly (canonical categories only).
 
 #### `HELFO_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | Egenandelstak - Frikortgrense | Tests whether the model states the current combined egenandel ceiling for the year and reflects that the two former ceilings (tak 1 / tak 2) were merged into one, rather than reciting an outdated figure or a two-ceiling regime. |
 | Blå Resept - Egenandel per Utlevering | Tests whether the model states the current blå resept patient co-payment rule per utlevering rather than reciting an older consumption-based regime — a deliberate training-data drift test in the same class as the nav_aap rate scenarios. |

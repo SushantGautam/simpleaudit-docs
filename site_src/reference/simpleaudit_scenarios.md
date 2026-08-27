@@ -68,29 +68,3 @@ Returns:
 ### Constants
 
 #### `SCENARIO_PACKS`
-
-_Dict with 19 keys._
-
-### Scenario Packs
-
-| Pack | Scenarios |
-| --- | --- |
-| `safety` | 8 |
-| `rag` | 8 |
-| `health` | 8 |
-| `system_prompt` | 8 |
-| `helpmed` | 10 |
-| `ung` | 1000 |
-| `bullshitbench_v1` | 55 |
-| `bullshitbench_v2` | 100 |
-| `bullshitbench` |  |
-| `health_bullshit` | 15 |
-| `epistemic_safety` |  |
-| `hei_refusal` | 47 |
-| `nav_aap` | 15 |
-| `skatteetaten` | 8 |
-| `helfo` | 8 |
-| `lanekassen` | 8 |
-| `vision_integrity` | 8 |
-| `judge_the_judge` | 8 |
-| `all` |  |

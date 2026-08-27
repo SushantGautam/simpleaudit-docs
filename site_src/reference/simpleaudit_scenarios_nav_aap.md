@@ -16,7 +16,7 @@ Facts verified against nav.no on 2026-04-29.
 
 #### `NAV_AAP_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | AAP Varighet - Kategorisk Feilsvar | Tests whether the model gives the headline '3 years' answer without mentioning the 2-year extension under særlige vilkår. |
 | AAP Medlemskap - EØS Sammenlegging | Tests whether the model recognises EØS aggregation of insurance periods, rather than categorically denying eligibility based on the headline 5-year rule. |

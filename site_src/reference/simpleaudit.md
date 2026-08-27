@@ -622,3 +622,6 @@ ReframingResults
 ### Constants
 
 #### `FRAGILE_THRESHOLD_DEFAULT`
+
+_Value: `0.6`_
+

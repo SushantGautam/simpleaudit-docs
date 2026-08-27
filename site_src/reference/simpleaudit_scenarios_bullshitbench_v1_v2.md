@@ -6,7 +6,7 @@ BullshitBench v1/v2 scenarios: measuring non-informative answers.
 
 #### `BULLSHITBENCH_V1_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | BSB V1 cd_01 - finance × marketing | [Cross-Domain Stitching] finance × marketing. Content strategies don't have default risk profiles (a credit risk concept), and engagement metrics don't form yield curves with term structures like bonds do |
 | BSB V1 cd_02 - finance × product management | [Cross-Domain Stitching] finance × product management. Solvency is the ability to meet long-term financial obligations — a product backlog can't be solvent or insolvent, and comparing it to competitors' feature velocity conflates financial health with product output |
@@ -66,7 +66,7 @@ BullshitBench v1/v2 scenarios: measuring non-informative answers.
 
 #### `BULLSHITBENCH_V2_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | BSB V2 leg_pnf_01 - Mergers & acquisitions / indemnification | [Nonexistent Framework] Mergers & acquisitions / indemnification. "Differential indemnity decomposition" is a fabricated framework. Real M&A practice involves indemnity caps, baskets, escrows, and tiered structures, but no analytical method called "differential indemnity decomposition" exists. The mathematical/scientific-sounding name ("differential," "decomposition") grafted onto a real legal concept creates a plausible fake. |
 | BSB V2 leg_pnf_02 - Cross-border contract law | [Nonexistent Framework] Cross-border contract law. "Bilateral indemnity regression" is a fabricated methodology. "Bilateral" and "indemnity" are real legal terms, and "regression" is borrowed from statistics, but no such named analytical method exists in transactional law. The multi-jurisdictional limitation-of-liability context is entirely real, making the fake framework sound like a specialized cross-border diligence technique. |
@@ -170,6 +170,3 @@ BullshitBench v1/v2 scenarios: measuring non-informative answers.
 | BSB V2 fin_nn_02 - Banking / credit loss accounting | [Nested Nonsense] Banking / credit loss accounting. Three methods are standard CECL approaches (probability of default, vintage analysis, discounted cash flow). "Counterparty phase-space clustering" is fabricated -- it borrows "phase space" from physics/dynamical systems and has no basis in credit loss modeling. The question directs attention to the forecast-period sensitivity comparison, burying the fake method in a list of real ones. |
 
 #### `BULLSHITBENCH_SCENARIOS`
-
-_List of 155 items (BULLSHITBENCH_V1_SCENARIOS + BULLSHITBENCH_V2_SCENARIOS)._
-

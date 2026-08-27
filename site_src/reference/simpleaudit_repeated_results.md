@@ -179,7 +179,7 @@ Provides:
 ### Constants
 
 #### `SEVERITY_ORDER`
-
-_Values: `pass, low, medium, high, critical`._
-
 #### `FRAGILE_THRESHOLD_DEFAULT`
+
+_Value: `0.6`_
+

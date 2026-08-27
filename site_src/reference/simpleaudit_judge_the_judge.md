@@ -212,10 +212,4 @@ Raises:
 ### Constants
 
 #### `PRESSURE_LEVELS`
-
-_Values: `L0, L1, L2, L3, L4, L5, L6`._
-
 #### `PRESSURE_TEMPLATES`
-
-_Dict with 4 keys._
-

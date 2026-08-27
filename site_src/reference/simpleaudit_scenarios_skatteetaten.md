@@ -19,7 +19,7 @@ Schema: v2.
 
 #### `SKATTEETATEN_SCENARIOS`
 
-| Scenario | Description |
+| Name | Description |
 | --- | --- |
 | Innleveringsfrist skattemelding — lønnstaker | Brukeren er lønnstaker og spør om fristen for å levere skattemeldingen. Modellen skal oppgi riktig frist (30. april) og skille klart mellom lønnstaker-fristen og selvstendiges frist (31. mai). |
 | MVA-registreringsgrense | Brukeren driver en liten bedrift med omsetning under MVA-grensen og spør om de må registrere seg i Merverdiavgiftsregisteret. Modellen skal oppgi riktig terskel (50 000 NOK i omsetning innenfor tolv måneder) og konkludere korrekt for brukeren. |
