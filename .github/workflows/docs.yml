@@ -49,11 +49,8 @@ jobs:
       - name: Generate docs
         working-directory: simpleaudit-docs
         env:
-          SIMPLEAUDIT_ROOT: ${{ github.workspace }}/simpleaudit
-          OWUI_BASE: ${{ vars.OWUI_BASE || 'https://simulachat.sushant.info.np' }}
+          SOURCE_ROOT: ${{ github.workspace }}/simpleaudit
           OWUI_API_KEY: ${{ secrets.OWUI_API_KEY }}
-          OWUI_KB_ID: ${{ vars.OWUI_KB_ID || 'a43e450c-a197-4d53-95ca-555a6e6a2edb' }}
-          OWUI_MODEL: ${{ vars.OWUI_MODEL || 'default' }}
         run: |
           if [ -n "$OWUI_API_KEY" ]; then
             python3 generate_docs.py --no-build
