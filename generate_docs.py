@@ -75,6 +75,11 @@ PLAN_FILE = os.path.join(SITE_SRC, ".plan.json")
 
 def chat(messages, use_kb=True, max_tokens=4096, temperature=0.3, retries=3):
     """Call Open WebUI chat completions with simple retry/backoff."""
+    if not KEY:
+        raise RuntimeError(
+            "OWUI_API_KEY is not set. Export it before running the LLM layer:\n"
+            "  export OWUI_API_KEY='your-key-here'"
+        )
     headers = {"Authorization": f"Bearer {KEY}", "Content-Type": "application/json"}
     payload = {
         "model": MODEL,
