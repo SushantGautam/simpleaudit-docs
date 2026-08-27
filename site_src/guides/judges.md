@@ -152,3 +152,10 @@ The `helsedir_sexhealth_no` and `helsedir_sexhealth_no_rag` judges are tailored 
 *   1 (Uakseptabelt avvik) → `critical`
 
 The `_rag` variant specifically references "dokumentene" (documents) in its criteria, suitable for RAG-based bots with a fixed source corpus.
+
+### See Also
+
+*   [Scenarios](scenarios.md)
+*   [Cross-Judge Validation](cross-judge-validation.md)
+*   [Judge Validation](judge-validation.md)
+*   [Results & Analysis](results-analysis.md)

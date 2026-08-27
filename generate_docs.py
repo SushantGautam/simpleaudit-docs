@@ -1347,6 +1347,132 @@ def build_index_md(pages, reference_modules):
     return "\n".join(lines)
 
 
+def cross_link_guides():
+    """Append a 'See Also' section to each guide page with links to related pages.
+
+    Runs after all guide pages are written. Idempotent: strips any existing
+    'See Also' section before re-adding, so repeated runs don't duplicate.
+    """
+    guides_dir = OUT
+    if not os.path.isdir(guides_dir):
+        return
+
+    # Collect all guide pages: slug -> (title, headings)
+    pages_info = {}
+    for fname in sorted(os.listdir(guides_dir)):
+        if not fname.endswith(".md"):
+            continue
+        slug = fname[:-3]
+        path = os.path.join(guides_dir, fname)
+        with open(path) as f:
+            content = f.read()
+        # Extract title from first ## heading (preserves casing like "CLI")
+        title = slug.replace("-", " ").title()
+        for line in content.splitlines():
+            if line.startswith("## "):
+                title = line[3:].strip()
+                break
+        headings = []
+        for line in content.splitlines():
+            if line.startswith("## ") or line.startswith("### "):
+                h = line.lstrip("#").strip()
+                if h.lower() != "see also":
+                    headings.append(h)
+        pages_info[slug] = {"title": title, "headings": headings, "path": path}
+
+    if len(pages_info) < 2:
+        return
+
+    # Build a keyword index: word -> set of slugs that mention it
+    import re as _re
+    word_to_slugs = {}
+    for slug, info in pages_info.items():
+        text = " ".join([info["title"]] + info["headings"]).lower()
+        words = set(_re.findall(r"[a-z]{3,}", text))
+        for w in words:
+            word_to_slugs.setdefault(w, set()).add(slug)
+
+    # Common words that don't help distinguish pages
+    stop = {"the", "and", "for", "with", "from", "that", "this", "using",
+            "use", "via", "all", "any", "not", "can", "may", "will", "are",
+            "was", "were", "has", "have", "had", "its", "their", "your",
+            "our", "how", "what", "when", "where", "which", "who", "why",
+            "simpleaudit", "audit", "audits", "model", "models", "python",
+            "function", "functions", "class", "classes", "method", "methods",
+            "example", "examples", "usage", "guide", "guides", "page", "pages",
+            "section", "sections", "module", "modules", "reference", "api",
+            "overview", "details", "note", "notes", "tip", "tips", "best",
+            "practices", "troubleshooting", "configuration", "config",
+            "implementation", "architecture", "core", "basic", "advanced",
+            "getting", "started", "installation", "setup", "environment",
+            "variables", "command", "commands", "line", "interface", "output",
+            "input", "data", "file", "files", "directory", "path", "paths",
+            "error", "errors", "handling", "resilience", "privacy", "handling"}
+
+    # Build section membership: slug -> section name
+    slug_section = {}
+    for section_name, slugs in NARRATIVE_SECTIONS:
+        for s in slugs:
+            slug_section[s] = section_name
+
+    def related_to(slug, max_results=4):
+        """Find pages most related to `slug`.
+
+        Scoring: +2 for same nav section, +1 per shared heading keyword.
+        """
+        info = pages_info[slug]
+        my_words = set(_re.findall(r"[a-z]{3,}",
+                     " ".join([info["title"]] + info["headings"]).lower()))
+        my_words -= stop
+        my_section = slug_section.get(slug)
+        scores = {}
+        for other_slug, other_info in pages_info.items():
+            if other_slug == slug:
+                continue
+            score = 0
+            # Same nav section gets a boost
+            if my_section and slug_section.get(other_slug) == my_section:
+                score += 2
+            # Shared heading keywords
+            other_words = set(_re.findall(r"[a-z]{3,}",
+                          " ".join([other_info["title"]] + other_info["headings"]).lower()))
+            other_words -= stop
+            score += len(my_words & other_words)
+            if score > 0:
+                scores[other_slug] = score
+        # Sort by score desc, then alphabetically
+        ranked = sorted(scores.items(), key=lambda x: (-x[1], x[0]))
+        return [s for s, _ in ranked[:max_results]]
+
+    # Rewrite each guide: strip old See Also, append new one
+    for slug, info in pages_info.items():
+        with open(info["path"]) as f:
+            content = f.read()
+
+        # Strip existing "### See Also" section (to end of file or next ##)
+        content = _re.sub(
+            r"\n### See Also\n[\s\S]*?(?=\n## |\Z)",
+            "",
+            content,
+        ).rstrip() + "\n"
+
+        related = related_to(slug)
+        if not related:
+            # Fallback: link to all other pages (better than no links)
+            related = [s for s in pages_info if s != slug][:4]
+
+        lines = ["", "### See Also", ""]
+        for r_slug in related:
+            r_info = pages_info[r_slug]
+            lines.append(f"*   [{r_info['title']}]({r_slug}.md)")
+        content += "\n".join(lines) + "\n"
+
+        with open(info["path"], "w") as f:
+            f.write(content)
+
+    print(f"  Cross-linked {len(pages_info)} guide pages")
+
+
 def build_nav(pages, reference_modules):
     """Build the mkdocs nav structure."""
     page_map = {p["slug"]: p for p in pages}
@@ -1523,7 +1649,7 @@ def main():
     print()
 
     # Step 1: load sources + hashes
-    print("[1/5] Loading source files...")
+    print("[1/6] Loading source files...")
     source_files = get_source_files()
     trackable_files = get_all_trackable_files()
     new_hashes = compute_file_hashes(trackable_files)
@@ -1531,7 +1657,7 @@ def main():
     print()
 
     # Step 2: deterministic API reference (always regenerated — it's cheap)
-    print("[2/5] Building API reference (Griffe)...")
+    print("[2/6] Building API reference (Griffe)...")
     reference_modules = [m for m, _ in build_api_reference()]
     print(f"  {len(reference_modules)} modules documented")
     print()
@@ -1541,7 +1667,7 @@ def main():
     old_hashes = old_plan.get("file_hashes", {}) if old_plan else {}
 
     if args.no_llm:
-        print("[3/5] Narrative pages — SKIPPED (--no-llm)")
+        print("[3/6] Narrative pages — SKIPPED (--no-llm)")
         pages = old_plan.get("pages", []) if old_plan else []
         if not pages:
             print("  No stored plan found; index will list guides as they appear.")
@@ -1550,11 +1676,11 @@ def main():
             structure_valid = set(old_hashes.keys()) == set(new_hashes.keys())
             if structure_valid:
                 pages = old_plan.get("pages", [])
-                print(f"[3/5] Reusing stored plan ({len(pages)} narrative pages)")
+                print(f"[3/6] Reusing stored plan ({len(pages)} narrative pages)")
             else:
                 added = set(new_hashes.keys()) - set(old_hashes.keys())
                 removed = set(old_hashes.keys()) - set(new_hashes.keys())
-                print("[3/5] Source file set changed — re-planning structure...")
+                print("[3/6] Source file set changed — re-planning structure...")
                 if added:
                     print(f"  Added: {', '.join(sorted(added))}")
                 if removed:
@@ -1565,7 +1691,7 @@ def main():
                     print(f"    - {p['title']} ({p['slug']})")
         else:
             label = "--force: re-planning" if args.force else "First run — planning"
-            print(f"[3/5] {label} documentation structure...")
+            print(f"[3/6] {label} documentation structure...")
             pages = determine_structure()
             print(f"  Planned {len(pages)} pages:")
             for p in pages:
@@ -1573,7 +1699,7 @@ def main():
             old_hashes = {}
 
         print()
-        print("[4/5] Generating narrative pages...")
+        print("[4/6] Generating narrative pages...")
         plan_slugs = {p["slug"] for p in pages}
         any_generated = False
 
@@ -1615,9 +1741,14 @@ def main():
 
         store_plan(pages, new_hashes)
 
-    # Step 5: assemble MkDocs site
+    # Step 5: cross-link guide pages
     print()
-    print("[5/5] Assembling MkDocs site...")
+    print("[5/6] Cross-linking guide pages...")
+    cross_link_guides()
+
+    # Step 6: assemble MkDocs site
+    print()
+    print("[6/6] Assembling MkDocs site...")
     index_md = build_index_md(pages, reference_modules)
     with open(os.path.join(SITE_SRC, "index.md"), "w") as f:
         f.write(index_md)

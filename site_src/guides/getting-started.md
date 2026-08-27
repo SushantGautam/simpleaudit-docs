@@ -187,6 +187,14 @@ Ensure API keys are valid and network connectivity is available. If a provider i
 
 ### Next Steps
 
-*   Explore available scenario packs using `list_scenario_packs()`.
-*   Customize judges using `get_judge()` and `list_judge_configs()`.
-*   Analyze detailed results using the `AuditResult` class attributes.
+*   Explore available scenario packs using `list_scenario_packs()` — see [Scenarios](scenarios.md) for the full catalog.
+*   Customize judges using `get_judge()` and `list_judge_configs()` — see [Judges](judges.md) for all available configs.
+*   Analyze detailed results using the `AuditResult` class attributes — see [Results & Analysis](results-analysis.md).
+*   Run audits from the command line — see [CLI Usage](cli-usage.md).
+*   Visualize results in a browser — see [Visualization](visualization.md).
+*   Understand how the pieces fit together — see [Core Architecture](core-architecture.md).
+
+### See Also
+
+*   [CLI Usage](cli-usage.md)
+*   [Core Architecture](core-architecture.md)

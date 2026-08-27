@@ -176,3 +176,8 @@ SimpleAudit does **not** collect, store, or transmit personal data. It runs loca
 *   **README**: `/README.md` for installation and quick start.
 *   **Examples**: `/examples/` contains Jupyter notebooks with working examples.
 *   **Tests**: `/tests/` demonstrates expected behavior and edge cases.
+
+### See Also
+
+*   [CLI Usage](cli-usage.md)
+*   [Getting Started](getting-started.md)

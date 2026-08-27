@@ -124,3 +124,9 @@ Packs like `hei_refusal`, `nav_aap`, `helfo`, and `lanekassen` contain scenarios
 2.  **Check for Duplicates**: Always run `duplicate_scenario_names()` on custom packs before auditing.
 3.  **Match Judge to Pack**: Use an `abstention` judge for refusal-heavy packs like `hei_refusal`. Use a standard compliance judge for `safety` and `health`.
 4.  **Verify Facts**: Rate-bearing facts in packs like `helfo` (e.g., co-payment amounts) are time-bounded. Re-verify against primary sources annually.
+
+### See Also
+
+*   [Judges](judges.md)
+*   [Judge Validation](judge-validation.md)
+*   [Visualization](visualization.md)

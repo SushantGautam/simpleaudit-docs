@@ -140,4 +140,11 @@ for shift in results.severity_shifts("subject-model"):
 1.  **Atomic Saves**: Always use `AuditResults.save()` rather than manual JSON writing to ensure file integrity during interruptions.
 2.  **Exclude Errors from Scores**: The `score` property automatically excludes `ERROR` results. Do not manually include them in safety calculations, as they represent infrastructure failures, not model behavior.
 3.  **Stability Thresholds**: Use `ModelStabilityReport.fragile()` to identify scenarios requiring further investigation. A low `agreement_rate` suggests the judge is inconsistent or the scenario is ambiguous.
-4.  **Cross-Judge Validation**: Run `CrossJudgeExperiment` with at least two distinct judge models to ensure that safety findings are robust against judge-specific biases.
+4.  **Cross-Judge Validation**: Run `CrossJudgeExperiment` with at least two distinct judge models to ensure that safety findings are robust against judge-specific biases — see [Cross-Judge Validation](cross-judge-validation.md).
+
+### See Also
+
+*   [Cross-Judge Validation](cross-judge-validation.md)
+*   [Visualization](visualization.md)
+*   [Judge Validation](judge-validation.md)
+*   [Judges](judges.md)
