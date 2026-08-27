@@ -1,0 +1,3883 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Lightweight AI Safety Auditing Framework">
+      
+      
+      
+        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit/">
+      
+      
+        <link rel="prev" href="../../guides/reframing-advanced-workflows/">
+      
+      
+        <link rel="next" href="../simpleaudit_cli/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Simpleaudit - SimpleAudit</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#simpleaudit" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SimpleAudit" class="md-header__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SimpleAudit
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Simpleaudit
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SimpleAudit" class="md-nav__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SimpleAudit
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SimpleAudit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/getting-started/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/core-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/cli-usage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cli usage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Judges
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Judges
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/judges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Judges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/judge-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Judge validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/cross-judge-validation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cross judge validation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_4" id="__nav_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results & Tooling
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Results & Tooling
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/results-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_5" id="__nav_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Advanced
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../guides/reframing-advanced-workflows/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Reframing advanced workflows
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simpleaudit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simpleaudit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="simpleaudit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelauditor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelAuditor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditexperiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditExperiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repeatedexperimentresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RepeatedExperimentResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelstabilityreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelStabilityReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenariostats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ScenarioStats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crossjudgeexperiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CrossJudgeExperiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crossjudgeresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CrossJudgeResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promptvariant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PromptVariant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storedrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StoredRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wigglerunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WiggleRunner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiggleprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WiggleProfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenariowiggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ScenarioWiggle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turnrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TurnRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_scenariospack_name-str-listdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_scenarios(pack_name: str) -&gt; List[Dict]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_scenario_packs-dictstr-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_scenario_packs() -&gt; Dict[str, int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_judgename-str-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_judge(name: str) -&gt; Dict[str, Any]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_judge_configs-dictstr-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_judge_configs() -&gt; Dict[str, str]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare_judgesresults_a-repeatedexperimentresults-results_b-repeatedexperimentresults-subject_label-str-label_a-str-judge_a-label_b-str-judge_b-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_judges(results_a: RepeatedExperimentResults, results_b: RepeatedExperimentResults, subject_label: str, label_a: str = 'judge_a', label_b: str = 'judge_b') -&gt; Dict[str, Any]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_stored_recordssource-unionstr-path-dictstr-any-liststoredrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_stored_records(source: Union[str, Path, Dict[str, Any]]) -&gt; List[StoredRecord]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Returns:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reframing_checkjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reframing_check(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-reframing_check_asyncjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        async reframing_check_async(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Returns:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fragile_threshold_default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FRAGILE_THRESHOLD_DEFAULT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_cross_judge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cross judge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_experiment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit experiment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judge_the_judge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judge the judge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_model_auditor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit model auditor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_reframing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit reframing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_repeated_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit repeated results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Judges
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Judges
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_abstention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges abstention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_binary_abstention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges binary abstention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_factuality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges factuality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_harm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges harm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_helpfulness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helpfulness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_helsedir_sexhealth_no/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helsedir sexhealth no
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_helsedir_sexhealth_no_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helsedir sexhealth no rag
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_judge_conviction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges judge conviction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_judges_safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_bullshitbench_health/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios bullshitbench health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_bullshitbench_v1_v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios bullshitbench v1 v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_health/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_hei_refusal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios hei refusal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_helfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios helfo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_helpmed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios helpmed
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_judge_the_judge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios judge the judge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_lanekassen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios lanekassen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_nav_aap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios nav aap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios rag
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_skatteetaten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios skatteetaten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_system_prompt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios system prompt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_ung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios ung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_scenarios_vision_integrity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios vision integrity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Visualization
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../simpleaudit_visualization_server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit visualization server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#simpleaudit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        simpleaudit
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="simpleaudit">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#modelauditor" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelAuditor
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#auditexperiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditExperiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#repeatedexperimentresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RepeatedExperimentResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#modelstabilityreport" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ModelStabilityReport
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenariostats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ScenarioStats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#crossjudgeexperiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CrossJudgeExperiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#examples" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Examples:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Examples:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#crossjudgeresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        CrossJudgeResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promptvariant" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PromptVariant
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attributes_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attributes:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attributes:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#storedrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        StoredRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wigglerunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WiggleRunner
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#wiggleprofile" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        WiggleProfile
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scenariowiggle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ScenarioWiggle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#turnrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TurnRecord
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_scenariospack_name-str-listdict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_scenarios(pack_name: str) -&gt; List[Dict]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_scenario_packs-dictstr-int" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_scenario_packs() -&gt; Dict[str, int]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#get_judgename-str-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_judge(name: str) -&gt; Dict[str, Any]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_judge_configs-dictstr-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_judge_configs() -&gt; Dict[str, str]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare_judgesresults_a-repeatedexperimentresults-results_b-repeatedexperimentresults-subject_label-str-label_a-str-judge_a-label_b-str-judge_b-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_judges(results_a: RepeatedExperimentResults, results_b: RepeatedExperimentResults, subject_label: str, label_a: str = 'judge_a', label_b: str = 'judge_b') -&gt; Dict[str, Any]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#load_stored_recordssource-unionstr-path-dictstr-any-liststoredrecord" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        load_stored_records(source: Union[str, Path, Dict[str, Any]]) -&gt; List[StoredRecord]
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Returns:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#reframing_checkjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        reframing_check(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#async-reframing_check_asyncjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        async reframing_check_async(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#parameters_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Parameters:
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#returns_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Returns:
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Returns:">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Constants">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fragile_threshold_default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FRAGILE_THRESHOLD_DEFAULT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Simpleaudit</h1>
+
+<h2 id="simpleaudit">simpleaudit<a class="headerlink" href="#simpleaudit" title="Permanent link">&para;</a></h2>
+<p>Top-level package: the public API of SimpleAudit.</p>
+<p>SimpleAudit - Lightweight AI Safety Auditing Framework</p>
+<p>A simple, effective tool for red-teaming AI systems using LLMs as auditor and judge.</p>
+<p>Supports multiple providers:
+- Anthropic (Claude) - default
+- OpenAI (GPT-4, GPT-5, etc.)
+- Grok (xAI)
+- Ollama (local models)
+- vLLM (local model serving)
+- Any OpenAI-compatible API</p>
+<p>Usage:
+    from simpleaudit import ModelAuditor, get_scenarios</p>
+<div class="highlight"><pre><span></span><code># Audit a model directly via its API
+auditor = ModelAuditor(
+    model="gpt-4o-mini",
+    provider="openai",
+    judge_model="gpt-4o",
+    judge_provider="openai",
+    system_prompt="You are helpful.",
+)
+results = auditor.run(get_scenarios("safety"))
+results.summary()
+</code></pre></div>
+<h3 id="classes">Classes<a class="headerlink" href="#classes" title="Permanent link">&para;</a></h3>
+<h4 id="modelauditor"><code>ModelAuditor</code><a class="headerlink" href="#modelauditor" title="Permanent link">&para;</a></h4>
+<p>Audits a target LLM directly via its API against a set of scenarios.</p>
+<p>Each scenario is sent to the target model (optionally over multiple turns),
+and the resulting conversation is scored by a separate LLM judge that
+returns a severity verdict, issues, and recommendations. The judge and
+target may use different providers, and an optional auditor model can
+probe the target between turns.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>strip_thinking(text: str) -&gt; str</code></li>
+<li><code>get_scenarios(pack_name: str) -&gt; List[Dict]</code></li>
+<li><code>parse_json_response(response: str, default_severity: str = 'ERROR') -&gt; Dict[str, Any]</code> — Parse JSON from LLM response. Delegates to utils.parse_json_response.</li>
+<li><code>async run_scenario(name: str, description: str, expected_behavior: Optional[List[str]] = None, test_prompt: Optional[str] = None, file_uri: Optional[Union[str, List[str]]] = None, max_turns: Optional[int] = None, language: str = 'English', pbar_audit: Optional[tqdm] = None, pbar_judge: Optional[tqdm] = None, max_workers: Optional[int] = None) -&gt; AuditResult</code></li>
+<li><code>async run_async(scenarios: Union[str, List[Dict]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; AuditResults</code> — Run the audit asynchronously across all scenarios.</li>
+<li><code>run(scenarios: Union[str, List[Dict]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; AuditResults</code> — Run the audit synchronously by driving :meth:<code>run_async</code> with <code>asyncio.run</code>.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max_turns</code></li>
+<li><code>verbose</code></li>
+<li><code>show_progress</code></li>
+<li><code>system_prompt</code></li>
+<li><code>json_format</code></li>
+<li><code>max_retries</code></li>
+<li><code>retry_backoff</code></li>
+<li><code>judge_fields</code></li>
+<li><code>probe_prompt</code></li>
+<li><code>judge_prompt</code></li>
+<li><code>judge_response_schema</code></li>
+<li><code>target_model</code></li>
+<li><code>target_client</code></li>
+<li><code>judge_model</code></li>
+<li><code>judge_client</code></li>
+<li><code>auditor_model</code></li>
+<li><code>auditor_client</code></li>
+</ul>
+<h4 id="auditresults"><code>AuditResults</code><a class="headerlink" href="#auditresults" title="Permanent link">&para;</a></h4>
+<p>Collection of audit results with analysis and export methods.</p>
+<p>Attributes:
+    results: List of AuditResult objects
+    timestamp: When the audit was run</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>summary()</code></li>
+<li><code>to_dict() -&gt; Dict</code></li>
+<li><code>save(filepath: str)</code> — Save results to JSON file (atomically, so interrupts can't corrupt it).</li>
+<li><code>load(filepath: str) -&gt; AuditResults</code> — Load results from JSON file.</li>
+<li><code>plot(save_path: Optional[str] = None)</code> — Plot audit results visualization.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>SEVERITY_SCORES</code></li>
+<li><code>SEVERITY_ICONS</code></li>
+<li><code>results</code></li>
+<li><code>timestamp</code></li>
+<li><code>total_auditor_input_tokens</code></li>
+<li><code>total_auditor_output_tokens</code></li>
+<li><code>total_judge_input_tokens</code></li>
+<li><code>total_judge_output_tokens</code></li>
+<li><code>total_target_input_tokens</code></li>
+<li><code>total_target_output_tokens</code></li>
+<li><code>token_usage</code></li>
+<li><code>severity_distribution</code></li>
+<li><code>all_issues</code></li>
+<li><code>all_recommendations</code></li>
+<li><code>passed</code></li>
+<li><code>failed</code></li>
+<li><code>critical_count</code></li>
+<li><code>score</code> — Safety score over scenarios that actually completed (0-100).</li>
+</ul>
+<h4 id="auditresult"><code>AuditResult</code><a class="headerlink" href="#auditresult" title="Permanent link">&para;</a></h4>
+<p>A single audit result for one scenario.</p>
+<p>Holds the scenario metadata, the full conversation with the target model,
+the judge's verdict (severity, issues, positive behaviors, summary,
+recommendations), the raw judge judgment dict, and token usage counts for
+the auditor, judge, and target models.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>to_dict() -&gt; Dict</code></li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>scenario_name</code></li>
+<li><code>scenario_description</code></li>
+<li><code>conversation</code></li>
+<li><code>severity</code></li>
+<li><code>issues_found</code></li>
+<li><code>positive_behaviors</code></li>
+<li><code>summary</code></li>
+<li><code>recommendations</code></li>
+<li><code>expected_behavior</code></li>
+<li><code>judgment</code></li>
+<li><code>auditor_input_tokens</code></li>
+<li><code>auditor_output_tokens</code></li>
+<li><code>judge_input_tokens</code></li>
+<li><code>judge_output_tokens</code></li>
+<li><code>target_input_tokens</code></li>
+<li><code>target_output_tokens</code></li>
+</ul>
+<h4 id="auditexperiment"><code>AuditExperiment</code><a class="headerlink" href="#auditexperiment" title="Permanent link">&para;</a></h4>
+<p>Runs audits across multiple models and compares their results.</p>
+<p>Each model is audited with the same scenarios and judge configuration,
+optionally repeated <code>n_repetitions</code> times (with optional adaptive
+reruns for low-agreement scenarios). Results can be cached to disk for
+resuming interrupted experiments, and per-model completion can be
+reported via the <code>on_model_done</code> callback.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>async run_async(scenarios: Union[str, List[Dict]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; RepeatedExperimentResults</code> — Run the experiment asynchronously across all configured models.</li>
+<li><code>run(scenarios: Union[str, List[Dict]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; RepeatedExperimentResults</code> — Run the experiment synchronously by driving :meth:<code>run_async</code> with <code>asyncio.run</code>.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>models</code></li>
+<li><code>judge_model</code></li>
+<li><code>judge_base_url</code></li>
+<li><code>judge_api_key</code></li>
+<li><code>judge_provider</code></li>
+<li><code>auditor_model</code></li>
+<li><code>auditor_provider</code></li>
+<li><code>auditor_api_key</code></li>
+<li><code>auditor_base_url</code></li>
+<li><code>judge</code></li>
+<li><code>probe_prompt</code></li>
+<li><code>judge_prompt</code></li>
+<li><code>judge_response_schema</code></li>
+<li><code>json_format</code></li>
+<li><code>verbose</code></li>
+<li><code>show_progress</code></li>
+<li><code>n_repetitions</code></li>
+<li><code>adaptive_reruns</code></li>
+<li><code>save_dir</code></li>
+<li><code>on_model_done</code></li>
+</ul>
+<h4 id="repeatedexperimentresults"><code>RepeatedExperimentResults</code><a class="headerlink" href="#repeatedexperimentresults" title="Permanent link">&para;</a></h4>
+<p>Results from running AuditExperiment with n_repetitions &gt; 1.</p>
+<p>Provides:
+- Backward-compatible dict interface (returns first run's AuditResults)
+- .runs(model) — all runs for a model, in execution order
+- .stability(model) — mean/std/CV and per-scenario pass rates
+- .stability(model).fragile(threshold=...) — scenarios whose verdict
+  disagrees across runs
+- .summary() — prints stability reports for all models
+- .save() / .load() — JSON serialization</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>runs(model_name: str) -&gt; List[AuditResults]</code> — Return all runs for the given model, in execution order.</li>
+<li><code>keys()</code></li>
+<li><code>values()</code> — Return the first run for each model (backward compat).</li>
+<li><code>items() -&gt; List[Tuple[str, AuditResults]]</code> — Return (model, first_run) pairs (backward compat).</li>
+<li><code>all_runs() -&gt; Dict[str, List[AuditResults]]</code> — Return a dict mapping each model to its full list of runs.</li>
+<li><code>stability(model_name: str) -&gt; ModelStabilityReport</code> — Compute stability statistics for a single model across N runs.</li>
+<li><code>summary() -&gt; None</code> — Print stability reports for all models.</li>
+<li><code>to_dict() -&gt; Dict</code></li>
+<li><code>save(filepath: str) -&gt; None</code> — Save all runs to a JSON file (atomically, so interrupts can't corrupt it).</li>
+<li><code>load(filepath: str) -&gt; RepeatedExperimentResults</code> — Load repeated experiment results from a JSON file.</li>
+</ul>
+<h4 id="modelstabilityreport"><code>ModelStabilityReport</code><a class="headerlink" href="#modelstabilityreport" title="Permanent link">&para;</a></h4>
+<p>Aggregate stability report for a model across repeated audit runs.</p>
+<p>Holds the per-run scores with mean, std, min, max and coefficient of
+variation, plus a :class:<code>ScenarioStats</code> entry per scenario. Provides
+:meth:<code>summary</code> for a printed report and :meth:<code>fragile</code> to query
+scenarios whose modal-verdict share falls below a threshold.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>summary() -&gt; None</code></li>
+<li><code>fragile(threshold: float = FRAGILE_THRESHOLD_DEFAULT) -&gt; Dict[str, ScenarioStats]</code> — Scenarios whose modal-verdict share falls below <em>threshold</em>.</li>
+<li><code>to_dict() -&gt; Dict</code></li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>model</code></li>
+<li><code>n_runs</code></li>
+<li><code>scores</code></li>
+<li><code>mean_score</code></li>
+<li><code>std_score</code></li>
+<li><code>min_score</code></li>
+<li><code>max_score</code></li>
+<li><code>cv</code></li>
+<li><code>per_scenario</code></li>
+</ul>
+<h4 id="scenariostats"><code>ScenarioStats</code><a class="headerlink" href="#scenariostats" title="Permanent link">&para;</a></h4>
+<p>Per-scenario stability statistics across repeated runs of one model.</p>
+<p>Captures the pass rate, raw severity distribution, modal severity and
+agreement rate, plus normalised entropy and ordinal spread of the
+verdicts, so that scenarios whose verdicts do not settle across runs can
+be identified.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>to_dict() -&gt; Dict</code></li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>pass_rate</code></li>
+<li><code>severity_distribution</code></li>
+<li><code>most_common_severity</code></li>
+<li><code>agreement_rate</code></li>
+<li><code>normalised_entropy</code></li>
+<li><code>ordinal_spread</code></li>
+<li><code>n_observations</code></li>
+</ul>
+<h4 id="crossjudgeexperiment"><code>CrossJudgeExperiment</code><a class="headerlink" href="#crossjudgeexperiment" title="Permanent link">&para;</a></h4>
+<p>Orchestrate AuditExperiment runs across multiple judge models.</p>
+<p>Runs one AuditExperiment per judge with save_dir namespaced by judge label
+to prevent file collision. Reuses PR #20's resume logic: each judge
+maintains its own run cache under <code>save_dir/&lt;judge_label&gt;/</code>.</p>
+<h2 id="parameters">Parameters:<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h2>
+<p>models : list of dict
+    Subject models to evaluate. Same format as <code>AuditExperiment.models</code>
+    — each dict must contain a <code>model</code> key and optionally <code>provider</code>,
+    <code>label</code>, and provider-specific credentials.
+judge_models : list of dict
+    Judge models to compare. Each dict must contain a <code>model</code> key and
+    optionally <code>provider</code>, <code>label</code>, <code>api_key</code>, and <code>base_url</code>.
+    If <code>label</code> is omitted it is derived from the model string.
+    Must contain at least two entries.
+auditor_models : list of dict or None, optional
+    Auditor (probe generator) configuration, one entry per judge in the
+    same order as <code>judge_models</code>. Each dict may contain <code>model</code>,
+    <code>provider</code>, <code>api_key</code>, and <code>base_url</code>; all four are forwarded to
+    the underlying <code>AuditExperiment</code>. If None, each judge serves as its
+    own auditor, mirroring <code>AuditExperiment</code> default behaviour.
+n_repetitions : int, default 3
+    Repetitions per (judge × subject) combination. Passed through to each
+    <code>AuditExperiment</code>.
+save_dir : str, Path, or None, optional
+    Parent directory for saved results. Each judge's runs land under
+    <code>save_dir/&lt;judge_label&gt;/&lt;subject_label&gt;/run_N.json</code>. Pass the same
+    <code>save_dir</code> on a resumed call to continue interrupted runs.
+<em>experiment_kwargs</em>
+    Additional keyword arguments forwarded to every <code>AuditExperiment</code>
+    (e.g. <code>probe_prompt</code>, <code>judge_prompt</code>, <code>json_format</code>,
+    <code>show_progress</code>).</p>
+<h2 id="examples">Examples:<a class="headerlink" href="#examples" title="Permanent link">&para;</a></h2>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>exp = CrossJudgeExperiment(
+...     models=[{"model": "claude-haiku-4-5-20251001", "provider": "anthropic",
+...              "label": "haiku-4.5"}],
+...     judge_models=[
+...         {"model": "claude-opus-4-7", "provider": "anthropic"},
+...         {"model": "claude-opus-4-8", "provider": "anthropic"},
+...     ],
+...     n_repetitions=3,
+...     save_dir="/path/to/results",
+... )
+results = await exp.run_async(scenarios="nav_aap", language="Norwegian")
+print(results.score_summary())</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>async run_async(scenarios: Union[str, List[Dict[str, Any]]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; CrossJudgeResults</code> — Execute all judge variants and return combined results.</li>
+<li><code>run(scenarios: Union[str, List[Dict[str, Any]]], max_turns: Optional[int] = None, language: str = 'English', max_workers: int = 1) -&gt; CrossJudgeResults</code> — Synchronous wrapper around run_async.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>models</code></li>
+<li><code>judge_models</code></li>
+<li><code>auditor_models</code></li>
+<li><code>n_repetitions</code></li>
+<li><code>save_dir</code></li>
+<li><code>judge_labels</code> — Labels of all configured judges, in order.</li>
+</ul>
+<h4 id="crossjudgeresults"><code>CrossJudgeResults</code><a class="headerlink" href="#crossjudgeresults" title="Permanent link">&para;</a></h4>
+<p>Results from CrossJudgeExperiment — one RepeatedExperimentResults per judge.</p>
+<p>Provides cross-judge severity shift detection, score deltas, and CV deltas
+per subject model. Results from each judge are kept independent; comparison
+is computed on demand.</p>
+<h2 id="attributes">Attributes:<a class="headerlink" href="#attributes" title="Permanent link">&para;</a></h2>
+<p>judges : list of str
+    Ordered list of judge labels present in this result set.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>score_summary() -&gt; Dict[str, Dict[str, Dict[str, Any]]]</code> — Per-subject, per-judge score statistics.</li>
+<li><code>severity_shifts(subject_label: str) -&gt; List[Dict[str, Any]]</code> — Per-scenario modal severity across all judges, with shift detection.</li>
+<li><code>to_dict() -&gt; Dict[str, Any]</code> — Serialize all results to a JSON-compatible dict.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>judges</code> — Ordered list of judge labels.</li>
+</ul>
+<h4 id="promptvariant"><code>PromptVariant</code><a class="headerlink" href="#promptvariant" title="Permanent link">&para;</a></h4>
+<p>One wording of the judge prompt.</p>
+<p>Variants are supplied explicitly rather than generated. A tool built to
+detect prompt-induced verdict movement cannot introduce a model-generated
+prompt of its own: the paraphrases would then be an uncontrolled axis
+inside the instrument measuring that axis.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>label</code></li>
+<li><code>judge_prompt</code></li>
+<li><code>response_schema</code></li>
+</ul>
+<h4 id="reframingresults"><code>ReframingResults</code><a class="headerlink" href="#reframingresults" title="Permanent link">&para;</a></h4>
+<p>Verdicts for every (scenario, variant) pair, and the shifts between them.</p>
+<h2 id="attributes_1">Attributes:<a class="headerlink" href="#attributes_1" title="Permanent link">&para;</a></h2>
+<p>variant_labels : list of str
+    Variant labels in the order they were run.
+per_scenario : dict
+    <code>{scenario_name: {variant_label: severity}}</code>.
+judgments : dict
+    <code>{scenario_name: {variant_label: raw_judgment_dict}}</code> — the full
+    judge output, kept so a shift can be read back to its reasoning.
+input_tokens, output_tokens : int
+    Judge tokens spent. No target tokens are spent on this path.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>shifts() -&gt; List[Dict[str, Any]]</code> — Per-scenario verdicts across variants, with shift detection.</li>
+<li><code>invariant_rate() -&gt; float</code> — Fraction of scenarios whose verdict is identical across all variants.</li>
+<li><code>to_dict() -&gt; Dict[str, Any]</code></li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>variant_labels</code></li>
+<li><code>per_scenario</code></li>
+<li><code>judgments</code></li>
+<li><code>input_tokens</code></li>
+<li><code>output_tokens</code></li>
+</ul>
+<h4 id="storedrecord"><code>StoredRecord</code><a class="headerlink" href="#storedrecord" title="Permanent link">&para;</a></h4>
+<p>A transcript to re-grade, plus the scenario context the judge needs.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>scenario_name</code></li>
+<li><code>scenario_description</code></li>
+<li><code>conversation</code></li>
+<li><code>expected_behavior</code></li>
+</ul>
+<h4 id="wigglerunner"><code>WiggleRunner</code><a class="headerlink" href="#wigglerunner" title="Permanent link">&para;</a></h4>
+<p>Runs the L0→L1→...→L6 pressure ladder on a candidate judge.</p>
+<p>Args:
+    candidate_judge_model: Model ID for the candidate judge (target seat).
+    candidate_judge_provider: Provider for the candidate judge.
+    persuader_model: Model ID for the persuader (auditor seat).
+    persuader_provider: Provider for the persuader.
+    observer_model: Model ID for the observer (judge seat).
+    observer_provider: Provider for the observer.
+    observer_version: Pinned version string for the observer (required).
+    candidate_judge_api_key: API key for the candidate judge.
+    candidate_judge_base_url: Base URL for the candidate judge.
+    persuader_api_key: API key for the persuader.
+    persuader_base_url: Base URL for the persuader.
+    observer_api_key: API key for the observer.
+    observer_base_url: Base URL for the observer.
+    max_retries: Max retries per API call.
+    retry_backoff: Base backoff seconds for retries.
+    verbose: Print progress.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>async run(scenarios: Union[str, List[Dict]], levels: Optional[List[str]] = None, multi_turn_n: int = 10) -&gt; WiggleProfile</code> — Run the full wiggle experiment.</li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>candidate_judge_model</code></li>
+<li><code>candidate_judge_provider</code></li>
+<li><code>persuader_model</code></li>
+<li><code>persuader_provider</code></li>
+<li><code>observer_model</code></li>
+<li><code>observer_provider</code></li>
+<li><code>observer_version</code></li>
+<li><code>max_retries</code></li>
+<li><code>retry_backoff</code></li>
+<li><code>verbose</code></li>
+</ul>
+<h4 id="wiggleprofile"><code>WiggleProfile</code><a class="headerlink" href="#wiggleprofile" title="Permanent link">&para;</a></h4>
+<p>Aggregate wiggle profile for a candidate judge.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>per_level_wiggle_rate(level: str) -&gt; float</code> — Wiggle rate at a specific pressure level.</li>
+<li><code>to_dict() -&gt; Dict[str, Any]</code></li>
+<li><code>save(path: str) -&gt; None</code></li>
+<li><code>load(path: str) -&gt; WiggleProfile</code></li>
+</ul>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>candidate_model</code></li>
+<li><code>candidate_provider</code></li>
+<li><code>observer_model</code></li>
+<li><code>observer_version</code></li>
+<li><code>persuader_model</code></li>
+<li><code>persuader_provider</code></li>
+<li><code>scenarios</code></li>
+<li><code>levels_tested</code></li>
+<li><code>n_scenarios</code></li>
+<li><code>n_flips</code></li>
+<li><code>wiggle_rate</code> — Fraction of scenarios whose verdict flipped from L0.</li>
+<li><code>l0_accuracy</code> — Fraction of scenarios where the L0 verdict matched ground truth.</li>
+<li><code>corrective_flips</code> — Flips that moved the verdict TOWARD ground truth.</li>
+<li><code>corrupting_flips</code> — Flips that moved the verdict AWAY from ground truth.</li>
+</ul>
+<h4 id="scenariowiggle"><code>ScenarioWiggle</code><a class="headerlink" href="#scenariowiggle" title="Permanent link">&para;</a></h4>
+<p>Wiggle outcome for one scenario across all pressure levels.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>scenario_name</code></li>
+<li><code>ground_truth</code></li>
+<li><code>l0_verdict</code></li>
+<li><code>l0_correct</code></li>
+<li><code>turns</code></li>
+<li><code>final_verdict</code></li>
+<li><code>flipped</code></li>
+<li><code>flip_direction</code></li>
+<li><code>wiggle</code> — True if the verdict changed from L0 at any point.</li>
+</ul>
+<h4 id="turnrecord"><code>TurnRecord</code><a class="headerlink" href="#turnrecord" title="Permanent link">&para;</a></h4>
+<p>One pressure turn's outcome.</p>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>level</code></li>
+<li><code>turn</code></li>
+<li><code>candidate_response</code></li>
+<li><code>observer_verdict</code></li>
+<li><code>observer_changed</code></li>
+<li><code>observer_reasoning</code></li>
+<li><code>error</code></li>
+</ul>
+<h3 id="functions">Functions<a class="headerlink" href="#functions" title="Permanent link">&para;</a></h3>
+<h4 id="get_scenariospack_name-str-listdict"><code>get_scenarios(pack_name: str) -&gt; List[Dict]</code><a class="headerlink" href="#get_scenariospack_name-str-listdict" title="Permanent link">&para;</a></h4>
+<p>Get scenarios from a built-in pack.</p>
+<p>Args:
+    pack_name: Name of the scenario pack</p>
+<p>Returns:
+    List of scenario dictionaries</p>
+<p>Raises:
+    ValueError: If pack name is not recognized</p>
+<h4 id="list_scenario_packs-dictstr-int"><code>list_scenario_packs() -&gt; Dict[str, int]</code><a class="headerlink" href="#list_scenario_packs-dictstr-int" title="Permanent link">&para;</a></h4>
+<p>List available scenario packs and their sizes.</p>
+<p>Returns:
+    Dict mapping pack names to number of scenarios</p>
+<h4 id="get_judgename-str-dictstr-any"><code>get_judge(name: str) -&gt; Dict[str, Any]</code><a class="headerlink" href="#get_judgename-str-dictstr-any" title="Permanent link">&para;</a></h4>
+<p>Get a built-in judge configuration by name.</p>
+<p>Args:
+    name: Judge config name (e.g. "safety", "helpfulness")</p>
+<p>Returns:
+    Judge config dict with probe_prompt, judge_prompt, output_schema, source</p>
+<p>Raises:
+    ValueError: If name is not recognised</p>
+<h4 id="list_judge_configs-dictstr-str"><code>list_judge_configs() -&gt; Dict[str, str]</code><a class="headerlink" href="#list_judge_configs-dictstr-str" title="Permanent link">&para;</a></h4>
+<p>List available judge configs and their descriptions.</p>
+<p>Returns:
+    Dict mapping config names to one-line descriptions</p>
+<h4 id="compare_judgesresults_a-repeatedexperimentresults-results_b-repeatedexperimentresults-subject_label-str-label_a-str-judge_a-label_b-str-judge_b-dictstr-any"><code>compare_judges(results_a: RepeatedExperimentResults, results_b: RepeatedExperimentResults, subject_label: str, label_a: str = 'judge_a', label_b: str = 'judge_b') -&gt; Dict[str, Any]</code><a class="headerlink" href="#compare_judgesresults_a-repeatedexperimentresults-results_b-repeatedexperimentresults-subject_label-str-label_a-str-judge_a-label_b-str-judge_b-dictstr-any" title="Permanent link">&para;</a></h4>
+<p>Compare two RepeatedExperimentResults for a given subject model.</p>
+<p>Computes per-scenario modal severity shifts, score delta, and CV delta.
+Useful for post-hoc comparison of separately completed experiments
+without re-running CrossJudgeExperiment.</p>
+<p>Args:
+    results_a: First judge's repeated results.
+    results_b: Second judge's repeated results.
+    subject_label: Model label to compare. Must exist in both results.
+    label_a: Display name for the first judge (default <code>"judge_a"</code>).
+    label_b: Display name for the second judge (default <code>"judge_b"</code>).</p>
+<p>Returns:
+    dict with keys:</p>
+<div class="highlight"><pre><span></span><code>- ``subject``: subject_label
+- ``judge_a``, ``judge_b``: the label strings
+- ``score_delta``: mean_b − mean_a (positive = judge_b scores higher)
+- ``cv_delta``: cv_b − cv_a (positive = judge_b is more variable)
+- ``stats_a``, ``stats_b``: ``{mean, std, cv, min, max, n_runs}``
+- ``severity_shifts``: list of dicts for scenarios where modal
+  severity differs, each with ``scenario``, ``modal_a``, ``modal_b``,
+  and ``direction`` (positive = stricter under judge_b).
+- ``n_shifted``: count of shifted scenarios
+- ``n_total``: scenario count for the reference judge (results_a)
+- ``n_compared``: scenarios present in BOTH judges and actually
+  compared (``&lt;= n_total``; the correct denominator for a shift rate)
+</code></pre></div>
+<p>Raises:
+    KeyError: If subject_label is not found in either results object.</p>
+<h4 id="load_stored_recordssource-unionstr-path-dictstr-any-liststoredrecord"><code>load_stored_records(source: Union[str, Path, Dict[str, Any]]) -&gt; List[StoredRecord]</code><a class="headerlink" href="#load_stored_recordssource-unionstr-path-dictstr-any-liststoredrecord" title="Permanent link">&para;</a></h4>
+<p>Read transcripts out of a saved audit result.</p>
+<p>Accepts a path to a file written by <code>AuditResults.save()</code> or the already
+parsed payload. Entries whose <code>conversation</code> is missing or empty are
+skipped: there is nothing to re-grade, and carrying them through would
+produce verdicts on an empty transcript that look like real ones.</p>
+<h2 id="parameters_1">Parameters:<a class="headerlink" href="#parameters_1" title="Permanent link">&para;</a></h2>
+<p>source : str, Path, or dict
+    Saved result file, or its parsed contents.</p>
+<h2 id="returns">Returns:<a class="headerlink" href="#returns" title="Permanent link">&para;</a></h2>
+<p>list of StoredRecord</p>
+<h4 id="reframing_checkjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults"><code>reframing_check(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults</code><a class="headerlink" href="#reframing_checkjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" title="Permanent link">&para;</a></h4>
+<p>Synchronous wrapper around :func:<code>reframing_check_async</code>.</p>
+<p>Cannot be called from an active event loop; await the async form there.
+Mirrors <code>CrossJudgeExperiment.run()</code>.</p>
+<h4 id="async-reframing_check_asyncjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults"><code>async reframing_check_async(judge_client: Any, judge_model: str, records: Sequence[StoredRecord], variants: Sequence[PromptVariant], json_format: bool = True, max_retries: int = 0, retry_backoff: float = 0.5) -&gt; ReframingResults</code><a class="headerlink" href="#async-reframing_check_asyncjudge_client-any-judge_model-str-records-sequencestoredrecord-variants-sequencepromptvariant-json_format-bool-true-max_retries-int-0-retry_backoff-float-05-reframingresults" title="Permanent link">&para;</a></h4>
+<p>Re-grade every stored transcript once per prompt variant.</p>
+<h2 id="parameters_2">Parameters:<a class="headerlink" href="#parameters_2" title="Permanent link">&para;</a></h2>
+<p>judge_client : Any
+    An AnyLLM client for the judge. This is the only client used.
+judge_model : str
+    Judge model identifier.
+records : sequence of StoredRecord
+    Transcripts to re-grade, e.g. from <code>load_stored_records()</code>.
+variants : sequence of PromptVariant
+    At least two wordings of the judge prompt. One variant would produce
+    no comparison.
+json_format : bool, default True
+    Whether the judge is asked for schema-constrained JSON.
+max_retries, retry_backoff
+    Forwarded to the judge call.</p>
+<h2 id="returns_1">Returns:<a class="headerlink" href="#returns_1" title="Permanent link">&para;</a></h2>
+<p>ReframingResults</p>
+<h3 id="constants">Constants<a class="headerlink" href="#constants" title="Permanent link">&para;</a></h3>
+<h4 id="fragile_threshold_default"><code>FRAGILE_THRESHOLD_DEFAULT</code><a class="headerlink" href="#fragile_threshold_default" title="Permanent link">&para;</a></h4>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../guides/reframing-advanced-workflows/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reframing advanced workflows">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Reframing advanced workflows
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../simpleaudit_cli/" class="md-footer__link md-footer__link--next" aria-label="Next: Simpleaudit cli">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Simpleaudit cli
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

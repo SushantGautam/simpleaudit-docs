@@ -1,0 +1,89 @@
+name: Build & Deploy Docs
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout docs repo
+        uses: actions/checkout@v4
+        with:
+          path: simpleaudit-docs
+
+      - name: Checkout simpleaudit source
+        uses: actions/checkout@v4
+        with:
+          repository: SushantGautam/simpleaudit
+          ref: main
+          path: simpleaudit
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install mkdocs mkdocs-material mkdocstrings[python] griffe requests
+
+      - name: Cache docs plan
+        uses: actions/cache@v4
+        with:
+          path: simpleaudit-docs/.docs_cache
+          key: docs-plan-${{ github.sha }}
+          restore-keys: |
+            docs-plan-
+
+      - name: Generate docs
+        working-directory: simpleaudit-docs
+        env:
+          SIMPLEAUDIT_ROOT: ${{ github.workspace }}/simpleaudit
+          OWUI_BASE: ${{ vars.OWUI_BASE || 'https://simulachat.sushant.info.np' }}
+          OWUI_API_KEY: ${{ secrets.OWUI_API_KEY }}
+          OWUI_KB_ID: ${{ vars.OWUI_KB_ID || 'a43e450c-a197-4d53-95ca-555a6e6a2edb' }}
+          OWUI_MODEL: ${{ vars.OWUI_MODEL || 'default' }}
+        run: |
+          if [ -n "$OWUI_API_KEY" ]; then
+            python3 generate_docs.py --no-build
+          else
+            echo "OWUI_API_KEY not set — using --no-llm (deterministic layer only)"
+            python3 generate_docs.py --no-llm --no-build
+          fi
+
+      - name: Build site
+        working-directory: simpleaudit-docs
+        run: python3 -m mkdocs build --strict
+
+      - name: Setup Pages
+        if: github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: simpleaudit-docs/site
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
