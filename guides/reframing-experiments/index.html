@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/visualization-server/">
+        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/reframing-experiments/">
       
       
-        <link rel="prev" href="../reframing-experiments/">
+        <link rel="prev" href="../custom-scenarios-guide/">
       
       
-        <link rel="next" href="../vision-image-integrity/">
+        <link rel="next" href="../visualization-server/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Visualization server - SimpleAudit</title>
+        <title>Reframing experiments - SimpleAudit</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#visualization-server" class="md-skip">
+        <a href="#reframing-experiments" class="md-skip">
           Skip to content
         </a>
       
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Visualization server
+              Reframing experiments
             
           </span>
         </div>
@@ -704,34 +704,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../reframing-experiments/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Reframing experiments
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -749,7 +721,7 @@
   <span class="md-ellipsis">
     
   
-    Visualization server
+    Reframing experiments
   
 
     
@@ -767,7 +739,7 @@
   <span class="md-ellipsis">
     
   
-    Visualization server
+    Reframing experiments
   
 
     
@@ -791,16 +763,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#visualization-server" class="md-nav__link">
+  <a href="#reframing-experiments" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Visualization Server
+        Reframing &amp; Experiments
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Visualization Server">
+    <nav class="md-nav" aria-label="Reframing &amp; Experiments">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promptreframer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PromptReframer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentrunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExperimentRunner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
@@ -814,22 +847,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#usage-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
+        Usage Examples
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Functions">
+    <nav class="md-nav" aria-label="Usage Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#export_standalone_htmljson_path-str-output_path-str-str" class="md-nav__link">
+  <a href="#basic-reframing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        export_standalone_html(json_path: str, output_path: str) -&gt; str
+        Basic Reframing
       
     </span>
   </a>
@@ -837,10 +870,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_datadata-bool" class="md-nav__link">
+  <a href="#running-an-experiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_data(data) -&gt; bool
+        Running an Experiment
       
     </span>
   </a>
@@ -848,21 +881,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_jsonfile_path-str-bool" class="md-nav__link">
+  <a href="#batch-experiment-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_json(file_path: str) -&gt; bool
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get_file_treedirectory-str-base_path-str-listdict" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_file_tree(directory: str, base_path: str = "") -&gt; List[Dict]
+        Batch Experiment Pipeline
       
     </span>
   </a>
@@ -875,22 +897,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
+  <a href="#statistical-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API Endpoints
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /
+        Statistical Methods
       
     </span>
   </a>
@@ -898,10 +908,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
+  <a href="#error-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /scenario_viewer.html
+        Error Handling
       
     </span>
   </a>
@@ -909,10 +919,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/auth
+        Best Practices
       
     </span>
   </a>
@@ -920,10 +930,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
+  <a href="#file-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/files
+        File Structure
       
     </span>
   </a>
@@ -931,98 +941,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/json/{file_path}
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running the Server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#internal-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internal Helpers
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Internal Helpers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_experiment_modelsdata-object-liststr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        _experiment_models(data: object) -&gt; List[str]
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_looks_like_audit_resultobj-object-bool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        _looks_like_audit_result(obj: object) -&gt; bool
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check_secretrequest-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        check_secret(request: Request)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-validation-logic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Validation Logic
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
+        Limitations
       
     </span>
   </a>
@@ -1049,6 +971,34 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../visualization-server/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Visualization server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
     </li>
   
 
@@ -3076,16 +3026,77 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#visualization-server" class="md-nav__link">
+  <a href="#reframing-experiments" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Visualization Server
+        Reframing &amp; Experiments
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Visualization Server">
+    <nav class="md-nav" aria-label="Reframing &amp; Experiments">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overview" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overview
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#core-classes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core Classes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#promptreframer" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PromptReframer
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experiment" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Experiment
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#experimentrunner" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ExperimentRunner
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#configuration" class="md-nav__link">
@@ -3099,22 +3110,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#usage-examples" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
+        Usage Examples
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Functions">
+    <nav class="md-nav" aria-label="Usage Examples">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#export_standalone_htmljson_path-str-output_path-str-str" class="md-nav__link">
+  <a href="#basic-reframing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        export_standalone_html(json_path: str, output_path: str) -&gt; str
+        Basic Reframing
       
     </span>
   </a>
@@ -3122,10 +3133,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_datadata-bool" class="md-nav__link">
+  <a href="#running-an-experiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_data(data) -&gt; bool
+        Running an Experiment
       
     </span>
   </a>
@@ -3133,21 +3144,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_jsonfile_path-str-bool" class="md-nav__link">
+  <a href="#batch-experiment-pipeline" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_json(file_path: str) -&gt; bool
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get_file_treedirectory-str-base_path-str-listdict" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_file_tree(directory: str, base_path: str = "") -&gt; List[Dict]
+        Batch Experiment Pipeline
       
     </span>
   </a>
@@ -3160,22 +3160,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
+  <a href="#statistical-methods" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API Endpoints
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Endpoints">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /
+        Statistical Methods
       
     </span>
   </a>
@@ -3183,10 +3171,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
+  <a href="#error-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /scenario_viewer.html
+        Error Handling
       
     </span>
   </a>
@@ -3194,10 +3182,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/auth
+        Best Practices
       
     </span>
   </a>
@@ -3205,10 +3193,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
+  <a href="#file-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/files
+        File Structure
       
     </span>
   </a>
@@ -3216,98 +3204,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/json/{file_path}
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running the Server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#internal-helpers" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Internal Helpers
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Internal Helpers">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#_experiment_modelsdata-object-liststr" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        _experiment_models(data: object) -&gt; List[str]
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#_looks_like_audit_resultobj-object-bool" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        _looks_like_audit_result(obj: object) -&gt; bool
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#check_secretrequest-request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        check_secret(request: Request)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-validation-logic" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Validation Logic
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Troubleshooting
+        Limitations
       
     </span>
   </a>
@@ -3350,192 +3250,329 @@
   
 
 
-  <h1>Visualization server</h1>
+  <h1>Reframing experiments</h1>
 
-<h2 id="visualization-server">Visualization Server<a class="headerlink" href="#visualization-server" title="Permanent link">&para;</a></h2>
-<p>The <code>SimpleAudit</code> visualization server provides a local web interface for inspecting audit results. Built on FastAPI, it serves an interactive HTML visualizer and exposes REST endpoints for browsing result directories. The server supports optional authentication via a shared secret and can generate standalone HTML reports for offline sharing.</p>
-<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
-<p>Server behavior controlled via environment variables:</p>
+<h2 id="reframing-experiments">Reframing &amp; Experiments<a class="headerlink" href="#reframing-experiments" title="Permanent link">&para;</a></h2>
+<p>Reframing and experimental design module enables advanced prompt manipulation and systematic testing. Core subsystem handles prompt transformation, A/B testing, and result aggregation.</p>
+<h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
+<p><code>simpleaudit.reframing</code> package provides tools for:
+- Prompt reframing: Transform prompts to test robustness, bias, or clarity
+- Experimental design: Run controlled experiments across prompt variants
+- Result comparison: Statistical analysis of experiment outcomes</p>
+<p>Module located at <code>simpleaudit/reframing/__init__.py</code>.</p>
+<h3 id="core-classes">Core Classes<a class="headerlink" href="#core-classes" title="Permanent link">&para;</a></h3>
+<h4 id="promptreframer"><code>PromptReframer</code><a class="headerlink" href="#promptreframer" title="Permanent link">&para;</a></h4>
+<p>Handles prompt transformation strategies.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptReframer</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">PromptReframer</span><span class="p">:</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">strategy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"paraphrase"</span><span class="p">,</span> <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">):</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="sd">        Initialize reframer.</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="sd">        Args:</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="sd">            strategy: Transformation type. Options: "paraphrase", "simplify", </span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="sd">                     "formalize", "bias_check", "adversarial"</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="sd">            temperature: LLM temperature for transformation (0.0-1.0)</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="sd">        """</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">strategy</span> <span class="o">=</span> <span class="n">strategy</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">temperature</span> <span class="o">=</span> <span class="n">temperature</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">reframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="sd">        Transform prompt using configured strategy.</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="sd">        Args:</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="sd">            prompt: Original prompt string</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a><span class="sd">            Reframed prompt string</span>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="sd">        """</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a>        <span class="k">pass</span>
+<a id="__codelineno-0-27" name="__codelineno-0-27" href="#__codelineno-0-27"></a>
+<a id="__codelineno-0-28" name="__codelineno-0-28" href="#__codelineno-0-28"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">batch_reframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">prompts</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<a id="__codelineno-0-29" name="__codelineno-0-29" href="#__codelineno-0-29"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-0-30" name="__codelineno-0-30" href="#__codelineno-0-30"></a><span class="sd">        Reframe multiple prompts.</span>
+<a id="__codelineno-0-31" name="__codelineno-0-31" href="#__codelineno-0-31"></a>
+<a id="__codelineno-0-32" name="__codelineno-0-32" href="#__codelineno-0-32"></a><span class="sd">        Args:</span>
+<a id="__codelineno-0-33" name="__codelineno-0-33" href="#__codelineno-0-33"></a><span class="sd">            prompts: List of prompt strings</span>
+<a id="__codelineno-0-34" name="__codelineno-0-34" href="#__codelineno-0-34"></a>
+<a id="__codelineno-0-35" name="__codelineno-0-35" href="#__codelineno-0-35"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-0-36" name="__codelineno-0-36" href="#__codelineno-0-36"></a><span class="sd">            List of reframed prompts</span>
+<a id="__codelineno-0-37" name="__codelineno-0-37" href="#__codelineno-0-37"></a><span class="sd">        """</span>
+<a id="__codelineno-0-38" name="__codelineno-0-38" href="#__codelineno-0-38"></a>        <span class="k">pass</span>
+</code></pre></div>
+<p><strong>Available Strategies:</strong></p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Default</th>
-<th style="text-align: left;">Description</th>
+<th>Strategy</th>
+<th>Description</th>
+<th>Use Case</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_SECRET</code></td>
-<td style="text-align: left;"><code>""</code></td>
-<td style="text-align: left;">Authentication key. If empty, auth disabled.</td>
+<td><code>paraphrase</code></td>
+<td>Rewrite with different wording</td>
+<td>Test semantic invariance</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_EMAIL</code></td>
-<td style="text-align: left;"><code>sushant@simula.no</code></td>
-<td style="text-align: left;">Contact email displayed in auth overlay.</td>
+<td><code>simplify</code></td>
+<td>Reduce complexity</td>
+<td>Test model robustness</td>
+</tr>
+<tr>
+<td><code>formalize</code></td>
+<td>Increase formality</td>
+<td>Test tone sensitivity</td>
+</tr>
+<tr>
+<td><code>bias_check</code></td>
+<td>Inject potential bias markers</td>
+<td>Detect bias in responses</td>
+</tr>
+<tr>
+<td><code>adversarial</code></td>
+<td>Add confusing elements</td>
+<td>Test failure modes</td>
 </tr>
 </tbody>
 </table>
-<h3 id="core-functions">Core Functions<a class="headerlink" href="#core-functions" title="Permanent link">&para;</a></h3>
-<h4 id="export_standalone_htmljson_path-str-output_path-str-str"><code>export_standalone_html(json_path: str, output_path: str) -&gt; str</code><a class="headerlink" href="#export_standalone_htmljson_path-str-output_path-str-str" title="Permanent link">&para;</a></h4>
-<p>Generates a self-contained HTML file with audit data inlined. No server required for viewing.</p>
-<p><strong>Parameters:</strong>
-*   <code>json_path</code>: Path to source audit JSON file.
-*   <code>output_path</code>: Destination for generated HTML file.</p>
-<p><strong>Returns:</strong>
-*   <code>str</code>: Path to written HTML file.</p>
-<p><strong>Raises:</strong>
-*   <code>ValueError</code>: If input JSON invalid or template missing <code>&lt;/head&gt;</code> anchor.</p>
-<p><strong>Example:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_standalone_html</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Create offline report</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">output</span> <span class="o">=</span> <span class="n">export_standalone_html</span><span class="p">(</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">json_path</span><span class="o">=</span><span class="s2">"results/run_01.json"</span><span class="p">,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">output_path</span><span class="o">=</span><span class="s2">"reports/run_01.html"</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Report saved to </span><span class="si">{</span><span class="n">output</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div></p>
-<h4 id="is_valid_audit_datadata-bool"><code>is_valid_audit_data(data) -&gt; bool</code><a class="headerlink" href="#is_valid_audit_datadata-bool" title="Permanent link">&para;</a></h4>
-<p>Validates parsed JSON structure against known audit result schemas.</p>
-<p><strong>Supported Shapes:</strong>
-1.  <strong>Legacy:</strong> <code>list[dict]</code> where each dict contains <code>scenario_name</code>/<code>name</code> and <code>severity</code>.
-2.  <strong>Current:</strong> <code>dict</code> with <code>"results"</code> key containing list of audit dicts.
-3.  <strong>Experiment:</strong> <code>dict</code> with <code>"runs"</code> key mapping model labels to run lists.</p>
-<p><strong>Returns:</strong>
-*   <code>True</code> if data matches any valid schema, <code>False</code> otherwise.</p>
-<h4 id="is_valid_audit_jsonfile_path-str-bool"><code>is_valid_audit_json(file_path: str) -&gt; bool</code><a class="headerlink" href="#is_valid_audit_jsonfile_path-str-bool" title="Permanent link">&para;</a></h4>
-<p>Checks if a JSON file on disk contains valid audit results.</p>
-<p><strong>Parameters:</strong>
-*   <code>file_path</code>: Full path to JSON file.</p>
-<p><strong>Returns:</strong>
-*   <code>True</code> if file parses and validates, <code>False</code> on parse error or invalid structure.</p>
-<h4 id="get_file_treedirectory-str-base_path-str-listdict"><code>get_file_tree(directory: str, base_path: str = "") -&gt; List[Dict]</code><a class="headerlink" href="#get_file_treedirectory-str-base_path-str-listdict" title="Permanent link">&para;</a></h4>
-<p>Recursively scans directory for JSON files. Classifies files as <code>file</code>, <code>experiment</code>, or <code>folder</code>.</p>
-<p><strong>Parameters:</strong>
-*   <code>directory</code>: Absolute path to scan.
-*   <code>base_path</code>: Relative path prefix for tree nodes.</p>
-<p><strong>Returns:</strong>
-*   List of dicts. Each dict contains:
-    *   <code>name</code>: Entry name.
-    *   <code>type</code>: <code>"folder"</code>, <code>"file"</code>, or <code>"experiment"</code>.
-    *   <code>path</code>: Relative path from root.
-    *   <code>children</code>: Nested items (folders only).
-    *   <code>models</code>: List of model labels (experiments only).</p>
-<h3 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">&para;</a></h3>
-<p>All API endpoints require <code>X-Secret</code> header if <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> is configured.</p>
-<h4 id="get"><code>GET /</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
-<p>Serves main visualization page (<code>visualizer.html</code>).</p>
-<h4 id="get-scenario_viewerhtml"><code>GET /scenario_viewer.html</code><a class="headerlink" href="#get-scenario_viewerhtml" title="Permanent link">&para;</a></h4>
-<p>Serves standalone scenario viewer page.</p>
-<h4 id="get-apiauth"><code>GET /api/auth</code><a class="headerlink" href="#get-apiauth" title="Permanent link">&para;</a></h4>
-<p>Verifies authentication status.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sushant@simula.no"</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
-</code></pre></div></p>
-<h4 id="get-apifiles"><code>GET /api/files</code><a class="headerlink" href="#get-apifiles" title="Permanent link">&para;</a></h4>
-<p>Returns file tree of results directory.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"tree"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run_01"</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder"</span><span class="p">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run_01"</span><span class="p">,</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"results.json"</span><span class="p">,</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">          </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"run_01/results.json"</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">      </span><span class="p">]</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="p">}</span>
-</code></pre></div></p>
-<h4 id="get-apijsonfile_path"><code>GET /api/json/{file_path}</code><a class="headerlink" href="#get-apijsonfile_path" title="Permanent link">&para;</a></h4>
-<p>Returns contents of specific JSON file.</p>
-<p><strong>Security:</strong>
-*   Prevents directory traversal via <code>os.path.realpath</code> validation.
-*   Only serves <code>.json</code> files.</p>
-<p><strong>Parameters:</strong>
-*   <code>file_path</code>: Relative path within results directory.</p>
-<p><strong>Errors:</strong>
-*   <code>400</code>: Invalid path or non-JSON file.
-*   <code>403</code>: Path escapes results directory.
-*   <code>404</code>: File not found.
-*   <code>500</code>: Results directory not configured.</p>
-<h3 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h3>
-<p>Use <code>uvicorn</code> to start the application.</p>
-<p><strong>Basic Usage:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># Set results directory and start server</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_RESULTS_DIR</span><span class="o">=</span><span class="s2">"./results"</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>uvicorn<span class="w"> </span>simpleaudit.visualization.server:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</code></pre></div></p>
-<p><strong>With Authentication:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_SECRET</span><span class="o">=</span><span class="s2">"my-secret-key"</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_EMAIL</span><span class="o">=</span><span class="s2">"admin@example.com"</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>uvicorn<span class="w"> </span>simpleaudit.visualization.server:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</code></pre></div></p>
-<p><strong>Accessing with Secret:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Fetch file tree with auth header</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"X-Secret: my-secret-key"</span><span class="w"> </span>http://localhost:8000/api/files
-</code></pre></div></p>
-<h3 id="internal-helpers">Internal Helpers<a class="headerlink" href="#internal-helpers" title="Permanent link">&para;</a></h3>
-<h4 id="_experiment_modelsdata-object-liststr"><code>_experiment_models(data: object) -&gt; List[str]</code><a class="headerlink" href="#_experiment_modelsdata-object-liststr" title="Permanent link">&para;</a></h4>
-<p>Extracts model labels from experiment data. A model is included if it has at least one loadable run containing valid audit results.</p>
-<h4 id="_looks_like_audit_resultobj-object-bool"><code>_looks_like_audit_result(obj: object) -&gt; bool</code><a class="headerlink" href="#_looks_like_audit_resultobj-object-bool" title="Permanent link">&para;</a></h4>
-<p>Checks if object is a dict with required audit fields (<code>scenario_name</code>/<code>name</code> and <code>severity</code>).</p>
-<h4 id="check_secretrequest-request"><code>check_secret(request: Request)</code><a class="headerlink" href="#check_secretrequest-request" title="Permanent link">&para;</a></h4>
-<p>Dependency for auth protection. Raises <code>401 Unauthorized</code> if secret mismatch. Uses <code>secrets.compare_digest</code> for constant-time comparison to prevent timing attacks.</p>
-<h3 id="data-validation-logic">Data Validation Logic<a class="headerlink" href="#data-validation-logic" title="Permanent link">&para;</a></h3>
-<p>The server strictly validates JSON structure before serving. Invalid files excluded from file tree.</p>
-<p><strong>Valid Audit Result Dict:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test_scenario"</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">  </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span><span class="p">,</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="nt">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
-</code></pre></div></p>
-<p><strong>Valid Experiment Structure:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">"runs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">"model_a"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">      </span><span class="p">{</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="w">        </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s1"</span><span class="p">,</span><span class="w"> </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="w">        </span><span class="p">]</span>
-<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="w">    </span><span class="p">],</span>
-<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="w">    </span><span class="nt">"model_b"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="w">      </span><span class="p">{</span>
-<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="w">        </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="w">          </span><span class="p">{</span><span class="w"> </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"s2"</span><span class="p">,</span><span class="w"> </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span><span class="w"> </span><span class="p">}</span>
-<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="w">        </span><span class="p">]</span>
-<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="w">    </span><span class="p">]</span>
-<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a><span class="p">}</span>
-</code></pre></div></p>
-<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
-<p><strong>"Results directory not set" (500)</strong>
-*   Ensure <code>RESULTS_DIR</code> global variable initialized.
-*   Set <code>SIMPLEAUDIT_RESULTS_DIR</code> environment variable before startup.</p>
-<p><strong>"Access denied" (403)</strong>
-*   Path traversal detected. Ensure <code>file_path</code> parameter does not contain <code>..</code> or absolute paths.</p>
-<p><strong>Auth Fails</strong>
-*   Verify <code>X-Secret</code> header matches <code>SIMPLEAUDIT_VISUALIZER_SECRET</code>.
-*   Check for non-ASCII characters in secret (UTF-8 encoding enforced).</p>
-<p><strong>Standalone HTML Not Rendering</strong>
-*   Verify source JSON passes <code>is_valid_audit_data</code>.
-*   Ensure <code>visualizer.html</code> template contains <code>&lt;/head&gt;</code> tag.</p>
+<h4 id="experiment"><code>Experiment</code><a class="headerlink" href="#experiment" title="Permanent link">&para;</a></h4>
+<p>Manages experimental runs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Experiment</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Experiment</span><span class="p">:</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">baseline_prompt</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>                 <span class="n">reframer</span><span class="p">:</span> <span class="n">PromptReframer</span><span class="p">,</span> <span class="n">n_trials</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">10</span><span class="p">):</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="sd">        Initialize experiment.</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="sd">        Args:</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="sd">            name: Experiment identifier</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="sd">            baseline_prompt: Original prompt to test against</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="sd">            reframer: Configured PromptReframer instance</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="sd">            n_trials: Number of trials per variant</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="sd">        """</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">baseline_prompt</span> <span class="o">=</span> <span class="n">baseline_prompt</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">reframer</span> <span class="o">=</span> <span class="n">reframer</span>
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">n_trials</span> <span class="o">=</span> <span class="n">n_trials</span>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"gpt-4"</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a><span class="sd">        Execute experiment.</span>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a><span class="sd">        Args:</span>
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a><span class="sd">            model: LLM model identifier</span>
+<a id="__codelineno-1-27" name="__codelineno-1-27" href="#__codelineno-1-27"></a><span class="sd">            metrics: List of evaluation metrics. Options: "accuracy", </span>
+<a id="__codelineno-1-28" name="__codelineno-1-28" href="#__codelineno-1-28"></a><span class="sd">                     "consistency", "latency", "cost"</span>
+<a id="__codelineno-1-29" name="__codelineno-1-29" href="#__codelineno-1-29"></a>
+<a id="__codelineno-1-30" name="__codelineno-1-30" href="#__codelineno-1-30"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-1-31" name="__codelineno-1-31" href="#__codelineno-1-31"></a><span class="sd">            Dictionary with experiment results:</span>
+<a id="__codelineno-1-32" name="__codelineno-1-32" href="#__codelineno-1-32"></a><span class="sd">            {</span>
+<a id="__codelineno-1-33" name="__codelineno-1-33" href="#__codelineno-1-33"></a><span class="sd">                "experiment": str,</span>
+<a id="__codelineno-1-34" name="__codelineno-1-34" href="#__codelineno-1-34"></a><span class="sd">                "baseline_score": float,</span>
+<a id="__codelineno-1-35" name="__codelineno-1-35" href="#__codelineno-1-35"></a><span class="sd">                "reframed_score": float,</span>
+<a id="__codelineno-1-36" name="__codelineno-1-36" href="#__codelineno-1-36"></a><span class="sd">                "delta": float,</span>
+<a id="__codelineno-1-37" name="__codelineno-1-37" href="#__codelineno-1-37"></a><span class="sd">                "p_value": float,</span>
+<a id="__codelineno-1-38" name="__codelineno-1-38" href="#__codelineno-1-38"></a><span class="sd">                "trials": int</span>
+<a id="__codelineno-1-39" name="__codelineno-1-39" href="#__codelineno-1-39"></a><span class="sd">            }</span>
+<a id="__codelineno-1-40" name="__codelineno-1-40" href="#__codelineno-1-40"></a><span class="sd">        """</span>
+<a id="__codelineno-1-41" name="__codelineno-1-41" href="#__codelineno-1-41"></a>        <span class="k">pass</span>
+<a id="__codelineno-1-42" name="__codelineno-1-42" href="#__codelineno-1-42"></a>
+<a id="__codelineno-1-43" name="__codelineno-1-43" href="#__codelineno-1-43"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">compare</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">:</span> <span class="s1">'Experiment'</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+<a id="__codelineno-1-44" name="__codelineno-1-44" href="#__codelineno-1-44"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-1-45" name="__codelineno-1-45" href="#__codelineno-1-45"></a><span class="sd">        Compare two experiments.</span>
+<a id="__codelineno-1-46" name="__codelineno-1-46" href="#__codelineno-1-46"></a>
+<a id="__codelineno-1-47" name="__codelineno-1-47" href="#__codelineno-1-47"></a><span class="sd">        Args:</span>
+<a id="__codelineno-1-48" name="__codelineno-1-48" href="#__codelineno-1-48"></a><span class="sd">            other: Another Experiment instance</span>
+<a id="__codelineno-1-49" name="__codelineno-1-49" href="#__codelineno-1-49"></a>
+<a id="__codelineno-1-50" name="__codelineno-1-50" href="#__codelineno-1-50"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-1-51" name="__codelineno-1-51" href="#__codelineno-1-51"></a><span class="sd">            Comparison dictionary with statistical significance</span>
+<a id="__codelineno-1-52" name="__codelineno-1-52" href="#__codelineno-1-52"></a><span class="sd">        """</span>
+<a id="__codelineno-1-53" name="__codelineno-1-53" href="#__codelineno-1-53"></a>        <span class="k">pass</span>
+</code></pre></div>
+<h4 id="experimentrunner"><code>ExperimentRunner</code><a class="headerlink" href="#experimentrunner" title="Permanent link">&para;</a></h4>
+<p>Orchestrates multiple experiments.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">ExperimentRunner</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">ExperimentRunner</span><span class="p">:</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"./experiments"</span><span class="p">):</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="sd">        Initialize runner.</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="sd">        Args:</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="sd">            output_dir: Directory for experiment results</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="sd">        """</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">output_dir</span> <span class="o">=</span> <span class="n">output_dir</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">experiments</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add_experiment</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">experiment</span><span class="p">:</span> <span class="n">Experiment</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">        </span><span class="sd">"""Add experiment to queue."""</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>        <span class="k">pass</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">run_all</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parallel</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="sd">        Execute all queued experiments.</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="sd">        Args:</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a><span class="sd">            parallel: Run experiments concurrently</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a><span class="sd">            List of result dictionaries</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a><span class="sd">        """</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>        <span class="k">pass</span>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">generate_report</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"json"</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="w">        </span><span class="sd">"""</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a><span class="sd">        Generate summary report.</span>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="sd">        Args:</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a><span class="sd">            format: Output format. Options: "json", "csv", "markdown"</span>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="sd">        Returns:</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a><span class="sd">            Report content string</span>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="sd">        """</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a>        <span class="k">pass</span>
+</code></pre></div>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<p>Configuration via <code>simpleaudit/reframing/config.py</code>:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">REFRAMING_CONFIG</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="s2">"default_strategy"</span><span class="p">:</span> <span class="s2">"paraphrase"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="s2">"default_temperature"</span><span class="p">:</span> <span class="mf">0.7</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="s2">"max_retries"</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">"timeout_seconds"</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="s2">"metrics"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"accuracy"</span><span class="p">,</span> <span class="s2">"consistency"</span><span class="p">],</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="s2">"significance_level"</span><span class="p">:</span> <span class="mf">0.05</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+</code></pre></div>
+<p>Override via environment variables:
+- <code>SIMPLEAUDIT_REFRAMING_STRATEGY</code>
+- <code>SIMPLEAUDIT_REFRAMING_TEMPERATURE</code>
+- <code>SIMPLEAUDIT_EXPERIMENT_OUTPUT_DIR</code></p>
+<h3 id="usage-examples">Usage Examples<a class="headerlink" href="#usage-examples" title="Permanent link">&para;</a></h3>
+<h4 id="basic-reframing">Basic Reframing<a class="headerlink" href="#basic-reframing" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptReframer</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">reframer</span> <span class="o">=</span> <span class="n">PromptReframer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">"simplify"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">original</span> <span class="o">=</span> <span class="s2">"Please analyze the financial statements and provide detailed recommendations for investment strategy optimization."</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="n">simplified</span> <span class="o">=</span> <span class="n">reframer</span><span class="o">.</span><span class="n">reframe</span><span class="p">(</span><span class="n">original</span><span class="p">)</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="nb">print</span><span class="p">(</span><span class="n">simplified</span><span class="p">)</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># "Analyze financials. Recommend investment strategy."</span>
+</code></pre></div>
+<h4 id="running-an-experiment">Running an Experiment<a class="headerlink" href="#running-an-experiment" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptReframer</span><span class="p">,</span> <span class="n">Experiment</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">reframer</span> <span class="o">=</span> <span class="n">PromptReframer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="s2">"bias_check"</span><span class="p">)</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">exp</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>    <span class="n">name</span><span class="o">=</span><span class="s2">"bias_test_001"</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    <span class="n">baseline_prompt</span><span class="o">=</span><span class="s2">"Evaluate this resume for senior engineer role."</span><span class="p">,</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="n">reframer</span><span class="o">=</span><span class="n">reframer</span><span class="p">,</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="n">n_trials</span><span class="o">=</span><span class="mi">20</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">)</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">results</span> <span class="o">=</span> <span class="n">exp</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span> <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s2">"accuracy"</span><span class="p">,</span> <span class="s2">"consistency"</span><span class="p">])</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Baseline: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'baseline_score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Reframed: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'reframed_score'</span><span class="p">]</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Significant: </span><span class="si">{</span><span class="n">results</span><span class="p">[</span><span class="s1">'p_value'</span><span class="p">]</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mf">0.05</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h4 id="batch-experiment-pipeline">Batch Experiment Pipeline<a class="headerlink" href="#batch-experiment-pipeline" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.reframing</span><span class="w"> </span><span class="kn">import</span> <span class="n">PromptReframer</span><span class="p">,</span> <span class="n">Experiment</span><span class="p">,</span> <span class="n">ExperimentRunner</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">runner</span> <span class="o">=</span> <span class="n">ExperimentRunner</span><span class="p">(</span><span class="n">output_dir</span><span class="o">=</span><span class="s2">"./results"</span><span class="p">)</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">strategies</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"paraphrase"</span><span class="p">,</span> <span class="s2">"simplify"</span><span class="p">,</span> <span class="s2">"formalize"</span><span class="p">]</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="k">for</span> <span class="n">strategy</span> <span class="ow">in</span> <span class="n">strategies</span><span class="p">:</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="n">reframer</span> <span class="o">=</span> <span class="n">PromptReframer</span><span class="p">(</span><span class="n">strategy</span><span class="o">=</span><span class="n">strategy</span><span class="p">)</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>    <span class="n">exp</span> <span class="o">=</span> <span class="n">Experiment</span><span class="p">(</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>        <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">"test_</span><span class="si">{</span><span class="n">strategy</span><span class="si">}</span><span class="s2">"</span><span class="p">,</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>        <span class="n">baseline_prompt</span><span class="o">=</span><span class="s2">"Summarize this document."</span><span class="p">,</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>        <span class="n">reframer</span><span class="o">=</span><span class="n">reframer</span><span class="p">,</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>        <span class="n">n_trials</span><span class="o">=</span><span class="mi">15</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>    <span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>    <span class="n">runner</span><span class="o">.</span><span class="n">add_experiment</span><span class="p">(</span><span class="n">exp</span><span class="p">)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="n">results</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">run_all</span><span class="p">(</span><span class="n">parallel</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="n">report</span> <span class="o">=</span> <span class="n">runner</span><span class="o">.</span><span class="n">generate_report</span><span class="p">(</span><span class="nb">format</span><span class="o">=</span><span class="s2">"markdown"</span><span class="p">)</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">report</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="statistical-methods">Statistical Methods<a class="headerlink" href="#statistical-methods" title="Permanent link">&para;</a></h3>
+<p>Module uses scipy for statistical testing:</p>
+<ul>
+<li><strong>t-test</strong>: Compare mean scores between baseline and reframed</li>
+<li><strong>Confidence intervals</strong>: 95% CI for score differences</li>
+<li><strong>Effect size</strong>: Cohen's d for practical significance</li>
+</ul>
+<p>Results include:
+- <code>p_value</code>: Probability of observing difference by chance
+- <code>confidence_interval</code>: Tuple (lower, upper) bounds
+- <code>effect_size</code>: Standardized mean difference</p>
+<h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
+<p>Common exceptions:</p>
+<table>
+<thead>
+<tr>
+<th>Exception</th>
+<th>Cause</th>
+<th>Resolution</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ReframingError</code></td>
+<td>LLM API failure</td>
+<td>Check API key, retry</td>
+</tr>
+<tr>
+<td><code>InvalidStrategyError</code></td>
+<td>Unknown strategy name</td>
+<td>Use valid strategy from list</td>
+</tr>
+<tr>
+<td><code>InsufficientTrialsError</code></td>
+<td>Too few trials for statistics</td>
+<td>Increase <code>n_trials</code> to ≥10</td>
+</tr>
+<tr>
+<td><code>ModelNotFoundError</code></td>
+<td>Invalid model identifier</td>
+<td>Verify model name</td>
+</tr>
+</tbody>
+</table>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Baseline stability</strong>: Run baseline multiple times to establish variance</li>
+<li><strong>Trial count</strong>: Minimum 10 trials per variant for statistical power</li>
+<li><strong>Strategy selection</strong>: Match strategy to testing goal</li>
+<li><strong>Metric alignment</strong>: Choose metrics relevant to use case</li>
+<li><strong>Parallel execution</strong>: Use <code>parallel=True</code> for large experiment sets</li>
+</ol>
+<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>simpleaudit/
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── reframing/
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>│   ├── __init__.py          # Exports PromptReframer, Experiment, ExperimentRunner
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>│   ├── reframer.py          # PromptReframer implementation
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>│   ├── experiment.py        # Experiment class
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>│   ├── runner.py            # ExperimentRunner class
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>│   ├── config.py            # Default configuration
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>│   └── stats.py             # Statistical analysis functions
+</code></pre></div>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Requires LLM API access for reframing</li>
+<li>Statistical tests assume normal distribution</li>
+<li>Parallel execution limited by API rate limits</li>
+<li>Bias detection strategy not exhaustive</li>
+</ul>
 <h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
 <ul>
+<li><a href="../core-architecture/">Core Architecture</a></li>
 <li><a href="../custom-scenarios-guide/">Custom Scenarios Guide</a></li>
 <li><a href="../getting-started/">Getting Started</a></li>
 <li><a href="../model-auditing/">Model Auditing</a></li>
@@ -3575,7 +3612,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../reframing-experiments/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Reframing experiments">
+          <a href="../custom-scenarios-guide/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Custom scenarios guide">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3585,20 +3622,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Reframing experiments
+                Custom scenarios guide
               </div>
             </div>
           </a>
         
         
           
-          <a href="../vision-image-integrity/" class="md-footer__link md-footer__link--next" aria-label="Next: Vision image integrity">
+          <a href="../visualization-server/" class="md-footer__link md-footer__link--next" aria-label="Next: Visualization server">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Vision image integrity
+                Visualization server
               </div>
             </div>
             <div class="md-footer__button md-icon">

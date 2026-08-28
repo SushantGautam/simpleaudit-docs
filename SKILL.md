@@ -213,7 +213,7 @@ Report changed / missing / questionable docs
 - Python: `.venv/bin/python`
 - Generator: `repoquill generate`
 - Build: `mkdocs build --strict`
-- Repo: https://github.com/SushantGautam/simpleaudit
+- Repo: https://github.com/kelkalot/simpleaudit
 - Site: https://sushantgautam.github.io/simpleaudit-docs/
 
 ## Verification Checklist
