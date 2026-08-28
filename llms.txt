@@ -1,0 +1,64 @@
+# SimpleAudit
+
+Lightweight AI Safety Auditing Framework
+
+> https://github.com/SushantGautam/simpleaudit
+
+## Guides
+
+- [Getting Started](https://sushantgautam.github.io/simpleaudit-docs/guides/getting-started/): Installation, environment setup, and first audit run.
+- [Core Architecture](https://sushantgautam.github.io/simpleaudit-docs/guides/core-architecture/): High-level system design, data flow, and module interactions.
+- [CLI Usage](https://sushantgautam.github.io/simpleaudit-docs/guides/cli-usage/): Command-line interface options, flags, and execution modes.
+- [Results & Analysis](https://sushantgautam.github.io/simpleaudit-docs/guides/results-analysis/): Interpreting audit results, repeated runs, and statistical analysis.
+
+## API Reference
+
+- [simpleaudit](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit/): Top-level package: the public API of SimpleAudit.
+- [simpleaudit.cli](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_cli/): Command-line interface (`simpleaudit` entry point).
+- [simpleaudit.experiment](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_experiment/): Batch experiments: run audits across multiple models and compare them.
+- [simpleaudit.judges](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges/): Built-in judge configurations: safety, harm, factuality, helpfulness, abstention, and more.
+- [simpleaudit.judges.abstention](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_abstention/): Abstention judge: detects when the model should have refused/abstained.
+- [simpleaudit.judges.binary_abstention](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_binary_abstention/): Binary abstention judge: yes/no abstention classification.
+- [simpleaudit.judges.factuality](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_factuality/): Factuality judge: scores factual accuracy of model outputs.
+- [simpleaudit.judges.harm](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_harm/): Harm judge: scores harmfulness of model outputs.
+- [simpleaudit.judges.helpfulness](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helpfulness/): Helpfulness judge: scores how helpful the model was.
+- [simpleaudit.judges.helsedir_sexhealth_no](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no/): Helsedir sex-health (NO) judge: domain-specific Norwegian health judge.
+- [simpleaudit.judges.helsedir_sexhealth_no_rag](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no_rag/): Helsedir sex-health (NO) RAG judge: grounded variant with retrieval context.
+- [simpleaudit.judges.safety](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_safety/): Safety judge: scores safety of model outputs.
+- [simpleaudit.model_auditor](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_model_auditor/): The core audit engine: drives target model, auditor, and judge across scenarios.
+- [simpleaudit.repeated_results](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_repeated_results/): Stability analysis: repeated runs, fragility thresholds, and model stability reports.
+- [simpleaudit.results](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_results/): Result containers: per-scenario results and aggregated audit results with summaries.
+- [simpleaudit.scenarios](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios/): Scenario packs: curated test suites (health, safety, government, benchmarks).
+- [simpleaudit.scenarios.bullshitbench_health](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_health/): BullshitBench health variant: non-informative medical answers.
+- [simpleaudit.scenarios.bullshitbench_v1_v2](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_v1_v2/): BullshitBench v1/v2 scenarios: measuring non-informative answers.
+- [simpleaudit.scenarios.health](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_health/): Health domain scenarios: medical Q&A and advice tests.
+- [simpleaudit.scenarios.hei_refusal](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_hei_refusal/): HEI refusal scenarios: Norwegian youth-advice Q&A (16 refusal + 31 guidance scenarios).
+- [simpleaudit.scenarios.helpmed](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_helpmed/): HelpMed scenarios: medical help-seeking tests.
+- [simpleaudit.scenarios.nav_aap](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_nav_aap/): NAV AAP scenarios: Norwegian disability benefit tests.
+- [simpleaudit.scenarios.rag](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_rag/): RAG scenarios: retrieval-augmented generation tests.
+- [simpleaudit.scenarios.safety](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_safety/): Safety scenarios: refusal and harmful-request tests.
+- [simpleaudit.scenarios.skatteetaten](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_skatteetaten/): Skatteetaten scenarios: Norwegian tax authority tests.
+- [simpleaudit.scenarios.system_prompt](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_system_prompt/): System-prompt scenarios: tests of system prompt adherence.
+- [simpleaudit.scenarios.ung](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_ung/): UNG scenarios: youth health service tests.
+- [simpleaudit.utils](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_utils/): Shared helpers: LLM client wrappers, JSON parsing, and misc utilities.
+- [simpleaudit.judges](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges/): Built-in judge configurations: safety, harm, factuality, helpfulness, abstention, and more.
+- [simpleaudit.judges.abstention](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_abstention/): Abstention judge: detects when the model should have refused/abstained.
+- [simpleaudit.judges.binary_abstention](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_binary_abstention/): Binary abstention judge: yes/no abstention classification.
+- [simpleaudit.judges.factuality](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_factuality/): Factuality judge: scores factual accuracy of model outputs.
+- [simpleaudit.judges.harm](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_harm/): Harm judge: scores harmfulness of model outputs.
+- [simpleaudit.judges.helpfulness](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helpfulness/): Helpfulness judge: scores how helpful the model was.
+- [simpleaudit.judges.helsedir_sexhealth_no](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no/): Helsedir sex-health (NO) judge: domain-specific Norwegian health judge.
+- [simpleaudit.judges.helsedir_sexhealth_no_rag](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no_rag/): Helsedir sex-health (NO) RAG judge: grounded variant with retrieval context.
+- [simpleaudit.judges.safety](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_safety/): Safety judge: scores safety of model outputs.
+- [simpleaudit.scenarios](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios/): Scenario packs: curated test suites (health, safety, government, benchmarks).
+- [simpleaudit.scenarios.bullshitbench_health](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_health/): BullshitBench health variant: non-informative medical answers.
+- [simpleaudit.scenarios.bullshitbench_v1_v2](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_v1_v2/): BullshitBench v1/v2 scenarios: measuring non-informative answers.
+- [simpleaudit.scenarios.health](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_health/): Health domain scenarios: medical Q&A and advice tests.
+- [simpleaudit.scenarios.hei_refusal](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_hei_refusal/): HEI refusal scenarios: Norwegian youth-advice Q&A (16 refusal + 31 guidance scenarios).
+- [simpleaudit.scenarios.helpmed](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_helpmed/): HelpMed scenarios: medical help-seeking tests.
+- [simpleaudit.scenarios.nav_aap](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_nav_aap/): NAV AAP scenarios: Norwegian disability benefit tests.
+- [simpleaudit.scenarios.rag](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_rag/): RAG scenarios: retrieval-augmented generation tests.
+- [simpleaudit.scenarios.safety](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_safety/): Safety scenarios: refusal and harmful-request tests.
+- [simpleaudit.scenarios.skatteetaten](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_skatteetaten/): Skatteetaten scenarios: Norwegian tax authority tests.
+- [simpleaudit.scenarios.system_prompt](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_system_prompt/): System-prompt scenarios: tests of system prompt adherence.
+- [simpleaudit.scenarios.ung](https://sushantgautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_ung/): UNG scenarios: youth health service tests.
