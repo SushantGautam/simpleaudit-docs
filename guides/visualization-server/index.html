@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/visualization-server/">
       
       
-        <link rel="prev" href="../custom-scenarios-guide/">
+        <link rel="prev" href="../creating-custom-scenarios/">
       
       
-        <link rel="next" href="../utilities-helpers/">
+        <link rel="next" href="../../reference/simpleaudit/">
       
       
         
@@ -516,6 +516,8 @@
       
         
       
+        
+      
     
     
     
@@ -565,14 +567,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../model-auditor/" class="md-nav__link">
+      <a href="../model-auditing/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Model auditor
+    Model auditing
   
 
     
@@ -593,14 +595,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../experiments-results/" class="md-nav__link">
+      <a href="../result-handling/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Experiments results
+    Result handling
   
 
     
@@ -649,6 +651,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../custom-judges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom judges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../test-scenarios/" class="md-nav__link">
         
   
@@ -677,14 +707,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-scenarios-guide/" class="md-nav__link">
+      <a href="../domain-specific-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom scenarios guide
+    Domain specific scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../creating-custom-scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Creating custom scenarios
   
 
     
@@ -795,22 +853,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#starting-the-server" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
+        Starting the Server
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Functions">
+    <nav class="md-nav" aria-label="Starting the Server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#start_serverresults_dir-host127001-port8000" class="md-nav__link">
+  <a href="#function-signature" class="md-nav__link">
     <span class="md-ellipsis">
       
-        start_server(results_dir, host="127.0.0.1", port=8000)
+        Function Signature
       
     </span>
   </a>
@@ -818,10 +876,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_jsonfile_path" class="md-nav__link">
+  <a href="#parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_json(file_path)
+        Parameters
       
     </span>
   </a>
@@ -829,10 +887,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get_file_treedirectory-base_path" class="md-nav__link">
+  <a href="#example-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_file_tree(directory, base_path="")
+        Example Usage
       
     </span>
   </a>
@@ -845,22 +903,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#http-endpoints" class="md-nav__link">
+  <a href="#api-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HTTP Endpoints
+        API Endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HTTP Endpoints">
+    <nav class="md-nav" aria-label="API Endpoints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
+  <a href="#1-root-endpoint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /
+        1. Root Endpoint
       
     </span>
   </a>
@@ -868,10 +926,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
+  <a href="#2-scenario-viewer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /scenario_viewer.html
+        2. Scenario Viewer
       
     </span>
   </a>
@@ -879,10 +937,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-faviconpng" class="md-nav__link">
+  <a href="#3-authentication-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /favicon.png
+        3. Authentication Check
       
     </span>
   </a>
@@ -890,10 +948,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
+  <a href="#4-file-tree" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/auth
+        4. File Tree
       
     </span>
   </a>
@@ -901,21 +959,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
+  <a href="#5-json-file-content" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/json/{file_path}
+        5. JSON File Content
       
     </span>
   </a>
@@ -936,13 +983,41 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling Authentication
+      
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure-requirements" class="md-nav__link">
+  <a href="#disabling-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure Requirements
+        Disabling Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Validation
       
     </span>
   </a>
@@ -972,10 +1047,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-usage" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example Usage
+        Best Practices
       
     </span>
   </a>
@@ -987,39 +1062,6 @@
     <span class="md-ellipsis">
       
         Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Considerations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#module-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Location
       
     </span>
   </a>
@@ -1046,34 +1088,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../utilities-helpers/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Utilities helpers
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -2867,22 +2881,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#starting-the-server" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
+        Starting the Server
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Core Functions">
+    <nav class="md-nav" aria-label="Starting the Server">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#start_serverresults_dir-host127001-port8000" class="md-nav__link">
+  <a href="#function-signature" class="md-nav__link">
     <span class="md-ellipsis">
       
-        start_server(results_dir, host="127.0.0.1", port=8000)
+        Function Signature
       
     </span>
   </a>
@@ -2890,10 +2904,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#is_valid_audit_jsonfile_path" class="md-nav__link">
+  <a href="#parameters" class="md-nav__link">
     <span class="md-ellipsis">
       
-        is_valid_audit_json(file_path)
+        Parameters
       
     </span>
   </a>
@@ -2901,10 +2915,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get_file_treedirectory-base_path" class="md-nav__link">
+  <a href="#example-usage" class="md-nav__link">
     <span class="md-ellipsis">
       
-        get_file_tree(directory, base_path="")
+        Example Usage
       
     </span>
   </a>
@@ -2917,22 +2931,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#http-endpoints" class="md-nav__link">
+  <a href="#api-endpoints" class="md-nav__link">
     <span class="md-ellipsis">
       
-        HTTP Endpoints
+        API Endpoints
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="HTTP Endpoints">
+    <nav class="md-nav" aria-label="API Endpoints">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
+  <a href="#1-root-endpoint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /
+        1. Root Endpoint
       
     </span>
   </a>
@@ -2940,10 +2954,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
+  <a href="#2-scenario-viewer" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /scenario_viewer.html
+        2. Scenario Viewer
       
     </span>
   </a>
@@ -2951,10 +2965,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-faviconpng" class="md-nav__link">
+  <a href="#3-authentication-check" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /favicon.png
+        3. Authentication Check
       
     </span>
   </a>
@@ -2962,10 +2976,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
+  <a href="#4-file-tree" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/auth
+        4. File Tree
       
     </span>
   </a>
@@ -2973,21 +2987,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
+  <a href="#5-json-file-content" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /api/files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/json/{file_path}
+        5. JSON File Content
       
     </span>
   </a>
@@ -3008,13 +3011,41 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Authentication">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#enabling-authentication" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Enabling Authentication
+      
+    </span>
+  </a>
+  
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure-requirements" class="md-nav__link">
+  <a href="#disabling-authentication" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure Requirements
+        Disabling Authentication
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-validation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Validation
       
     </span>
   </a>
@@ -3044,10 +3075,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#example-usage" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Example Usage
+        Best Practices
       
     </span>
   </a>
@@ -3059,39 +3090,6 @@
     <span class="md-ellipsis">
       
         Troubleshooting
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#security-considerations" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Security Considerations
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#dependencies" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Dependencies
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#module-location" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Module Location
       
     </span>
   </a>
@@ -3137,349 +3135,199 @@
   <h1>Visualization server</h1>
 
 <h2 id="visualization-server">Visualization Server<a class="headerlink" href="#visualization-server" title="Permanent link">&para;</a></h2>
-<p>FastAPI web interface viewing SimpleAudit results metrics. Local server. No external dependencies beyond <code>fastapi</code> <code>uvicorn</code>.</p>
+<p>The <code>SimpleAudit</code> library includes a local web server for visualizing audit results. Built with FastAPI, this subsystem serves a frontend interface to browse, load, and display JSON result files generated by the audit process. The server binds to localhost by default, ensuring results remain private unless explicitly exposed.</p>
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
-<p><code>visualization/server.py</code> provides HTTP endpoints serving audit JSON files. Renders <code>visualizer.html</code> <code>scenario_viewer.html</code>. Recursively scans results directory. Validates JSON structure. Optional authentication via secret header.</p>
+<p>The visualization server provides a lightweight interface for inspecting audit data without external dependencies. It scans a designated results directory, validates JSON structures, and serves a file tree to the frontend. The frontend then requests specific JSON files to render visualizations.</p>
+<p>Key features:
+- <strong>Local Binding</strong>: Defaults to <code>127.0.0.1</code>, preventing external network access.
+- <strong>Authentication</strong>: Optional secret-based authentication via environment variables.
+- <strong>File Validation</strong>: Ensures only valid audit JSON files are listed.
+- <strong>Security</strong>: Prevents directory traversal attacks.</p>
 <h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
-<p>Server reads environment variables at startup.</p>
+<p>Configuration occurs via environment variables. These variables are read when the server starts.</p>
 <table>
 <thead>
 <tr>
 <th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Default</th>
 <th style="text-align: left;">Description</th>
+<th style="text-align: left;">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_SECRET</code></td>
+<td style="text-align: left;">Secret key required for API access. If empty, authentication is disabled.</td>
 <td style="text-align: left;"><code>""</code></td>
-<td style="text-align: left;">Auth token. Blank disables auth.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_EMAIL</code></td>
-<td style="text-align: left;"><code>sushant@simula.no</code></td>
-<td style="text-align: left;">Contact email shown in frontend.</td>
+<td style="text-align: left;">Contact email displayed in the frontend when authentication is enabled.</td>
+<td style="text-align: left;"><code>"sushant@simula.no"</code></td>
 </tr>
 </tbody>
 </table>
-<h3 id="core-functions">Core Functions<a class="headerlink" href="#core-functions" title="Permanent link">&para;</a></h3>
-<h4 id="start_serverresults_dir-host127001-port8000"><code>start_server(results_dir, host="127.0.0.1", port=8000)</code><a class="headerlink" href="#start_serverresults_dir-host127001-port8000" title="Permanent link">&para;</a></h4>
-<p>Starts FastAPI server.</p>
-<p><strong>Parameters:</strong></p>
-<ul>
-<li><code>results_dir</code> (str): Path containing JSON result files.</li>
-<li><code>host</code> (str): Bind address. Default <code>127.0.0.1</code>.</li>
-<li><code>port</code> (int): Port number. Default <code>8000</code>.</li>
-</ul>
-<p><strong>Behavior:</strong></p>
-<ol>
-<li>Reads env vars.</li>
-<li>Resolves <code>results_dir</code> absolute path.</li>
-<li>Validates directory existence.</li>
-<li>Prints server URL.</li>
-<li>Runs <code>uvicorn</code>.</li>
-</ol>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_server</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">start_server</span><span class="p">(</span><span class="s2">"./results"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
+<p>Set these variables before starting the server:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_SECRET</span><span class="o">=</span><span class="s2">"my-secret-key"</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_EMAIL</span><span class="o">=</span><span class="s2">"admin@example.com"</span>
 </code></pre></div>
-<h4 id="is_valid_audit_jsonfile_path"><code>is_valid_audit_json(file_path)</code><a class="headerlink" href="#is_valid_audit_jsonfile_path" title="Permanent link">&para;</a></h4>
-<p>Validates JSON file structure.</p>
-<p><strong>Returns:</strong></p>
-<ul>
-<li><code>True</code>: File contains non-empty list OR dict with non-empty <code>results</code> list.</li>
-<li><code>False</code>: Invalid JSON, empty data, or IO error.</li>
-</ul>
-<p><strong>Logic:</strong></p>
-<ul>
-<li>Accepts <code>[...]</code></li>
-<li>Accepts <code>{"results": [...]}</code></li>
-<li>Rejects other structures.</li>
-</ul>
-<h4 id="get_file_treedirectory-base_path"><code>get_file_tree(directory, base_path="")</code><a class="headerlink" href="#get_file_treedirectory-base_path" title="Permanent link">&para;</a></h4>
-<p>Recursively builds file tree.</p>
-<p><strong>Returns:</strong></p>
-<ul>
-<li>List of dicts.</li>
-<li>Folder dict: <code>{"name", "type": "folder", "path", "children"}</code></li>
-<li>File dict: <code>{"name", "type": "file", "path"}</code></li>
-</ul>
-<p><strong>Filters:</strong></p>
-<ul>
-<li>Includes only <code>.json</code> files.</li>
-<li>Includes only valid audit JSON files.</li>
-<li>Excludes empty folders.</li>
-</ul>
-<h3 id="http-endpoints">HTTP Endpoints<a class="headerlink" href="#http-endpoints" title="Permanent link">&para;</a></h3>
-<h4 id="get"><code>GET /</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
-<p>Serves main visualization page.</p>
-<ul>
-<li>Loads <code>visualizer.html</code>.</li>
-<li>Returns <code>HTMLResponse</code>.</li>
-<li>Returns 500 if template missing.</li>
-</ul>
-<h4 id="get-scenario_viewerhtml"><code>GET /scenario_viewer.html</code><a class="headerlink" href="#get-scenario_viewerhtml" title="Permanent link">&para;</a></h4>
-<p>Serves standalone scenario viewer.</p>
-<ul>
-<li>Loads <code>scenario_viewer.html</code>.</li>
-<li>Returns <code>HTMLResponse</code>.</li>
-</ul>
-<h4 id="get-faviconpng"><code>GET /favicon.png</code><a class="headerlink" href="#get-faviconpng" title="Permanent link">&para;</a></h4>
-<p>Serves favicon.</p>
-<ul>
-<li>Loads <code>thumbnail.png</code>.</li>
-<li>Returns <code>FileResponse</code>.</li>
-<li>Returns 404 if missing.</li>
-</ul>
-<h4 id="get-apiauth"><code>GET /api/auth</code><a class="headerlink" href="#get-apiauth" title="Permanent link">&para;</a></h4>
-<p>Checks authentication status.</p>
-<p><strong>Response:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sushant@simula.no"</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
+<h3 id="starting-the-server">Starting the Server<a class="headerlink" href="#starting-the-server" title="Permanent link">&para;</a></h3>
+<p>Use the <code>start_server</code> function to launch the visualization server. This function initializes the FastAPI application and runs the Uvicorn server.</p>
+<h4 id="function-signature">Function Signature<a class="headerlink" href="#function-signature" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">start_server</span><span class="p">(</span><span class="n">results_dir</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">host</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"127.0.0.1"</span><span class="p">,</span> <span class="n">port</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">8000</span><span class="p">)</span>
 </code></pre></div>
+<h4 id="parameters">Parameters<a class="headerlink" href="#parameters" title="Permanent link">&para;</a></h4>
 <ul>
-<li><code>enabled</code>: <code>True</code> if <code>SECRET</code> set.</li>
-<li><code>contact_email</code>: From env var.</li>
+<li><strong><code>results_dir</code></strong> (str): Path to the directory containing JSON result files. Relative paths resolve from the current working directory.</li>
+<li><strong><code>host</code></strong> (str): Host address to bind. Defaults to <code>"127.0.0.1"</code> (localhost only).</li>
+<li><strong><code>port</code></strong> (int): Port number. Defaults to <code>8000</code>.</li>
 </ul>
-<p><strong>Auth Behavior:</strong></p>
-<ul>
-<li>If <code>SECRET</code> set, requires <code>X-Secret</code> header.</li>
-<li>Returns 401 if header missing/wrong.</li>
-</ul>
-<h4 id="get-apifiles"><code>GET /api/files</code><a class="headerlink" href="#get-apifiles" title="Permanent link">&para;</a></h4>
-<p>Retrieves file tree.</p>
-<p><strong>Security:</strong></p>
-<ul>
-<li>Requires <code>X-Secret</code> if auth enabled.</li>
-</ul>
-<p><strong>Response:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"tree"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1"</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder"</span><span class="p">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder1"</span><span class="p">,</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
+<h4 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_server</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Start server on default localhost:8000</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">start_server</span><span class="p">(</span><span class="s2">"./results"</span><span class="p">)</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Start server on specific port</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">start_server</span><span class="p">(</span><span class="s2">"/absolute/path/to/results"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8080</span><span class="p">)</span>
 </code></pre></div>
-<p><strong>Errors:</strong></p>
-<ul>
-<li>500: Results directory not set.</li>
-<li>404: Results directory missing.</li>
-</ul>
-<h4 id="get-apijsonfile_path"><code>GET /api/json/{file_path}</code><a class="headerlink" href="#get-apijsonfile_path" title="Permanent link">&para;</a></h4>
-<p>Retrieves specific JSON file content.</p>
-<p><strong>Path Parameter:</strong></p>
-<ul>
-<li><code>file_path</code>: Relative path from results root.</li>
-</ul>
-<p><strong>Security:</strong></p>
-<ul>
-<li>Requires <code>X-Secret</code> if auth enabled.</li>
-<li>Prevents path traversal.</li>
-<li>Ensures path stays within <code>RESULTS_DIR</code>.</li>
-</ul>
-<p><strong>Validation:</strong></p>
-<ul>
-<li>Must exist.</li>
-<li>Must end with <code>.json</code>.</li>
-<li>Must be valid JSON.</li>
-</ul>
-<p><strong>Response:</strong></p>
-<ul>
-<li>Raw JSON data from file.</li>
-</ul>
-<p><strong>Errors:</strong></p>
-<ul>
-<li>403: Path escapes results directory.</li>
-<li>404: File not found.</li>
-<li>400: Not JSON file OR invalid JSON syntax.</li>
-<li>500: Read error.</li>
-</ul>
-<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<p>Optional security layer.</p>
-<p><strong>Enable:</strong></p>
-<p>Set <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> environment variable.</p>
-<p><strong>Usage:</strong></p>
-<ol>
-<li>Client sends <code>X-Secret</code> header.</li>
-<li>Header value must match env var.</li>
-<li>Mismatch returns 401 Unauthorized.</li>
-</ol>
-<p><strong>Example Request:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"X-Secret: my-secret-key"</span><span class="w"> </span>http://localhost:8000/api/files
-</code></pre></div>
-<p><strong>Frontend Integration:</strong></p>
-<ul>
-<li>Frontend calls <code>/api/auth</code>.</li>
-<li>If <code>enabled: true</code>, displays login overlay.</li>
-<li>Overlay shows <code>contact_email</code>.</li>
-<li>User enters secret.</li>
-<li>Frontend stores secret for subsequent API calls.</li>
-</ul>
-<h3 id="file-structure-requirements">File Structure Requirements<a class="headerlink" href="#file-structure-requirements" title="Permanent link">&para;</a></h3>
-<p>Results directory must contain JSON files.</p>
-<p><strong>Valid Structures:</strong></p>
-<ol>
-<li>
-<p><strong>Array:</strong>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">[</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="p">{</span><span class="nt">"metric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value"</span><span class="p">}</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="p">]</span>
+<p><strong>Output:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>Starting SimpleAudit Visualizer...
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>Results directory: /current/working/dir/results
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>Server: http://127.0.0.1:8000
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>Press Ctrl+C to stop
 </code></pre></div></p>
-</li>
-<li>
-<p><strong>Object with Results:</strong>
-    <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"metadata"</span><span class="p">:</span><span class="w"> </span><span class="s2">"info"</span><span class="p">,</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">    </span><span class="p">{</span><span class="nt">"metric"</span><span class="p">:</span><span class="w"> </span><span class="s2">"value"</span><span class="p">}</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="p">}</span>
+<h3 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">&para;</a></h3>
+<p>The server exposes several REST API endpoints for the frontend. All data endpoints require authentication if a secret is configured.</p>
+<h4 id="1-root-endpoint">1. Root Endpoint<a class="headerlink" href="#1-root-endpoint" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Path</strong>: <code>/</code></li>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Description</strong>: Serves the main visualization HTML page.</li>
+</ul>
+<h4 id="2-scenario-viewer">2. Scenario Viewer<a class="headerlink" href="#2-scenario-viewer" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Path</strong>: <code>/scenario_viewer.html</code></li>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Description</strong>: Serves the standalone scenario viewer page.</li>
+</ul>
+<h4 id="3-authentication-check">3. Authentication Check<a class="headerlink" href="#3-authentication-check" title="Permanent link">&para;</a></h4>
+<ul>
+<li><strong>Path</strong>: <code>/api/auth</code></li>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Description</strong>: Verifies authentication status and returns contact email.</li>
+<li><strong>Headers</strong>: <code>X-Secret</code> (if authentication enabled).</li>
+</ul>
+<p><strong>Response Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"admin@example.com"</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
 </code></pre></div></p>
-</li>
-</ol>
-<p><strong>Invalid Structures:</strong></p>
+<h4 id="4-file-tree">4. File Tree<a class="headerlink" href="#4-file-tree" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Empty arrays <code>[]</code></li>
-<li>Objects without <code>results</code> key</li>
-<li>Non-JSON files</li>
-<li>Malformed JSON</li>
+<li><strong>Path</strong>: <code>/api/files</code></li>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Description</strong>: Returns a recursive tree of valid JSON files in the results directory.</li>
+<li><strong>Headers</strong>: <code>X-Secret</code> (if authentication enabled).</li>
 </ul>
-<h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
-<p>Server handles common errors gracefully.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Status Code</th>
-<th style="text-align: left;">Condition</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;">400</td>
-<td style="text-align: left;">Invalid JSON syntax OR non-JSON file extension</td>
-</tr>
-<tr>
-<td style="text-align: left;">401</td>
-<td style="text-align: left;">Missing/incorrect <code>X-Secret</code> header</td>
-</tr>
-<tr>
-<td style="text-align: left;">403</td>
-<td style="text-align: left;">Path traversal attempt</td>
-</tr>
-<tr>
-<td style="text-align: left;">404</td>
-<td style="text-align: left;">File/directory not found</td>
-</tr>
-<tr>
-<td style="text-align: left;">500</td>
-<td style="text-align: left;">Server internal error OR missing template</td>
-</tr>
-</tbody>
-</table>
-<h3 id="development-notes">Development Notes<a class="headerlink" href="#development-notes" title="Permanent link">&para;</a></h3>
+<p><strong>Response Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"tree"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project_a"</span><span class="p">,</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder"</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project_a"</span><span class="p">,</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">      </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">        </span><span class="p">{</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"audit_1.json"</span><span class="p">,</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">          </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"project_a/audit_1.json"</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">      </span><span class="p">]</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="p">}</span>
+</code></pre></div></p>
+<h4 id="5-json-file-content">5. JSON File Content<a class="headerlink" href="#5-json-file-content" title="Permanent link">&para;</a></h4>
 <ul>
-<li>Uses <code>uvicorn</code> ASGI server.</li>
-<li>Static HTML files located in <code>visualization/</code> directory.</li>
-<li><code>RESULTS_DIR</code> global variable updated by <code>start_server</code>.</li>
-<li>Environment variables re-read in <code>start_server</code> to support testing.</li>
-<li>Path normalization prevents directory escape attacks.</li>
+<li><strong>Path</strong>: <code>/api/json/{file_path}</code></li>
+<li><strong>Method</strong>: <code>GET</code></li>
+<li><strong>Description</strong>: Retrieves the content of a specific JSON file.</li>
+<li><strong>Path Parameters</strong>:</li>
+<li><code>file_path</code>: Relative path to the JSON file within the results directory.</li>
+<li><strong>Headers</strong>: <code>X-Secret</code> (if authentication enabled).</li>
 </ul>
-<h3 id="example-usage">Example Usage<a class="headerlink" href="#example-usage" title="Permanent link">&para;</a></h3>
-<p><strong>1. Prepare Results:</strong></p>
-<p>Create <code>./results/audit1.json</code>:</p>
+<p><strong>Security Note</strong>: The server validates that the requested path does not escape the results directory. Requests attempting directory traversal (e.g., <code>../../etc/passwd</code>) return <code>403 Forbidden</code>.</p>
+<p><strong>Response Example:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
 <a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="p">{</span><span class="nt">"test"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">,</span><span class="w"> </span><span class="nt">"time"</span><span class="p">:</span><span class="w"> </span><span class="mf">0.5</span><span class="p">}</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="p">}</span>
-</code></pre></div>
-<p><strong>2. Start Server:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">"SIMPLEAUDIT_VISUALIZER_SECRET"</span><span class="p">]</span> <span class="o">=</span> <span class="s2">"dev-secret"</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">start_server</span>
-<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
-<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">start_server</span><span class="p">(</span><span class="s2">"./results"</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"0.0.0.0"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
-</code></pre></div>
-<p><strong>3. Access Interface:</strong></p>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="w">      </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="w">      </span><span class="nt">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pass"</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+</code></pre></div></p>
+<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
+<p>Authentication uses a simple header-based scheme. If <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> is set, all API endpoints (except <code>/api/auth</code> for initial check) require the <code>X-Secret</code> header.</p>
+<h4 id="enabling-authentication">Enabling Authentication<a class="headerlink" href="#enabling-authentication" title="Permanent link">&para;</a></h4>
+<ol>
+<li>Set the environment variable:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_SECRET</span><span class="o">=</span><span class="s2">"your-secret"</span>
+</code></pre></div></li>
+<li>Start the server.</li>
+<li>Frontend prompts for the secret.</li>
+<li>Subsequent API requests include <code>X-Secret: your-secret</code>.</li>
+</ol>
+<h4 id="disabling-authentication">Disabling Authentication<a class="headerlink" href="#disabling-authentication" title="Permanent link">&para;</a></h4>
+<p>Leave <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> empty or unset. Authentication checks become no-ops.</p>
+<h3 id="file-validation">File Validation<a class="headerlink" href="#file-validation" title="Permanent link">&para;</a></h3>
+<p>The server validates JSON files before listing them in the file tree. A file is considered valid if:</p>
+<ol>
+<li>It is a JSON array with at least one element.</li>
+<li>It is a JSON object containing a <code>results</code> key, where <code>results</code> is a non-empty array.</li>
+</ol>
+<p>Invalid files are excluded from the file tree.</p>
+<h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
+<p>The server returns standard HTTP status codes for errors:</p>
 <ul>
-<li>Open <code>http://localhost:8000</code></li>
-<li>Enter secret <code>dev-secret</code> if prompted.</li>
-<li>Browse file tree.</li>
-<li>Click JSON file to view data.</li>
+<li><strong>400 Bad Request</strong>: Invalid JSON content or non-JSON file requested.</li>
+<li><strong>401 Unauthorized</strong>: Missing or incorrect <code>X-Secret</code> header.</li>
+<li><strong>403 Forbidden</strong>: Path traversal attempt.</li>
+<li><strong>404 Not Found</strong>: File or directory does not exist.</li>
+<li><strong>500 Internal Server Error</strong>: Results directory not set or server error.</li>
 </ul>
-<p><strong>4. API Access:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Check auth status</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>curl<span class="w"> </span>http://localhost:8000/api/auth
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Get file tree</span>
-<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"X-Secret: dev-secret"</span><span class="w"> </span>http://localhost:8000/api/files
-<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
-<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># Get specific file</span>
-<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"X-Secret: dev-secret"</span><span class="w"> </span>http://localhost:8000/api/json/audit1.json
-</code></pre></div>
+<h3 id="development-notes">Development Notes<a class="headerlink" href="#development-notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Module</strong>: <code>simpleaudit.visualization.server</code></li>
+<li><strong>Dependencies</strong>: <code>fastapi</code>, <code>uvicorn</code></li>
+<li><strong>Static Files</strong>: The server serves <code>visualizer.html</code> and <code>scenario_viewer.html</code> from the same directory as <code>server.py</code>.</li>
+<li><strong>Favicon</strong>: Served from <code>thumbnail.png</code> in the module directory.</li>
+</ul>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Use Localhost</strong>: Keep <code>host</code> as <code>"127.0.0.1"</code> unless you have a specific reason to expose the server.</li>
+<li><strong>Set Secret in Production</strong>: Always set <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> if the server might be accessed by others on the network.</li>
+<li><strong>Validate Results Directory</strong>: Ensure the <code>results_dir</code> path exists and contains valid JSON files before starting the server.</li>
+<li><strong>Monitor Logs</strong>: Uvicorn logs to stdout. Monitor for errors during development.</li>
+</ol>
 <h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
-<p><strong>"Results directory not set"</strong></p>
-<ul>
-<li>Ensure <code>start_server</code> called before accessing API.</li>
-<li>Verify <code>results_dir</code> path valid.</li>
-</ul>
-<p><strong>"Access denied"</strong></p>
-<ul>
-<li>Check <code>file_path</code> parameter.</li>
-<li>Ensure no <code>../</code> sequences.</li>
-<li>Verify file exists within results root.</li>
-</ul>
-<p><strong>Auth failing</strong></p>
-<ul>
-<li>Verify <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> env var set.</li>
-<li>Check <code>X-Secret</code> header spelling.</li>
-<li>Ensure header value matches env var exactly.</li>
-</ul>
-<p><strong>Template not found</strong></p>
-<ul>
-<li>Verify <code>visualizer.html</code> exists in <code>visualization/</code> folder.</li>
-<li>Check file permissions.</li>
-</ul>
-<h3 id="security-considerations">Security Considerations<a class="headerlink" href="#security-considerations" title="Permanent link">&para;</a></h3>
-<ul>
-<li><strong>Path Traversal:</strong> Blocked via <code>os.path.normpath</code> check.</li>
-<li><strong>File Access:</strong> Restricted to <code>.json</code> files only.</li>
-<li><strong>Authentication:</strong> Optional. Disable by leaving secret blank.</li>
-<li><strong>Local Binding:</strong> Default <code>127.0.0.1</code> prevents external access. Change host only if needed.</li>
-</ul>
-<h3 id="dependencies">Dependencies<a class="headerlink" href="#dependencies" title="Permanent link">&para;</a></h3>
-<ul>
-<li><code>fastapi</code></li>
-<li><code>uvicorn</code></li>
-<li><code>pydantic</code> (via FastAPI)</li>
-</ul>
-<p>Install:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pip<span class="w"> </span>install<span class="w"> </span>fastapi<span class="w"> </span>uvicorn
-</code></pre></div>
-<h3 id="module-location">Module Location<a class="headerlink" href="#module-location" title="Permanent link">&para;</a></h3>
-<p><code>simpleaudit/visualization/server.py</code></p>
-<p>Related files:</p>
-<ul>
-<li><code>simpleaudit/visualization/visualizer.html</code></li>
-<li><code>simpleaudit/visualization/scenario_viewer.html</code></li>
-<li><code>simpleaudit/visualization/thumbnail.png</code></li>
-</ul>
+<p><strong>Issue</strong>: "Results directory not set" error.
+<strong>Cause</strong>: <code>start_server</code> not called or <code>results_dir</code> invalid.
+<strong>Fix</strong>: Ensure <code>start_server</code> is called with a valid path.</p>
+<p><strong>Issue</strong>: "Unauthorized" error.
+<strong>Cause</strong>: Missing <code>X-Secret</code> header.
+<strong>Fix</strong>: Ensure the frontend sends the correct secret. Check <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> value.</p>
+<p><strong>Issue</strong>: Files not appearing in tree.
+<strong>Cause</strong>: JSON files invalid or empty.
+<strong>Fix</strong>: Validate JSON structure. Ensure <code>results</code> array is non-empty.</p>
 <h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="../cli-usage/">CLI Usage</a></li>
-<li><a href="../custom-scenarios-guide/">Custom Scenarios Guide</a></li>
-<li><a href="../experiments-results/">Experiments &amp; Results</a></li>
-<li><a href="../judges-system/">Judges System</a></li>
+<li><a href="../core-architecture/">Core Architecture</a></li>
+<li><a href="../creating-custom-scenarios/">Creating Custom Scenarios</a></li>
+<li><a href="../custom-judges/">Custom Judges</a></li>
 </ul>
 
 
@@ -3516,7 +3364,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../custom-scenarios-guide/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Custom scenarios guide">
+          <a href="../creating-custom-scenarios/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Creating custom scenarios">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3526,20 +3374,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Custom scenarios guide
+                Creating custom scenarios
               </div>
             </div>
           </a>
         
         
           
-          <a href="../utilities-helpers/" class="md-footer__link md-footer__link--next" aria-label="Next: Utilities helpers">
+          <a href="../../reference/simpleaudit/" class="md-footer__link md-footer__link--next" aria-label="Next: Simpleaudit">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Utilities helpers
+                Simpleaudit
               </div>
             </div>
             <div class="md-footer__button md-icon">
