@@ -1,0 +1,22 @@
+name: Docs
+
+on:
+  # Auto-run disabled. To enable, uncomment one of:
+  #   push:
+  #     branches: [main]
+  #   push:            # all branches
+  #   push:
+  #     tags: ['v*']   # on release
+  workflow_dispatch:
+
+jobs:
+  docs:
+    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
+    with:
+      config: repoquill.yml
+      api_key_secret: LLM_API_KEY
+      api_key_env: OPENAI_API_KEY
+      deploy_branch: gh-pages
+      deploy_path: site
+    secrets:
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
