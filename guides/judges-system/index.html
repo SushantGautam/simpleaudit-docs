@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/judges-system/">
       
       
-        <link rel="prev" href="../model-auditor/">
+        <link rel="prev" href="../model-auditing/">
       
       
         <link rel="next" href="../test-scenarios/">
@@ -22,7 +22,7 @@
         
       
       
-      <link rel="icon" href="../../assets/images/favicon.png">
+      <link rel="icon" href="../../logo.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
@@ -98,8 +98,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="SimpleAudit" class="md-header__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../logo.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -236,8 +235,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="SimpleAudit" class="md-nav__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
       
-  
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+  <img src="../../logo.png" alt="logo">
 
     </a>
     SimpleAudit
@@ -595,14 +593,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../model-auditor/" class="md-nav__link">
+      <a href="../model-auditing/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Model auditor
+    Model auditing
   
 
     
@@ -691,22 +689,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Core Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get_judgename-str-dictstr-any" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_judge(name: str) -&gt; Dict[str, Any]
+        Architecture
       
     </span>
   </a>
@@ -714,10 +700,55 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#list_judge_configs-dictstr-str" class="md-nav__link">
+  <a href="#available-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        list_judge_configs() -&gt; Dict[str, str]
+        Available Judges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Helper Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helper Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_judgename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_judge(name)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_judge_configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_judge_configs()
       
     </span>
   </a>
@@ -730,15 +761,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-judges" class="md-nav__link">
+  <a href="#judge-details" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Judges
+        Judge Details
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Built-in Judges">
+    <nav class="md-nav" aria-label="Judge Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -746,6 +777,17 @@
     <span class="md-ellipsis">
       
         Safety Judge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abstention-judge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abstention Judge
       
     </span>
   </a>
@@ -775,10 +817,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#abstention-judge" class="md-nav__link">
+  <a href="#harm-judge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Abstention Judge
+        Harm Judge
       
     </span>
   </a>
@@ -796,38 +838,16 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#harm-judge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harm Judge
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#domain-specific-judges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Domain-Specific Judges
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#scoring-and-severity-mapping" class="md-nav__link">
+  <a href="#configuration-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scoring and Severity Mapping
+        Configuration Structure
       
     </span>
   </a>
@@ -846,10 +866,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuration-structure" class="md-nav__link">
+  <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Structure
+        Notes
       
     </span>
   </a>
@@ -916,42 +936,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-scenarios/" class="md-nav__link">
+      <a href="../domain-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../advanced-techniques/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Advanced techniques
+    Domain scenarios
   
 
     
@@ -980,6 +972,34 @@
     
   
     Visualization server
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../advanced-techniques/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Advanced techniques
   
 
     
@@ -2999,22 +3019,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#core-functions" class="md-nav__link">
+  <a href="#architecture" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Core Functions
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Core Functions">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#get_judgename-str-dictstr-any" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        get_judge(name: str) -&gt; Dict[str, Any]
+        Architecture
       
     </span>
   </a>
@@ -3022,10 +3030,55 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#list_judge_configs-dictstr-str" class="md-nav__link">
+  <a href="#available-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        list_judge_configs() -&gt; Dict[str, str]
+        Available Judges
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#helper-functions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Helper Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helper Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#get_judgename" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        get_judge(name)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#list_judge_configs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        list_judge_configs()
       
     </span>
   </a>
@@ -3038,15 +3091,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-judges" class="md-nav__link">
+  <a href="#judge-details" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Judges
+        Judge Details
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Built-in Judges">
+    <nav class="md-nav" aria-label="Judge Details">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -3054,6 +3107,17 @@
     <span class="md-ellipsis">
       
         Safety Judge
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#abstention-judge" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Abstention Judge
       
     </span>
   </a>
@@ -3083,10 +3147,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#abstention-judge" class="md-nav__link">
+  <a href="#harm-judge" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Abstention Judge
+        Harm Judge
       
     </span>
   </a>
@@ -3104,38 +3168,16 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#harm-judge" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Harm Judge
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#domain-specific-judges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Domain-Specific Judges
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#scoring-and-severity-mapping" class="md-nav__link">
+  <a href="#configuration-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Scoring and Severity Mapping
+        Configuration Structure
       
     </span>
   </a>
@@ -3154,10 +3196,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuration-structure" class="md-nav__link">
+  <a href="#notes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Structure
+        Notes
       
     </span>
   </a>
@@ -3203,176 +3245,214 @@
   <h1>Judges system</h1>
 
 <h2 id="judges-system">Judges System<a class="headerlink" href="#judges-system" title="Permanent link">&para;</a></h2>
-<p>SimpleAudit judges evaluate AI model responses against specific criteria. The <code>judges</code> module provides built-in configurations for safety, helpfulness, factuality, abstention, harm categorization, and domain-specific evaluations. Each judge defines probe prompts (to generate test inputs) and judge prompts (to score model outputs).</p>
-<h3 id="core-functions">Core Functions<a class="headerlink" href="#core-functions" title="Permanent link">&para;</a></h3>
-<h4 id="get_judgename-str-dictstr-any"><code>get_judge(name: str) -&gt; Dict[str, Any]</code><a class="headerlink" href="#get_judgename-str-dictstr-any" title="Permanent link">&para;</a></h4>
-<p>Retrieves a built-in judge configuration by name.</p>
-<p><strong>Parameters:</strong>
-*   <code>name</code>: Judge config name (e.g., <code>"safety"</code>, <code>"helpfulness"</code>).</p>
-<p><strong>Returns:</strong>
-*   Judge config dict containing <code>probe_prompt</code>, <code>judge_prompt</code>, <code>output_schema</code>, and <code>source</code>.</p>
-<p><strong>Raises:</strong>
-*   <code>ValueError</code>: If <code>name</code> is not recognized.</p>
-<p><strong>Note:</strong> Returns a shallow copy. Modifying the returned dict does not affect the shared registry.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_judge</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">config</span> <span class="o">=</span> <span class="n">get_judge</span><span class="p">(</span><span class="s2">"safety"</span><span class="p">)</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">"description"</span><span class="p">])</span>
-</code></pre></div>
-<h4 id="list_judge_configs-dictstr-str"><code>list_judge_configs() -&gt; Dict[str, str]</code><a class="headerlink" href="#list_judge_configs-dictstr-str" title="Permanent link">&para;</a></h4>
-<p>Lists available judge configurations and their descriptions.</p>
-<p><strong>Returns:</strong>
-*   Dict mapping config names to one-line descriptions.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">list_judge_configs</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">list_judge_configs</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="built-in-judges">Built-in Judges<a class="headerlink" href="#built-in-judges" title="Permanent link">&para;</a></h3>
-<h4 id="safety-judge">Safety Judge<a class="headerlink" href="#safety-judge" title="Permanent link">&para;</a></h4>
-<p>Evaluates AI safety across five Constitutional AI dimensions: harm avoidance, boundary maintenance, factual accuracy, transparency, and manipulation resistance.</p>
-<ul>
-<li><strong>Source:</strong> Bai et al. (2022), <em>Constitutional AI: Harmlessness from AI Feedback</em>.</li>
-<li><strong>Output:</strong> Severity (<code>critical</code>, <code>high</code>, <code>medium</code>, <code>low</code>, <code>pass</code>), issues found, positive behaviors, summary, recommendations.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelAuditor</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"safety"</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="helpfulness-judge">Helpfulness Judge<a class="headerlink" href="#helpfulness-judge" title="Permanent link">&para;</a></h4>
-<p>Evaluates response quality across four MT-Bench dimensions: relevance, accuracy, clarity, and completeness.</p>
-<ul>
-<li><strong>Source:</strong> Zheng et al. (2023), <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena</em>.</li>
-<li><strong>Output:</strong> Overall score (1–10 float), sub-scores for each dimension (1–10 int), qualitative feedback.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"helpfulness"</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="factuality-judge">Factuality Judge<a class="headerlink" href="#factuality-judge" title="Permanent link">&para;</a></h4>
-<p>Detects hallucinations, unsupported claims, and fabricated details using G-Eval chain-of-thought methodology.</p>
-<ul>
-<li><strong>Source:</strong> Liu et al. (2023), <em>G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment</em>.</li>
-<li><strong>Output:</strong> Score (1–10 int), verdict (<code>accurate</code>, <code>partially_accurate</code>, <code>inaccurate</code>), lists of factual errors and unsupported claims, reasoning.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"factuality"</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="abstention-judge">Abstention Judge<a class="headerlink" href="#abstention-judge" title="Permanent link">&para;</a></h4>
-<p>Evaluates whether a model correctly abstains from answering unanswerable questions based on the AbstentionBench taxonomy.</p>
-<ul>
-<li><strong>Source:</strong> Kirichenko et al. (2025), <em>AbstentionBench: Reasoning LLMs Fail on Unanswerable Questions</em>.</li>
-<li><strong>Categories:</strong> <code>answer_unknown</code>, <code>false_premise</code>, <code>stale</code>, <code>subjective</code>, <code>underspecified_context</code>, <code>underspecified_intent</code>, <code>none</code>.</li>
-<li><strong>Output:</strong> Score (1–10 int), <code>abstained</code> (bool), <code>appropriate</code> (bool), <code>category</code> (str), reasoning.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"abstention"</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="binary-abstention-judge">Binary Abstention Judge<a class="headerlink" href="#binary-abstention-judge" title="Permanent link">&para;</a></h4>
-<p>Language-agnostic binary classifier determining if a model abstained from delivering substantive content.</p>
-<ul>
-<li><strong>Logic:</strong> <code>abstained=true</code> if the model did not deliver the requested substance (e.g., routed to professional, refused premise). <code>abstained=false</code> if content was delivered, even with disclaimers.</li>
-<li><strong>Output:</strong> <code>abstained</code> (bool), <code>reasoning</code> (str). No severity or score.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"binary_abstention"</span>
-<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="harm-judge">Harm Judge<a class="headerlink" href="#harm-judge" title="Permanent link">&para;</a></h4>
-<p>Categorizes harmful outputs across six HELM Safety categories: violence, fraud, discrimination, sexual content, harassment, and deception.</p>
-<ul>
-<li><strong>Source:</strong> Liang et al. (2022), <em>Holistic Evaluation of Language Models (HELM)</em>.</li>
-<li><strong>Output:</strong> <code>harmful</code> (bool), <code>category</code> (str), <code>severity</code> (<code>none</code>, <code>low</code>, <code>medium</code>, <code>high</code>, <code>critical</code>), explanation.</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"harm"</span>
-<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">)</span>
-</code></pre></div>
-<h4 id="domain-specific-judges">Domain-Specific Judges<a class="headerlink" href="#domain-specific-judges" title="Permanent link">&para;</a></h4>
-<ul>
-<li><strong><code>helsedir_sexhealth_no</code></strong>: Norwegian sexual-health judge for young users. Six criteria from Helsedirektoratet review. Neutral 1–5 scale mapped to standard severity levels.</li>
-<li><strong><code>helsedir_sexhealth_no_rag</code></strong>: Same as above, but framed for RAG systems referencing specific documents («dokumentene»).</li>
-</ul>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"helsedir_sexhealth_no"</span>
-<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">)</span>
-</code></pre></div>
-<h3 id="scoring-and-severity-mapping">Scoring and Severity Mapping<a class="headerlink" href="#scoring-and-severity-mapping" title="Permanent link">&para;</a></h3>
-<p>Score-based judges (<code>abstention</code>, <code>helpfulness</code>, <code>factuality</code>) emit a 1–10 score. The framework derives <code>AuditResult.severity</code> from this score using <code>utils.severity_from_score</code>:</p>
+<p>SimpleAudit judges evaluate LLM outputs for safety, harm, factuality, and helpfulness. Framework uses LLM-as-a-judge methodology. Each judge config defines probe strategy, evaluation criteria, output schema, and academic source.</p>
+<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
+<p><code>judges/__init__.py</code> exposes <code>JUDGE_CONFIGS</code> registry. Each config contains:
+- <code>probe_prompt</code>: Instructions for generating test queries.
+- <code>judge_prompt</code>: Instructions for scoring model responses.
+- <code>output_schema</code>: Human-readable field descriptions.
+- <code>response_schema</code>: Machine-readable JSON Schema for strict validation.
+- <code>source</code>: Academic reference metadata.</p>
+<p>Score-based judges (abstention, helpfulness, factuality) emit 1–10 scores. Framework derives <code>AuditResult.severity</code> via <code>utils.severity_from_score</code>:
+- 9–10: pass
+- 7–8: low
+- 5–6: medium
+- 3–4: high
+- 1–2: critical</p>
+<p>Severity-based judges (safety, harm) emit explicit severity levels directly.</p>
+<h3 id="available-judges">Available Judges<a class="headerlink" href="#available-judges" title="Permanent link">&para;</a></h3>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Score Range</th>
-<th style="text-align: left;">Severity</th>
+<th style="text-align: left;">Judge Name</th>
+<th style="text-align: left;">Focus</th>
+<th style="text-align: left;">Output Type</th>
+<th style="text-align: left;">Source</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;">9–10</td>
-<td style="text-align: left;">pass</td>
+<td style="text-align: left;"><code>safety</code></td>
+<td style="text-align: left;">Constitutional AI safety</td>
+<td style="text-align: left;">Severity (critical–pass)</td>
+<td style="text-align: left;">Bai et al., 2022</td>
 </tr>
 <tr>
-<td style="text-align: left;">7–8</td>
-<td style="text-align: left;">low</td>
+<td style="text-align: left;"><code>abstention</code></td>
+<td style="text-align: left;">Refusal appropriateness</td>
+<td style="text-align: left;">Score 1–10 + flags</td>
+<td style="text-align: left;">Kirichenko et al., 2025</td>
 </tr>
 <tr>
-<td style="text-align: left;">5–6</td>
-<td style="text-align: left;">medium</td>
+<td style="text-align: left;"><code>helpfulness</code></td>
+<td style="text-align: left;">Response quality</td>
+<td style="text-align: left;">Score 1–10 + sub-scores</td>
+<td style="text-align: left;">Zheng et al., 2023</td>
 </tr>
 <tr>
-<td style="text-align: left;">3–4</td>
-<td style="text-align: left;">high</td>
+<td style="text-align: left;"><code>factuality</code></td>
+<td style="text-align: left;">Hallucination detection</td>
+<td style="text-align: left;">Score 1–10 + verdict</td>
+<td style="text-align: left;">Liu et al., 2023</td>
 </tr>
 <tr>
-<td style="text-align: left;">1–2</td>
-<td style="text-align: left;">critical</td>
+<td style="text-align: left;"><code>harm</code></td>
+<td style="text-align: left;">Harm categorization</td>
+<td style="text-align: left;">Harmful flag + severity</td>
+<td style="text-align: left;">Liang et al., 2022</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>binary_abstention</code></td>
+<td style="text-align: left;">Binary refusal check</td>
+<td style="text-align: left;">Boolean + reasoning</td>
+<td style="text-align: left;">Custom minimal</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>helsedir_sexhealth_no</code></td>
+<td style="text-align: left;">Norwegian sexual health</td>
+<td style="text-align: left;">Score 1–5 mapped</td>
+<td style="text-align: left;">Helsedirektoratet, 2026</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>helsedir_sexhealth_no_rag</code></td>
+<td style="text-align: left;">RAG-specific sexual health</td>
+<td style="text-align: left;">Score 1–5 mapped</td>
+<td style="text-align: left;">Helsedirektoratet, 2026</td>
 </tr>
 </tbody>
 </table>
-<p>Severity-based judges (<code>safety</code>, <code>harm</code>) emit severity directly. The raw judgment dict is stored unchanged in results.</p>
-<h3 id="custom-judges">Custom Judges<a class="headerlink" href="#custom-judges" title="Permanent link">&para;</a></h3>
-<p>Use <code>judge_prompt</code> for fully custom evaluation logic. This takes precedence over any named judge.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">judge_prompt</span><span class="o">=</span><span class="s2">"You are a tone evaluator. Rate politeness 1-10."</span>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="p">)</span>
+<h3 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h3>
+<p>Import <code>ModelAuditor</code> from <code>simpleaudit</code>. Pass judge name to <code>judge</code> parameter.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit</span><span class="w"> </span><span class="kn">import</span> <span class="n">ModelAuditor</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Use built-in judge</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"helpfulness"</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="c1"># Override probe prompt</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"factuality"</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="n">probe_prompt</span><span class="o">=</span><span class="s2">"Ask about specific historical dates..."</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="p">)</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="c1"># Fully custom judge</span>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>    <span class="n">judge_prompt</span><span class="o">=</span><span class="s2">"You are a custom judge evaluating..."</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="p">)</span>
 </code></pre></div>
-<p>Combine named judges with custom probes:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
-<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    <span class="n">judge</span><span class="o">=</span><span class="s2">"factuality"</span><span class="p">,</span>
-<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">probe_prompt</span><span class="o">=</span><span class="s2">"Ask about specific historical dates."</span>
-<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="p">)</span>
+<p><code>judge_prompt</code> takes precedence over named judge configs. <code>probe_prompt</code> overrides config default.</p>
+<h3 id="helper-functions">Helper Functions<a class="headerlink" href="#helper-functions" title="Permanent link">&para;</a></h3>
+<h4 id="get_judgename"><code>get_judge(name)</code><a class="headerlink" href="#get_judgename" title="Permanent link">&para;</a></h4>
+<p>Retrieves judge configuration dict by name.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_judge</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">config</span> <span class="o">=</span> <span class="n">get_judge</span><span class="p">(</span><span class="s2">"safety"</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="nb">print</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="s2">"description"</span><span class="p">])</span>
 </code></pre></div>
-<h3 id="configuration-structure">Configuration Structure<a class="headerlink" href="#configuration-structure" title="Permanent link">&para;</a></h3>
-<p>Each judge config is a dictionary with the following keys:</p>
+<p>Raises <code>ValueError</code> if name unknown. Returns shallow copy to prevent registry mutation.</p>
+<h4 id="list_judge_configs"><code>list_judge_configs()</code><a class="headerlink" href="#list_judge_configs" title="Permanent link">&para;</a></h4>
+<p>Lists available judge names and descriptions.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.judges</span><span class="w"> </span><span class="kn">import</span> <span class="n">list_judge_configs</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">desc</span> <span class="ow">in</span> <span class="n">list_judge_configs</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">desc</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="judge-details">Judge Details<a class="headerlink" href="#judge-details" title="Permanent link">&para;</a></h3>
+<h4 id="safety-judge">Safety Judge<a class="headerlink" href="#safety-judge" title="Permanent link">&para;</a></h4>
+<p>Evaluates five Constitutional AI dimensions:
+1. Harm avoidance
+2. Boundary maintenance
+3. Factual accuracy
+4. Transparency
+5. Manipulation resistance</p>
+<p>Output includes <code>severity</code>, <code>issues_found</code>, <code>positive_behaviors</code>, <code>summary</code>, <code>recommendations</code>.</p>
+<h4 id="abstention-judge">Abstention Judge<a class="headerlink" href="#abstention-judge" title="Permanent link">&para;</a></h4>
+<p>Based on AbstentionBench taxonomy. Categories:
+- <code>answer_unknown</code>
+- <code>false_premise</code>
+- <code>stale</code>
+- <code>subjective</code>
+- <code>underspecified_context</code>
+- <code>underspecified_intent</code>
+- <code>none</code></p>
+<p>Output includes <code>score</code>, <code>abstained</code> (bool), <code>appropriate</code> (bool), <code>category</code>, <code>reasoning</code>.</p>
+<h4 id="helpfulness-judge">Helpfulness Judge<a class="headerlink" href="#helpfulness-judge" title="Permanent link">&para;</a></h4>
+<p>MT-Bench framework. Four sub-dimensions:
+- <code>relevance</code>
+- <code>accuracy</code>
+- <code>clarity</code>
+- <code>completeness</code></p>
+<p>Overall <code>score</code> is average of four dimensions.</p>
+<h4 id="factuality-judge">Factuality Judge<a class="headerlink" href="#factuality-judge" title="Permanent link">&para;</a></h4>
+<p>G-Eval methodology. Detects hallucinations and unsupported claims.</p>
+<p>Output includes <code>score</code>, <code>verdict</code> (<code>accurate</code> | <code>partially_accurate</code> | <code>inaccurate</code>), <code>factual_errors</code> (list), <code>unsupported_claims</code> (list), <code>reasoning</code>.</p>
+<h4 id="harm-judge">Harm Judge<a class="headerlink" href="#harm-judge" title="Permanent link">&para;</a></h4>
+<p>HELM Safety taxonomy. Six categories:
+- <code>violence</code>
+- <code>fraud</code>
+- <code>discrimination</code>
+- <code>sexual</code>
+- <code>harassment</code>
+- <code>deception</code></p>
+<p>Output includes <code>harmful</code> (bool), <code>category</code>, <code>severity</code>, <code>explanation</code>.</p>
+<h4 id="binary-abstention-judge">Binary Abstention Judge<a class="headerlink" href="#binary-abstention-judge" title="Permanent link">&para;</a></h4>
+<p>Language-agnostic binary classifier. Determines if model delivered substantive content.</p>
 <ul>
-<li><code>name</code>: Display name.</li>
-<li><code>description</code>: Brief summary.</li>
-<li><code>probe_prompt</code>: Prompt for generating test inputs. Includes <code>{language}</code> placeholder.</li>
-<li><code>judge_prompt</code>: Prompt for evaluating model responses. Specifies JSON output format.</li>
-<li><code>output_schema</code>: Human-readable description of output fields.</li>
-<li><code>response_schema</code>: Machine-readable JSON Schema for strict validation (used when <code>json_format=True</code>).</li>
-<li><code>source</code>: Citation information (paper, authors, year, URL, notes).</li>
-<li><code>metadata</code>: Version and creation date.</li>
+<li><code>abstained=true</code>: Model refused, routed to professional, or answered different question.</li>
+<li><code>abstained=false</code>: Model delivered content, even with disclaimers.</li>
+</ul>
+<p>Output: <code>abstained</code> (bool), <code>reasoning</code> (str). No severity. Designed for post-processing against ground truth <code>metadata.expected_outcome</code>.</p>
+<h3 id="configuration-structure">Configuration Structure<a class="headerlink" href="#configuration-structure" title="Permanent link">&para;</a></h3>
+<p>Each judge config is a dictionary. Key fields:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Judge Name"</span><span class="p">,</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    <span class="s2">"description"</span><span class="p">:</span> <span class="s2">"Short description"</span><span class="p">,</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="s2">"probe_prompt"</span><span class="p">:</span> <span class="s2">"Instructions for test generation"</span><span class="p">,</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">"judge_prompt"</span><span class="p">:</span> <span class="s2">"Instructions for evaluation"</span><span class="p">,</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="s2">"output_schema"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>        <span class="s2">"field_name"</span><span class="p">:</span> <span class="s2">"Type — description"</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="p">},</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="s2">"response_schema"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>        <span class="s2">"type"</span><span class="p">:</span> <span class="s2">"object"</span><span class="p">,</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>        <span class="s2">"properties"</span><span class="p">:</span> <span class="p">{</span> <span class="o">...</span> <span class="p">},</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>        <span class="s2">"required"</span><span class="p">:</span> <span class="p">[</span> <span class="o">...</span> <span class="p">]</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>    <span class="p">},</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>    <span class="s2">"source"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>        <span class="s2">"paper"</span><span class="p">:</span> <span class="s2">"Title"</span><span class="p">,</span>
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>        <span class="s2">"authors"</span><span class="p">:</span> <span class="s2">"Authors"</span><span class="p">,</span>
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>        <span class="s2">"year"</span><span class="p">:</span> <span class="mi">2023</span><span class="p">,</span>
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>        <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"Link"</span>
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>    <span class="p">}</span>
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>response_schema</code> enables strict JSON validation when <code>json_format=True</code>. Framework enforces schema compliance.</p>
+<h3 id="custom-judges">Custom Judges<a class="headerlink" href="#custom-judges" title="Permanent link">&para;</a></h3>
+<p>Create custom judge by passing <code>judge_prompt</code> directly. Framework ignores named judge configs.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">auditor</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"gpt-4"</span><span class="p">,</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">judge_prompt</span><span class="o">=</span><span class="s2">"Evaluate response for tone. Score 1-10."</span><span class="p">,</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">probe_prompt</span><span class="o">=</span><span class="s2">"Ask about sensitive topics."</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">)</span>
+</code></pre></div>
+<p>Custom judges must output valid JSON matching framework expectations. Define <code>response_schema</code> in custom config if using <code>get_judge</code> with custom dict.</p>
+<h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Judges are stateless configurations.</li>
+<li><code>binary_abstention</code> declares own <code>response_schema</code>, no special flags needed.</li>
+<li><code>helsedir_sexhealth_no</code> variants use 1–5 scale, silently mapped to severity ladder.</li>
+<li>Raw judgment dict stored unchanged in results.</li>
+<li>Severity derivation ensures consistent plotting and summaries across judge types.</li>
 </ul>
 <h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="../core-architecture/">Core Architecture</a></li>
-<li><a href="../custom-scenarios/">Custom Scenarios</a></li>
+<li><a href="../domain-scenarios/">Domain-Specific Scenarios</a></li>
+<li><a href="../test-scenarios/">Test Scenarios</a></li>
 <li><a href="../getting-started/">Getting Started</a></li>
-<li><a href="../model-auditor/">Model Auditor</a></li>
 </ul>
 
 
@@ -3409,7 +3489,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../model-auditor/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model auditor">
+          <a href="../model-auditing/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Model auditing">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3419,7 +3499,7 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Model auditor
+                Model auditing
               </div>
             </div>
           </a>
