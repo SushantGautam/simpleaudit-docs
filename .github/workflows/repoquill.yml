@@ -4,11 +4,11 @@
 # This is a docs-only repo. The simpleaudit source is checked out separately
 # and pointed at via SOURCE_ROOT. The LLM API key is read from the
 # LLM_API_KEY secret and exposed to the LLM client as the env var named in
-# repoquill.yml (api_key_env).
+# repoquill.config.yml (api_key_env).
 #
 # RepoQuill is installed from the SushantGautam/RepoQuill repo (not PyPI).
 # ============================================================================
-name: Docs
+name: RepoQuill
 
 on:
   push:
@@ -16,7 +16,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - "repoquill.yml"
+      - ".github/workflows/repoquill.config.yml"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
     inputs:
@@ -76,7 +76,7 @@ jobs:
           SOURCE_ROOT: ${{ github.workspace }}/source
         run: |
           repoquill generate \
-            --config repoquill.yml \
+            --config .github/workflows/repoquill.config.yml \
             --build
 
       - name: Upload site artifact
@@ -224,6 +224,6 @@ jobs:
           SOURCE_ROOT: ${{ github.workspace }}/source
         run: |
           repoquill generate \
-            --config repoquill.yml \
+            --config .github/workflows/repoquill.config.yml \
             --no-llm \
             --build
