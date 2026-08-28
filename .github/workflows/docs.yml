@@ -26,8 +26,9 @@ on:
           "gh-pages" publishes to a dedicated gh-pages branch (default).
           "branch-folder" commits the built site into docs/ on the default
           branch (main). "branch-folder:<branch>" commits into docs/ on a
-          specific branch (e.g. "branch-folder:dev"). GitHub Pages must be
-          configured to serve from the matching branch and /docs path.
+          specific branch. "branch-folder:<branch>:<folder>" commits into a
+          custom folder (e.g. "branch-folder:dev:guides"). GitHub Pages must
+          be configured to serve from the matching branch and folder path.
         required: false
         default: "gh-pages"
         type: string
@@ -105,14 +106,17 @@ jobs:
       - name: Show deploy target
         run: |
           echo "Deploy target: $DEPLOY_TARGET"
-          case "$DEPLOY_TARGET" in
-            branch-folder:*)
-              echo "Deploy branch: ${DEPLOY_TARGET#branch-folder:}"
-              ;;
-            branch-folder)
-              echo "Deploy branch: <default branch>"
-              ;;
-          esac
+          if [[ "$DEPLOY_TARGET" == branch-folder* ]]; then
+            REST="${DEPLOY_TARGET#branch-folder:}"
+            BRANCH="${REST%%:*}"
+            FOLDER="docs"
+            if [[ "$REST" == *:* ]]; then
+              FOLDER="${REST#*:}"
+            fi
+            [ -z "$BRANCH" ] && BRANCH="<default branch>"
+            echo "Deploy branch: $BRANCH"
+            echo "Deploy folder: $FOLDER/"
+          fi
 
       # ------------------------------------------------------------------
       # Option A: publish to a dedicated gh-pages branch (default).
@@ -131,20 +135,28 @@ jobs:
       # GitHub Pages must be configured to serve from the /docs folder on
       # the default branch (main). No extra branch is created.
       # ------------------------------------------------------------------
-      - name: Resolve deploy branch
+      - name: Resolve deploy branch and folder
         if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
         id: resolve-branch
         run: |
-          # Extract branch from "branch-folder:<branch>", or use default branch.
-          case "$DEPLOY_TARGET" in
-            branch-folder:*)
-              BRANCH="${DEPLOY_TARGET#branch-folder:}"
-              ;;
-            *)
-              BRANCH="${{ github.event.repository.default_branch }}"
-              ;;
-          esac
+          # Format: branch-folder[:<branch>[:<folder>]]
+          #   branch-folder              -> default branch, docs/
+          #   branch-folder:dev          -> dev branch, docs/
+          #   branch-folder:dev:guides   -> dev branch, guides/
+          #   branch-folder::guides      -> default branch, guides/
+          REST="${DEPLOY_TARGET#branch-folder:}"
+          # Split on first colon: branch:folder
+          BRANCH="${REST%%:*}"
+          FOLDER="docs"
+          if [[ "$REST" == *:* ]]; then
+            FOLDER="${REST#*:}"
+          fi
+          # Empty branch means default branch
+          if [ -z "$BRANCH" ]; then
+            BRANCH="${{ github.event.repository.default_branch }}"
+          fi
           echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+          echo "folder=$FOLDER" >> "$GITHUB_OUTPUT"
 
       - name: Checkout target branch
         if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
@@ -153,22 +165,25 @@ jobs:
           ref: ${{ steps.resolve-branch.outputs.branch }}
           path: repo
 
-      - name: Commit site into docs/
+      - name: Commit site into target folder
         if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
+        env:
+          TARGET_FOLDER: ${{ steps.resolve-branch.outputs.folder }}
         run: |
           set -euo pipefail
-          # Replace the docs/ folder with the freshly built site.
-          rm -rf repo/docs
-          mkdir -p repo/docs
-          cp -R site/* repo/docs/
+          FOLDER="$TARGET_FOLDER"
+          # Replace the target folder with the freshly built site.
+          rm -rf "repo/$FOLDER"
+          mkdir -p "repo/$FOLDER"
+          cp -R site/* "repo/$FOLDER/"
           cd repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add -A docs/
+          git add -A "$FOLDER/"
           if git diff --cached --quiet; then
-            echo "No changes to docs/ — skipping commit."
+            echo "No changes to $FOLDER/ — skipping commit."
           else
-            git commit -m "docs: rebuild site (RepoQuill) [skip ci]"
+            git commit -m "docs: rebuild site in $FOLDER/ (RepoQuill) [skip ci]"
             git push
           fi
 
