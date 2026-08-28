@@ -32,6 +32,14 @@ on:
         options:
           - gh-pages
           - branch-folder
+      deploy_branch:
+        description: >
+          Branch to commit the docs/ folder into (only used when
+          deploy_target is "branch-folder"). Leave empty to use the
+          repository's default branch.
+        required: false
+        default: ""
+        type: string
 
 jobs:
   generate-and-build:
@@ -95,6 +103,8 @@ jobs:
       # Where to publish. Override via the workflow_dispatch input, or set a
       # repository variable / secret named DEPLOY_TARGET to change the default.
       DEPLOY_TARGET: "${{ github.event.inputs.deploy_target || vars.DEPLOY_TARGET || 'gh-pages' }}"
+      # Branch to commit docs/ into (branch-folder mode). Empty = default branch.
+      DEPLOY_BRANCH: "${{ github.event.inputs.deploy_branch || vars.DEPLOY_BRANCH || '' }}"
     steps:
       - name: Download site artifact
         uses: actions/download-artifact@v4
@@ -103,7 +113,11 @@ jobs:
           path: site/
 
       - name: Show deploy target
-        run: echo "Deploying to $DEPLOY_TARGET"
+        run: |
+          echo "Deploy target: $DEPLOY_TARGET"
+          if [ "$DEPLOY_TARGET" = "branch-folder" ]; then
+            echo "Deploy branch: ${DEPLOY_BRANCH:-<default branch>}"
+          fi
 
       # ------------------------------------------------------------------
       # Option A: publish to a dedicated gh-pages branch (default).
@@ -122,11 +136,11 @@ jobs:
       # GitHub Pages must be configured to serve from the /docs folder on
       # the default branch (main). No extra branch is created.
       # ------------------------------------------------------------------
-      - name: Checkout default branch
+      - name: Checkout target branch
         if: "env.DEPLOY_TARGET == 'branch-folder'"
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.repository.default_branch }}
+          ref: ${{ env.DEPLOY_BRANCH || github.event.repository.default_branch }}
           path: repo
 
       - name: Commit site into docs/ on main
