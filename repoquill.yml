@@ -26,9 +26,9 @@ package_dir: simpleaudit
 # variable that holds the key (set it in your shell or GitHub Actions secrets).
 llm:
   provider: openai            # openai | anthropic | openrouter | groq | ollama | ...
-  model: gpt-4o
+  model: default              # model id on the custom endpoint (Qwen3.8-27B-FP8)
   api_key_env: OPENAI_API_KEY # env var name holding the API key
-  base_url: null              # null = provider default; set for custom/OpenAI-compatible endpoints
+  base_url: https://simulachat.sushant.info.np/api/v1  # custom OpenAI-compatible endpoint
   temperature: 0.3
   max_tokens: 8192
   # Optional local RAG (runs offline on the GitHub runner, no API key).
