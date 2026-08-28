@@ -19,10 +19,28 @@ on:
       - "repoquill.yml"
       - ".github/workflows/docs.yml"
   workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: >
+          Where to publish the built site.
+          "gh-pages" publishes to a dedicated gh-pages branch (default).
+          "main-folder" commits the built site into the docs/ folder on main
+          (GitHub Pages serves from /docs on the default branch).
+        required: false
+        default: "gh-pages"
+        type: choice
+        options:
+          - gh-pages
+          - main-folder
 
 jobs:
   generate-and-build:
-    if: github.event_name != 'pull_request'
+    # Skip when the push is the docs-bot's own "rebuild site" commit (avoids
+    # an infinite loop when DEPLOY_TARGET=main-folder commits back to main).
+    if: >
+      github.event_name != 'pull_request' &&
+      !(github.event_name == 'push' &&
+        contains(github.event.head_commit.message, '[skip ci]'))
     runs-on: ubuntu-latest
     steps:
       - name: Checkout docs repo
@@ -73,6 +91,10 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    env:
+      # Where to publish. Override via the workflow_dispatch input, or set a
+      # repository variable / secret named DEPLOY_TARGET to change the default.
+      DEPLOY_TARGET: "${{ github.event.inputs.deploy_target || vars.DEPLOY_TARGET || 'gh-pages' }}"
     steps:
       - name: Download site artifact
         uses: actions/download-artifact@v4
@@ -80,12 +102,51 @@ jobs:
           name: site
           path: site/
 
-      - name: Deploy to GitHub Pages
+      - name: Show deploy target
+        run: echo "Deploying to $DEPLOY_TARGET"
+
+      # ------------------------------------------------------------------
+      # Option A: publish to a dedicated gh-pages branch (default).
+      # GitHub Pages must be configured to serve from the gh-pages branch.
+      # ------------------------------------------------------------------
+      - name: Deploy to gh-pages branch
+        if: "env.DEPLOY_TARGET == 'gh-pages'"
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./site
           publish_branch: gh-pages
+
+      # ------------------------------------------------------------------
+      # Option B: commit the built site into docs/ on the default branch.
+      # GitHub Pages must be configured to serve from the /docs folder on
+      # the default branch (main). No extra branch is created.
+      # ------------------------------------------------------------------
+      - name: Checkout default branch
+        if: "env.DEPLOY_TARGET == 'main-folder'"
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.repository.default_branch }}
+          path: repo
+
+      - name: Commit site into docs/ on main
+        if: "env.DEPLOY_TARGET == 'main-folder'"
+        run: |
+          set -euo pipefail
+          # Replace the docs/ folder with the freshly built site.
+          rm -rf repo/docs
+          mkdir -p repo/docs
+          cp -R site/* repo/docs/
+          cd repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -A docs/
+          if git diff --cached --quiet; then
+            echo "No changes to docs/ — skipping commit."
+          else
+            git commit -m "docs: rebuild site (RepoQuill) [skip ci]"
+            git push
+          fi
 
   # Lightweight PR check: build the deterministic reference only (no LLM,
   # no API key) to catch config/reference regressions on every PR.
