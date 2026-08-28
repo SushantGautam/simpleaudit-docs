@@ -24,22 +24,17 @@ on:
         description: >
           Where to publish the built site.
           "gh-pages" publishes to a dedicated gh-pages branch (default).
-          "branch-folder" commits the built site into the docs/ folder on main
-          (GitHub Pages serves from /docs on the default branch).
+          "branch-folder" commits the built site into docs/ on the default
+          branch (main). "branch-folder:dev" commits into docs/ on the dev
+          branch. GitHub Pages must be configured to serve from the matching
+          branch and /docs path.
         required: false
         default: "gh-pages"
         type: choice
         options:
           - gh-pages
           - branch-folder
-      deploy_branch:
-        description: >
-          Branch to commit the docs/ folder into (only used when
-          deploy_target is "branch-folder"). Leave empty to use the
-          repository's default branch.
-        required: false
-        default: ""
-        type: string
+          - branch-folder:dev
 
 jobs:
   generate-and-build:
@@ -102,9 +97,8 @@ jobs:
     env:
       # Where to publish. Override via the workflow_dispatch input, or set a
       # repository variable / secret named DEPLOY_TARGET to change the default.
+      # Format: "gh-pages" | "branch-folder" | "branch-folder:<branch>"
       DEPLOY_TARGET: "${{ github.event.inputs.deploy_target || vars.DEPLOY_TARGET || 'gh-pages' }}"
-      # Branch to commit docs/ into (branch-folder mode). Empty = default branch.
-      DEPLOY_BRANCH: "${{ github.event.inputs.deploy_branch || vars.DEPLOY_BRANCH || '' }}"
     steps:
       - name: Download site artifact
         uses: actions/download-artifact@v4
@@ -115,9 +109,14 @@ jobs:
       - name: Show deploy target
         run: |
           echo "Deploy target: $DEPLOY_TARGET"
-          if [ "$DEPLOY_TARGET" = "branch-folder" ]; then
-            echo "Deploy branch: ${DEPLOY_BRANCH:-<default branch>}"
-          fi
+          case "$DEPLOY_TARGET" in
+            branch-folder:*)
+              echo "Deploy branch: ${DEPLOY_TARGET#branch-folder:}"
+              ;;
+            branch-folder)
+              echo "Deploy branch: <default branch>"
+              ;;
+          esac
 
       # ------------------------------------------------------------------
       # Option A: publish to a dedicated gh-pages branch (default).
@@ -136,15 +135,30 @@ jobs:
       # GitHub Pages must be configured to serve from the /docs folder on
       # the default branch (main). No extra branch is created.
       # ------------------------------------------------------------------
+      - name: Resolve deploy branch
+        if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
+        id: resolve-branch
+        run: |
+          # Extract branch from "branch-folder:<branch>", or use default branch.
+          case "$DEPLOY_TARGET" in
+            branch-folder:*)
+              BRANCH="${DEPLOY_TARGET#branch-folder:}"
+              ;;
+            *)
+              BRANCH="${{ github.event.repository.default_branch }}"
+              ;;
+          esac
+          echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
+
       - name: Checkout target branch
-        if: "env.DEPLOY_TARGET == 'branch-folder'"
+        if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
         uses: actions/checkout@v4
         with:
-          ref: ${{ env.DEPLOY_BRANCH || github.event.repository.default_branch }}
+          ref: ${{ steps.resolve-branch.outputs.branch }}
           path: repo
 
-      - name: Commit site into docs/ on main
-        if: "env.DEPLOY_TARGET == 'branch-folder'"
+      - name: Commit site into docs/
+        if: startsWith(env.DEPLOY_TARGET, 'branch-folder')
         run: |
           set -euo pipefail
           # Replace the docs/ folder with the freshly built site.
