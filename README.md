@@ -8,55 +8,55 @@ Documentation site for [SimpleAudit](https://github.com/SushantGautam/simpleaudi
 
 | Path | Description |
 |------|-------------|
-| `site/` | Built static site (deployed to GitHub Pages) |
-| `site_src/` | MkDocs source: guides, API reference, images, plan cache |
-| `generate_docs.py` | Two-layer docs generator (Griffe + LLM) |
-| `upload_to_kb.py` | Syncs simpleaudit source to the Open WebUI knowledge base |
-| `mkdocs.yml` | Generated MkDocs Material config |
+| `.github/workflows/repoquill.yml` | CI workflow: generate + build + deploy |
+| `.github/workflows/repoquill.config.yml` | RepoQuill config (LLM, site, nav, guides) |
 
-## How the docs are generated
+That's it. Everything else is generated at build time.
 
-The pipeline has two layers:
+## How it works
 
-1. **Deterministic (no LLM):** Griffe scans the `simpleaudit/` package and renders a complete API reference (classes, functions, signatures, docstrings) into `site_src/reference/`. The nav, index page, and `mkdocs.yml` are also generated deterministically.
+[RepoQuill](https://github.com/SushantGautam/RepoQuill) is a standalone docs generator. The CI workflow:
 
-2. **LLM narrative:** Guide pages (getting started, architecture, CLI usage, judges, scenarios, etc.) are written by an LLM (Open WebUI backend) with source code context. Pages are only regenerated when their source files change (SHA-256 hash tracking in `site_src/.plan.json`).
+1. Checks out this repo, the RepoQuill repo, and the simpleaudit source
+2. Installs RepoQuill from source
+3. Runs `repoquill generate --config .github/workflows/repoquill.config.yml --build`
+4. Deploys the built `site/` to GitHub Pages (or a branch folder)
 
-## Regenerating the docs
+RepoQuill produces two layers:
 
-```bash
-# Prerequisites: a checkout of the simpleaudit repo
-export SIMPLEAUDIT_ROOT=/path/to/simpleaudit
+- **API reference (deterministic):** Griffe scans the `simpleaudit/` package and renders classes, functions, signatures, and docstrings.
+- **Guide pages (LLM):** Narrative pages (getting started, architecture, judges, etc.) written by an LLM with source code context. Pages are only regenerated when their source files change.
 
-# Install deps
-pip install mkdocs mkdocs-material griffe requests
+## Published artifacts
 
-# Incremental generate (only changed pages)
-python3 generate_docs.py
+The built site includes:
 
-# Full re-plan + regenerate everything
-python3 generate_docs.py --force
+- HTML pages (guides + API reference)
+- `llms.txt` — concise AI-agent-friendly index
+- `llms-full.txt` — full docs concatenated for AI agents
+- `SKILL.md` — agent skill for generating, maintaining, and validating the docs
 
-# Deterministic layer only (no LLM calls)
-python3 generate_docs.py --no-llm
+## Deploy targets
 
-# Generate + build the static site
-python3 generate_docs.py --build
-```
+The workflow supports two deploy modes (set via `workflow_dispatch` input or `DEPLOY_TARGET` repo variable):
 
-## CI / GitHub Pages
+- **`gh-pages`** (default) — publishes to a dedicated `gh-pages` branch
+- **`branch-folder[:<branch>[:<folder>]]`** — commits the built site into a folder on a branch (e.g. `branch-folder:main:docs`)
 
-The `.github/workflows/docs.yml` workflow:
-1. Checks out this repo and the `SushantGautam/simpleaudit` repo
-2. Runs the generator (incremental, with cached plan)
-3. Builds the site with `mkdocs build --strict`
-4. Deploys `site/` to GitHub Pages
-
-The workflow requires the `OWUI_API_KEY` secret (and optionally `OWUI_BASE`, `OWUI_KB_ID`, `OWUI_MODEL`) for LLM page generation. If the secret is missing, it falls back to `--no-llm` (deterministic layer only).
-
-## Local preview
+## Local development
 
 ```bash
+# Install RepoQuill
+pip install git+https://github.com/SushantGautam/RepoQuill
+
+# Generate + build (point SOURCE_ROOT at a simpleaudit checkout)
+SOURCE_ROOT=/path/to/simpleaudit \
+OPENAI_API_KEY=your-key \
+repoquill generate \
+  --config .github/workflows/repoquill.config.yml \
+  --build
+
+# Preview
 python3 -m http.server 8765 -d site/
 # → http://localhost:8765
 ```
