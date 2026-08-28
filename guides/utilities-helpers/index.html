@@ -10,7 +10,7 @@
       
       
       
-        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/utilities/">
+        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/utilities-helpers/">
       
       
         <link rel="prev" href="../visualization-server/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Utilities - SimpleAudit</title>
+        <title>Utilities helpers - SimpleAudit</title>
       
     
     
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Utilities
+              Utilities helpers
             
           </span>
         </div>
@@ -677,14 +677,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-scenarios/" class="md-nav__link">
+      <a href="../custom-scenarios-guide/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom scenarios
+    Custom scenarios guide
   
 
     
@@ -747,7 +747,7 @@
   <span class="md-ellipsis">
     
   
-    Utilities
+    Utilities helpers
   
 
     
@@ -765,7 +765,7 @@
   <span class="md-ellipsis">
     
   
-    Utilities
+    Utilities helpers
   
 
     
@@ -824,10 +824,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#validate_configconfig-dict-bool" class="md-nav__link">
+  <a href="#generate_timestamp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate_config(config: dict) -&gt; bool
+        generate_timestamp()
       
     </span>
   </a>
@@ -835,10 +835,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sanitize_filenamename-str-str" class="md-nav__link">
+  <a href="#normalize_recordrecord" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sanitize_filename(name: str) -&gt; str
+        normalize_record(record)
       
     </span>
   </a>
@@ -846,10 +846,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup_logginglevel-int-logginginfo-logginglogger" class="md-nav__link">
+  <a href="#resolve_pathpath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        setup_logging(level: int = logging.INFO) -&gt; logging.Logger
+        resolve_path(path)
       
     </span>
   </a>
@@ -857,10 +857,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#chunk_listlst-list-size-int-listlist" class="md-nav__link">
+  <a href="#safe_json_serializedata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        chunk_list(lst: list, size: int) -&gt; list[list]
+        safe_json_serialize(data)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map_log_levellevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        map_log_level(level)
       
     </span>
   </a>
@@ -873,22 +884,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#internal-helpers" class="md-nav__link">
+  <a href="#data-processing-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Internal Helpers
+        Data Processing Helpers
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Internal Helpers">
+    <nav class="md-nav" aria-label="Data Processing Helpers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_ensure_dirpath-str-none" class="md-nav__link">
+  <a href="#flatten_dictd" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _ensure_dir(path: str) -&gt; None
+        flatten_dict(d)
       
     </span>
   </a>
@@ -896,10 +907,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_read_json_filefilepath-str-dict" class="md-nav__link">
+  <a href="#validate_audit_schemarecord" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _read_json_file(filepath: str) -&gt; dict
+        validate_audit_schema(record)
       
     </span>
   </a>
@@ -912,10 +923,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuration-options" class="md-nav__link">
+  <a href="#file-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Options
+        File Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure_directorypath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ensure_directory(path)
       
     </span>
   </a>
@@ -923,10 +946,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#read_json_filepath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        read_json_file(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
       
     </span>
   </a>
@@ -945,6 +984,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#performance-notes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -956,10 +1006,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure" class="md-nav__link">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure
+        Limitations
       
     </span>
   </a>
@@ -2780,10 +2830,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#validate_configconfig-dict-bool" class="md-nav__link">
+  <a href="#generate_timestamp" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate_config(config: dict) -&gt; bool
+        generate_timestamp()
       
     </span>
   </a>
@@ -2791,10 +2841,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#sanitize_filenamename-str-str" class="md-nav__link">
+  <a href="#normalize_recordrecord" class="md-nav__link">
     <span class="md-ellipsis">
       
-        sanitize_filename(name: str) -&gt; str
+        normalize_record(record)
       
     </span>
   </a>
@@ -2802,10 +2852,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#setup_logginglevel-int-logginginfo-logginglogger" class="md-nav__link">
+  <a href="#resolve_pathpath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        setup_logging(level: int = logging.INFO) -&gt; logging.Logger
+        resolve_path(path)
       
     </span>
   </a>
@@ -2813,10 +2863,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#chunk_listlst-list-size-int-listlist" class="md-nav__link">
+  <a href="#safe_json_serializedata" class="md-nav__link">
     <span class="md-ellipsis">
       
-        chunk_list(lst: list, size: int) -&gt; list[list]
+        safe_json_serialize(data)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#map_log_levellevel" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        map_log_level(level)
       
     </span>
   </a>
@@ -2829,22 +2890,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#internal-helpers" class="md-nav__link">
+  <a href="#data-processing-helpers" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Internal Helpers
+        Data Processing Helpers
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Internal Helpers">
+    <nav class="md-nav" aria-label="Data Processing Helpers">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#_ensure_dirpath-str-none" class="md-nav__link">
+  <a href="#flatten_dictd" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _ensure_dir(path: str) -&gt; None
+        flatten_dict(d)
       
     </span>
   </a>
@@ -2852,10 +2913,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#_read_json_filefilepath-str-dict" class="md-nav__link">
+  <a href="#validate_audit_schemarecord" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _read_json_file(filepath: str) -&gt; dict
+        validate_audit_schema(record)
       
     </span>
   </a>
@@ -2868,10 +2929,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuration-options" class="md-nav__link">
+  <a href="#file-handling" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration Options
+        File Handling
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="File Handling">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ensure_directorypath" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ensure_directory(path)
       
     </span>
   </a>
@@ -2879,10 +2952,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#best-practices" class="md-nav__link">
+  <a href="#read_json_filepath" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Best Practices
+        read_json_file(path)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
       
     </span>
   </a>
@@ -2901,6 +2990,17 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#usage-patterns" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Usage Patterns
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#performance-notes" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -2912,10 +3012,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure" class="md-nav__link">
+  <a href="#limitations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure
+        Limitations
       
     </span>
   </a>
@@ -2958,199 +3058,256 @@
   
 
 
-  <h1>Utilities</h1>
+  <h1>Utilities helpers</h1>
 
 <h2 id="utilities-helpers">Utilities &amp; Helpers<a class="headerlink" href="#utilities-helpers" title="Permanent link">&para;</a></h2>
-<p>Shared helper functions, data processing, internal tools. <code>simpleaudit.utils</code> module. Core support logic. Data validation. File handling. Logging setup.</p>
+<p><code>simpleaudit.utils</code> module contains shared utility functions, data processing helpers, and internal tools used across <code>SimpleAudit</code> library. These functions standardize data formatting, file handling, and audit trail generation.</p>
 <h3 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h3>
-<p><code>utils.py</code> file. Contains non-domain-specific functions. Reusable across audit modules. No external dependencies. Pure Python. Fast execution.</p>
+<p>Utility functions handle:
+- Timestamp generation and formatting
+- File path resolution
+- Data normalization for audit records
+- Log level mapping
+- Safe JSON serialization</p>
+<p>All functions are pure functions unless noted. No side effects on input data.</p>
 <h3 id="public-functions">Public Functions<a class="headerlink" href="#public-functions" title="Permanent link">&para;</a></h3>
-<h4 id="validate_configconfig-dict-bool"><code>validate_config(config: dict) -&gt; bool</code><a class="headerlink" href="#validate_configconfig-dict-bool" title="Permanent link">&para;</a></h4>
-<p>Checks config dictionary structure. Ensures required keys present. Returns <code>True</code> if valid. Raises <code>ValueError</code> if missing keys.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Parameter</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>config</code></td>
-<td style="text-align: left;"><code>dict</code></td>
-<td style="text-align: left;">Configuration object. Must contain <code>db_url</code>, <code>output_dir</code>.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_config</span>
+<h4 id="generate_timestamp"><code>generate_timestamp()</code><a class="headerlink" href="#generate_timestamp" title="Permanent link">&para;</a></h4>
+<p>Generates ISO 8601 formatted timestamp with UTC timezone.</p>
+<p><strong>Parameters:</strong>
+- <code>format</code> (str, optional): Custom format string. Default: <code>%Y-%m-%dT%H:%M:%S.%fZ</code></p>
+<p><strong>Returns:</strong>
+- <code>str</code>: Formatted timestamp</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_timestamp</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">cfg</span> <span class="o">=</span> <span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s2">"db_url"</span><span class="p">:</span> <span class="s2">"postgresql://user:pass@localhost/db"</span><span class="p">,</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s2">"output_dir"</span><span class="p">:</span> <span class="s2">"./reports"</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="p">}</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="k">if</span> <span class="n">validate_config</span><span class="p">(</span><span class="n">cfg</span><span class="p">):</span>
-<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"Config valid"</span><span class="p">)</span>
-</code></pre></div>
-<h4 id="sanitize_filenamename-str-str"><code>sanitize_filename(name: str) -&gt; str</code><a class="headerlink" href="#sanitize_filenamename-str-str" title="Permanent link">&para;</a></h4>
-<p>Removes illegal characters from filename. Prevents path traversal attacks. Replaces special chars with underscore.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Parameter</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>name</code></td>
-<td style="text-align: left;"><code>str</code></td>
-<td style="text-align: left;">Original filename.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong> <code>str</code> Safe filename.</p>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">sanitize_filename</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">ts</span> <span class="o">=</span> <span class="n">generate_timestamp</span><span class="p">()</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># "2024-01-15T14:30:45.123456Z"</span>
+</code></pre></div></p>
+<h4 id="normalize_recordrecord"><code>normalize_record(record)</code><a class="headerlink" href="#normalize_recordrecord" title="Permanent link">&para;</a></h4>
+<p>Normalizes audit record dictionary for consistent storage.</p>
+<p><strong>Parameters:</strong>
+- <code>record</code> (dict): Raw audit record</p>
+<p><strong>Returns:</strong>
+- <code>dict</code>: Normalized record with standard keys</p>
+<p><strong>Standard Keys:</strong>
+| Key | Type | Description |
+|-----|------|-------------|
+| <code>timestamp</code> | str | ISO 8601 timestamp |
+| <code>action</code> | str | Audit action type |
+| <code>entity</code> | str | Target entity identifier |
+| <code>user</code> | str | User identifier |
+| <code>metadata</code> | dict | Additional context data |</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize_record</span>
 <a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">raw</span> <span class="o">=</span> <span class="s2">"report/2023;drop table.txt"</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">safe</span> <span class="o">=</span> <span class="n">sanitize_filename</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># Output: "report_2023_drop_table.txt"</span>
-</code></pre></div>
-<h4 id="setup_logginglevel-int-logginginfo-logginglogger"><code>setup_logging(level: int = logging.INFO) -&gt; logging.Logger</code><a class="headerlink" href="#setup_logginglevel-int-logginginfo-logginglogger" title="Permanent link">&para;</a></h4>
-<p>Configures root logger. Adds console handler. Format: <code>%(asctime)s - %(name)s - %(levelname)s - %(message)s</code>.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Parameter</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Default</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>level</code></td>
-<td style="text-align: left;"><code>int</code></td>
-<td style="text-align: left;"><code>logging.INFO</code></td>
-<td style="text-align: left;">Logging threshold.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong> <code>logging.Logger</code> Configured logger instance.</p>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">logging</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">setup_logging</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="n">logger</span> <span class="o">=</span> <span class="n">setup_logging</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s2">"Debug message"</span><span class="p">)</span>
-</code></pre></div>
-<h4 id="chunk_listlst-list-size-int-listlist"><code>chunk_list(lst: list, size: int) -&gt; list[list]</code><a class="headerlink" href="#chunk_listlst-list-size-int-listlist" title="Permanent link">&para;</a></h4>
-<p>Splits large list into smaller chunks. Useful for batch database inserts. Prevents memory spikes.</p>
-<p><strong>Parameters:</strong></p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Parameter</th>
-<th style="text-align: left;">Type</th>
-<th style="text-align: left;">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>lst</code></td>
-<td style="text-align: left;"><code>list</code></td>
-<td style="text-align: left;">Input list.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>size</code></td>
-<td style="text-align: left;"><code>int</code></td>
-<td style="text-align: left;">Max items per chunk.</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Returns:</strong> <code>list[list]</code> List of sublists.</p>
-<p><strong>Example:</strong></p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">chunk_list</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">data</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">chunks</span> <span class="o">=</span> <span class="n">chunk_list</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># Output: [[0, 1, 2], [3, 4, 5], [6, 7, 8], [9]]</span>
-</code></pre></div>
-<h3 id="internal-helpers">Internal Helpers<a class="headerlink" href="#internal-helpers" title="Permanent link">&para;</a></h3>
-<p>These functions start with underscore. Not part of public API. May change without notice.</p>
-<h4 id="_ensure_dirpath-str-none"><code>_ensure_dir(path: str) -&gt; None</code><a class="headerlink" href="#_ensure_dirpath-str-none" title="Permanent link">&para;</a></h4>
-<p>Creates directory if missing. Uses <code>os.makedirs</code> with <code>exist_ok=True</code>.</p>
-<h4 id="_read_json_filefilepath-str-dict"><code>_read_json_file(filepath: str) -&gt; dict</code><a class="headerlink" href="#_read_json_filefilepath-str-dict" title="Permanent link">&para;</a></h4>
-<p>Reads JSON file. Returns empty dict if file missing or invalid JSON. Logs warning on error.</p>
-<h3 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h3>
-<p>Utils module respects global config. Pass config dict to <code>init_utils()</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit</span><span class="w"> </span><span class="kn">import</span> <span class="n">init_utils</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="n">raw</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>    <span class="s2">"time"</span><span class="p">:</span> <span class="s2">"2024-01-15 14:30:45"</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="s2">"action"</span><span class="p">:</span> <span class="s2">"create"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="s2">"target"</span><span class="p">:</span> <span class="s2">"user_123"</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="s2">"actor"</span><span class="p">:</span> <span class="s2">"admin"</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="p">}</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="n">normalized</span> <span class="o">=</span> <span class="n">normalize_record</span><span class="p">(</span><span class="n">raw</span><span class="p">)</span>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="c1"># {</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1">#     "timestamp": "2024-01-15T14:30:45Z",</span>
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a><span class="c1">#     "action": "create",</span>
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">#     "entity": "user_123",</span>
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="c1">#     "user": "admin",</span>
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1">#     "metadata": {}</span>
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a><span class="c1"># }</span>
+</code></pre></div></p>
+<h4 id="resolve_pathpath"><code>resolve_path(path)</code><a class="headerlink" href="#resolve_pathpath" title="Permanent link">&para;</a></h4>
+<p>Resolves relative paths to absolute paths relative to project root.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> (str): File path (relative or absolute)</p>
+<p><strong>Returns:</strong>
+- <code>str</code>: Absolute path</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">resolve_path</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">abs_path</span> <span class="o">=</span> <span class="n">resolve_path</span><span class="p">(</span><span class="s2">"logs/audit.log"</span><span class="p">)</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># "/home/user/project/logs/audit.log"</span>
+</code></pre></div></p>
+<h4 id="safe_json_serializedata"><code>safe_json_serialize(data)</code><a class="headerlink" href="#safe_json_serializedata" title="Permanent link">&para;</a></h4>
+<p>Serializes data to JSON string with custom encoder for non-serializable types.</p>
+<p><strong>Parameters:</strong>
+- <code>data</code>: Any Python object
+- <code>indent</code> (int, optional): JSON indentation. Default: <code>2</code></p>
+<p><strong>Returns:</strong>
+- <code>str</code>: JSON string</p>
+<p><strong>Handles:</strong>
+- <code>datetime</code> objects → ISO 8601 strings
+- <code>set</code> objects → lists
+- <code>bytes</code> objects → base64 encoded strings
+- Custom objects → <code>str(obj)</code></p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">safe_json_serialize</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="s2">"created"</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="s2">"tags"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"admin"</span><span class="p">,</span> <span class="s2">"user"</span><span class="p">},</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="s2">"raw"</span><span class="p">:</span> <span class="sa">b</span><span class="s2">"binary_data"</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="p">}</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">json_str</span> <span class="o">=</span> <span class="n">safe_json_serialize</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="c1"># {</span>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1">#   "created": "2024-01-15T14:30:45.123456",</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="c1">#   "tags": ["admin", "user"],</span>
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a><span class="c1">#   "raw": "YmluYXJ5X2RhdGE="</span>
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a><span class="c1"># }</span>
+</code></pre></div></p>
+<h4 id="map_log_levellevel"><code>map_log_level(level)</code><a class="headerlink" href="#map_log_levellevel" title="Permanent link">&para;</a></h4>
+<p>Maps string log level to numeric value.</p>
+<p><strong>Parameters:</strong>
+- <code>level</code> (str): Log level name</p>
+<p><strong>Returns:</strong>
+- <code>int</code>: Numeric log level</p>
+<p><strong>Supported Levels:</strong>
+| String | Numeric |
+|--------|---------|
+| <code>DEBUG</code> | 10 |
+| <code>INFO</code> | 20 |
+| <code>WARNING</code> | 30 |
+| <code>ERROR</code> | 40 |
+| <code>CRITICAL</code> | 50 |</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">map_log_level</span>
 <a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">init_utils</span><span class="p">({</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="s2">"log_level"</span><span class="p">:</span> <span class="s2">"DEBUG"</span><span class="p">,</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>    <span class="s2">"temp_dir"</span><span class="p">:</span> <span class="s2">"/tmp/audit"</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="p">})</span>
-</code></pre></div>
-<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
-<ol>
-<li><strong>Use <code>sanitize_filename</code></strong> for all user-generated file names.</li>
-<li><strong>Chunk large datasets</strong> using <code>chunk_list</code> before DB writes.</li>
-<li><strong>Validate config early</strong> in application startup.</li>
-<li><strong>Reuse logger</strong> from <code>setup_logging</code>. Do not create multiple loggers.</li>
-</ol>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">level</span> <span class="o">=</span> <span class="n">map_log_level</span><span class="p">(</span><span class="s2">"WARNING"</span><span class="p">)</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="c1"># 30</span>
+</code></pre></div></p>
+<h3 id="data-processing-helpers">Data Processing Helpers<a class="headerlink" href="#data-processing-helpers" title="Permanent link">&para;</a></h3>
+<h4 id="flatten_dictd"><code>flatten_dict(d)</code><a class="headerlink" href="#flatten_dictd" title="Permanent link">&para;</a></h4>
+<p>Flattens nested dictionary into single-level dict with dot notation keys.</p>
+<p><strong>Parameters:</strong>
+- <code>d</code> (dict): Nested dictionary</p>
+<p><strong>Returns:</strong>
+- <code>dict</code>: Flattened dictionary</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">flatten_dict</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">nested</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>    <span class="s2">"user"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Alice"</span><span class="p">,</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="s2">"address"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>            <span class="s2">"city"</span><span class="p">:</span> <span class="s2">"NYC"</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="p">}</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="p">}</span>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="p">}</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">flat</span> <span class="o">=</span> <span class="n">flatten_dict</span><span class="p">(</span><span class="n">nested</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># {</span>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1">#     "user.name": "Alice",</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="c1">#     "user.address.city": "NYC"</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="c1"># }</span>
+</code></pre></div></p>
+<h4 id="validate_audit_schemarecord"><code>validate_audit_schema(record)</code><a class="headerlink" href="#validate_audit_schemarecord" title="Permanent link">&para;</a></h4>
+<p>Validates audit record against expected schema.</p>
+<p><strong>Parameters:</strong>
+- <code>record</code> (dict): Audit record to validate</p>
+<p><strong>Returns:</strong>
+- <code>bool</code>: <code>True</code> if valid, <code>False</code> otherwise</p>
+<p><strong>Required Fields:</strong>
+- <code>timestamp</code> (str)
+- <code>action</code> (str)
+- <code>entity</code> (str)
+- <code>user</code> (str)</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">validate_audit_schema</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">valid</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="s2">"timestamp"</span><span class="p">:</span> <span class="s2">"2024-01-15T14:30:45Z"</span><span class="p">,</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    <span class="s2">"action"</span><span class="p">:</span> <span class="s2">"create"</span><span class="p">,</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    <span class="s2">"entity"</span><span class="p">:</span> <span class="s2">"user_123"</span><span class="p">,</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="s2">"user"</span><span class="p">:</span> <span class="s2">"admin"</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">}</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="n">is_valid</span> <span class="o">=</span> <span class="n">validate_audit_schema</span><span class="p">(</span><span class="n">valid</span><span class="p">)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1"># True</span>
+</code></pre></div></p>
+<h3 id="file-handling">File Handling<a class="headerlink" href="#file-handling" title="Permanent link">&para;</a></h3>
+<h4 id="ensure_directorypath"><code>ensure_directory(path)</code><a class="headerlink" href="#ensure_directorypath" title="Permanent link">&para;</a></h4>
+<p>Creates directory if it does not exist.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> (str): Directory path</p>
+<p><strong>Returns:</strong>
+- <code>None</code></p>
+<p><strong>Raises:</strong>
+- <code>OSError</code>: If directory cannot be created</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ensure_directory</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">ensure_directory</span><span class="p">(</span><span class="s2">"logs/audit"</span><span class="p">)</span>
+</code></pre></div></p>
+<h4 id="read_json_filepath"><code>read_json_file(path)</code><a class="headerlink" href="#read_json_filepath" title="Permanent link">&para;</a></h4>
+<p>Reads and parses JSON file.</p>
+<p><strong>Parameters:</strong>
+- <code>path</code> (str): File path</p>
+<p><strong>Returns:</strong>
+- <code>dict</code> or <code>list</code>: Parsed JSON data</p>
+<p><strong>Raises:</strong>
+- <code>FileNotFoundError</code>: If file does not exist
+- <code>json.JSONDecodeError</code>: If file contains invalid JSON</p>
+<p><strong>Example:</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_json_file</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">data</span> <span class="o">=</span> <span class="n">read_json_file</span><span class="p">(</span><span class="s2">"config/audit.json"</span><span class="p">)</span>
+</code></pre></div></p>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<p>No configuration options in this module. All functions use default behavior unless parameters specified.</p>
 <h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
-<p>Utils functions raise standard Python exceptions.</p>
-<table>
-<thead>
-<tr>
-<th style="text-align: left;">Exception</th>
-<th style="text-align: left;">Trigger</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align: left;"><code>ValueError</code></td>
-<td style="text-align: left;">Invalid config structure.</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>FileNotFoundError</code></td>
-<td style="text-align: left;">Missing required file (internal).</td>
-</tr>
-<tr>
-<td style="text-align: left;"><code>json.JSONDecodeError</code></td>
-<td style="text-align: left;">Malformed JSON input (internal).</td>
-</tr>
-</tbody>
-</table>
+<p>All utility functions raise standard Python exceptions:
+- <code>ValueError</code>: For invalid input values
+- <code>TypeError</code>: For incorrect parameter types
+- <code>OSError</code>: For file system errors
+- <code>json.JSONDecodeError</code>: For invalid JSON</p>
+<p>No custom exception classes defined in this module.</p>
+<h3 id="usage-patterns">Usage Patterns<a class="headerlink" href="#usage-patterns" title="Permanent link">&para;</a></h3>
+<p>Typical usage in audit pipeline:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.utils</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="n">generate_timestamp</span><span class="p">,</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="n">normalize_record</span><span class="p">,</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="n">safe_json_serialize</span><span class="p">,</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>    <span class="n">ensure_directory</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="p">)</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">log_audit_action</span><span class="p">(</span><span class="n">action</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="n">record</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="s2">"timestamp"</span><span class="p">:</span> <span class="n">generate_timestamp</span><span class="p">(),</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>        <span class="s2">"action"</span><span class="p">:</span> <span class="n">action</span><span class="p">,</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>        <span class="s2">"entity"</span><span class="p">:</span> <span class="n">entity</span><span class="p">,</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>        <span class="s2">"user"</span><span class="p">:</span> <span class="n">user</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>        <span class="s2">"metadata"</span><span class="p">:</span> <span class="n">metadata</span> <span class="ow">or</span> <span class="p">{}</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="p">}</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    <span class="n">normalized</span> <span class="o">=</span> <span class="n">normalize_record</span><span class="p">(</span><span class="n">record</span><span class="p">)</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>    <span class="n">json_output</span> <span class="o">=</span> <span class="n">safe_json_serialize</span><span class="p">(</span><span class="n">normalized</span><span class="p">)</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a>    <span class="n">ensure_directory</span><span class="p">(</span><span class="s2">"logs/audit"</span><span class="p">)</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"logs/audit/audit.log"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a>        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">json_output</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>    <span class="k">return</span> <span class="n">normalized</span>
+</code></pre></div>
 <h3 id="performance-notes">Performance Notes<a class="headerlink" href="#performance-notes" title="Permanent link">&para;</a></h3>
 <ul>
-<li><code>chunk_list</code> runs in O(n) time.</li>
-<li><code>sanitize_filename</code> uses regex. Fast for short strings.</li>
-<li><code>setup_logging</code> idempotent. Safe to call multiple times.</li>
+<li>All functions operate in O(n) time where n is data size</li>
+<li>No external dependencies</li>
+<li>Thread-safe: All functions are pure or use atomic file operations</li>
+<li>Memory efficient: No large data structures created internally</li>
 </ul>
-<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h3>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>simpleaudit/
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>├── __init__.py
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>├── utils.py          # This module
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>├── core/
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>│   └── auditor.py
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>└── db/
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>    └── connector.py
-</code></pre></div>
-<p><code>utils.py</code> imports only from standard library. No circular dependencies. Safe to import anywhere.</p>
+<h3 id="limitations">Limitations<a class="headerlink" href="#limitations" title="Permanent link">&para;</a></h3>
+<ul>
+<li><code>normalize_record</code> does not validate semantic correctness of fields</li>
+<li><code>safe_json_serialize</code> may lose precision for floating point numbers</li>
+<li><code>resolve_path</code> relies on current working directory for relative paths</li>
+<li>No support for binary file operations in this module</li>
+</ul>
 <h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
 <ul>
 <li><a href="../experiments-results/">Experiments &amp; Results</a></li>
-<li><a href="../custom-scenarios/">Custom Scenarios Guide</a></li>
-<li><a href="../getting-started/">Getting Started</a></li>
-<li><a href="../judges-system/">Judges System</a></li>
+<li><a href="../model-auditor/">Model Auditor</a></li>
 </ul>
 
 

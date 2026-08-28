@@ -836,14 +836,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-scenarios/" class="md-nav__link">
+      <a href="../custom-scenarios-guide/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom scenarios
+    Custom scenarios guide
   
 
     
@@ -892,14 +892,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../utilities/" class="md-nav__link">
+      <a href="../utilities-helpers/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Utilities
+    Utilities helpers
   
 
     
@@ -2805,9 +2805,9 @@
   <h1>Cli usage</h1>
 
 <h2 id="cli-usage">CLI Usage<a class="headerlink" href="#cli-usage" title="Permanent link">&para;</a></h2>
-<p><code>simpleaudit</code> CLI visualizes/exports AI safety audit results. Inspect JSON audit data via local web server or generate standalone HTML reports. Implemented in <code>simpleaudit/cli.py</code>. Primary entry point post-audit analysis.</p>
+<p><code>simpleaudit</code> CLI visualizes/exports AI safety audit results. Inspect JSON audit data via local web server or generate standalone HTML reports. Implemented <code>simpleaudit/cli.py</code>. Primary entry point post-audit analysis.</p>
 <h3 id="installation-and-dependencies">Installation and Dependencies<a class="headerlink" href="#installation-and-dependencies" title="Permanent link">&para;</a></h3>
-<p>Core <code>simpleaudit</code> package excludes visualization dependencies. Use <code>serve</code> and <code>export-html</code> commands requires optional dependencies. Missing dependencies cause CLI exit with error message instructing install <code>visualize</code> extra.</p>
+<p>Core <code>simpleaudit</code> package excludes visualization dependencies. <code>serve</code>/<code>export-html</code> commands require optional dependencies. Missing dependencies trigger error message instructing install <code>visualize</code> extra.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'simpleaudit[visualize]'</span>
 </code></pre></div>
 <h3 id="command-overview">Command Overview<a class="headerlink" href="#command-overview" title="Permanent link">&para;</a></h3>
@@ -2816,7 +2816,7 @@
 <li><strong><code>serve</code></strong>: Starts local web server dynamically visualize audit results from directory.</li>
 <li><strong><code>export-html</code></strong>: Generates single, self-contained HTML file from specific JSON result file.</li>
 </ol>
-<p>No command provided or unrecognized command used, CLI prints help message exits status code <code>1</code>.</p>
+<p>No command provided, or unrecognized command used, CLI prints help message exits status code <code>1</code>.</p>
 <h3 id="command-serve">Command: <code>serve</code><a class="headerlink" href="#command-serve" title="Permanent link">&para;</a></h3>
 <p><code>serve</code> command launches web server interactive visualization audit results. Scans specified directory JSON files serves via browser interface.</p>
 <p><strong>Syntax:</strong>
@@ -2855,7 +2855,7 @@
 </table>
 <p><strong>Behavior:</strong>
 *   <code>--results_dir</code> omitted, CLI defaults <code>.</code> prints warning: <code>⚠️  Warning: --results_dir not specified, using current directory '.'</code>. Recommended explicitly set flag avoid confusion.
-*   Command imports <code>start_server</code> from <code>simpleaudit.visualization.server</code>. Module dependencies missing, CLI prints error exits.
+*   Command imports <code>start_server</code> from <code>simpleaudit.visualization.server</code>. Module/dependencies missing, CLI prints error exits.
 *   Successful startup, server binds specified host port.</p>
 <p><strong>Example Usage:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Serve results specific directory port 5000</span>
@@ -2865,7 +2865,7 @@
 <a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>simpleaudit<span class="w"> </span>serve
 </code></pre></div></p>
 <h3 id="command-export-html">Command: <code>export-html</code><a class="headerlink" href="#command-export-html" title="Permanent link">&para;</a></h3>
-<p><code>export-html</code> command converts single JSON audit result file standalone HTML file. HTML file inlines necessary assets, opened directly browser without server network connection.</p>
+<p><code>export-html</code> command converts single JSON audit result file standalone HTML file. HTML file inlines necessary assets, opened directly browser without server/network connection.</p>
 <p><strong>Syntax:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>simpleaudit<span class="w"> </span>export-html<span class="w"> </span>&lt;json_path&gt;<span class="w"> </span><span class="o">[</span>-o<span class="w"> </span>OUTPUT<span class="o">]</span>
 </code></pre></div></p>
@@ -2900,7 +2900,7 @@
     *   <code>-o</code> provided, used output path.
     *   <code>-o</code> omitted:
         *   <code>json_path</code> contains dot (<code>.</code>), extension replaced <code>.html</code> (e.g., <code>results.json</code> becomes <code>results.html</code>).
-        *   <code>json_path</code> does not contain dot, <code>.html</code> appended filename.
+        *   <code>json_path</code> no dot, <code>.html</code> appended filename.
 *   <strong>Error Handling</strong>:
     *   Input <code>json_path</code> does not exist, CLI prints <code>Error: &lt;json_path&gt; does not exist</code> exits status code <code>1</code>.
     *   <code>ValueError</code> occurs processing (e.g., invalid JSON structure), CLI prints error message exits status code <code>1</code>.
@@ -2913,10 +2913,10 @@
 <a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>simpleaudit<span class="w"> </span>export-html<span class="w"> </span>./results/audit_01.json<span class="w"> </span>-o<span class="w"> </span>./reports/audit_01_report.html
 </code></pre></div></p>
 <h3 id="error-handling-and-exit-codes">Error Handling and Exit Codes<a class="headerlink" href="#error-handling-and-exit-codes" title="Permanent link">&para;</a></h3>
-<p>CLI uses standard exit codes indicate success failure:</p>
+<p>CLI uses standard exit codes indicate success/failure:</p>
 <ul>
 <li><strong>0</strong>: Success (implicit, standard Python behavior).</li>
-<li><strong>1</strong>: Failure. Occurs following scenarios:<ul>
+<li><strong>1</strong>: Failure. Occurs scenarios:<ul>
 <li>No command provided invalid command used.</li>
 <li>Required optional dependencies visualization missing.</li>
 <li>Input JSON file <code>export-html</code> not found.</li>
@@ -2956,6 +2956,7 @@
 <ul>
 <li><a href="../getting-started/">Getting Started</a></li>
 <li><a href="../core-architecture/">Core Architecture</a></li>
+<li><a href="../visualization-server/">Visualization Server</a></li>
 </ul>
 
 
