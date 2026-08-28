@@ -297,8 +297,6 @@
       
         
       
-        
-      
     
     
     
@@ -654,36 +652,10 @@
   
   
   
-    <li class="md-nav__item">
-      <a href="../results-analysis/" class="md-nav__link">
+    
+    
+      
         
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Results analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
       
         
       
@@ -707,10 +679,10 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
         
           
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
             
   
   
@@ -728,8 +700,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_3">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -746,14 +718,42 @@
   
   
     <li class="md-nav__item">
-      <a href="../model-auditing/" class="md-nav__link">
+      <a href="../model-auditor/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Model auditing
+    Model auditor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../experiments-results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Experiments results
   
 
     
@@ -830,6 +830,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../custom-scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../visualization-server/" class="md-nav__link">
         
   
@@ -858,42 +886,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../norwegian-domain-scenarios/" class="md-nav__link">
+      <a href="../utilities/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Norwegian domain scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../extending-simpleaudit/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Extending simpleaudit
+    Utilities
   
 
     
@@ -2792,7 +2792,7 @@
 
   <h1>Getting started</h1>
 
-<p>SimpleAudit lightweight framework AI safety auditing. Uses LLMs system under test judge evaluate model behavior safety scenarios. Supports multiple providers: Anthropic, OpenAI, Grok, Ollama, vLLM.</p>
+<p>SimpleAudit lightweight framework AI safety auditing. Uses Large Language Models (LLMs) system under test judge evaluate model behavior specific safety scenarios. Supports multiple providers: Anthropic, OpenAI, Grok, Ollama, vLLM.</p>
 <h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h3>
 <p>Install core library pip:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>simpleaudit
@@ -2809,7 +2809,7 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">"your-key-here"</span>
 </code></pre></div></p>
 <p><strong>Local Models (Ollama/vLLM):</strong>
-Ensure local model server running. No API key typically required. Specify correct base URL <code>ModelAuditor</code> configuration.</p>
+Ensure local model server running. No API key typically required, specify correct base URL <code>ModelAuditor</code> configuration.</p>
 <h3 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h3>
 <p>Library exposes key classes functions via <code>simpleaudit</code>:</p>
 <table>
@@ -2834,7 +2834,7 @@ Ensure local model server running. No API key typically required. Specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditResults</code></td>
-<td style="text-align: left;">Container audit outcomes, providing summary statistics.</td>
+<td style="text-align: left;">Container audit outcomes, summary statistics.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditResult</code></td>
@@ -2842,7 +2842,7 @@ Ensure local model server running. No API key typically required. Specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditExperiment</code></td>
-<td style="text-align: left;">Manages complex experimental setups, including repeated runs.</td>
+<td style="text-align: left;">Manages complex experimental setups, repeated runs.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>RepeatedExperimentResults</code></td>
@@ -2858,7 +2858,7 @@ Ensure local model server running. No API key typically required. Specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>CrossJudgeExperiment</code></td>
-<td style="text-align: left;">Compares results across different judge models.</td>
+<td style="text-align: left;">Compares results different judge models.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>CrossJudgeResults</code></td>
@@ -3017,9 +3017,9 @@ Use <code>WiggleRunner</code> test judge qualification scenarios. Requires setup
 <p>Ensure API keys valid network connectivity available. Provider not supported model name invalid, library raises exception during <code>run()</code> call. Check <code>AuditResults</code> object individual scenario errors partial failures occur.</p>
 <h3 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Explore available scenario packs using <code>list_scenario_packs()</code> — see <a href="scenarios.md">Scenarios</a> full catalog.</li>
-<li>Customize judges using <code>get_judge()</code> <code>list_judge_configs()</code> — see <a href="judges.md">Judges</a> all available configs.</li>
-<li>Analyze detailed results using <code>AuditResult</code> class attributes — see <a href="../results-analysis/">Results &amp; Analysis</a>.</li>
+<li>Explore available scenario packs <code>list_scenario_packs()</code> — see <a href="scenarios.md">Scenarios</a> full catalog.</li>
+<li>Customize judges <code>get_judge()</code> <code>list_judge_configs()</code> — see <a href="judges.md">Judges</a> all available configs.</li>
+<li>Analyze detailed results <code>AuditResult</code> class attributes — see <a href="results-analysis.md">Results &amp; Analysis</a>.</li>
 <li>Run audits command line — see <a href="../cli-usage/">CLI Usage</a>.</li>
 <li>Visualize results browser — see <a href="visualization.md">Visualization</a>.</li>
 <li>Understand pieces fit together — see <a href="../core-architecture/">Core Architecture</a>.</li>
@@ -3028,6 +3028,8 @@ Use <code>WiggleRunner</code> test judge qualification scenarios. Requires setup
 <ul>
 <li><a href="../cli-usage/">CLI Usage</a></li>
 <li><a href="../core-architecture/">Core Architecture</a></li>
+<li><a href="../experiments-results/">Experiments &amp; Results</a></li>
+<li><a href="../model-auditor/">Model Auditor</a></li>
 </ul>
 
 
