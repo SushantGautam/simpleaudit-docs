@@ -1,20 +1,22 @@
 # RepoQuill configuration
 # Docs: https://github.com/SushantGautam/RepoQuill#config
 
-project_name: simpleaudit-docs
-package_dir: 
+project_name: simpleaudit
+package_dir: simpleaudit
+root: /Users/sushantgautam/copilot-worktrees/simpleaudit/sushantgautam-bookish-couscous
 
 llm:
   provider: openai
-  model: gpt-4o
+  model: Qwen/Qwen3.8-27B-FP8
   api_key_env: OPENAI_API_KEY
+  base_url: https://simulachat.sushant.info.np/api/v1
 
 site:
-  name: simpleaudit-docs
-  description: "Documentation for simpleaudit-docs"
-  url: https://SushantGautam.github.io/simpleaudit-docs/
-  repo_url: https://github.com/SushantGautam/simpleaudit-docs
-  repo_name: SushantGautam/simpleaudit-docs
+  name: simpleaudit
+  description: "Documentation for simpleaudit"
+  url: https://sushantgautam.github.io/simpleaudit-docs/
+  repo_url: https://github.com/kelkalot/simpleaudit
+  repo_name: kelkalot/simpleaudit
 
 narrative_sections:
   - title: Getting Started
@@ -23,8 +25,16 @@ narrative_sections:
     slugs: [architecture, key-ideas]
 
 reference_sections:
-  # Add reference sections here (e.g. for Python packages)
+  - title: Core Engine
+    modules: [simpleaudit, simpleaudit.model_auditor, simpleaudit.experiment, simpleaudit.results, simpleaudit.repeated_results]
+  - title: Judges
+    modules: [simpleaudit.judges, simpleaudit.judges.safety, simpleaudit.judges.harm, simpleaudit.judges.helpfulness, simpleaudit.judges.factuality, simpleaudit.judges.abstention, simpleaudit.judges.binary_abstention, simpleaudit.judges.judge_conviction, simpleaudit.judges.helsedir_sexhealth_no, simpleaudit.judges.helsedir_sexhealth_no_rag]
+  - title: Scenarios
+    modules: [simpleaudit.scenarios, simpleaudit.scenarios.safety, simpleaudit.scenarios.health, simpleaudit.scenarios.bullshitbench_health, simpleaudit.scenarios.bullshitbench_v1_v2, simpleaudit.scenarios.hei_refusal, simpleaudit.scenarios.helfo, simpleaudit.scenarios.helpmed, simpleaudit.scenarios.lanekassen, simpleaudit.scenarios.nav_aap, simpleaudit.scenarios.rag, simpleaudit.scenarios.skatteetaten, simpleaudit.scenarios.system_prompt, simpleaudit.scenarios.ung, simpleaudit.scenarios.vision_integrity, simpleaudit.scenarios.judge_the_judge, simpleaudit.scenarios.images.make_images]
+  - title: Analysis & Utilities
+    modules: [simpleaudit.cross_judge, simpleaudit.judge_the_judge, simpleaudit.reframing, simpleaudit.utils, simpleaudit.cli, simpleaudit.visualization.server]
 
 index:
-  tagline: "Documentation for simpleaudit-docs"
-  # Add quick_start here (e.g. install command)
+  tagline: "Documentation for simpleaudit"
+  quick_start:
+    install: "pip install simpleaudit"
