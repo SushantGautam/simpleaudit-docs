@@ -669,8 +669,6 @@
       
         
       
-        
-      
     
     
     
@@ -748,14 +746,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../result-handling/" class="md-nav__link">
+      <a href="../custom-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Result handling
+    Custom scenarios
   
 
     
@@ -776,14 +774,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../judges-system/" class="md-nav__link">
+      <a href="../judges-and-metrics/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Judges system
+    Judges and metrics
   
 
     
@@ -804,14 +802,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-judges/" class="md-nav__link">
+      <a href="../results-and-analysis/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom judges
+    Results and analysis
   
 
     
@@ -832,14 +830,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../test-scenarios/" class="md-nav__link">
+      <a href="../visualization-server/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Test scenarios
+    Visualization server
   
 
     
@@ -888,42 +886,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../creating-custom-scenarios/" class="md-nav__link">
+      <a href="../advanced-configuration/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Creating custom scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../visualization-server/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Visualization server
+    Advanced configuration
   
 
     
@@ -2822,16 +2792,16 @@
 
   <h1>Getting started</h1>
 
-<p>SimpleAudit lightweight framework AI safety auditing. Uses Large Language Models (LLMs) system under test judge evaluate model behavior specific safety scenarios. Supports multiple providers: Anthropic, OpenAI, Grok, Ollama, vLLM.</p>
+<p>SimpleAudit lightweight framework AI safety auditing. LLMs system under test judge. Evaluate model behavior safety scenarios. Multiple providers: Anthropic, OpenAI, Grok, Ollama, vLLM.</p>
 <h3 id="installation">Installation<a class="headerlink" href="#installation" title="Permanent link">&para;</a></h3>
-<p>Install core library pip:</p>
+<p>Core library pip:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>simpleaudit
 </code></pre></div>
-<p>Visualization features (web server HTML export) install optional dependencies:</p>
+<p>Visualization features (web server, HTML export) optional dependencies:</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'simpleaudit[visualize]'</span>
 </code></pre></div>
 <h3 id="environment-setup">Environment Setup<a class="headerlink" href="#environment-setup" title="Permanent link">&para;</a></h3>
-<p>SimpleAudit requires API keys LLM providers. Set environment variables before running audits.</p>
+<p>API keys required LLM providers. Environment variables before audits.</p>
 <p><strong>OpenAI:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">OPENAI_API_KEY</span><span class="o">=</span><span class="s2">"your-key-here"</span>
 </code></pre></div></p>
@@ -2839,9 +2809,9 @@
 <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">ANTHROPIC_API_KEY</span><span class="o">=</span><span class="s2">"your-key-here"</span>
 </code></pre></div></p>
 <p><strong>Local Models (Ollama/vLLM):</strong>
-Ensure local model server running. No API key typically required, specify correct base URL <code>ModelAuditor</code> configuration.</p>
+Local model server running. No API key typically. Correct base URL <code>ModelAuditor</code> configuration.</p>
 <h3 id="core-components">Core Components<a class="headerlink" href="#core-components" title="Permanent link">&para;</a></h3>
-<p>Library exposes key classes functions via <code>simpleaudit</code>:</p>
+<p>Key classes functions <code>simpleaudit</code>:</p>
 <table>
 <thead>
 <tr>
@@ -2864,15 +2834,15 @@ Ensure local model server running. No API key typically required, specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditResults</code></td>
-<td style="text-align: left;">Container audit outcomes, providing summary statistics.</td>
+<td style="text-align: left;">Container audit outcomes, summary statistics.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditResult</code></td>
-<td style="text-align: left;">Individual result object single scenario.</td>
+<td style="text-align: left;">Individual result single scenario.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>AuditExperiment</code></td>
-<td style="text-align: left;">Manages complex experimental setups, including repeated runs.</td>
+<td style="text-align: left;">Manages complex experimental setups, repeated runs.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>RepeatedExperimentResults</code></td>
@@ -2888,7 +2858,7 @@ Ensure local model server running. No API key typically required, specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>CrossJudgeExperiment</code></td>
-<td style="text-align: left;">Compares results across different judge models.</td>
+<td style="text-align: left;">Compares results different judge models.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>CrossJudgeResults</code></td>
@@ -2900,7 +2870,7 @@ Ensure local model server running. No API key typically required, specify correc
 </tr>
 <tr>
 <td style="text-align: left;"><code>reframing_check</code></td>
-<td style="text-align: left;">Evaluates model robustness against prompt reframing attacks.</td>
+<td style="text-align: left;">Evaluates model robustness prompt reframing attacks.</td>
 </tr>
 <tr>
 <td style="text-align: left;"><code>reframing_check_async</code></td>
@@ -2941,7 +2911,7 @@ Ensure local model server running. No API key typically required, specify correc
 </tbody>
 </table>
 <h3 id="first-audit-run">First Audit Run<a class="headerlink" href="#first-audit-run" title="Permanent link">&para;</a></h3>
-<p>Example demonstrates auditing OpenAI model using GPT-4 judge.</p>
+<p>Example: audit OpenAI model GPT-4 judge.</p>
 <ol>
 <li>
 <p><strong>Import modules:</strong>
@@ -2962,7 +2932,7 @@ Ensure local model server running. No API key typically required, specify correc
 </li>
 <li>
 <p><strong>Load Scenarios:</strong>
-    Retrieve set safety scenarios.
+    Retrieve safety scenarios.
     <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">scenarios</span> <span class="o">=</span> <span class="n">get_scenarios</span><span class="p">(</span><span class="s2">"safety"</span><span class="p">)</span>
 </code></pre></div></p>
 </li>
@@ -2980,29 +2950,29 @@ Ensure local model server running. No API key typically required, specify correc
 </li>
 </ol>
 <h3 id="cli-usage">CLI Usage<a class="headerlink" href="#cli-usage" title="Permanent link">&para;</a></h3>
-<p>SimpleAudit includes command-line interface visualizing results.</p>
+<p>Command-line interface visualizing results.</p>
 <p><strong>Serve Web Dashboard:</strong>
-Start local web server visualize JSON result files.
+Local web server visualize JSON result files.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>simpleaudit<span class="w"> </span>serve<span class="w"> </span>--results_dir<span class="w"> </span>./results<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
 </code></pre></div></p>
 <p><strong>Export Standalone HTML:</strong>
-Generate self-contained HTML file sharing results without server.
+Self-contained HTML file sharing results without server.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>simpleaudit<span class="w"> </span>export-html<span class="w"> </span>./results/audit_01.json<span class="w"> </span>-o<span class="w"> </span>./report.html
 </code></pre></div></p>
 <h3 id="configuration-options">Configuration Options<a class="headerlink" href="#configuration-options" title="Permanent link">&para;</a></h3>
-<p><code>ModelAuditor</code> accepts parameters:</p>
+<p><code>ModelAuditor</code> parameters:</p>
 <ul>
 <li><code>model</code> (str): Name model audit (e.g., <code>"gpt-4o-mini"</code>, <code>"claude-3-sonnet"</code>).</li>
 <li><code>provider</code> (str): LLM provider (<code>"openai"</code>, <code>"anthropic"</code>, <code>"ollama"</code>, <code>"vllm"</code>, etc.).</li>
-<li><code>judge_model</code> (str): Model used evaluate responses.</li>
+<li><code>judge_model</code> (str): Model evaluate responses.</li>
 <li><code>judge_provider</code> (str): Provider judge model.</li>
-<li><code>system_prompt</code> (str): System prompt applied target model.</li>
+<li><code>system_prompt</code> (str): System prompt target model.</li>
 <li><code>base_url</code> (str, optional): Custom API endpoint OpenAI-compatible providers.</li>
 <li><code>api_key</code> (str, optional): Explicit API key (overrides environment variable).</li>
 </ul>
 <h3 id="advanced-features">Advanced Features<a class="headerlink" href="#advanced-features" title="Permanent link">&para;</a></h3>
 <p><strong>Repeated Experiments:</strong>
-Use <code>AuditExperiment</code> run scenarios multiple times assess model stability.
+<code>AuditExperiment</code> run scenarios multiple times assess model stability.
 <div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuditExperiment</span>
 <a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
 <a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="n">experiment</span> <span class="o">=</span> <span class="n">AuditExperiment</span><span class="p">(</span>
@@ -3037,19 +3007,19 @@ Test model remains safe prompt rephrased.
 <a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="p">)</span>
 </code></pre></div></p>
 <p><strong>Judge Qualification (Wiggle Testing):</strong>
-Use <code>WiggleRunner</code> test judge qualification scenarios. Requires setup three model roles (target, judge, wiggle judge).
+<code>WiggleRunner</code> test judge qualification scenarios. Setup three model roles (target, judge, wiggle judge).
 <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit</span><span class="w"> </span><span class="kn">import</span> <span class="n">WiggleRunner</span>
 <a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
 <a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># Note: Specific configuration depends model setup</span>
 <a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="c1"># wiggle_runner = WiggleRunner(...)</span>
 </code></pre></div></p>
 <h3 id="error-handling">Error Handling<a class="headerlink" href="#error-handling" title="Permanent link">&para;</a></h3>
-<p>Ensure API keys valid network connectivity available. Provider not supported model name invalid, library raises exception during <code>run()</code> call. Check <code>AuditResults</code> object individual scenario errors partial failures occur.</p>
+<p>API keys valid. Network connectivity available. Provider unsupported model name invalid, library raises exception <code>run()</code> call. Check <code>AuditResults</code> object individual scenario errors partial failures.</p>
 <h3 id="next-steps">Next Steps<a class="headerlink" href="#next-steps" title="Permanent link">&para;</a></h3>
 <ul>
-<li>Explore available scenario packs using <code>list_scenario_packs()</code> — see <a href="scenarios.md">Scenarios</a> full catalog.</li>
-<li>Customize judges using <code>get_judge()</code> <code>list_judge_configs()</code> — see <a href="judges.md">Judges</a> all available configs.</li>
-<li>Analyze detailed results using <code>AuditResult</code> class attributes — see <a href="results-analysis.md">Results &amp; Analysis</a>.</li>
+<li>Explore available scenario packs <code>list_scenario_packs()</code> — see <a href="scenarios.md">Scenarios</a> full catalog.</li>
+<li>Customize judges <code>get_judge()</code> <code>list_judge_configs()</code> — see <a href="judges.md">Judges</a> all available configs.</li>
+<li>Analyze detailed results <code>AuditResult</code> class attributes — see <a href="results-analysis.md">Results &amp; Analysis</a>.</li>
 <li>Run audits command line — see <a href="../cli-usage/">CLI Usage</a>.</li>
 <li>Visualize results browser — see <a href="visualization.md">Visualization</a>.</li>
 <li>Understand pieces fit together — see <a href="../core-architecture/">Core Architecture</a>.</li>
@@ -3058,8 +3028,8 @@ Use <code>WiggleRunner</code> test judge qualification scenarios. Requires setup
 <ul>
 <li><a href="../cli-usage/">CLI Usage</a></li>
 <li><a href="../core-architecture/">Core Architecture</a></li>
-<li><a href="../domain-specific-scenarios/">Domain-Specific Scenarios</a></li>
-<li><a href="../judges-system/">Judges System</a></li>
+<li><a href="../custom-scenarios/">Custom Scenarios</a></li>
+<li><a href="../model-auditing/">Model Auditing</a></li>
 </ul>
 
 

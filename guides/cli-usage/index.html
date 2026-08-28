@@ -675,8 +675,6 @@
       
         
       
-        
-      
     
     
     
@@ -754,14 +752,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../result-handling/" class="md-nav__link">
+      <a href="../custom-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Result handling
+    Custom scenarios
   
 
     
@@ -782,14 +780,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../judges-system/" class="md-nav__link">
+      <a href="../judges-and-metrics/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Judges system
+    Judges and metrics
   
 
     
@@ -810,14 +808,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-judges/" class="md-nav__link">
+      <a href="../results-and-analysis/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Custom judges
+    Results and analysis
   
 
     
@@ -838,14 +836,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../test-scenarios/" class="md-nav__link">
+      <a href="../visualization-server/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Test scenarios
+    Visualization server
   
 
     
@@ -894,42 +892,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../creating-custom-scenarios/" class="md-nav__link">
+      <a href="../advanced-configuration/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Creating custom scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../visualization-server/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Visualization server
+    Advanced configuration
   
 
     
@@ -2835,9 +2805,9 @@
   <h1>Cli usage</h1>
 
 <h2 id="cli-usage">CLI Usage<a class="headerlink" href="#cli-usage" title="Permanent link">&para;</a></h2>
-<p><code>simpleaudit</code> CLI visualizes/exports AI safety audit results. Inspect JSON audit data via local web server or generate standalone HTML reports offline. Implemented <code>simpleaudit/cli.py</code>. Primary entry point post-audit analysis.</p>
+<p><code>simpleaudit</code> CLI visualizes/exports AI safety audit results. Inspect JSON audit data via local web server or generate standalone HTML reports offline. CLI implemented in <code>simpleaudit/cli.py</code>. Primary entry point post-audit analysis.</p>
 <h3 id="installation-and-dependencies">Installation and Dependencies<a class="headerlink" href="#installation-and-dependencies" title="Permanent link">&para;</a></h3>
-<p>Core <code>simpleaudit</code> package excludes visualization dependencies. Use <code>serve</code>/<code>export-html</code> commands requires optional dependencies. Missing dependencies cause CLI exit error message instructing install <code>visualize</code> extra.</p>
+<p>Core <code>simpleaudit</code> package excludes visualization dependencies. <code>serve</code> and <code>export-html</code> commands require optional dependencies. Missing dependencies cause CLI exit with error message instructing install <code>visualize</code> extra.</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s1">'simpleaudit[visualize]'</span>
 </code></pre></div>
 <h3 id="command-overview">Command Overview<a class="headerlink" href="#command-overview" title="Permanent link">&para;</a></h3>
@@ -2846,9 +2816,9 @@
 <li><strong><code>serve</code></strong>: Starts local web server dynamically visualize audit results from directory.</li>
 <li><strong><code>export-html</code></strong>: Generates single, self-contained HTML file from specific JSON result file.</li>
 </ol>
-<p>No command provided, or unrecognized command used, CLI prints help message exits status code <code>1</code>.</p>
+<p>No command provided or unrecognized command used, CLI prints help message exits status code <code>1</code>.</p>
 <h3 id="command-serve">Command: <code>serve</code><a class="headerlink" href="#command-serve" title="Permanent link">&para;</a></h3>
-<p><code>serve</code> command launches web server interactive visualization audit results. Scans specified directory JSON files serves browser interface.</p>
+<p><code>serve</code> command launches web server interactive visualization audit results. Scans specified directory JSON files serves via browser interface.</p>
 <p><strong>Syntax:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>simpleaudit<span class="w"> </span>serve<span class="w"> </span><span class="o">[</span>--results_dir<span class="w"> </span>DIR<span class="o">]</span><span class="w"> </span><span class="o">[</span>--port<span class="w"> </span>PORT<span class="o">]</span><span class="w"> </span><span class="o">[</span>--host<span class="w"> </span>HOST<span class="o">]</span>
 </code></pre></div></p>
@@ -2885,7 +2855,7 @@
 </table>
 <p><strong>Behavior:</strong>
 *   <code>--results_dir</code> omitted, CLI defaults <code>.</code> prints warning: <code>⚠️  Warning: --results_dir not specified, using current directory '.'</code>. Recommended explicitly set flag avoid confusion.
-*   Command imports <code>start_server</code> <code>simpleaudit.visualization.server</code>. Module/dependencies missing, CLI prints error exits.
+*   Command imports <code>start_server</code> from <code>simpleaudit.visualization.server</code>. Module dependencies missing, CLI prints error exits.
 *   Successful startup, server binds specified host port.</p>
 <p><strong>Example Usage:</strong>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># Serve results specific directory port 5000</span>
@@ -2925,7 +2895,7 @@
 </tbody>
 </table>
 <p><strong>Behavior:</strong>
-*   Command imports <code>export_standalone_html</code> <code>simpleaudit.visualization.server</code>.
+*   Command imports <code>export_standalone_html</code> from <code>simpleaudit.visualization.server</code>.
 *   <strong>Output Path Logic</strong>:
     *   <code>-o</code> provided, used output path.
     *   <code>-o</code> omitted:
