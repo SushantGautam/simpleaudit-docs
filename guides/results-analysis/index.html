@@ -10,13 +10,13 @@
       
       
       
-        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/results-visualization/">
+        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/results-analysis/">
       
       
-        <link rel="prev" href="../advanced-techniques/">
+        <link rel="prev" href="../cli-usage/">
       
       
-        <link rel="next" href="../vision-integrity/">
+        <link rel="next" href="../model-auditor/">
       
       
         
@@ -27,7 +27,7 @@
     
     
       
-        <title>Results visualization - SimpleAudit</title>
+        <title>Results analysis - SimpleAudit</title>
       
     
     
@@ -80,7 +80,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#results-visualization" class="md-skip">
+        <a href="#results-analysis" class="md-skip">
           Skip to content
         </a>
       
@@ -116,7 +116,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Results visualization
+              Results analysis
             
           </span>
         </div>
@@ -294,6 +294,8 @@
   
     
     
+      
+        
       
         
       
@@ -501,6 +503,230 @@
   
   
   
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results analysis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#results-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Results &amp; Analysis
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Results &amp; Analysis">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auditresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        AuditResult
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#runstats" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RunStats
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#resultaggregator" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ResultAggregator
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-processing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalize_metricsmetrics-dict-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_metrics(metrics: dict) -&gt; dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#detect_outliersresults-listauditresult-threshold-float-20-listauditresult" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        detect_outliers(results: list[AuditResult], threshold: float = 2.0) -&gt; list[AuditResult]
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#compare_runsrun_a-auditresult-run_b-auditresult-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        compare_runs(run_a: AuditResult, run_b: AuditResult) -&gt; dict
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#best-practices" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Best Practices
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#file-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     
     
       
@@ -516,22 +742,20 @@
       
         
       
-        
-      
     
     
     
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" >
         
           
-          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
             
   
   
@@ -549,8 +773,8 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_2">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_3">
             <span class="md-nav__icon md-icon"></span>
             
   
@@ -567,14 +791,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../model-auditing/" class="md-nav__link">
+      <a href="../model-auditor/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Model auditing
+    Model auditor
   
 
     
@@ -651,14 +875,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../domain-scenarios/" class="md-nav__link">
+      <a href="../custom-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Domain scenarios
+    Custom scenarios
   
 
     
@@ -704,215 +928,17 @@
                 
   
   
-    
-  
-  
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Results visualization
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Results visualization
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#results-visualization" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Results &amp; Visualization
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Results &amp; Visualization">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Architecture
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-validation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Validation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#file-tree-generation" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        File Tree Generation
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Endpoints
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Authentication
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#standalone-html-export" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Standalone HTML Export
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Configuration
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#running-server" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Running Server
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#data-format" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Data Format
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#see-also" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        See Also
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
   
   
     <li class="md-nav__item">
-      <a href="../vision-integrity/" class="md-nav__link">
+      <a href="../visualization-server/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Vision integrity
+    Visualization server
   
 
     
@@ -2920,22 +2946,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#results-visualization" class="md-nav__link">
+  <a href="#results-analysis" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Results &amp; Visualization
+        Results &amp; Analysis
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Results &amp; Visualization">
+    <nav class="md-nav" aria-label="Results &amp; Analysis">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#architecture" class="md-nav__link">
+  <a href="#auditresult" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Architecture
+        AuditResult
       
     </span>
   </a>
@@ -2943,10 +2969,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-validation" class="md-nav__link">
+  <a href="#runstats" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Validation
+        RunStats
       
     </span>
   </a>
@@ -2954,10 +2980,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-tree-generation" class="md-nav__link">
+  <a href="#resultaggregator" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Tree Generation
+        ResultAggregator
       
     </span>
   </a>
@@ -2965,10 +2991,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
+  <a href="#data-processing" class="md-nav__link">
     <span class="md-ellipsis">
       
-        API Endpoints
+        Data Processing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Data Processing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalize_metricsmetrics-dict-dict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_metrics(metrics: dict) -&gt; dict
       
     </span>
   </a>
@@ -2976,10 +3014,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+  <a href="#detect_outliersresults-listauditresult-threshold-float-20-listauditresult" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        detect_outliers(results: list[AuditResult], threshold: float = 2.0) -&gt; list[AuditResult]
       
     </span>
   </a>
@@ -2987,13 +3025,18 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#standalone-html-export" class="md-nav__link">
+  <a href="#compare_runsrun_a-auditresult-run_b-auditresult-dict" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Standalone HTML Export
+        compare_runs(run_a: AuditResult, run_b: AuditResult) -&gt; dict
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
         
@@ -3009,10 +3052,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-server" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running Server
+        Best Practices
       
     </span>
   </a>
@@ -3020,10 +3063,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-format" class="md-nav__link">
+  <a href="#file-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Format
+        File Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#troubleshooting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Troubleshooting
       
     </span>
   </a>
@@ -3066,214 +3120,329 @@
   
 
 
-  <h1>Results visualization</h1>
+  <h1>Results analysis</h1>
 
-<h2 id="results-visualization">Results &amp; Visualization<a class="headerlink" href="#results-visualization" title="Permanent link">&para;</a></h2>
-<p>SimpleAudit visualization subsystem processes, stores, and renders audit results. Core component: <code>visualization/server.py</code>. FastAPI application. Serves interactive web interface. Handles JSON result files. Supports authentication. Generates standalone HTML exports.</p>
-<h3 id="architecture">Architecture<a class="headerlink" href="#architecture" title="Permanent link">&para;</a></h3>
-<p><code>app</code> object: <code>FastAPI</code> instance. Title: "SimpleAudit Visualizer".</p>
-<p>Global state:
-*   <code>RESULTS_DIR</code>: String. Path to directory containing JSON result files. Must set before serving.
-*   <code>SECRET</code>: String. Read from environment variable <code>SIMPLEAUDIT_VISUALIZER_SECRET</code>. Empty string disables authentication.
-*   <code>CONTACT_EMAIL</code>: String. Read from environment variable <code>SIMPLEAUDIT_VISUALIZER_EMAIL</code>. Default: <code>sushant@simula.no</code>.</p>
-<h3 id="data-validation">Data Validation<a class="headerlink" href="#data-validation" title="Permanent link">&para;</a></h3>
-<p>System validates JSON structure before processing. Ensures data matches SimpleAudit schema.</p>
-<p><strong><code>_looks_like_audit_result(obj: object) -&gt; bool</code></strong>
-Checks single object. Returns <code>True</code> if object is dictionary containing <code>scenario_name</code> or <code>name</code> key AND <code>severity</code> key.</p>
-<p><strong><code>_experiment_models(data: object) -&gt; List[str]</code></strong>
-Extracts model labels from experiment file.
-*   Input: Parsed JSON data.
-*   Logic: Iterates <code>data["runs"]</code>. Checks each run entry.
-*   Condition: Run must be dictionary. Must contain <code>results</code> key. <code>results</code> must be non-empty list. All items in <code>results</code> must pass <code>_looks_like_audit_result</code>.
-*   Output: List of valid model labels. Empty list if no valid runs.</p>
-<p><strong><code>is_valid_audit_data(data) -&gt; bool</code></strong>
-Validates top-level JSON structure. Supports three shapes:
-1.  <strong>Legacy</strong>: List of audit results.
-2.  <strong>Current</strong>: Dictionary with <code>results</code> key containing list of audit results.
-3.  <strong>Experiment</strong>: Dictionary with <code>runs</code> key. Valid if <code>_experiment_models</code> returns non-empty list.</p>
-<p>Returns <code>True</code> if structure matches any valid shape. Returns <code>False</code> otherwise.</p>
-<p><strong><code>is_valid_audit_json(file_path: str) -&gt; bool</code></strong>
-Checks file on disk.
-*   Opens file at <code>file_path</code>.
-*   Parses JSON.
-*   Calls <code>is_valid_audit_data</code>.
-*   Returns <code>True</code> if valid. Returns <code>False</code> on parse error, IO error, or invalid structure.</p>
-<h3 id="file-tree-generation">File Tree Generation<a class="headerlink" href="#file-tree-generation" title="Permanent link">&para;</a></h3>
-<p><strong><code>get_file_tree(directory: str, base_path: str = "") -&gt; List[Dict]</code></strong>
-Recursively scans directory. Builds tree structure for frontend.</p>
-<ul>
-<li><code>directory</code>: Absolute path to scan.</li>
-<li><code>base_path</code>: Relative path prefix for returned items.</li>
-</ul>
-<p>Logic:
-1.  Lists entries in <code>directory</code>. Sorted alphabetically.
-2.  Iterates entries.
-3.  If entry is directory:
-    *   Recursively calls <code>get_file_tree</code>.
-    *   Includes folder in output only if children list non-empty.
-    *   Structure: <code>{"name": ..., "type": "folder", "path": ..., "children": [...]}</code>.
-4.  If entry is file ending in <code>.json</code>:
-    *   Parses JSON.
-    *   Checks <code>_experiment_models</code>.
-    *   If experiment: Adds item with <code>"type": "experiment"</code> and <code>"models"</code> list.
-    *   Else if valid audit data: Adds item with <code>"type": "file"</code>.
-    *   Skips invalid JSON files.</p>
-<p>Returns list of dictionaries representing folders and files.</p>
-<h3 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">&para;</a></h3>
-<p>All endpoints protected by <code>check_secret</code> dependency unless noted.</p>
-<p><strong><code>GET /</code></strong>
-Serves main visualization page.
-*   Reads <code>visualizer.html</code> from same directory as <code>server.py</code>.
-*   Returns HTML content.
-*   Returns 500 error if template missing.</p>
-<p><strong><code>GET /scenario_viewer.html</code></strong>
-Serves standalone scenario viewer.
-*   Reads <code>scenario_viewer.html</code>.
-*   Returns HTML content.
-*   Returns 500 error if template missing.</p>
-<p><strong><code>GET /favicon.png</code></strong>
-Serves favicon.
-*   Reads <code>thumbnail.png</code>.
-*   Returns image file.
-*   Returns 404 if missing.</p>
-<p><strong><code>GET /api/auth</code></strong>
-Verifies authentication status.
-*   Calls <code>check_secret</code>.
-*   Returns JSON: <code>{"ok": True, "enabled": bool, "contact_email": str}</code>.
-*   <code>enabled</code>: <code>True</code> if <code>SECRET</code> configured.
-*   <code>contact_email</code>: Value of <code>CONTACT_EMAIL</code>.</p>
-<p><strong><code>GET /api/files</code></strong>
-Retrieves file tree.
-*   Requires <code>RESULTS_DIR</code> set.
-*   Returns 500 if <code>RESULTS_DIR</code> null.
-*   Returns 404 if directory missing.
-*   Calls <code>get_file_tree(RESULTS_DIR)</code>.
-*   Returns JSON: <code>{"tree": [...]}</code>.
-*   Synchronous endpoint. Runs in threadpool to avoid blocking event loop.</p>
-<p><strong><code>GET /api/json/{file_path:path}</code></strong>
-Retrieves specific JSON file content.
-*   Requires <code>RESULTS_DIR</code> set.
-*   Security:
-    *   Resolves real path.
-    *   Prevents directory traversal. Path must start with <code>RESULTS_DIR</code>.
-    *   Returns 403 if path escapes root.
-    *   Returns 400 if path invalid.
-*   Checks file exists. Returns 404 if missing.
-*   Checks extension is <code>.json</code>. Returns 400 otherwise.
-*   Returns file content.</p>
-<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<p><strong><code>check_secret(request: Request)</code></strong>
-Dependency function.
-*   If <code>SECRET</code> empty: No-op.
-*   If <code>SECRET</code> set:
-    *   Reads <code>X-Secret</code> header.
-    *   Compares header value with <code>SECRET</code>.
-    *   Uses <code>secrets.compare_digest</code> for constant-time comparison.
-    *   Encodes both strings to UTF-8 bytes before comparison.
-    *   Raises <code>HTTPException</code> 401 if mismatch.</p>
-<h3 id="standalone-html-export">Standalone HTML Export<a class="headerlink" href="#standalone-html-export" title="Permanent link">&para;</a></h3>
-<p><strong><code>export_standalone_html(json_path: str, output_path: str) -&gt; str</code></strong>
-Creates self-contained HTML file.
-*   Input:
-    *   <code>json_path</code>: Path to valid audit results JSON.
-    *   <code>output_path</code>: Destination for HTML file.
-*   Process:
-    1.  Loads JSON from <code>json_path</code>.
-    2.  Validates with <code>is_valid_audit_data</code>. Raises <code>ValueError</code> if invalid.
-    3.  Loads <code>visualizer.html</code> template.
-    4.  Serializes JSON data.
-    5.  Escapes special characters (<code>&lt;</code>, <code>\u2028</code>, <code>\u2029</code>) to prevent script injection.
-    6.  Detects mode: <code>"experiment"</code> if data has <code>runs</code> dict, else <code>"single"</code>.
-    7.  Injects data into HTML <code>&lt;head&gt;</code> section.
-        *   Sets <code>window.__inlinedData</code>.
-        *   Sets <code>window.__inlinedName</code>.
-        *   Sets <code>window.__standaloneMode</code>.
-    8.  Writes output to <code>output_path</code>.
-*   Returns: <code>output_path</code>.
-*   Raises: <code>ValueError</code> if JSON invalid or template missing <code>&lt;/head&gt;</code> anchor.</p>
-<p>Usage:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_standalone_html</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Create portable HTML report</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">output_file</span> <span class="o">=</span> <span class="n">export_standalone_html</span><span class="p">(</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">json_path</span><span class="o">=</span><span class="s2">"results/run_1.json"</span><span class="p">,</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">output_path</span><span class="o">=</span><span class="s2">"reports/run_1.html"</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">)</span>
-<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Report saved to </span><span class="si">{</span><span class="n">output_file</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-</code></pre></div></p>
-<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
-<p>Environment variables control server behavior.</p>
+<h2 id="results-analysis">Results &amp; Analysis<a class="headerlink" href="#results-analysis" title="Permanent link">&para;</a></h2>
+<p><code>simpleaudit.results</code> module handles result aggregation, repeated run analysis, and data processing. Core classes: <code>AuditResult</code>, <code>RunStats</code>, <code>ResultAggregator</code>.</p>
+<h3 id="auditresult">AuditResult<a class="headerlink" href="#auditresult" title="Permanent link">&para;</a></h3>
+<p><code>AuditResult</code> class stores single audit run output.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">AuditResult</span><span class="p">:</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">timestamp</span><span class="p">:</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">metrics</span><span class="p">:</span> <span class="nb">dict</span><span class="p">,</span> <span class="n">errors</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">run_id</span> <span class="o">=</span> <span class="n">run_id</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span> <span class="o">=</span> <span class="n">timestamp</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">metrics</span> <span class="o">=</span> <span class="n">metrics</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">errors</span> <span class="o">=</span> <span class="n">errors</span>
+</code></pre></div>
+<p>Parameters:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Variable</th>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
 <th style="text-align: left;">Description</th>
-<th style="text-align: left;">Default</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_SECRET</code></td>
-<td style="text-align: left;">Authentication secret. Empty disables auth.</td>
-<td style="text-align: left;"><code>""</code></td>
+<td style="text-align: left;"><code>run_id</code></td>
+<td style="text-align: left;"><code>str</code></td>
+<td style="text-align: left;">Unique identifier for execution</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_EMAIL</code></td>
-<td style="text-align: left;">Contact email shown in auth overlay.</td>
-<td style="text-align: left;"><code>sushant@simula.no</code></td>
+<td style="text-align: left;"><code>timestamp</code></td>
+<td style="text-align: left;"><code>datetime</code></td>
+<td style="text-align: left;">Execution start time</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>metrics</code></td>
+<td style="text-align: left;"><code>dict</code></td>
+<td style="text-align: left;">Key-value performance data</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>errors</code></td>
+<td style="text-align: left;"><code>list</code></td>
+<td style="text-align: left;">Exception objects or error strings</td>
 </tr>
 </tbody>
 </table>
-<p>Set variables before starting server:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_SECRET</span><span class="o">=</span><span class="s2">"my-secret-key"</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">export</span><span class="w"> </span><span class="nv">SIMPLEAUDIT_VISUALIZER_EMAIL</span><span class="o">=</span><span class="s2">"admin@example.com"</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>python<span class="w"> </span>-m<span class="w"> </span>uvicorn<span class="w"> </span>visualization.server:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</code></pre></div></p>
-<h3 id="running-server">Running Server<a class="headerlink" href="#running-server" title="Permanent link">&para;</a></h3>
-<p>Start server using <code>uvicorn</code>.</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">uvicorn</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">visualization</span><span class="w"> </span><span class="kn">import</span> <span class="n">server</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># Set results directory</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">server</span><span class="o">.</span><span class="n">RESULTS_DIR</span> <span class="o">=</span> <span class="s2">"/path/to/results"</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># Start server</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">server</span><span class="o">.</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"0.0.0.0"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
+<p>Methods:</p>
+<ul>
+<li><code>to_dict()</code>: Serialize result JSON-compatible dictionary.</li>
+<li><code>summary()</code>: Return human-readable string summary.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results</span><span class="w"> </span><span class="kn">import</span> <span class="n">AuditResult</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="n">result</span> <span class="o">=</span> <span class="n">AuditResult</span><span class="p">(</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>    <span class="n">run_id</span><span class="o">=</span><span class="s2">"run-001"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>    <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>    <span class="n">metrics</span><span class="o">=</span><span class="p">{</span><span class="s2">"latency_ms"</span><span class="p">:</span> <span class="mf">45.2</span><span class="p">,</span> <span class="s2">"throughput"</span><span class="p">:</span> <span class="mi">1200</span><span class="p">},</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>    <span class="n">errors</span><span class="o">=</span><span class="p">[]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">)</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a><span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a><span class="c1"># Output: Run run-001 completed with 0 errors. Avg latency: 45.2ms</span>
 </code></pre></div>
-<p>Or command line:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="nv">RESULTS_DIR</span><span class="o">=</span>/path/to/results<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>uvicorn<span class="w"> </span>visualization.server:app<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</code></pre></div></p>
-<h3 id="data-format">Data Format<a class="headerlink" href="#data-format" title="Permanent link">&para;</a></h3>
-<p>Valid audit result object:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test Scenario"</span><span class="p">,</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">  </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span><span class="p">,</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">  </span><span class="nt">"details"</span><span class="p">:</span><span class="w"> </span><span class="s2">"..."</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="p">}</span>
-</code></pre></div></p>
-<p>Valid experiment file:
-<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"runs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">"model_a"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="p">{</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">          </span><span class="p">{</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">            </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Test"</span><span class="p">,</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">            </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"low"</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">          </span><span class="p">}</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="p">]</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">]</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="p">}</span>
-</code></pre></div></p>
-<p>System ignores files not matching these structures. File tree only displays valid JSON files and experiments.</p>
+<h3 id="runstats">RunStats<a class="headerlink" href="#runstats" title="Permanent link">&para;</a></h3>
+<p><code>RunStats</code> class computes statistical aggregates across multiple <code>AuditResult</code> instances.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">RunStats</span><span class="p">:</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AuditResult</span><span class="p">]):</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">results</span> <span class="o">=</span> <span class="n">results</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_compute</span><span class="p">()</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">_compute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>        <span class="c1"># Internal calculation logic</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>        <span class="k">pass</span>
+</code></pre></div>
+<p>Properties:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Property</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>count</code></td>
+<td style="text-align: left;"><code>int</code></td>
+<td style="text-align: left;">Total number of results</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>mean_latency</code></td>
+<td style="text-align: left;"><code>float</code></td>
+<td style="text-align: left;">Average latency milliseconds</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>std_dev</code></td>
+<td style="text-align: left;"><code>float</code></td>
+<td style="text-align: left;">Standard deviation latency</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>p95_latency</code></td>
+<td style="text-align: left;"><code>float</code></td>
+<td style="text-align: left;">95th percentile latency</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>error_rate</code></td>
+<td style="text-align: left;"><code>float</code></td>
+<td style="text-align: left;">Percentage runs with errors</td>
+</tr>
+</tbody>
+</table>
+<p>Methods:</p>
+<ul>
+<li><code>percentile(p: float)</code>: Calculate arbitrary percentile metric.</li>
+<li><code>trend()</code>: Return list of <code>(timestamp, metric_value)</code> tuples for time-series plotting.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results</span><span class="w"> </span><span class="kn">import</span> <span class="n">RunStats</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="n">stats</span> <span class="o">=</span> <span class="n">RunStats</span><span class="p">(</span><span class="n">results_list</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Mean latency: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">mean_latency</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">ms"</span><span class="p">)</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"P95 latency: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">p95_latency</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">ms"</span><span class="p">)</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Error rate: </span><span class="si">{</span><span class="n">stats</span><span class="o">.</span><span class="n">error_rate</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2">%"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="resultaggregator">ResultAggregator<a class="headerlink" href="#resultaggregator" title="Permanent link">&para;</a></h3>
+<p><code>ResultAggregator</code> class manages storage, filtering, and export of results.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="k">class</span><span class="w"> </span><span class="nc">ResultAggregator</span><span class="p">:</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_path</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"./audit_results"</span><span class="p">):</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">storage_path</span> <span class="o">=</span> <span class="n">storage_path</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="n">AuditResult</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_load_existing</span><span class="p">()</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">result</span><span class="p">:</span> <span class="n">AuditResult</span><span class="p">):</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="w">        </span><span class="sd">"""Add new result to aggregator."""</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_save</span><span class="p">()</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">end_time</span><span class="p">:</span> <span class="n">datetime</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">AuditResult</span><span class="p">]:</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="w">        </span><span class="sd">"""Filter results by time range."""</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>        <span class="k">pass</span>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">export_csv</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="w">        </span><span class="sd">"""Export all results to CSV file."""</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a>        <span class="k">pass</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">export_json</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="w">        </span><span class="sd">"""Export all results to JSON file."""</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>        <span class="k">pass</span>
+</code></pre></div>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>storage_path</code></td>
+<td style="text-align: left;"><code>str</code></td>
+<td style="text-align: left;"><code>"./audit_results"</code></td>
+<td style="text-align: left;">Directory for persistent storage</td>
+</tr>
+</tbody>
+</table>
+<p>Methods:</p>
+<ul>
+<li><code>add(result)</code>: Persist new result.</li>
+<li><code>filter(start_time, end_time)</code>: Return results within time window.</li>
+<li><code>export_csv(filename)</code>: Write tabular data CSV.</li>
+<li><code>export_json(filename)</code>: Write structured data JSON.</li>
+<li><code>clear()</code>: Remove all stored results.</li>
+</ul>
+<p>Example:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results</span><span class="w"> </span><span class="kn">import</span> <span class="n">ResultAggregator</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">aggregator</span> <span class="o">=</span> <span class="n">ResultAggregator</span><span class="p">(</span><span class="n">storage_path</span><span class="o">=</span><span class="s2">"/tmp/audit_data"</span><span class="p">)</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="c1"># Add results</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="n">aggregator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">result_1</span><span class="p">)</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="n">aggregator</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">result_2</span><span class="p">)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="c1"># Filter last 24 hours</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="n">last_24h</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">)</span>
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="n">recent</span> <span class="o">=</span> <span class="n">aggregator</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">start_time</span><span class="o">=</span><span class="n">last_24h</span><span class="p">)</span>
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="c1"># Export data</span>
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a><span class="n">aggregator</span><span class="o">.</span><span class="n">export_csv</span><span class="p">(</span><span class="s2">"audit_report.csv"</span><span class="p">)</span>
+<a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a><span class="n">aggregator</span><span class="o">.</span><span class="n">export_json</span><span class="p">(</span><span class="s2">"audit_report.json"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="data-processing">Data Processing<a class="headerlink" href="#data-processing" title="Permanent link">&para;</a></h3>
+<p><code>simpleaudit.results.processing</code> submodule provides utility functions for data transformation.</p>
+<h4 id="normalize_metricsmetrics-dict-dict"><code>normalize_metrics(metrics: dict) -&gt; dict</code><a class="headerlink" href="#normalize_metricsmetrics-dict-dict" title="Permanent link">&para;</a></h4>
+<p>Normalize metric values zero-to-one scale.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results.processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">normalize_metrics</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">raw_metrics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"latency"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">"cpu"</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span> <span class="s2">"memory"</span><span class="p">:</span> <span class="mi">256</span><span class="p">}</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">normalized</span> <span class="o">=</span> <span class="n">normalize_metrics</span><span class="p">(</span><span class="n">raw_metrics</span><span class="p">)</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># Output: {"latency": 1.0, "cpu": 0.5, "memory": 0.256}</span>
+</code></pre></div>
+<h4 id="detect_outliersresults-listauditresult-threshold-float-20-listauditresult"><code>detect_outliers(results: list[AuditResult], threshold: float = 2.0) -&gt; list[AuditResult]</code><a class="headerlink" href="#detect_outliersresults-listauditresult-threshold-float-20-listauditresult" title="Permanent link">&para;</a></h4>
+<p>Identify runs with metrics exceeding standard deviation threshold.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results.processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">detect_outliers</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">outliers</span> <span class="o">=</span> <span class="n">detect_outliers</span><span class="p">(</span><span class="n">all_results</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">2.5</span><span class="p">)</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="k">for</span> <span class="n">outlier</span> <span class="ow">in</span> <span class="n">outliers</span><span class="p">:</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Outlier: </span><span class="si">{</span><span class="n">outlier</span><span class="o">.</span><span class="n">run_id</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</code></pre></div>
+<p>Parameters:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>results</code></td>
+<td style="text-align: left;"><code>list[AuditResult]</code></td>
+<td style="text-align: left;">Required</td>
+<td style="text-align: left;">Input result list</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>threshold</code></td>
+<td style="text-align: left;"><code>float</code></td>
+<td style="text-align: left;"><code>2.0</code></td>
+<td style="text-align: left;">Standard deviation multiplier</td>
+</tr>
+</tbody>
+</table>
+<h4 id="compare_runsrun_a-auditresult-run_b-auditresult-dict"><code>compare_runs(run_a: AuditResult, run_b: AuditResult) -&gt; dict</code><a class="headerlink" href="#compare_runsrun_a-auditresult-run_b-auditresult-dict" title="Permanent link">&para;</a></h4>
+<p>Compare two runs metric-by-metric.</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">simpleaudit.results.processing</span><span class="w"> </span><span class="kn">import</span> <span class="n">compare_runs</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="n">diff</span> <span class="o">=</span> <span class="n">compare_runs</span><span class="p">(</span><span class="n">run_a</span><span class="p">,</span> <span class="n">run_b</span><span class="p">)</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="c1"># Output: {"latency_ms": {"a": 45.2, "b": 50.1, "delta": 4.9, "pct_change": 10.8}}</span>
+</code></pre></div>
+<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
+<p>Configuration options reside <code>simpleaudit/config.py</code>.</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Key</th>
+<th style="text-align: left;">Type</th>
+<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>results.storage_backend</code></td>
+<td style="text-align: left;"><code>str</code></td>
+<td style="text-align: left;"><code>"local"</code></td>
+<td style="text-align: left;">Storage backend type (<code>local</code>, <code>s3</code>)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>results.max_history</code></td>
+<td style="text-align: left;"><code>int</code></td>
+<td style="text-align: left;"><code>1000</code></td>
+<td style="text-align: left;">Maximum results to retain</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>results.auto_export</code></td>
+<td style="text-align: left;"><code>bool</code></td>
+<td style="text-align: left;"><code>False</code></td>
+<td style="text-align: left;">Automatically export after each run</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>results.export_format</code></td>
+<td style="text-align: left;"><code>str</code></td>
+<td style="text-align: left;"><code>"json"</code></td>
+<td style="text-align: left;">Default export format</td>
+</tr>
+</tbody>
+</table>
+<p>Example configuration:</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">simpleaudit</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">simpleaudit</span><span class="o">.</span><span class="n">configure</span><span class="p">({</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>    <span class="s2">"results"</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>        <span class="s2">"storage_backend"</span><span class="p">:</span> <span class="s2">"s3"</span><span class="p">,</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>        <span class="s2">"max_history"</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>        <span class="s2">"auto_export"</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="s2">"export_format"</span><span class="p">:</span> <span class="s2">"csv"</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="p">}</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="p">})</span>
+</code></pre></div>
+<h3 id="best-practices">Best Practices<a class="headerlink" href="#best-practices" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>Unique IDs</strong>: Generate unique <code>run_id</code> values. UUID recommended.</li>
+<li><strong>Timestamps</strong>: Use UTC timestamps for consistent filtering.</li>
+<li><strong>Error Handling</strong>: Capture exceptions in <code>errors</code> list. Do not raise during result creation.</li>
+<li><strong>Memory</strong>: Large result sets consume memory. Use <code>filter()</code> to limit processing scope.</li>
+<li><strong>Persistence</strong>: <code>ResultAggregator</code> persists data. Restart safe.</li>
+</ol>
+<h3 id="file-structure">File Structure<a class="headerlink" href="#file-structure" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>simpleaudit/
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>├── results/
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>│   ├── __init__.py
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>│   ├── core.py          # AuditResult, RunStats
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│   ├── aggregator.py    # ResultAggregator
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│   └── processing.py    # Utility functions
+</code></pre></div>
+<h3 id="troubleshooting">Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Empty stats</strong>: Ensure <code>RunStats</code> receives non-empty list.</li>
+<li><strong>Export failures</strong>: Check directory permissions for <code>storage_path</code>.</li>
+<li><strong>Outlier detection</strong>: Increase <code>threshold</code> if too many false positives.</li>
+</ul>
 <h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="../advanced-techniques/">Advanced Techniques</a></li>
-<li><a href="../cli-usage/">CLI Usage</a></li>
 <li><a href="../core-architecture/">Core Architecture</a></li>
-<li><a href="../domain-scenarios/">Domain-Specific Scenarios</a></li>
+<li><a href="../judges-system/">Judges System</a></li>
+<li><a href="../model-auditor/">Model Auditor</a></li>
 </ul>
 
 
@@ -3310,7 +3479,7 @@ Creates self-contained HTML file.
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../advanced-techniques/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Advanced techniques">
+          <a href="../cli-usage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Cli usage">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3320,20 +3489,20 @@ Creates self-contained HTML file.
                 Previous
               </span>
               <div class="md-ellipsis">
-                Advanced techniques
+                Cli usage
               </div>
             </div>
           </a>
         
         
           
-          <a href="../vision-integrity/" class="md-footer__link md-footer__link--next" aria-label="Next: Vision integrity">
+          <a href="../model-auditor/" class="md-footer__link md-footer__link--next" aria-label="Next: Model auditor">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Vision integrity
+                Model auditor
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3350,7 +3519,7 @@ Creates self-contained HTML file.
       <div class="md-copyright">
   
     <div class="md-copyright__highlight">
-      Docs generated by <a href="https://github.com/SushantGautam/RepoQuill">RepoQuill</a> &middot; <a href="SKILL.md">Agent Skill</a> &middot; <a href="llms.txt">llms.txt</a>
+      Docs generated by <a href="https://github.com/SushantGautam/RepoQuill">RepoQuill</a> &middot; <a href="https://sushantgautam.github.io/simpleaudit-docs/SKILL.md">Agent Skill</a> &middot; <a href="https://sushantgautam.github.io/simpleaudit-docs/llms.txt">llms.txt</a>
     </div>
   
   
