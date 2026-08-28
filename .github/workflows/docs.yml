@@ -25,16 +25,12 @@ on:
           Where to publish the built site.
           "gh-pages" publishes to a dedicated gh-pages branch (default).
           "branch-folder" commits the built site into docs/ on the default
-          branch (main). "branch-folder:dev" commits into docs/ on the dev
-          branch. GitHub Pages must be configured to serve from the matching
-          branch and /docs path.
+          branch (main). "branch-folder:<branch>" commits into docs/ on a
+          specific branch (e.g. "branch-folder:dev"). GitHub Pages must be
+          configured to serve from the matching branch and /docs path.
         required: false
         default: "gh-pages"
-        type: choice
-        options:
-          - gh-pages
-          - branch-folder
-          - branch-folder:dev
+        type: string
 
 jobs:
   generate-and-build:
