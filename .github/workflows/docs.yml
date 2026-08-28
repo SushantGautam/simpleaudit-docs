@@ -1,86 +1,50 @@
-name: Build & Deploy Docs
+# ============================================================================
+# SimpleAudit docs — powered by RepoQuill
+#
+# This is a docs-only repo. The simpleaudit source is checked out separately
+# (via the reusable workflow's source_repo input) and pointed at via
+# SOURCE_ROOT. The LLM API key is read from the LLM_API_KEY secret and
+# exposed to the LLM client as the env var named in repoquill.yml
+# (api_key_env).
+# ============================================================================
+name: Docs
 
 on:
   push:
     branches: [main]
+  # Regenerate docs when the config or workflow changes.
+  pull_request:
+    branches: [main]
+    paths:
+      - "repoquill.yml"
+      - ".github/workflows/docs.yml"
   workflow_dispatch:
 
-permissions:
-  contents: write
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout docs repo
-        uses: actions/checkout@v4
-        with:
-          path: simpleaudit-docs
-
-      - name: Checkout simpleaudit source
-        uses: actions/checkout@v4
-        with:
-          repository: kelkalot/simpleaudit
-          ref: feat/judge-the-judge
-          path: simpleaudit
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.11"
-
-      - name: Install dependencies
-        run: pip install mkdocs mkdocs-material mkdocstrings[python] griffe requests
-
-      - name: Cache docs plan
-        uses: actions/cache@v4
-        with:
-          path: simpleaudit-docs/.docs_cache
-          key: docs-plan-${{ github.sha }}
-          restore-keys: |
-            docs-plan-
-
-      - name: Generate docs
-        working-directory: simpleaudit-docs
-        env:
-          SOURCE_ROOT: ${{ github.workspace }}/simpleaudit
-          OWUI_API_KEY: ${{ secrets.OWUI_API_KEY }}
-        run: |
-          if [ -n "$OWUI_API_KEY" ]; then
-            python3 generate_docs.py --no-build
-          else
-            echo "OWUI_API_KEY not set — using --no-llm (deterministic layer only)"
-            python3 generate_docs.py --no-llm --no-build
-          fi
-
-      - name: Build site
-        working-directory: simpleaudit-docs
-        run: python3 -m mkdocs build --strict
-
-      - name: Setup Pages
-        if: github.event_name != 'pull_request'
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        if: github.event_name != 'pull_request'
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: simpleaudit-docs/site
-
-  deploy:
+  docs:
+    # Run the full reusable workflow (generate + build + deploy) on push to
+    # main and manual dispatch. On PRs, just generate (no deploy) as a check.
     if: github.event_name != 'pull_request'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
+    with:
+      config: repoquill.yml
+      # Check out the simpleaudit source separately (docs-only repo).
+      source_repo: SushantGautam/simpleaudit
+      source_ref: main
+      api_key_secret: LLM_API_KEY     # name of the secret in THIS repo
+      api_key_env: OPENAI_API_KEY      # must match api_key_env in repoquill.yml
+      deploy_branch: gh-pages
+      deploy_path: site
+    secrets: inherit
+
+  # Lightweight PR check: build the deterministic reference only (no LLM,
+  # no API key) to catch config/reference regressions on every PR.
+  docs-check:
+    if: github.event_name == 'pull_request'
+    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
+    with:
+      config: repoquill.yml
+      source_repo: SushantGautam/simpleaudit
+      source_ref: main
+      no_llm: "true"
+      deploy_branch: ""
