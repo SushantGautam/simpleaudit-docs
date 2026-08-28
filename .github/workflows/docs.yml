@@ -2,17 +2,17 @@
 # SimpleAudit docs — powered by RepoQuill
 #
 # This is a docs-only repo. The simpleaudit source is checked out separately
-# (via the reusable workflow's source_repo input) and pointed at via
-# SOURCE_ROOT. The LLM API key is read from the LLM_API_KEY secret and
-# exposed to the LLM client as the env var named in repoquill.yml
-# (api_key_env).
+# and pointed at via SOURCE_ROOT. The LLM API key is read from the
+# LLM_API_KEY secret and exposed to the LLM client as the env var named in
+# repoquill.yml (api_key_env).
+#
+# RepoQuill is installed from the SushantGautam/RepoQuill repo (not PyPI).
 # ============================================================================
 name: Docs
 
 on:
   push:
     branches: [main]
-  # Regenerate docs when the config or workflow changes.
   pull_request:
     branches: [main]
     paths:
@@ -21,30 +21,109 @@ on:
   workflow_dispatch:
 
 jobs:
-  docs:
-    # Run the full reusable workflow (generate + build + deploy) on push to
-    # main and manual dispatch. On PRs, just generate (no deploy) as a check.
+  generate-and-build:
     if: github.event_name != 'pull_request'
-    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
-    with:
-      config: repoquill.yml
-      # Check out the simpleaudit source separately (docs-only repo).
-      source_repo: SushantGautam/simpleaudit
-      source_ref: main
-      api_key_secret: LLM_API_KEY     # name of the secret in THIS repo
-      api_key_env: OPENAI_API_KEY      # must match api_key_env in repoquill.yml
-      deploy_branch: gh-pages
-      deploy_path: site
-    secrets: inherit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout docs repo
+        uses: actions/checkout@v4
+
+      - name: Checkout RepoQuill
+        uses: actions/checkout@v4
+        with:
+          repository: SushantGautam/RepoQuill
+          path: _repoquill
+
+      - name: Checkout simpleaudit source
+        uses: actions/checkout@v4
+        with:
+          repository: SushantGautam/simpleaudit
+          ref: main
+          path: source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install RepoQuill
+        run: |
+          python -m pip install --upgrade pip
+          pip install ./_repoquill
+
+      - name: Generate + build docs
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.LLM_API_KEY }}
+          SOURCE_ROOT: ${{ github.workspace }}/source
+        run: |
+          repoquill generate \
+            --config repoquill.yml \
+            --build
+
+      - name: Upload site artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: site/
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: generate-and-build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Download site artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: site/
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
+          publish_branch: gh-pages
 
   # Lightweight PR check: build the deterministic reference only (no LLM,
   # no API key) to catch config/reference regressions on every PR.
   docs-check:
     if: github.event_name == 'pull_request'
-    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
-    with:
-      config: repoquill.yml
-      source_repo: SushantGautam/simpleaudit
-      source_ref: main
-      no_llm: "true"
-      deploy_branch: ""
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout docs repo
+        uses: actions/checkout@v4
+
+      - name: Checkout RepoQuill
+        uses: actions/checkout@v4
+        with:
+          repository: SushantGautam/RepoQuill
+          path: _repoquill
+
+      - name: Checkout simpleaudit source
+        uses: actions/checkout@v4
+        with:
+          repository: SushantGautam/simpleaudit
+          ref: main
+          path: source
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install RepoQuill
+        run: |
+          python -m pip install --upgrade pip
+          pip install ./_repoquill
+
+      - name: Generate reference (no LLM)
+        env:
+          SOURCE_ROOT: ${{ github.workspace }}/source
+        run: |
+          repoquill generate \
+            --config repoquill.yml \
+            --no-llm \
+            --build
