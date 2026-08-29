@@ -12,13 +12,13 @@ pip install simpleaudit
 
 ### Getting Started
 
-- [Quickstart](guides/quickstart.md) — Run your first local audit via CLI and inspect generated results.
-- [Installation](guides/installation.md) — Install SimpleAudit and configure local model dependencies.
+- [Quickstart](guides/quickstart.md) — Run your first local audit using the CLI and core auditor classes.
+- [Installation](guides/installation.md) — Install dependencies and configure the local-first environment.
 
 ### Core Concepts
 
-- [Architecture](guides/architecture.md) — Understand the auditor, experiment, and result aggregation flow.
-- [Key Ideas](guides/key-ideas.md) — Learn how judges, scenarios, and visualization integrate.
+- [Architecture](guides/architecture.md) — Understand the experiment lifecycle, model auditing, and result handling.
+- [Key Ideas](guides/key-ideas.md) — Learn how judges and scenarios define adversarial probing strategies.
 
 ## API Reference
 
@@ -26,7 +26,7 @@ pip install simpleaudit
 
 - [`simpleaudit`](reference/simpleaudit.md) — SimpleAudit - Lightweight AI Safety Auditing Framework
 - [`simpleaudit.cli`](reference/simpleaudit_cli.md) — CLI interface for SimpleAudit tools.
-- [`simpleaudit.experiment`](reference/simpleaudit_experiment.md) — 
+- [`simpleaudit.experiment`](reference/simpleaudit_experiment.md) — audit experiment
 - [`simpleaudit.judges`](reference/simpleaudit_judges.md) — Built-in judge configurations for SimpleAudit.
 - [`simpleaudit.judges.abstention`](reference/simpleaudit_judges_abstention.md) — Abstention judge configuration.
 - [`simpleaudit.judges.binary_abstention`](reference/simpleaudit_judges_binary_abstention.md) — Binary abstention judge — language-agnostic.
@@ -40,8 +40,8 @@ pip install simpleaudit
 - [`simpleaudit.repeated_results`](reference/simpleaudit_repeated_results.md) — Repeated-run results for SimpleAudit.
 - [`simpleaudit.results`](reference/simpleaudit_results.md) — Results handling for SimpleAudit.
 - [`simpleaudit.scenarios`](reference/simpleaudit_scenarios.md) — Built-in scenario packs for SimpleAudit.
-- [`simpleaudit.scenarios.bullshitbench_health`](reference/simpleaudit_scenarios_bullshitbench_health.md) — 
-- [`simpleaudit.scenarios.bullshitbench_v1_v2`](reference/simpleaudit_scenarios_bullshitbench_v1_v2.md) — 
+- [`simpleaudit.scenarios.bullshitbench_health`](reference/simpleaudit_scenarios_bullshitbench_health.md) — Bullshitbench health scenarios for SimpleAudit
+- [`simpleaudit.scenarios.bullshitbench_v1_v2`](reference/simpleaudit_scenarios_bullshitbench_v1_v2.md) — BullshitBench Scenario Pack for SimpleAudit
 - [`simpleaudit.scenarios.health`](reference/simpleaudit_scenarios_health.md) — Healthcare domain scenarios.
 - [`simpleaudit.scenarios.hei_refusal`](reference/simpleaudit_scenarios_hei_refusal.md) — Hei refusal scenario pack.
 - [`simpleaudit.scenarios.helpmed`](reference/simpleaudit_scenarios_helpmed.md) — HelpMed domain scenarios.
@@ -50,7 +50,7 @@ pip install simpleaudit
 - [`simpleaudit.scenarios.safety`](reference/simpleaudit_scenarios_safety.md) — General AI safety scenarios.
 - [`simpleaudit.scenarios.skatteetaten`](reference/simpleaudit_scenarios_skatteetaten.md) — Skatteetaten (Norwegian Tax Administration) scenario pack.
 - [`simpleaudit.scenarios.system_prompt`](reference/simpleaudit_scenarios_system_prompt.md) — System prompt testing scenarios.
-- [`simpleaudit.scenarios.ung`](reference/simpleaudit_scenarios_ung.md) — 
+- [`simpleaudit.scenarios.ung`](reference/simpleaudit_scenarios_ung.md) — ung scenarios
 - [`simpleaudit.utils`](reference/simpleaudit_utils.md) — Utility functions for SimpleAudit.
 
 ### CLI
@@ -72,8 +72,8 @@ pip install simpleaudit
 ### Scenarios
 
 - [`simpleaudit.scenarios`](reference/simpleaudit_scenarios.md) — Built-in scenario packs for SimpleAudit.
-- [`simpleaudit.scenarios.bullshitbench_health`](reference/simpleaudit_scenarios_bullshitbench_health.md) — 
-- [`simpleaudit.scenarios.bullshitbench_v1_v2`](reference/simpleaudit_scenarios_bullshitbench_v1_v2.md) — 
+- [`simpleaudit.scenarios.bullshitbench_health`](reference/simpleaudit_scenarios_bullshitbench_health.md) — Bullshitbench health scenarios for SimpleAudit
+- [`simpleaudit.scenarios.bullshitbench_v1_v2`](reference/simpleaudit_scenarios_bullshitbench_v1_v2.md) — BullshitBench Scenario Pack for SimpleAudit
 - [`simpleaudit.scenarios.health`](reference/simpleaudit_scenarios_health.md) — Healthcare domain scenarios.
 - [`simpleaudit.scenarios.hei_refusal`](reference/simpleaudit_scenarios_hei_refusal.md) — Hei refusal scenario pack.
 - [`simpleaudit.scenarios.helpmed`](reference/simpleaudit_scenarios_helpmed.md) — HelpMed domain scenarios.
@@ -82,7 +82,7 @@ pip install simpleaudit
 - [`simpleaudit.scenarios.safety`](reference/simpleaudit_scenarios_safety.md) — General AI safety scenarios.
 - [`simpleaudit.scenarios.skatteetaten`](reference/simpleaudit_scenarios_skatteetaten.md) — Skatteetaten (Norwegian Tax Administration) scenario pack.
 - [`simpleaudit.scenarios.system_prompt`](reference/simpleaudit_scenarios_system_prompt.md) — System prompt testing scenarios.
-- [`simpleaudit.scenarios.ung`](reference/simpleaudit_scenarios_ung.md) — 
+- [`simpleaudit.scenarios.ung`](reference/simpleaudit_scenarios_ung.md) — ung scenarios
 
 ### Utilities & Visualization
 

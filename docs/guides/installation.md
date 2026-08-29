@@ -1,21 +1,21 @@
 ## Installation
 
-SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to validate comparative LLM safety scoring without requiring ground-truth labels. The library supports open models running locally via Ollama or vLLM, as well as API-hosted models. By default, SimpleAudit does not collect or transmit user data.
+SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to run with minimal setup, supporting both local models (via Ollama or vLLM) and API-hosted models. The library does not collect or transmit user data by default.
 
-### Prerequisites
+### System Requirements
 
 *   **Python:** 3.11 or higher.
-*   **Local Model Runtime (Optional):** If you intend to run models locally without API keys, you must have a local inference server running. The examples provided in the repository primarily use **Ollama**.
+*   **Hardware:** A local GPU is recommended for running target models locally, though CPU-only execution is possible for smaller models or API-based workflows.
 
-### Installing the Library
+### Package Installation
 
-SimpleAudit is available on PyPI. You can install it using `pip`:
+You can install SimpleAudit from PyPI using `pip`:
 
 ```bash
 pip install simpleaudit
 ```
 
-If you are working directly from the source repository, you can install it in editable mode:
+If you are contributing to the project or need the latest development version, you can install it from source:
 
 ```bash
 git clone https://github.com/kelkalot/simpleaudit.git
@@ -23,101 +23,86 @@ cd simpleaudit
 pip install -e .
 ```
 
-### Configuring Local Model Dependencies
+### Local Model Setup (Ollama)
 
-SimpleAudit is "local-first," meaning it is optimized to work with models running on your local machine. To use local models, you must ensure your inference server is running and the required models are pulled.
+SimpleAudit is optimized for local-first workflows. The most common local backend is **Ollama**. To use local models, you must first install and start the Ollama server.
 
-#### Using Ollama
-
-The provided examples (e.g., `examples/local_ollama_audit.py`, `examples/custom_judge_ollama.py`) rely on Ollama.
-
-1.  **Start the Ollama server:**
+1.  **Install Ollama:** Follow the official [Ollama installation guide](https://ollama.com/download).
+2.  **Start the Server:** Ensure the Ollama service is running in the background:
     ```bash
     ollama serve
     ```
+3.  **Pull Models:** You need at least two models: a **target model** (the one being audited) and a **judge model** (which evaluates the target's responses). The judge model should be capable of structured output (JSON) for best results.
 
-2.  **Pull the required models:**
-    You need at least two models: a **target model** (the model being audited) and a **judge model** (which evaluates the target's responses). The judge model should ideally support JSON output formats for structured scoring.
-
-    For a quick start, the examples suggest:
-    ```bash
-    ollama pull llama3.2:3b     # Target model (small/fast)
-    ollama pull gemma3:latest   # Judge model (supports json_object response format)
-    ```
-
-    *Note: You can substitute any other models available in Ollama by changing the `model` and `judge_model` parameters in the code.*
-
-#### Using vLLM
-
-SimpleAudit also supports vLLM for local inference. You must start your vLLM server with the desired model and ensure the `base_url` points to your local vLLM endpoint (typically `http://localhost:8000/v1`).
-
-### Verification
-
-To verify that the installation is successful and that your local models are accessible, you can run the provided quickstart example. This example uses Ollama and does not require API keys.
-
-1.  Ensure Ollama is running and the models specified in the example are pulled.
-2.  Run the example script:
+    Example using `llama3.2:3b` as the target and `gemma3:latest` as the judge:
 
     ```bash
-    python examples/local_ollama_audit.py
+    ollama pull llama3.2:3b
+    ollama pull gemma3:latest
     ```
 
-    Or, if you prefer a Jupyter notebook environment:
+### Local Model Setup (vLLM)
 
+For higher throughput or specific hardware configurations, you can use **vLLM** as the provider. This requires running a vLLM server that exposes an OpenAI-compatible API endpoint.
+
+1.  Install `vllm` via pip.
+2.  Start a vLLM server pointing to your model weights:
     ```bash
-    jupyter notebook examples/quickstart.ipynb
+    vllm serve <model_name_or_path> --port 8000
     ```
+3.  When configuring SimpleAudit, set the `provider` to `"vllm"` and provide the `base_url` (e.g., `http://localhost:8000/v1`).
 
-    *Note: The `quickstart.ipynb` and `quickstart_gemma_hf.ipynb` examples may require specific model configurations. The `local_ollama_audit.py` script is a good starting point for verifying local Ollama connectivity.*
+### Verifying the Installation
 
-### Offline Development (Fake Audit)
-
-If you are setting up a development environment and do not yet have access to LLMs (local or API), you can use the `fake_audit.py` example. This script uses mock LLM clients to demonstrate the workflow without requiring any running model servers or API keys.
-
-```bash
-python examples/fake_audit.py
-```
-
-This is useful for:
-*   Testing the installation.
-*   Understanding the output structure (`AuditResults`, `AuditResult`).
-*   CI/CD smoke tests.
-
-### API Key Configuration (Optional)
-
-If you plan to use API-hosted models (e.g., OpenAI, Anthropic) instead of local models, you will need to provide API keys. These are typically passed directly to the `ModelAuditor` or `AuditExperiment` constructors as parameters, such as `api_key`, `judge_api_key`, `auditor_api_key`, etc.
-
-Example structure for API usage (conceptual):
+To verify that SimpleAudit is installed correctly and that your local model backend is reachable, you can run a minimal smoke test. The following example uses the `ModelAuditor` class with Ollama. It runs a single scenario from the built-in `safety` pack.
 
 ```python
-from simpleaudit import ModelAuditor
+from simpleaudit import ModelAuditor, get_scenarios
 
+# Define models
+TARGET_MODEL = "llama3.2:3b"
+JUDGE_MODEL = "gemma3:latest"
+
+# Get a small subset of scenarios for a quick test
+scenarios = get_scenarios("safety")[:1]
+
+# Initialize the auditor
+# Note: json_format=False is often used for Ollama if it doesn't support strict JSON mode
 auditor = ModelAuditor(
-    model="gpt-4o",
-    provider="openai",
-    api_key="YOUR_OPENAI_API_KEY",
-    judge_model="gpt-4o",
-    judge_provider="openai",
-    judge_api_key="YOUR_OPENAI_API_KEY"
+    model=TARGET_MODEL,
+    provider="ollama",
+    judge_model=JUDGE_MODEL,
+    judge_provider="ollama",
+    json_format=False,
+    verbose=True
 )
+
+# Run the audit
+results = auditor.run(scenarios, max_turns=1)
+
+# Print a summary
+print(results.summary())
 ```
 
-*Note: Ensure you handle your API keys securely and do not commit them to version control.*
+If this script runs without connection errors and prints a summary, your installation is successful.
 
-### Next Steps
+### Configuration Notes
 
-Once installed and verified, you can begin running audits by:
-1.  Selecting a scenario pack using `get_scenarios(pack_name)`.
-2.  Initializing a `ModelAuditor` or `AuditExperiment`.
-3.  Running the audit using the `run()` or `run_async()` methods.
+SimpleAudit relies on constructor parameters for configuration rather than global environment variables for core logic. Key configuration points include:
 
-Refer to the **Usage** and **Scenario Packs** documentation pages for detailed instructions on configuring audits and interpreting results.
+*   **Provider:** Specifies the backend (`"ollama"`, `"vllm"`, `"openai"`, etc.).
+*   **Base URL:** Required for local servers (Ollama/vLLM) or custom API endpoints.
+*   **API Keys:** Only required for cloud-based providers (e.g., OpenAI, Anthropic). Local providers typically do not require API keys.
+
+### Troubleshooting
+
+*   **Connection Refused:** Ensure your local model server (Ollama/vLLM) is running and accessible at the specified `base_url`.
+*   **JSON Parsing Errors:** If using a judge model that struggles with structured output, consider setting `json_format=False` in `ModelAuditor` or using a more capable judge model.
+*   **Missing Scenarios:** If `get_scenarios(pack_name)` fails, ensure you have the latest version of the package, as scenario packs are bundled with the library. You can list available packs using `list_scenario_packs()`.
+
+For more advanced setups, such as custom judge prompts or multi-model experiments, refer to the `examples/` directory in the repository, particularly `custom_judge_ollama.py` and `quickstart.ipynb`.
 
 ### See Also
 
 *   [Quickstart](quickstart.md)
 *   [Architecture](architecture.md)
-*   [Key Ideas](key-ideas.md)
-
-
-**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
