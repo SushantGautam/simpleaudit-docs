@@ -1,0 +1,1404 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Documentation for simpleaudit-docs">
+      
+      
+      
+        <link rel="canonical" href="https://SushantGautam.github.io/simpleaudit-docs/guides/local-model-setup/">
+      
+      
+        <link rel="prev" href="../custom-scenarios/">
+      
+      
+        <link rel="next" href="../results-visualization/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Local model setup - simpleaudit-docs</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#local-model-setup" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="simpleaudit-docs" class="md-header__button md-logo" aria-label="simpleaudit-docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            simpleaudit-docs
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Local model setup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="simpleaudit-docs" class="md-nav__button md-logo" aria-label="simpleaudit-docs" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    simpleaudit-docs
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    simpleaudit-docs
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../quickstart/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Quickstart
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Concepts
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Concepts
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../key-ideas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Key ideas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    More
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    More
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli-reference/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Cli reference
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-judges/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom judges
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Custom scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local model setup
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Local model setup
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-model-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Model Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Model Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-modelauditor-for-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring ModelAuditor for Ollama
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring ModelAuditor for Ollama">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-judge-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named Judge Configurations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Named Judge Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-running-a-safety-audit-with-local-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Running a Safety Audit with Local Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-with-a-mock-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with a Mock Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saving-and-visualizing-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saving and Visualizing Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../results-visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Results visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../testing-development/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Testing development
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#local-model-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local Model Setup
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Local Model Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Prerequisites
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuring-modelauditor-for-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuring ModelAuditor for Ollama
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Configuring ModelAuditor for Ollama">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#basic-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Basic Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#key-parameters" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key Parameters
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#named-judge-configurations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Named Judge Configurations
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Named Judge Configurations">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#example-running-a-safety-audit-with-local-models" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Example: Running a Safety Audit with Local Models
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#performance-considerations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Performance Considerations
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#testing-with-a-mock-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Testing with a Mock Server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#saving-and-visualizing-results" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Saving and Visualizing Results
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+  <h1>Local model setup</h1>
+
+<h2 id="local-model-setup">Local Model Setup</h2>
+<p>Running AI safety audits typically requires access to large language models (LLMs) for both generating responses (the target) and evaluating them (the judge). While cloud APIs offer high performance, they incur costs and require external network access. <strong>simpleaudit-docs</strong> supports fully local inference via <strong>Ollama</strong>, allowing you to run complete audits on your local machine without API keys or cloud dependencies.</p>
+<p>This guide covers how to configure Ollama as the inference backend, select appropriate models, and utilize named judge configurations for local evaluations.</p>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>Before running local audits, ensure the following are installed and running on your system:</p>
+<ol>
+<li><strong>Ollama</strong>: Download and install from <a href="https://ollama.ai">ollama.ai</a>.</li>
+<li><strong>Ollama Service</strong>: Start the background service:
+    <code>bash
+    ollama serve</code></li>
+<li><strong>Models</strong>: Pull the specific models you intend to use. For a basic setup, <code>llama3.2</code> or <code>gemma3</code> are recommended.
+    <code>bash
+    ollama pull llama3.2
+    ollama pull gemma3</code></li>
+</ol>
+<h3 id="configuring-modelauditor-for-ollama">Configuring <code>ModelAuditor</code> for Ollama</h3>
+<p>The <code>ModelAuditor</code> class accepts a <code>provider</code> parameter to specify the inference backend. Set this to <code>"ollama"</code> for both the target model and the judge model to ensure a fully local workflow.</p>
+<h4 id="basic-configuration">Basic Configuration</h4>
+<p>You can specify the model names directly as strings. The <code>model</code> parameter defines the system under test, while <code>judge_model</code> defines the evaluator.</p>
+<pre><code class="language-python">from simpleaudit import ModelAuditor, get_scenarios
+
+# Define local models
+TARGET_MODEL = &quot;gemma3&quot;      # The model being audited
+JUDGE_MODEL = &quot;gemma3&quot;       # The model performing the audit (can be same or different)
+
+auditor = ModelAuditor(
+    model=TARGET_MODEL,
+    provider=&quot;ollama&quot;,
+    judge_model=JUDGE_MODEL,
+    judge_provider=&quot;ollama&quot;,
+    system_prompt=&quot;You are a helpful AI assistant. Be concise and accurate.&quot;,
+    max_turns=3,  # Keep turns low for faster local testing
+    verbose=True,
+)
+
+# Run a subset of scenarios
+scenarios = get_scenarios(&quot;safety&quot;)[:3]
+results = auditor.run(scenarios)
+results.summary()
+</code></pre>
+<h4 id="key-parameters">Key Parameters</h4>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Parameter</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>model</code></td>
+<td style="text-align: left;">The name of the Ollama model to test (e.g., <code>"llama3.2"</code>, <code>"gemma3"</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>provider</code></td>
+<td style="text-align: left;">Must be set to <code>"ollama"</code> for local inference.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>judge_model</code></td>
+<td style="text-align: left;">The name of the Ollama model used for evaluation.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>judge_provider</code></td>
+<td style="text-align: left;">Must be set to <code>"ollama"</code> if using a local judge.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>json_format</code></td>
+<td style="text-align: left;"><strong>Important</strong>: Set to <code>False</code> for Ollama. Ollama does not support OpenAI-style <code>json_object</code> response formatting.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>max_turns</code></td>
+<td style="text-align: left;">Number of conversation turns per scenario. Lower values (e.g., 2-3) are recommended for local models to reduce latency.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="named-judge-configurations">Named Judge Configurations</h3>
+<p>Instead of writing custom judge prompts, <code>simpleaudit</code> provides built-in named judge configurations grounded in published evaluation research. These are particularly useful for local setups where you want consistent, high-quality evaluations without manual prompt engineering.</p>
+<p>You can list available configurations using <code>list_judge_configs()</code>:</p>
+<pre><code class="language-python">from simpleaudit import list_judge_configs
+
+for name, desc in list_judge_configs().items():
+    print(f&quot;{name}: {desc}&quot;)
+</code></pre>
+<p>Common configurations include:</p>
+<ol>
+<li><strong><code>safety</code></strong>: Based on Constitutional AI (Bai et al., 2022). Evaluates harm, manipulation, and boundary violations.</li>
+<li><strong><code>helpfulness</code></strong>: Based on MT-Bench (Zheng et al., 2023). Evaluates relevance, accuracy, clarity, and completeness.</li>
+<li><strong><code>factuality</code></strong>: Based on G-Eval (Liu et al., 2023). Detects hallucinations and factual errors.</li>
+</ol>
+<h4 id="example-running-a-safety-audit-with-local-models">Example: Running a Safety Audit with Local Models</h4>
+<p>The following example demonstrates a complete local audit using the <code>safety</code> judge configuration.</p>
+<pre><code class="language-python">from simpleaudit import ModelAuditor, get_scenarios
+
+TARGET_MODEL = &quot;llama3.2:3b&quot;  # Small/fast target model
+JUDGE_MODEL = &quot;gemma3:latest&quot; # Larger judge model for better accuracy
+
+auditor = ModelAuditor(
+    model=TARGET_MODEL,
+    provider=&quot;ollama&quot;,
+    judge_model=JUDGE_MODEL,
+    judge_provider=&quot;ollama&quot;,
+    judge=&quot;safety&quot;,       # Use the named 'safety' configuration
+    json_format=False,    # Required for Ollama
+    max_turns=2,
+    verbose=False,
+    show_progress=True,
+)
+
+scenarios = get_scenarios(&quot;safety&quot;)[:5]
+results = auditor.run(scenarios)
+
+# Display per-scenario severity
+for r in results:
+    print(f&quot;{r.scenario_name}: {r.severity.upper()}&quot;)
+    if r.summary:
+        print(f&quot;  -&gt; {r.summary[:100]}&quot;)
+
+results.save(&quot;local_safety_audit.json&quot;)
+</code></pre>
+<h3 id="performance-considerations">Performance Considerations</h3>
+<p>Local inference is significantly slower than cloud APIs. To optimize your workflow:</p>
+<ol>
+<li><strong>Model Selection</strong>: Use smaller models (e.g., <code>llama3.2:3b</code>) for the target if speed is critical. Use larger models (e.g., <code>gemma3</code>, <code>llama3:8b</code>) for the judge to ensure evaluation quality.</li>
+<li><strong>Scenario Count</strong>: Start with a small subset of scenarios (e.g., 3-5) to verify your setup before running the full suite.</li>
+<li><strong>Max Turns</strong>: Reduce <code>max_turns</code> to 2 or 3. Multi-turn conversations increase latency exponentially on local hardware.</li>
+<li><strong>JSON Format</strong>: Always set <code>json_format=False</code> when using Ollama to avoid parsing errors.</li>
+</ol>
+<h3 id="testing-with-a-mock-server">Testing with a Mock Server</h3>
+<p>If you do not have Ollama installed or wish to test the <code>simpleaudit</code> framework without running heavy local models, you can use the provided mock server. This server simulates an OpenAI-compatible API with intentional safety issues for testing purposes.</p>
+<ol>
+<li>
+<p><strong>Install dependencies</strong>:
+    <code>bash
+    pip install fastapi uvicorn</code></p>
+</li>
+<li>
+<p><strong>Start the mock server</strong>:
+    <code>bash
+    python examples/mock_server.py</code></p>
+</li>
+<li>
+<p><strong>Run audit against mock server</strong>:
+    ```python
+    from simpleaudit import ModelAuditor</p>
+<p>auditor = ModelAuditor(
+    model="mock",
+    provider="openai",
+    base_url="http://localhost:8000/v1",
+    judge_model="judge",
+    judge_provider="openai",
+    judge_base_url="http://localhost:8000/v1",
+)</p>
+<p>results = auditor.run("safety")
+results.summary()
+```</p>
+</li>
+</ol>
+<p>This approach is useful for CI/CD pipelines or development environments where local GPU resources are unavailable.</p>
+<h3 id="saving-and-visualizing-results">Saving and Visualizing Results</h3>
+<p>Local audits produce the same result objects as cloud-based audits. You can save results to JSON and generate charts if <code>matplotlib</code> is installed.</p>
+<pre><code class="language-python"># Save results
+results.save(&quot;local_audit_results.json&quot;)
+
+# Generate chart (optional)
+try:
+    results.plot(save_path=&quot;local_audit_chart.png&quot;)
+    print(&quot;Chart saved to local_audit_chart.png&quot;)
+except ImportError:
+    print(&quot;Install matplotlib for charts: pip install simpleaudit[plot]&quot;)
+</code></pre>
+<p>By following this guide, you can perform rigorous AI safety audits entirely on your local infrastructure, ensuring data privacy and eliminating API costs.</p>
+<h3 id="see-also">See Also</h3>
+<ul>
+<li><a href="../custom-judges/">Custom Judges</a></li>
+<li><a href="../results-visualization/">Results &amp; Visualization</a></li>
+<li><a href="../testing-development/">Testing &amp; Development</a></li>
+<li><a href="../installation/">Installation</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../custom-scenarios/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Custom scenarios">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Custom scenarios
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../results-visualization/" class="md-footer__link md-footer__link--next" aria-label="Next: Results visualization">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Results visualization
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
