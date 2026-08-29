@@ -1,133 +1,151 @@
 ## Installation
 
-SimpleAudit is a lightweight, local-first framework for auditing AI systems. It supports both local model inference (via Ollama or vLLM) and API-hosted models (Anthropic, OpenAI, etc.). The library is designed for minimal setup and does not require external API keys if you are running models locally.
+SimpleAudit is a lightweight, local-first framework for multilingual AI safety auditing and red-teaming. It supports both local model inference (via Ollama or vLLM) and API-based providers (Anthropic, OpenAI, etc.). The package is distributed via PyPI and requires Python 3.11 or higher.
 
 ### Prerequisites
 
-*   **Python**: Version 3.11 or higher.
-*   **Python Package Manager**: `pip` or `uv`.
-*   **Local Model Runtime** (Optional): If you plan to audit local models, you must have a compatible runtime installed and running:
-    *   **Ollama**: For local LLM inference.
-    *   **vLLM**: For high-throughput local model serving.
+Before installing SimpleAudit, ensure your environment meets the following requirements:
 
-### Installing the Package
+1.  **Python Version**: Python 3.11+ is required.
+    ```bash
+    python --version
+    ```
+2.  **Package Manager**: `pip` (recommended) or `uv` for faster dependency resolution.
 
-You can install `simpleaudit` from PyPI using `pip`.
+### Installation via pip
+
+To install the core library, use the following command:
 
 ```bash
 pip install simpleaudit
 ```
 
-If you are using `uv` for faster dependency resolution:
+#### Optional Dependencies
 
-```bash
-uv pip install simpleaudit
-```
+Depending on your use case, you may need to install additional extras:
 
-### Verifying the Installation
+1.  **Plotting Support**: If you intend to use the `AuditResults.plot()` method to generate visual charts of your audit results, you must install `matplotlib`. You can install this alongside the core library using the `plot` extra:
 
-To verify that the library is installed correctly and that the core modules are importable, run the following command in your terminal:
-
-```bash
-python -c "import simpleaudit; print(simpleaudit.__version__)"
-```
-
-This should output the current version of the library (e.g., `0.1.0`).
-
-### Configuring Local Model Runtimes
-
-If you intend to use SimpleAudit with local models, you must configure your local inference engine before running audits. SimpleAudit communicates with these engines via their standard HTTP APIs.
-
-#### Ollama Setup
-
-1.  **Install Ollama**: Follow the [official Ollama installation guide](https://ollama.com/download).
-2.  **Start the Service**: Ensure the Ollama server is running.
     ```bash
-    ollama serve
-    ```
-3.  **Pull Models**: You need at least two models: one for the **target** (the model being audited) and one for the **judge** (the model evaluating the target's responses).
-    ```bash
-    # Example: Pull a small target model and a capable judge model
-    ollama pull llama3.2:3b
-    ollama pull gemma3:latest
+    pip install "simpleaudit[plot]"
     ```
 
-#### vLLM Setup
+    Alternatively, if you have already installed the core library, you can add the dependency separately:
+    ```bash
+    pip install matplotlib
+    ```
 
-If you are using vLLM, ensure your vLLM server is running and exposing an OpenAI-compatible API endpoint. You will need to specify the `base_url` and `api_key` (can be a dummy string if not required) when initializing the auditor.
+    *Note: The `local_ollama_audit.py` example in the repository demonstrates a try/except block around `results.plot()` to handle cases where `matplotlib` is not installed.*
 
-### API Key Configuration
+2.  **Local Model Support (Ollama/vLLM)**:
+    SimpleAudit itself does not bundle local model runtimes. To run audits against local models, you must have the corresponding server running:
+    *   **Ollama**: Install from [ollama.ai](https://ollama.ai) and start the server (`ollama serve`).
+    *   **vLLM**: Ensure your vLLM instance is running and accessible via an OpenAI-compatible API endpoint.
 
-If you are using API-hosted models (Anthropic, OpenAI, Grok, etc.), you must provide the appropriate API keys. SimpleAudit supports several methods for passing these keys:
+    No additional Python packages are strictly required by `simpleaudit` to connect to these services, as it communicates via standard HTTP APIs. However, ensure your network configuration allows communication with the local server (typically `http://localhost:11434` for Ollama).
 
-1.  **Constructor Arguments**: Pass `api_key`, `judge_api_key`, and `auditor_api_key` directly to `ModelAuditor` or `AuditExperiment`.
-2.  **Environment Variables**: While the core library relies on explicit parameters for clarity, you can manage keys via your environment or a secrets manager and pass them programmatically.
+### Verification
 
-**Note**: For local providers like `ollama` or `vllm`, API keys are typically not required, but you may still need to specify the `base_url` if it is not the default (e.g., `http://localhost:11434` for Ollama).
-
-### Quick Start Example
-
-Below is a minimal example demonstrating how to initialize a `ModelAuditor` using local Ollama models. This example does not require any API keys.
-
-```python
-from simpleaudit import ModelAuditor, get_scenarios
-
-# Define models
-TARGET_MODEL = "llama3.2:3b"
-JUDGE_MODEL = "gemma3:latest"
-
-# Initialize the auditor
-# Note: json_format=False is recommended for Ollama if it does not support structured output
-auditor = ModelAuditor(
-    model=TARGET_MODEL,
-    provider="ollama",
-    judge_model=JUDGE_MODEL,
-    judge_provider="ollama",
-    json_format=False,
-    verbose=True
-)
-
-# Load a scenario pack
-# 'safety' is a standard pack name; use list_scenario_packs() to see available packs
-scenarios = get_scenarios("safety")
-
-# Run the audit
-results = auditor.run(scenarios)
-
-# Print summary
-results.summary()
-```
-
-### Using Fake Clients for Development
-
-If you want to test SimpleAudit's logic without incurring API costs or waiting for local inference, you can use the built-in fake clients. This is useful for CI pipelines or local development.
+After installation, verify that the package is correctly installed by checking the version in your Python environment:
 
 ```python
-from simpleaudit import ModelAuditor
-from tests.fakes import make_auditor, fixed_probe_auditor, fixed_severity_judge
-
-# Create a fake auditor that returns predefined responses
-# This bypasses actual LLM calls
-fake_auditor = make_auditor(
-    probe_auditor=fixed_probe_auditor("Hello"),
-    judge=fixed_severity_judge("pass")
-)
-
-# You can now run scenarios against this fake auditor
-# Note: The specific setup for fake clients may require importing from tests.fakes
-# and configuring the ModelAuditor to use these mocks, which is typically done
-# in unit tests or specific development scripts.
+import simpleaudit
+print(simpleaudit.__version__)
 ```
 
-### Troubleshooting
+You can also verify that the core classes are importable:
 
-*   **Connection Errors**: If you see connection refused errors when using Ollama or vLLM, ensure the service is running and the `base_url` is correct.
-*   **JSON Parsing Errors**: If you encounter issues with JSON parsing, ensure that your judge model supports structured output or set `json_format=False` to allow the library to use more robust text-based parsing strategies.
-*   **Missing Scenarios**: If `get_scenarios` raises an error, use `list_scenario_packs()` to verify the correct pack name.
+```python
+from simpleaudit import ModelAuditor, AuditExperiment, get_scenarios, list_scenario_packs
 
-For more detailed configuration options, refer to the `ModelAuditor` and `AuditExperiment` class documentation.
+# List available scenario packs to confirm data integrity
+packs = list_scenario_packs()
+print(f"Available scenario packs: {list(packs.keys())}")
+```
+
+### Local Development Installation
+
+If you are contributing to SimpleAudit or wish to use the latest unreleased features, you can install the package from source in development mode.
+
+1.  Clone the repository:
+    ```bash
+    git clone https://github.com/kelkalot/simpleaudit.git
+    cd simpleaudit
+    ```
+
+2.  Install in editable mode:
+    ```bash
+    pip install -e .
+    ```
+
+3.  (Optional) Install development dependencies for testing:
+    ```bash
+    pip install -e ".[dev]"
+    ```
+    *Note: The specific dev extras name may vary; if `[dev]` is not defined, you may need to install test dependencies manually, such as `pytest`.*
+
+### Environment Configuration
+
+SimpleAudit is designed to be "local-first" and does not require API keys if you are using local models (Ollama/vLLM). However, if you plan to use API-based providers (e.g., Anthropic, OpenAI), you will need to configure your API keys.
+
+While the `ModelAuditor` and `AuditExperiment` constructors accept `api_key` parameters directly, it is standard practice to manage these via environment variables to avoid hardcoding secrets.
+
+**Supported Providers and Typical Environment Variables:**
+
+| Provider | Typical Env Var | Notes |
+| :--- | :--- | :--- |
+| Anthropic | `ANTHROPIC_API_KEY` | Default provider for many examples. |
+| OpenAI | `OPENAI_API_KEY` | For GPT-4, GPT-5, etc. |
+| Grok (xAI) | `XAI_API_KEY` | For Grok models. |
+| Ollama | N/A | Local server, no API key required. |
+| vLLM | N/A | Local server, no API key required. |
+
+*Note: The library documentation does not explicitly list specific environment variable names it reads internally. You should pass API keys explicitly via the `api_key` parameter in `ModelAuditor` or `AuditExperiment` constructors, or ensure your provider's SDK (if used under the hood) picks up the standard environment variables.*
+
+### Quick Start Check
+
+To confirm your installation is working end-to-end without requiring external API keys, you can run the provided fake audit example. This uses mock clients to simulate the audit process.
+
+1.  Navigate to the `examples` directory (if installed from source):
+    ```bash
+    cd examples
+    ```
+
+2.  Run the fake audit script:
+    ```bash
+    python fake_audit.py
+    ```
+
+    This script imports from `tests.fakes` and `simpleaudit.experiment`. If you installed via pip, you may need to install the test utilities or replicate the logic in a local script using the `ModelAuditor` class with a local Ollama setup.
+
+    For a pip-installed package, a minimal local check using Ollama (if available) is:
+
+    ```python
+    from simpleaudit import ModelAuditor, get_scenarios
+
+    # Assumes Ollama is running locally
+    auditor = ModelAuditor(
+        model="llama3.2",
+        provider="ollama",
+        judge_model="llama3.2",
+        judge_provider="ollama",
+        max_turns=1,
+        verbose=True
+    )
+
+    # Run a single scenario
+    scenarios = get_scenarios("safety")[:1]
+    results = auditor.run(scenarios)
+    results.summary()
+    ```
+
+If this script runs without connection errors, your installation is successful and configured for local auditing.
 
 ### See Also
 
 *   [Quickstart](quickstart.md)
+*   [Architecture](architecture.md)
 *   [Key Ideas](key-ideas.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
