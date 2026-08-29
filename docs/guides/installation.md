@@ -1,96 +1,139 @@
 ## Installation
 
-SimpleAudit is a lightweight AI safety auditing framework designed for validating comparative LLM safety scoring without ground-truth labels. It supports local model serving via Ollama and vLLM, as well as API-based providers like Anthropic and OpenAI. This page covers the installation process and environment verification for Python 3.11+.
+SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to validate comparative LLM safety scoring without requiring ground-truth labels. The library supports open models running locally (via providers like Ollama or vLLM) and can optionally connect to API-hosted models. By default, SimpleAudit does not collect or transmit user data, ensuring privacy during local development and auditing workflows.
 
 ### Prerequisites
 
-SimpleAudit requires **Python 3.11 or higher**. Verify your Python version by running:
-
-```bash
-python --version
-```
-
-If you are using a version older than 3.11, please upgrade your Python environment before proceeding.
+*   **Python 3.11+**: The library requires Python version 3.11 or higher.
+*   **Local Model Provider (Optional but Recommended)**: For offline auditing, a local inference server such as **Ollama** or **vLLM** is required.
+    *   For Ollama: Ensure `ollama serve` is running.
+    *   For vLLM: Ensure your vLLM server is accessible via the configured base URL.
 
 ### Installing the Package
 
-You can install SimpleAudit from PyPI using `pip`:
+SimpleAudit is available on PyPI. You can install it using `pip`:
 
 ```bash
 pip install simpleaudit
 ```
 
-If you are working with a specific project environment, it is recommended to create a virtual environment first:
+If you are working from the source code repository, you can install it in editable mode:
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install simpleaudit
+git clone https://github.com/kelkalot/simpleaudit.git
+cd simpleaudit
+pip install -e .
 ```
 
-### Verifying the Installation
+### Configuring Local Model Paths
 
-To verify that SimpleAudit is installed correctly and that the core modules are accessible, you can run the following Python snippet. This checks the import of the primary `ModelAuditor` class and the version string.
+SimpleAudit does not hardcode model paths. Instead, it relies on the **provider** and **model** parameters passed to the `ModelAuditor` or `AuditExperiment` classes. These parameters determine how the library connects to the LLMs.
+
+#### Using Ollama
+
+Ollama is the recommended provider for local, offline auditing. It supports JSON response formats for judge models, which is critical for structured output parsing.
+
+To configure Ollama, you specify the model name as it appears in your local Ollama registry (e.g., `llama3.2:3b`, `gemma3:latest`).
+
+**Example: Initializing a ModelAuditor with Ollama**
 
 ```python
-import simpleaudit
+from simpleaudit import ModelAuditor, get_scenarios
 
-print(f"SimpleAudit version: {simpleaudit.__version__}")
+# Define local Ollama model names
+TARGET_MODEL = "llama3.2:3b"
+JUDGE_MODEL  = "gemma3:latest"
 
-# Verify core classes are importable
-from simpleaudit import ModelAuditor, AuditResults, get_scenarios, list_scenario_packs
+# Load a scenario pack
+# 'bullshitbench' is a built-in pack; others include 'safety', 'rag', 'health'
+scenarios = get_scenarios("bullshitbench")[:3]
 
-print("Core imports successful.")
+# Initialize the auditor
+# Note: json_format=False is often used for Ollama if the model does not strictly 
+# enforce JSON mode, though newer versions may support it.
+auditor = ModelAuditor(
+    model=TARGET_MODEL,
+    provider="ollama",
+    judge_model=JUDGE_MODEL,
+    judge_provider="ollama",
+    json_format=False,  # Adjust based on your Ollama model's capabilities
+    verbose=True
+)
+
+# Run the audit
+results = auditor.run(scenarios=scenarios, max_turns=3)
 ```
 
-If this script runs without errors, your installation is successful.
+#### Using vLLM or OpenAI-Compatible APIs
 
-### Optional Dependencies for Local Models
+If you are using vLLM or another OpenAI-compatible server, you can use the `openai` provider (or a custom provider string if supported by your backend) and specify the `base_url`.
 
-SimpleAudit is designed to be local-first. If you plan to audit models running locally via **Ollama** or **vLLM**, you do not need to install additional Python packages for the library itself, as it communicates with these services via their HTTP APIs. However, you must ensure the local model server is running.
-
-For **Ollama**:
-1. Install Ollama from [ollama.com](https://ollama.com).
-2. Start the server: `ollama serve`.
-3. Pull a model: `ollama pull llama3.2:3b`.
-
-For **vLLM**:
-1. Ensure `vllm` is installed in your environment if you are running the server via Python.
-2. Start the vLLM server with your chosen model.
-
-SimpleAudit will connect to these servers using the `provider` parameter set to `"ollama"` or `"vllm"` in the `ModelAuditor` constructor.
-
-### Quick Verification Example
-
-To perform a minimal functional check without requiring external API keys or local models, you can inspect the available scenario packs. This confirms that the data loading mechanisms are working.
+**Example: Initializing with a Custom Base URL**
 
 ```python
-from simpleaudit import list_scenario_packs
+from simpleaudit import ModelAuditor
 
-# List available scenario packs
-packs = list_scenario_packs()
-print(f"Available scenario packs: {packs}")
+auditor = ModelAuditor(
+    model="my-local-model",
+    provider="openai",  # Or the specific provider string your backend expects
+    judge_model="my-judge-model",
+    judge_provider="openai",
+    base_url="http://localhost:8000/v1",  # Path to your vLLM or compatible server
+    judge_base_url="http://localhost:8000/v1",
+    # api_key="EMPTY"  # Often required for local OpenAI-compatible servers
+)
 ```
 
-### Environment Configuration
+### Verifying Installation
 
-SimpleAudit does not require specific environment variables for basic installation. However, if you are using API-based providers (e.g., Anthropic, OpenAI), you must configure your API keys according to the provider's standard methods (e.g., setting `ANTHROPIC_API_KEY` or `OPENAI_API_KEY` in your environment or passing them explicitly to the `ModelAuditor` constructor via `api_key`).
+To verify that SimpleAudit is installed correctly and can connect to your local models, you can run a minimal smoke test using the `fake_audit.py` example provided in the repository, or a simple script that initializes the auditor.
 
-For local providers (Ollama, vLLM), no API keys are required by default, as the local servers typically do not enforce authentication.
+**Option 1: Using the Repository Example (Recommended for Smoke Tests)**
+
+The repository includes `examples/fake_audit.py`, which uses mock clients to verify the library structure without requiring actual LLM inference. This is useful for CI/CD pipelines or verifying Python environment setup.
+
+```bash
+# From the repository root
+python examples/fake_audit.py
+```
+
+**Option 2: Quick Local Check**
+
+If you have Ollama running, you can quickly check connectivity by initializing the auditor. If the connection fails, the library will raise an error during the `run` or `run_async` call.
+
+```python
+from simpleaudit import ModelAuditor, get_scenarios
+
+try:
+    auditor = ModelAuditor(
+        model="llama3.2:3b",
+        provider="ollama",
+        judge_model="gemma3:latest",
+        judge_provider="ollama"
+    )
+    # Fetch a single scenario to test the pipeline
+    scenarios = get_scenarios("safety")[:1]
+    
+    # Run a single scenario with minimal turns
+    result = auditor.run(scenarios=scenarios, max_turns=1)
+    print("Audit successful. Score:", result.score)
+except Exception as e:
+    print(f"Connection or configuration error: {e}")
+```
 
 ### Troubleshooting
 
-1. **Import Errors**: If you encounter `ModuleNotFoundError: No module named 'simpleaudit'`, ensure you have activated the correct virtual environment and that `pip install simpleaudit` completed successfully.
-2. **Python Version**: If you see syntax errors or compatibility issues, verify that your Python version is 3.11 or higher. SimpleAudit does not support Python 3.10 or earlier.
-3. **Local Server Connectivity**: If auditing local models fails, ensure that the Ollama or vLLM server is running and accessible at the expected base URL (default is usually `http://localhost:11434` for Ollama and `http://localhost:8000` for vLLM). You can explicitly set the `base_url` in the `ModelAuditor` constructor if your server runs on a non-standard port or host.
+1.  **Model Not Found**: Ensure the model name passed to `model` and `judge_model` exactly matches the name in your local provider's registry (e.g., `ollama list`).
+2.  **JSON Parsing Errors**: If you encounter errors parsing judge responses, ensure your judge model supports structured output or set `json_format=False` and use a judge that outputs parseable text. The `parse_json_response` utility is used internally to handle these cases, but model compliance is required.
+3.  **Base URL Issues**: When using `vLLM` or custom OpenAI-compatible servers, verify that `base_url` points to the correct API endpoint (typically `/v1`).
+4.  **Provider String**: The `provider` parameter must match a supported provider string. Common values include `"ollama"` and `"openai"`. Check the `ModelAuditor` documentation for other supported providers.
 
 ### Next Steps
 
-Once installed, you can begin auditing by creating a `ModelAuditor` instance. See the [Quickstart](#) guide for examples of running your first audit using `ModelAuditor.run()` or `AuditExperiment`.
+*   **Running Audits**: See the [Running Audits](#) documentation for details on `AuditExperiment` and `ModelAuditor` execution methods.
+*   **Custom Judges**: Learn how to define custom judge prompts using `probe_prompt` and `judge_prompt` parameters in `ModelAuditor`.
+*   **Scenario Packs**: Explore available scenario packs using `list_scenario_packs()` and `get_scenarios()`.
 
 ### See Also
 
 *   [Quickstart](quickstart.md)
-
-
-**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

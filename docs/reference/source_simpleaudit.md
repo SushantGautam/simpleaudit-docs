@@ -1,3 +1,0 @@
-## source.simpleaudit
-
-::: source.simpleaudit
