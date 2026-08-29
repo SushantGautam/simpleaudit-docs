@@ -589,10 +589,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-auditexperiment" class="md-nav__link">
+  <a href="#1-modelauditor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. AuditExperiment
+        1. ModelAuditor
       
     </span>
   </a>
@@ -600,10 +600,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-modelauditor" class="md-nav__link">
+  <a href="#2-auditexperiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. ModelAuditor
+        2. AuditExperiment
       
     </span>
   </a>
@@ -611,10 +611,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-results-classes" class="md-nav__link">
+  <a href="#3-results-repeated-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Results Classes
+        3. Results &amp; Repeated Results
       
     </span>
   </a>
@@ -638,10 +638,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-judges-and-scenarios" class="md-nav__link">
+  <a href="#judge-configurations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Judges and Scenarios
+        Judge Configurations
       
     </span>
   </a>
@@ -649,10 +649,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#error-handling-and-resilience" class="md-nav__link">
+  <a href="#error-handling-resilience" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error Handling and Resilience
+        Error Handling &amp; Resilience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-first-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local-First Design
       
     </span>
   </a>
@@ -776,10 +787,10 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-auditexperiment" class="md-nav__link">
+  <a href="#1-modelauditor" class="md-nav__link">
     <span class="md-ellipsis">
       
-        1. AuditExperiment
+        1. ModelAuditor
       
     </span>
   </a>
@@ -787,10 +798,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#2-modelauditor" class="md-nav__link">
+  <a href="#2-auditexperiment" class="md-nav__link">
     <span class="md-ellipsis">
       
-        2. ModelAuditor
+        2. AuditExperiment
       
     </span>
   </a>
@@ -798,10 +809,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-results-classes" class="md-nav__link">
+  <a href="#3-results-repeated-results" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. Results Classes
+        3. Results &amp; Repeated Results
       
     </span>
   </a>
@@ -825,10 +836,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#built-in-judges-and-scenarios" class="md-nav__link">
+  <a href="#judge-configurations" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Built-in Judges and Scenarios
+        Judge Configurations
       
     </span>
   </a>
@@ -836,10 +847,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#error-handling-and-resilience" class="md-nav__link">
+  <a href="#error-handling-resilience" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Error Handling and Resilience
+        Error Handling &amp; Resilience
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-first-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local-First Design
       
     </span>
   </a>
@@ -885,25 +907,53 @@
   <h1>Architecture</h1>
 
 <h2 id="architecture">Architecture</h2>
-<p>SimpleAudit is a lightweight, local-first framework for auditing and red-teaming Large Language Models (LLMs). It operates by simulating adversarial user interactions (probing) and evaluating the model's responses against specific safety or quality criteria (judging). The architecture is designed to be provider-agnostic, supporting local inference engines (Ollama, vLLM) and API-based providers (OpenAI, Anthropic, etc.) through the <code>any_llm</code> abstraction layer.</p>
-<p>The system is composed of three primary layers:
-1.  <strong>Experiment Orchestration</strong>: <code>AuditExperiment</code> manages multi-model comparisons and repeated runs for statistical stability.
-2.  <strong>Core Auditing</strong>: <code>ModelAuditor</code> executes the actual probing and judging logic for a single model.
-3.  <strong>Results &amp; Analysis</strong>: <code>AuditResults</code> and <code>RepeatedExperimentResults</code> handle data storage, serialization, and statistical reporting.</p>
+<p>SimpleAudit is a lightweight, local-first framework for auditing and red-teaming Large Language Models (LLMs). The architecture is designed to decouple the <strong>auditing logic</strong> (probe generation and evaluation) from the <strong>target model</strong> being tested, allowing for flexible, multilingual, and multi-model comparisons.</p>
+<p>The system operates on a three-role model:
+1.  <strong>Target Model</strong>: The LLM under audit.
+2.  <strong>Auditor Model</strong>: Generates adversarial probes (red-team inputs) to test the target.
+3.  <strong>Judge Model</strong>: Evaluates the conversation between the Auditor and Target, assigning a severity score and generating a report.</p>
 <h3 id="core-components">Core Components</h3>
-<h4 id="1-auditexperiment">1. <code>AuditExperiment</code></h4>
-<p>The top-level orchestrator for running audits across multiple models. It handles the setup of judge and auditor configurations, manages concurrency, and supports resumable experiments via disk caching.</p>
-<p><strong>Location:</strong> <code>simpleaudit/experiment.py</code></p>
-<p><strong>Key Parameters:</strong>
-*   <code>models</code>: A list of dictionaries. Each dict must contain a <code>"model"</code> key. Optional keys include <code>"label"</code>, <code>"provider"</code>, <code>"api_key"</code>, <code>"base_url"</code>, and model-specific overrides for the judge/auditor.
-*   <code>judge_model</code>, <code>judge_provider</code>, <code>judge_api_key</code>, <code>judge_base_url</code>: Default configuration for the judge model. These are merged into each model's configuration unless overridden at the model level.
-*   <code>auditor_model</code>, <code>auditor_provider</code>, <code>auditor_api_key</code>, <code>auditor_base_url</code>: Default configuration for the auditor (probe generator). If not specified, the judge configuration is used.
-*   <code>judge</code>: Optional name of a built-in judge configuration (e.g., <code>"safety"</code>, <code>"helpfulness"</code>).
-*   <code>probe_prompt</code>, <code>judge_prompt</code>: Optional custom system prompts for the auditor and judge, respectively.
-*   <code>n_repetitions</code>: Number of times to run the experiment for each model (default: 1).
-*   <code>save_dir</code>: Optional directory path to save results incrementally. Enables resuming interrupted experiments.</p>
-<p><strong>Usage:</strong></p>
-<pre><code class="language-python">from simpleaudit import AuditExperiment
+<p>The library is structured around four primary modules: <code>ModelAuditor</code>, <code>AuditExperiment</code>, <code>Results</code>, and <code>RepeatedResults</code>.</p>
+<h4 id="1-modelauditor">1. ModelAuditor</h4>
+<p>The <code>ModelAuditor</code> class (<code>simpleaudit.model_auditor.ModelAuditor</code>) is the atomic unit of execution. It manages the lifecycle of a single audit session against a specific target model.</p>
+<p><strong>Key Responsibilities:</strong>
+*   <strong>Client Management</strong>: Instantiates <code>AnyLLM</code> clients for the target, judge, and auditor models. It supports various providers (OpenAI, Anthropic, Ollama, vLLM) via the <code>provider</code> parameter.
+*   <strong>Probe Generation</strong>: Uses the Auditor model to generate context-aware probes. If a <code>test_prompt</code> is provided in the scenario, it is used verbatim for the first turn; otherwise, the Auditor generates a probe based on the scenario description.
+*   <strong>Judgment</strong>: Sends the conversation history to the Judge model. The Judge returns a structured JSON response containing severity, issues, and recommendations.
+*   <strong>Thinking Stripping</strong>: Includes a utility <code>strip_thinking()</code> to remove <code>&lt;think&gt;</code> or <code>&lt;thinking&gt;</code> tags from model outputs, ensuring clean evaluation data.</p>
+<p><strong>Constructor Parameters:</strong>
+*   <code>model</code>, <code>provider</code>: Target model configuration.
+*   <code>judge_model</code>, <code>judge_provider</code>: Judge model configuration.
+*   <code>auditor_model</code>, <code>auditor_provider</code>: Optional separate auditor configuration (defaults to judge config if not specified).
+*   <code>judge</code>: Optional name of a built-in judge config (e.g., <code>"safety"</code>, <code>"factuality"</code>).
+*   <code>probe_prompt</code>, <code>judge_prompt</code>: Custom system prompts to override default behaviors.
+*   <code>json_format</code>: Whether to enforce JSON schema output from the judge (default <code>True</code>).
+*   <code>max_turns</code>: Maximum number of back-and-forth turns per scenario.</p>
+<pre><code class="language-python">from simpleaudit import ModelAuditor
+
+auditor = ModelAuditor(
+    model=&quot;llama3.2:3b&quot;,
+    provider=&quot;ollama&quot;,
+    judge_model=&quot;gemma3:latest&quot;,
+    judge_provider=&quot;ollama&quot;,
+    judge=&quot;safety&quot;,
+    max_turns=3,
+    json_format=False  # Ollama may not support strict JSON schema
+)
+</code></pre>
+<h4 id="2-auditexperiment">2. AuditExperiment</h4>
+<p>The <code>AuditExperiment</code> class (<code>simpleaudit.experiment.AuditExperiment</code>) orchestrates audits across <strong>multiple models</strong> and supports <strong>repeated runs</strong> for statistical stability analysis.</p>
+<p><strong>Key Responsibilities:</strong>
+*   <strong>Multi-Model Orchestration</strong>: Accepts a list of model configurations. It merges common parameters (like <code>judge_model</code>) from the experiment level into individual model configurations.
+*   <strong>Repetitions</strong>: Supports <code>n_repetitions</code> to run the same scenario set multiple times, enabling stability metrics.
+*   <strong>Resumability</strong>: If <code>save_dir</code> is provided, it checks for existing <code>run_N.json</code> files and skips completed runs, allowing long experiments to be resumed after interruption.
+*   <strong>Callbacks</strong>: Supports an <code>on_model_done</code> callback for real-time processing of results as each model completes.</p>
+<p><strong>Constructor Parameters:</strong>
+*   <code>models</code>: List of dictionaries, each containing at least a <code>"model"</code> key. Optional <code>"label"</code> for display.
+*   <code>judge_model</code>, <code>judge_provider</code>: Default judge settings applied to all models unless overridden.
+*   <code>n_repetitions</code>: Number of times to run the full scenario set per model (default <code>1</code>).
+*   <code>save_dir</code>: Directory to save intermediate results for resumability.</p>
+<pre><code class="language-python">from simpleaudit.experiment import AuditExperiment
 
 experiment = AuditExperiment(
     models=[
@@ -912,87 +962,66 @@ experiment = AuditExperiment(
     ],
     judge_model=&quot;gemma3:latest&quot;,
     judge_provider=&quot;ollama&quot;,
-    judge=&quot;safety&quot;,
     n_repetitions=3,
     save_dir=&quot;./audit_results&quot;
 )
 
-# Run with a built-in scenario pack
-results = experiment.run(&quot;safety&quot;, max_turns=5, language=&quot;English&quot;)
+# Run the experiment
+results = experiment.run(scenarios=&quot;safety&quot;, max_turns=2)
 </code></pre>
-<h4 id="2-modelauditor">2. <code>ModelAuditor</code></h4>
-<p>The engine that executes a single audit run. It manages the conversation loop, generating probes using an auditor model and evaluating responses using a judge model.</p>
-<p><strong>Location:</strong> <code>simpleaudit/model_auditor.py</code></p>
-<p><strong>Key Parameters:</strong>
-*   <code>model</code>, <code>provider</code>: The target model being audited.
-*   <code>judge_model</code>, <code>judge_provider</code>: The model used to evaluate the target's responses.
-*   <code>auditor_model</code>, <code>auditor_provider</code>: The model used to generate adversarial probes. Defaults to the judge model if not specified.
-*   <code>system_prompt</code>: Optional system prompt applied to the target model.
-*   <code>judge</code>: Name of a built-in judge config. If provided, it sets default <code>probe_prompt</code> and <code>judge_prompt</code> unless explicitly overridden.
-*   <code>json_format</code>: Whether to enforce JSON schema output from the judge (default: <code>True</code>).
-*   <code>max_turns</code>: Maximum number of back-and-forth turns per scenario (default: 5).</p>
-<p><strong>Behavior:</strong>
-*   <strong>Probe Generation</strong>: On the first turn, if a <code>test_prompt</code> is defined in the scenario, it is used verbatim. Subsequent turns use the auditor model to generate the next probe based on the conversation history.
-*   <strong>Judging</strong>: The judge model evaluates the full conversation history. It returns a structured JSON response containing <code>severity</code>, <code>issues_found</code>, <code>positive_behaviors</code>, <code>summary</code>, and <code>recommendations</code>.
-*   <strong>Thinking Tag Stripping</strong>: The <code>strip_thinking</code> static method removes <code>&lt;think&gt;</code> or <code>&lt;thinking&gt;</code> blocks from model outputs to ensure clean evaluation.</p>
-<h4 id="3-results-classes">3. Results Classes</h4>
-<p><strong><code>AuditResults</code></strong> (<code>simpleaudit/results.py</code>)
-Represents the outcome of a single experiment run.
-*   <strong>Properties</strong>: <code>score</code> (0-100), <code>passed</code>, <code>failed</code>, <code>critical_count</code>, <code>severity_distribution</code>, <code>token_usage</code>.
-*   <strong>Methods</strong>:
-    *   <code>summary()</code>: Prints a human-readable summary to the console.
-    *   <code>save(filepath)</code>: Serializes results to JSON.
-    *   <code>load(filepath)</code>: Class method to load results from JSON.
-    *   <code>plot(save_path)</code>: Generates a matplotlib visualization (pie chart of severity distribution and bar chart of scenario scores).</p>
-<p><strong><code>RepeatedExperimentResults</code></strong> (<code>simpleaudit/repeated_results.py</code>)
-Represents the outcome of an <code>AuditExperiment</code> with <code>n_repetitions &gt; 1</code>.
-*   <strong>Container Protocol</strong>: Supports <code>len()</code>, <code>in</code>, <code>[]</code> indexing (returns the first run's <code>AuditResults</code>), and iteration over model labels.
-*   <strong>Methods</strong>:
-    *   <code>stability(model_name)</code>: Returns a <code>ModelStabilityReport</code> for a specific model, calculating mean score, standard deviation, coefficient of variation, and per-scenario pass rates.
-    *   <code>summary()</code>: Prints stability reports for all models.
-    *   <code>save(filepath)</code> / <code>load(filepath)</code>: Serializes/deserializes the full multi-run dataset.</p>
+<h4 id="3-results-repeated-results">3. Results &amp; Repeated Results</h4>
+<p>The library provides two levels of result aggregation:</p>
+<p><strong>AuditResults</strong> (<code>simpleaudit.results.AuditResults</code>):
+*   Aggregates <code>AuditResult</code> objects from a single run.
+*   Provides properties for <code>score</code>, <code>severity_distribution</code>, <code>token_usage</code>, and <code>passed</code>/<code>failed</code> counts.
+*   Methods: <code>summary()</code> (prints human-readable report), <code>save(filepath)</code>, <code>load(filepath)</code>, <code>plot(save_path)</code>.</p>
+<p><strong>RepeatedExperimentResults</strong> (<code>simpleaudit.repeated_results.RepeatedExperimentResults</code>):
+*   Aggregates <code>AuditResults</code> across multiple repetitions for each model.
+*   Implements a dict-like interface (<code>__getitem__</code>, <code>keys</code>, <code>values</code>) for backward compatibility, returning the <em>first</em> run's results for a given model label.
+*   <strong>Stability Analysis</strong>: The <code>stability(model_name)</code> method returns a <code>ModelStabilityReport</code> containing:
+    *   <code>mean_score</code>, <code>std_score</code>, <code>min_score</code>, <code>max_score</code>.
+    *   <code>cv</code> (Coefficient of Variation).
+    *   <code>per_scenario</code>: A dictionary of <code>ScenarioStats</code> including <code>pass_rate</code> and <code>agreement_rate</code> (how often the most common severity occurred).</p>
+<pre><code class="language-python"># Access stability for a specific model
+stability_report = results.stability(&quot;Llama 3.2&quot;)
+stability_report.summary()
+
+# Access first run results for a model (backward compatible)
+first_run_results = results[&quot;Llama 3.2&quot;]
+print(first_run_results.score)
+</code></pre>
 <h3 id="data-flow">Data Flow</h3>
 <ol>
-<li><strong>Initialization</strong>: <code>AuditExperiment</code> validates model configurations and merges global judge/auditor settings with model-specific overrides.</li>
-<li><strong>Execution</strong>:<ul>
-<li>For each model, <code>ModelAuditor</code> is instantiated.</li>
-<li>For each scenario in the pack, <code>run_scenario</code> is called.</li>
-<li><strong>Turn 1</strong>: The scenario's <code>test_prompt</code> (or a generated probe) is sent to the target model.</li>
-<li><strong>Subsequent Turns</strong>: The auditor model generates a new probe based on the previous conversation. The target model responds.</li>
-<li><strong>Judgment</strong>: After <code>max_turns</code>, the judge model evaluates the entire conversation.</li>
-</ul>
-</li>
-<li><strong>Aggregation</strong>:<ul>
-<li>Individual <code>AuditResult</code> objects are collected into an <code>AuditResults</code> instance.</li>
-<li>If <code>n_repetitions &gt; 1</code>, multiple <code>AuditResults</code> instances are grouped by model label into <code>RepeatedExperimentResults</code>.</li>
-</ul>
-</li>
-<li><strong>Persistence</strong>: If <code>save_dir</code> is set, each run is saved to disk immediately, allowing the experiment to resume if interrupted.</li>
+<li><strong>Scenario Selection</strong>: Scenarios are loaded from built-in packs (e.g., <code>"safety"</code>, <code>"bullshitbench"</code>) via <code>get_scenarios()</code> or provided as a custom list of dictionaries.</li>
+<li><strong>Probe Generation</strong>: For each turn, the Auditor model generates a probe. If <code>test_prompt</code> is present, it is used on turn 1.</li>
+<li><strong>Target Interaction</strong>: The probe is sent to the Target model. The response is appended to the conversation history.</li>
+<li><strong>Judgment</strong>: After <code>max_turns</code>, the full conversation is sent to the Judge model.</li>
+<li><strong>Parsing</strong>: The Judge's response is parsed into JSON. If parsing fails, a default severity (usually <code>"ERROR"</code>) is assigned.</li>
+<li><strong>Aggregation</strong>: Results are stored in <code>AuditResult</code> objects, aggregated into <code>AuditResults</code>, and finally into <code>RepeatedExperimentResults</code> if repetitions were configured.</li>
 </ol>
-<h3 id="built-in-judges-and-scenarios">Built-in Judges and Scenarios</h3>
-<p><strong>Judges</strong> (<code>simpleaudit/judges/__init__.py</code>)
-Pre-defined evaluation criteria accessible via the <code>judge</code> parameter:
-*   <code>safety</code>: Constitutional AI safety evaluation.
-*   <code>abstention</code>: Refusal/abstention appropriateness.
-*   <code>helpfulness</code>: Response quality (relevance, accuracy, clarity, completeness).
-*   <code>factuality</code>: Hallucination and factual error detection.
-*   <code>harm</code>: HELM Safety harm categorization.
-*   <code>binary_abstention</code>: Binary classifier for abstention.</p>
-<p><strong>Scenario Packs</strong> (<code>simpleaudit/scenarios/__init__.py</code>)
-Collections of test scenarios accessible via <code>get_scenarios(pack_name)</code>:
-*   <code>safety</code>, <code>rag</code>, <code>health</code>, <code>system_prompt</code>, <code>helpmed</code>, <code>ung</code>.
-*   <code>bullshitbench</code>, <code>health_bullshit</code>, <code>epistemic_safety</code>.
-*   <code>hei_refusal</code>, <code>nav_aap</code>, <code>skatteetaten</code>.
-*   <code>all</code>: Union of all available packs.</p>
-<h3 id="error-handling-and-resilience">Error Handling and Resilience</h3>
+<h3 id="judge-configurations">Judge Configurations</h3>
+<p>SimpleAudit includes several built-in judge configurations accessible via the <code>judge</code> parameter in <code>ModelAuditor</code> or <code>AuditExperiment</code>. These are defined in <code>simpleaudit.judges</code>:</p>
 <ul>
-<li><strong>JSON Parsing</strong>: The <code>parse_json_response</code> utility handles malformed JSON from LLMs, extracting valid JSON payloads from surrounding text and defaulting to an <code>"ERROR"</code> severity if parsing fails completely.</li>
-<li><strong>Resumability</strong>: <code>AuditExperiment</code> checks <code>save_dir</code> for existing <code>run_N.json</code> files before starting. If a run exists, it is loaded from disk and skipped, ensuring that interrupted experiments do not waste compute resources.</li>
-<li><strong>Concurrency</strong>: <code>max_workers</code> controls the number of concurrent scenarios processed per model, utilizing <code>asyncio.Semaphore</code> to limit parallelism.</li>
+<li><code>safety</code>: Constitutional AI safety evaluation.</li>
+<li><code>abstention</code>: Refusal/abstention appropriateness.</li>
+<li><code>helpfulness</code>: Response quality (MT-Bench dimensions).</li>
+<li><code>factuality</code>: Hallucination and factual error detection.</li>
+<li><code>harm</code>: HELM Safety harm categorization.</li>
+<li><code>binary_abstention</code>: Binary classifier for abstention.</li>
 </ul>
+<p>You can list available judges using <code>list_judge_configs()</code> from <code>simpleaudit.judges</code>.</p>
+<h3 id="error-handling-resilience">Error Handling &amp; Resilience</h3>
+<ul>
+<li><strong>JSON Parsing</strong>: The <code>parse_json_response</code> utility handles malformed JSON from LLMs, extracting JSON from code blocks or surrounding text. If parsing fails completely, it returns a default structure with <code>severity: "ERROR"</code>.</li>
+<li><strong>Resumable Experiments</strong>: By setting <code>save_dir</code> in <code>AuditExperiment</code>, each repetition's results are saved to <code>run_N.json</code>. If the experiment is interrupted, re-running it will load existing files and skip those runs, ensuring no wasted API calls.</li>
+</ul>
+<h3 id="local-first-design">Local-First Design</h3>
+<p>SimpleAudit is designed to work without external APIs. By using <code>provider="ollama"</code> and local model names, the entire audit pipeline (Target, Auditor, Judge) can run locally. The <code>json_format</code> parameter should be set to <code>False</code> for providers like Ollama that may not support strict <code>response_format</code> schemas, relying instead on prompt engineering for JSON output.</p>
 <h3 id="see-also">See Also</h3>
 <ul>
 <li><a href="../key-ideas/">Key Ideas</a></li>
+<li><a href="../installation/">Installation</a></li>
+<li><a href="../quickstart/">Quickstart</a></li>
 </ul>
 <p><strong>Container capabilities:</strong> <code>AuditResults</code> can be iterated with <code>for</code> and supports index access with <code>[]</code> and supports <code>len()</code>.</p>
 <p><strong>Container capabilities:</strong> <code>RepeatedExperimentResults</code> can be iterated with <code>for</code> and supports index access with <code>[]</code> and supports <code>len()</code> and supports <code>in</code> membership testing.</p>
