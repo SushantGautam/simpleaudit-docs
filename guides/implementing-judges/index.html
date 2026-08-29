@@ -6,28 +6,28 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Lightweight AI Safety Auditing Framework">
+        <meta name="description" content="Documentation for simpleaudit">
       
       
       
-        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/visualization-server/">
+        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/implementing-judges/">
       
       
-        <link rel="prev" href="../domain-scenarios/">
+        <link rel="prev" href="../defining-test-scenarios/">
       
       
-        <link rel="next" href="../advanced-techniques/">
+        <link rel="next" href="../advanced-judging-strategies/">
       
       
         
       
       
-      <link rel="icon" href="../../logo.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
     
     
       
-        <title>Visualization server - SimpleAudit</title>
+        <title>Implementing judges - simpleaudit</title>
       
     
     
@@ -52,8 +52,6 @@
         <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
       
     
-    
-      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
     <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
@@ -80,7 +78,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#visualization-server" class="md-skip">
+        <a href="#implementing-judges" class="md-skip">
           Skip to content
         </a>
       
@@ -96,9 +94,10 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="SimpleAudit" class="md-header__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
+    <a href="../.." title="simpleaudit" class="md-header__button md-logo" aria-label="simpleaudit" data-md-component="logo">
       
-  <img src="../../logo.png" alt="logo">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -109,13 +108,13 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            SimpleAudit
+            simpleaudit
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Visualization server
+              Implementing judges
             
           </span>
         </div>
@@ -152,48 +151,6 @@
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
     
     
-    
-      
-      
-        <label class="md-header__button md-icon" for="__search">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        </label>
-        <div class="md-search" data-md-component="search" role="dialog">
-  <label class="md-search__overlay" for="__search"></label>
-  <div class="md-search__inner" role="search">
-    <form class="md-search__form" name="search">
-      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
-      <label class="md-search__icon md-icon" for="__search">
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
-        
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
-      </label>
-      <nav class="md-search__options" aria-label="Search">
-        
-        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-        </button>
-      </nav>
-      
-        <div class="md-search__suggest" data-md-component="search-suggest"></div>
-      
-    </form>
-    <div class="md-search__output">
-      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
-        <div class="md-search-result" data-md-component="search-result">
-          <div class="md-search-result__meta">
-            Initializing search
-          </div>
-          <ol class="md-search-result__list" role="presentation"></ol>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      
     
     
       <div class="md-header__source">
@@ -233,12 +190,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="SimpleAudit" class="md-nav__button md-logo" aria-label="SimpleAudit" data-md-component="logo">
+    <a href="../.." title="simpleaudit" class="md-nav__button md-logo" aria-label="simpleaudit" data-md-component="logo">
       
-  <img src="../../logo.png" alt="logo">
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    SimpleAudit
+    simpleaudit
   </label>
   
     <div class="md-nav__source">
@@ -269,7 +227,7 @@
   <span class="md-ellipsis">
     
   
-    SimpleAudit
+    simpleaudit
   
 
     
@@ -291,14 +249,6 @@
   
   
     
-    
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -348,28 +298,22 @@
                 
   
   
+    
   
   
+  
     
-    
-      
-        
-      
-        
-      
-        
-      
     
     
     
       
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" checked>
         
           
           <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
@@ -379,7 +323,7 @@
   <span class="md-ellipsis">
     
   
-    Start Here
+    More
   
 
     
@@ -390,12 +334,12 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_2_1">
             <span class="md-nav__icon md-icon"></span>
             
   
-    Start Here
+    More
   
 
           </label>
@@ -485,14 +429,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
               
                 
   
@@ -500,191 +436,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../results-analysis/" class="md-nav__link">
+      <a href="../defining-test-scenarios/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Results analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-    
-  
-  
-  
-    
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_3" checked>
-        
-          
-          <label class="md-nav__link" for="__nav_2_3" id="__nav_2_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    More
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_3_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    More
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../model-auditing/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Model auditing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../judges-system/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Judges system
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../test-scenarios/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Test scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../domain-scenarios/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Domain scenarios
+    Defining test scenarios
   
 
     
@@ -719,7 +478,7 @@
   <span class="md-ellipsis">
     
   
-    Visualization server
+    Implementing judges
   
 
     
@@ -737,7 +496,7 @@
   <span class="md-ellipsis">
     
   
-    Visualization server
+    Implementing judges
   
 
     
@@ -761,22 +520,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#visualization-server" class="md-nav__link">
+  <a href="#implementing-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Visualization Server
+        Implementing Judges
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Visualization Server">
+    <nav class="md-nav" aria-label="Implementing Judges">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration
+        Architecture Overview
       
     </span>
   </a>
@@ -784,88 +543,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+  <a href="#built-in-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        Built-in Judges
       
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Endpoints
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Endpoints">
+    <nav class="md-nav" aria-label="Built-in Judges">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
+  <a href="#score-based-vs-severity-based-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /scenario_viewer.html
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-faviconpng" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /favicon.png
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/auth
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/json/{file_path}
+        Score-Based vs. Severity-Based Judges
       
     </span>
   </a>
@@ -878,10 +571,50 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-validation" class="md-nav__link">
+  <a href="#using-built-in-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Validation
+        Using Built-in Judges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Built-in Judges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-probe-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customizing Probe Prompts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-judges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing Custom Judges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementing Custom Judges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-a-custom-judge-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of a Custom Judge Prompt
       
     </span>
   </a>
@@ -889,10 +622,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#standalone-html-export" class="md-nav__link">
+  <a href="#creating-a-full-custom-judge-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Standalone HTML Export
+        Creating a Full Custom Judge Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieving-judge-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving Judge Metadata
       
     </span>
   </a>
@@ -900,10 +649,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running the Server
+        Best Practices
       
     </span>
   </a>
@@ -911,10 +660,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Notes
+        References
       
     </span>
   </a>
@@ -953,14 +702,126 @@
   
   
     <li class="md-nav__item">
-      <a href="../advanced-techniques/" class="md-nav__link">
+      <a href="../advanced-judging-strategies/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Advanced techniques
+    Advanced judging strategies
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../domain-specific-scenarios/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Domain specific scenarios
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../rag-and-vision-auditing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Rag and vision auditing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../result-analysis-and-visualization/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Result analysis and visualization
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../extending-simpleaudit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Extending simpleaudit
   
 
     
@@ -996,14 +857,6 @@
   
   
     
-    
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -1057,74 +910,6 @@
   
     
     
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
     
     
       
@@ -1144,7 +929,7 @@
   <span class="md-ellipsis">
     
   
-    Core
+    Core Engine
   
 
     
@@ -1160,7 +945,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Core
+    Core Engine
   
 
           </label>
@@ -2106,26 +1891,6 @@
   
     
     
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-    
     
     
       
@@ -2434,38 +2199,6 @@
   
   
     
-    
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
-        
-      
     
     
     
@@ -2936,6 +2669,175 @@
 
               
             
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Analysis & Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Analysis & Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_cross_judge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cross judge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_reframing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit reframing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
           </ul>
         </nav>
       
@@ -2968,22 +2870,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#visualization-server" class="md-nav__link">
+  <a href="#implementing-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Visualization Server
+        Implementing Judges
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Visualization Server">
+    <nav class="md-nav" aria-label="Implementing Judges">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#configuration" class="md-nav__link">
+  <a href="#architecture-overview" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuration
+        Architecture Overview
       
     </span>
   </a>
@@ -2991,88 +2893,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#authentication" class="md-nav__link">
+  <a href="#built-in-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Authentication
+        Built-in Judges
       
     </span>
   </a>
   
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#api-endpoints" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        API Endpoints
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="API Endpoints">
+    <nav class="md-nav" aria-label="Built-in Judges">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#get" class="md-nav__link">
+  <a href="#score-based-vs-severity-based-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        GET /
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-scenario_viewerhtml" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /scenario_viewer.html
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-faviconpng" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /favicon.png
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apiauth" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/auth
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apifiles" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/files
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#get-apijsonfile_path" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        GET /api/json/{file_path}
+        Score-Based vs. Severity-Based Judges
       
     </span>
   </a>
@@ -3085,10 +2921,50 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#data-validation" class="md-nav__link">
+  <a href="#using-built-in-judges" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Data Validation
+        Using Built-in Judges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Using Built-in Judges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#customizing-probe-prompts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customizing Probe Prompts
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#implementing-custom-judges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementing Custom Judges
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementing Custom Judges">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#structure-of-a-custom-judge-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Structure of a Custom Judge Prompt
       
     </span>
   </a>
@@ -3096,10 +2972,26 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#standalone-html-export" class="md-nav__link">
+  <a href="#creating-a-full-custom-judge-configuration" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Standalone HTML Export
+        Creating a Full Custom Judge Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#retrieving-judge-metadata" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Retrieving Judge Metadata
       
     </span>
   </a>
@@ -3107,10 +2999,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#running-the-server" class="md-nav__link">
+  <a href="#best-practices" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running the Server
+        Best Practices
       
     </span>
   </a>
@@ -3118,10 +3010,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#notes" class="md-nav__link">
+  <a href="#references" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Notes
+        References
       
     </span>
   </a>
@@ -3164,188 +3056,184 @@
   
 
 
-  <h1>Visualization server</h1>
+  <h1>Implementing judges</h1>
 
-<h2 id="visualization-server">Visualization Server<a class="headerlink" href="#visualization-server" title="Permanent link">&para;</a></h2>
-<p>The Visualization Server module provides a local FastAPI web interface for exploring SimpleAudit results. It serves an interactive HTML visualizer, exposes REST endpoints for file discovery and data retrieval, and supports optional secret-based authentication. The server reads JSON result files from a configured directory, validates their structure, and renders them in the browser.</p>
-<h3 id="configuration">Configuration<a class="headerlink" href="#configuration" title="Permanent link">&para;</a></h3>
-<p>The server relies on two environment variables for configuration:</p>
+<h2 id="implementing-judges">Implementing Judges</h2>
+<p>The <code>simpleaudit.judges</code> module provides a registry of pre-configured evaluation judges used by <code>ModelAuditor</code> to assess AI model responses. Judges define the criteria, prompting strategy, and expected output format for evaluating specific dimensions of model performance, such as safety, factuality, and helpfulness.</p>
+<p>This documentation covers the architecture of the judge system, the available built-in configurations, and how to integrate custom or named judges into your audit pipeline.</p>
+<h3 id="architecture-overview">Architecture Overview</h3>
+<p>A judge configuration in <code>simpleaudit</code> is a dictionary containing the following keys:</p>
+<ul>
+<li><strong><code>name</code></strong>: Human-readable identifier.</li>
+<li><strong><code>description</code></strong>: A brief summary of the evaluation focus.</li>
+<li><strong><code>probe_prompt</code></strong>: The prompt used to generate user messages that test the target model. It includes a <code>{language}</code> placeholder for localization.</li>
+<li><strong><code>judge_prompt</code></strong>: The prompt sent to the judge LLM to evaluate the conversation. It specifies the evaluation criteria and the required JSON output structure.</li>
+<li><strong><code>output_schema</code></strong>: A human-readable description of the expected JSON fields.</li>
+<li><strong><code>response_schema</code></strong>: A machine-readable JSON Schema used by the framework when <code>json_format=True</code> is enabled. This ensures strict validation of the judge's output.</li>
+<li><strong><code>source</code></strong>: Academic references and methodology notes.</li>
+<li><strong><code>metadata</code></strong>: Versioning and authorship information.</li>
+</ul>
+<p>The module exposes two primary functions:
+1.  <code>get_judge(name: str)</code>: Retrieves a copy of a judge configuration by name.
+2.  <code>list_judge_configs()</code>: Returns a dictionary mapping judge names to their descriptions.</p>
+<h3 id="built-in-judges">Built-in Judges</h3>
+<p>The <code>JUDGE_CONFIGS</code> dictionary in <code>simpleaudit/judges/__init__.py</code> registers the following built-in judges:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align: left;">Variable</th>
-<th style="text-align: left;">Description</th>
-<th style="text-align: left;">Default</th>
+<th style="text-align: left;">Judge Name</th>
+<th style="text-align: left;">Focus Area</th>
+<th style="text-align: left;">Output Type</th>
+<th style="text-align: left;">Reference</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_SECRET</code></td>
-<td style="text-align: left;">Secret string required in the <code>X-Secret</code> header for API access. If empty, authentication is disabled.</td>
-<td style="text-align: left;"><code>""</code></td>
+<td style="text-align: left;"><code>safety</code></td>
+<td style="text-align: left;">Constitutional AI safety (harm, boundaries, transparency)</td>
+<td style="text-align: left;">Severity (<code>critical</code>–<code>pass</code>)</td>
+<td style="text-align: left;">Bai et al., 2022</td>
 </tr>
 <tr>
-<td style="text-align: left;"><code>SIMPLEAUDIT_VISUALIZER_EMAIL</code></td>
-<td style="text-align: left;">Contact email displayed in the frontend when authentication is enabled.</td>
-<td style="text-align: left;"><code>"sushant@simula.no"</code></td>
+<td style="text-align: left;"><code>factuality</code></td>
+<td style="text-align: left;">Hallucination and factual error detection</td>
+<td style="text-align: left;">Score (1–10) + Verdict</td>
+<td style="text-align: left;">Liu et al., 2023 (G-Eval)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>helpfulness</code></td>
+<td style="text-align: left;">Response quality (relevance, accuracy, clarity, completeness)</td>
+<td style="text-align: left;">Score (1–10) + Sub-scores</td>
+<td style="text-align: left;">Zheng et al., 2023 (MT-Bench)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>abstention</code></td>
+<td style="text-align: left;">Appropriateness of refusal/abstention</td>
+<td style="text-align: left;">Score (1–10) + Flags</td>
+<td style="text-align: left;">Kirichenko et al., 2025</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>harm</code></td>
+<td style="text-align: left;">HELM Safety harm categorization</td>
+<td style="text-align: left;">Harmful flag + Category</td>
+<td style="text-align: left;">Liang et al., 2022</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>binary_abstention</code></td>
+<td style="text-align: left;">Binary detection of model abstention</td>
+<td style="text-align: left;"><code>{abstained, reasoning}</code></td>
+<td style="text-align: left;">N/A</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>helsedir_sexhealth_no</code></td>
+<td style="text-align: left;">Norwegian sexual health safety (generic)</td>
+<td style="text-align: left;">Score (1–5) mapped to Severity</td>
+<td style="text-align: left;">Helsedirektoratet, 2026</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>helsedir_sexhealth_no_rag</code></td>
+<td style="text-align: left;">Norwegian sexual health safety (RAG-specific)</td>
+<td style="text-align: left;">Score (1–5) mapped to Severity</td>
+<td style="text-align: left;">Helsedirektoratet, 2026</td>
 </tr>
 </tbody>
 </table>
-<p>The results directory is set programmatically via the <code>RESULTS_DIR</code> global variable. Ensure this variable points to a valid directory containing audit result JSON files before starting the server.</p>
-<h3 id="authentication">Authentication<a class="headerlink" href="#authentication" title="Permanent link">&para;</a></h3>
-<p>If <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> is set, all API endpoints (except <code>/api/auth</code>) require a valid <code>X-Secret</code> header. The server uses constant-time comparison (<code>secrets.compare_digest</code>) to prevent timing attacks.</p>
-<p>To test authentication:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>-H<span class="w"> </span><span class="s2">"X-Secret: your-secret-here"</span><span class="w"> </span>http://localhost:8000/api/auth
-</code></pre></div>
-<p>Response when auth is enabled and valid:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"ok"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"contact_email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"sushant@simula.no"</span>
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">}</span>
-</code></pre></div>
-<h3 id="api-endpoints">API Endpoints<a class="headerlink" href="#api-endpoints" title="Permanent link">&para;</a></h3>
-<h4 id="get"><code>GET /</code><a class="headerlink" href="#get" title="Permanent link">&para;</a></h4>
-<p>Serves the main visualization page (<code>visualizer.html</code>).</p>
-<h4 id="get-scenario_viewerhtml"><code>GET /scenario_viewer.html</code><a class="headerlink" href="#get-scenario_viewerhtml" title="Permanent link">&para;</a></h4>
-<p>Serves the standalone scenario viewer page.</p>
-<h4 id="get-faviconpng"><code>GET /favicon.png</code><a class="headerlink" href="#get-faviconpng" title="Permanent link">&para;</a></h4>
-<p>Serves the favicon (<code>thumbnail.png</code>).</p>
-<h4 id="get-apiauth"><code>GET /api/auth</code><a class="headerlink" href="#get-apiauth" title="Permanent link">&para;</a></h4>
-<p>Verifies the provided secret and returns authentication status.</p>
-<p><strong>Parameters:</strong>
-- <code>X-Secret</code> (Header, optional): The secret string. Required if <code>SIMPLEAUDIT_VISUALIZER_SECRET</code> is set.</p>
-<p><strong>Response:</strong>
-- <code>ok</code> (bool): <code>true</code> if the request is authorized.
-- <code>enabled</code> (bool): <code>true</code> if a secret is configured.
-- <code>contact_email</code> (str): The configured contact email.</p>
-<h4 id="get-apifiles"><code>GET /api/files</code><a class="headerlink" href="#get-apifiles" title="Permanent link">&para;</a></h4>
-<p>Returns the file tree structure of JSON files in the results directory.</p>
-<p><strong>Response:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
-<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"tree"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">      </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder_name"</span><span class="p">,</span>
-<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder"</span><span class="p">,</span>
-<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">      </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder_name"</span><span class="p">,</span>
-<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">      </span><span class="nt">"children"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"results.json"</span><span class="p">,</span>
-<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"file"</span><span class="p">,</span>
-<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">          </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder_name/results.json"</span>
-<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">        </span><span class="p">},</span>
-<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a><span class="w">        </span><span class="p">{</span>
-<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">          </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"experiment.json"</span><span class="p">,</span>
-<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="w">          </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"experiment"</span><span class="p">,</span>
-<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="w">          </span><span class="nt">"path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"folder_name/experiment.json"</span><span class="p">,</span>
-<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a><span class="w">          </span><span class="nt">"models"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"model_a"</span><span class="p">,</span><span class="w"> </span><span class="s2">"model_b"</span><span class="p">]</span>
-<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a><span class="w">        </span><span class="p">}</span>
-<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a><span class="w">      </span><span class="p">]</span>
-<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="p">}</span>
-</code></pre></div></p>
-<p><strong>Types:</strong>
-- <code>file</code>: Single audit result file.
-- <code>experiment</code>: Multi-model experiment file. Includes a <code>models</code> list.
-- <code>folder</code>: Directory containing valid JSON files.</p>
-<h4 id="get-apijsonfile_path"><code>GET /api/json/{file_path}</code><a class="headerlink" href="#get-apijsonfile_path" title="Permanent link">&para;</a></h4>
-<p>Retrieves the contents of a specific JSON file.</p>
-<p><strong>Parameters:</strong>
-- <code>file_path</code> (Path): Relative path from the results directory.</p>
-<p><strong>Security:</strong>
-- Prevents directory traversal attacks by resolving real paths and ensuring they start with the results directory root.
-- Only serves <code>.json</code> files.</p>
-<p><strong>Response:</strong>
-- JSON content of the file.</p>
-<h3 id="data-validation">Data Validation<a class="headerlink" href="#data-validation" title="Permanent link">&para;</a></h3>
-<p>The server validates JSON files to ensure they contain valid audit results. A file is considered valid if it matches one of the following structures:</p>
+<h4 id="score-based-vs-severity-based-judges">Score-Based vs. Severity-Based Judges</h4>
+<p>It is critical to understand how <code>simpleaudit</code> handles the output of different judge types:</p>
 <ol>
-<li>
-<p><strong>Legacy Shape:</strong> A list of audit result objects.
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">[</span>
-<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">  </span><span class="p">{</span>
-<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span>
-<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="w">    </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
-<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="p">]</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Current Shape:</strong> An object with a <code>results</code> list.
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="p">{</span>
-<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="w">  </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="w">    </span><span class="p">{</span>
-<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="w">      </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span>
-<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="w">      </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
-<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="w">    </span><span class="p">}</span>
-<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="w">  </span><span class="p">]</span>
-<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">}</span>
-</code></pre></div></p>
-</li>
-<li>
-<p><strong>Experiment Shape:</strong> An object with a <code>runs</code> dictionary.
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">  </span><span class="nt">"runs"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
-<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">"model_a"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="w">      </span><span class="p">{</span>
-<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="w">        </span><span class="nt">"results"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
-<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a><span class="w">          </span><span class="p">{</span>
-<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a><span class="w">            </span><span class="nt">"scenario_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"test"</span><span class="p">,</span>
-<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a><span class="w">            </span><span class="nt">"severity"</span><span class="p">:</span><span class="w"> </span><span class="s2">"high"</span>
-<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="w">          </span><span class="p">}</span>
-<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="w">        </span><span class="p">]</span>
-<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a><span class="w">      </span><span class="p">}</span>
-<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a><span class="w">    </span><span class="p">]</span>
-<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="w">  </span><span class="p">}</span>
-<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a><span class="p">}</span>
-</code></pre></div></p>
+<li><strong>Severity-Based Judges</strong> (e.g., <code>safety</code>): These judges output a <code>severity</code> field directly. The framework uses this value for reporting.</li>
+<li><strong>Score-Based Judges</strong> (e.g., <code>factuality</code>, <code>helpfulness</code>): These judges output a numerical <code>score</code> (typically 1–10). The framework automatically derives a <code>severity</code> from this score using <code>utils.severity_from_score</code> to ensure consistent visualization and summarization:<ul>
+<li><strong>9–10</strong>: <code>pass</code></li>
+<li><strong>7–8</strong>: <code>low</code></li>
+<li><strong>5–6</strong>: <code>medium</code></li>
+<li><strong>3–4</strong>: <code>high</code></li>
+<li><strong>1–2</strong>: <code>critical</code></li>
+</ul>
 </li>
 </ol>
-<p>An audit result object must contain either <code>scenario_name</code> or <code>name</code>, and a <code>severity</code> field.</p>
-<h3 id="standalone-html-export">Standalone HTML Export<a class="headerlink" href="#standalone-html-export" title="Permanent link">&para;</a></h3>
-<p>The <code>export_standalone_html</code> function creates a self-contained HTML file with audit results inlined. This file can be opened directly in a browser without a server.</p>
-<p><strong>Function Signature:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">export_standalone_html</span><span class="p">(</span><span class="n">json_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">output_path</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span>
-</code></pre></div></p>
-<p><strong>Parameters:</strong>
-- <code>json_path</code>: Path to the audit results JSON file.
-- <code>output_path</code>: Where to write the standalone HTML file.</p>
-<p><strong>Returns:</strong>
-- The output path.</p>
-<p><strong>Raises:</strong>
-- <code>ValueError</code>: If the JSON is not valid audit data or the template is missing.</p>
-<p><strong>Example Usage:</strong>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">export_standalone_html</span>
-<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
-<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="n">export_standalone_html</span><span class="p">(</span><span class="s2">"results/audit.json"</span><span class="p">,</span> <span class="s2">"output/standalone.html"</span><span class="p">)</span>
-</code></pre></div></p>
-<h3 id="running-the-server">Running the Server<a class="headerlink" href="#running-the-server" title="Permanent link">&para;</a></h3>
-<p>Start the server using <code>uvicorn</code>:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>uvicorn<span class="w"> </span>visualization.server:app<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
-</code></pre></div>
-<p>Ensure <code>RESULTS_DIR</code> is set before starting the server. For example:</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
-<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">visualization.server</span><span class="w"> </span><span class="kn">import</span> <span class="n">app</span><span class="p">,</span> <span class="n">RESULTS_DIR</span>
-<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
-<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># Set the results directory</span>
-<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="n">RESULTS_DIR</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="s2">"path/to/results"</span><span class="p">)</span>
-<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
-<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># Start the server</span>
-<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="kn">import</span><span class="w"> </span><span class="nn">uvicorn</span>
-<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="n">uvicorn</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">app</span><span class="p">,</span> <span class="n">host</span><span class="o">=</span><span class="s2">"0.0.0.0"</span><span class="p">,</span> <span class="n">port</span><span class="o">=</span><span class="mi">8000</span><span class="p">)</span>
-</code></pre></div>
-<h3 id="notes">Notes<a class="headerlink" href="#notes" title="Permanent link">&para;</a></h3>
+<p>The raw judgment dictionary returned by the LLM is stored unchanged in the audit results, preserving all sub-scores and reasoning.</p>
+<h3 id="using-built-in-judges">Using Built-in Judges</h3>
+<p>You can use any built-in judge by passing its name to the <code>judge</code> parameter of <code>ModelAuditor</code>.</p>
+<pre><code class="language-python">from simpleaudit import ModelAuditor
+
+# Initialize auditor with the 'factuality' judge
+auditor = ModelAuditor(
+    model=&quot;gpt-4o&quot;,
+    judge=&quot;factuality&quot;,
+    # Optional: Override the probe prompt if you need specific test cases
+    # probe_prompt=&quot;Ask about specific historical dates...&quot;
+)
+
+# Run an audit
+results = auditor.run_audit(scenario=&quot;Historical accuracy test&quot;)
+</code></pre>
+<h4 id="customizing-probe-prompts">Customizing Probe Prompts</h4>
+<p>While the judge determines <em>how</em> to evaluate, the <code>probe_prompt</code> determines <em>what</em> questions are asked. You can override the default probe prompt for a named judge:</p>
+<pre><code class="language-python">auditor = ModelAuditor(
+    model=&quot;gpt-4o&quot;,
+    judge=&quot;helpfulness&quot;,
+    probe_prompt=&quot;You are a user asking for coding help. Ask for a Python script to sort a list.&quot;
+)
+</code></pre>
+<h3 id="implementing-custom-judges">Implementing Custom Judges</h3>
+<p>If the built-in judges do not cover your specific evaluation needs, you can provide a fully custom judge via the <code>judge_prompt</code> parameter. When <code>judge_prompt</code> is provided, it takes precedence over any <code>judge</code> name.</p>
+<h4 id="structure-of-a-custom-judge-prompt">Structure of a Custom Judge Prompt</h4>
+<p>Your custom <code>judge_prompt</code> must instruct the LLM to output a valid JSON object. To ensure robust parsing, it is recommended to include a strict JSON schema in the prompt.</p>
+<pre><code class="language-python">custom_judge_prompt = &quot;&quot;&quot;
+You are an expert evaluator for customer support tone.
+Evaluate the AI's response for empathy and professionalism.
+
+Output JSON:
+{
+    &quot;score&quot;: &lt;integer 1-10&gt;,
+    &quot;tone_issues&quot;: [&quot;&lt;issue 1&gt;&quot;],
+    &quot;reasoning&quot;: &quot;&lt;explanation&gt;&quot;
+}
+&quot;&quot;&quot;
+
+auditor = ModelAuditor(
+    model=&quot;gpt-4o&quot;,
+    judge_prompt=custom_judge_prompt,
+    # If using json_format=True, you may also need to define a response_schema
+    # in your custom config if you are building a full judge dict, 
+    # but for simple judge_prompt overrides, the framework attempts to parse 
+    # the JSON defined in the prompt.
+)
+</code></pre>
+<h4 id="creating-a-full-custom-judge-configuration">Creating a Full Custom Judge Configuration</h4>
+<p>For advanced use cases where you need to control the <code>response_schema</code> or <code>probe_prompt</code> independently of the judge logic, you can construct a judge dictionary manually and pass it if your version of <code>ModelAuditor</code> supports a <code>judge_config</code> dict, or by extending the <code>JUDGE_CONFIGS</code> registry (though modifying the library source is not recommended for production).</p>
+<p>However, the standard approach for custom logic is to use <code>judge_prompt</code> for the evaluation logic and <code>probe_prompt</code> for the testing logic.</p>
+<h3 id="retrieving-judge-metadata">Retrieving Judge Metadata</h3>
+<p>You can inspect available judges and their details programmatically:</p>
+<pre><code class="language-python">from simpleaudit.judges import list_judge_configs, get_judge
+
+# List all available judges
+available = list_judge_configs()
+for name, desc in available.items():
+    print(f&quot;{name}: {desc}&quot;)
+
+# Get specific judge config
+config = get_judge(&quot;safety&quot;)
+print(config[&quot;judge_prompt&quot;])
+print(config[&quot;source&quot;][&quot;paper&quot;])
+</code></pre>
+<h3 id="best-practices">Best Practices</h3>
+<ol>
+<li><strong>Use <code>response_schema</code> for Score Judges</strong>: If you create a custom judge that outputs a score, ensure your prompt explicitly requests the JSON structure. If you are integrating a custom judge into the <code>JUDGE_CONFIGS</code> registry (via subclassing or monkey-patching for development), include a <code>response_schema</code> key to enable <code>json_format=True</code> validation.</li>
+<li><strong>Chain-of-Thought for Accuracy</strong>: As seen in the <code>factuality</code> judge (G-Eval), including instructions to "reason step-by-step" before assigning a score significantly improves the alignment of LLM judges with human evaluation.</li>
+<li><strong>Localization</strong>: All built-in <code>probe_prompt</code>s include a <code>{language}</code> placeholder. When customizing probes, ensure you respect this placeholder if you intend to run multilingual audits.</li>
+<li><strong>Severity Mapping</strong>: Do not rely on the judge to output <code>severity</code> if you are using a score-based judge. The framework handles the mapping. Your judge should focus on providing an accurate numerical score and detailed reasoning.</li>
+</ol>
+<h3 id="references">References</h3>
 <ul>
-<li>The server uses synchronous endpoints for file operations to avoid blocking the event loop. FastAPI runs these in a thread pool.</li>
-<li>File tree generation parses all JSON files in the results directory. For large directories, this may take time.</li>
-<li>The visualizer detects inlined data in standalone HTML files and renders it as a custom upload.</li>
+<li><strong>G-Eval</strong>: Liu et al. (2023). <em>G-Eval: NLG Evaluation using GPT-4 with Better Human Alignment.</em> EMNLP 2023.</li>
+<li><strong>Constitutional AI</strong>: Bai et al. (2022). <em>Constitutional AI: Harmlessness from AI Feedback.</em> Anthropic.</li>
+<li><strong>MT-Bench</strong>: Zheng et al. (2023). <em>Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena.</em></li>
 </ul>
-<h3 id="see-also">See Also<a class="headerlink" href="#see-also" title="Permanent link">&para;</a></h3>
+<h3 id="see-also">See Also</h3>
 <ul>
-<li><a href="../domain-scenarios/">Domain-Specific Scenarios</a></li>
-<li><a href="../getting-started/">Getting Started</a></li>
-<li><a href="../results-analysis/">Results &amp; Analysis</a></li>
+<li><a href="../defining-test-scenarios/">Defining Test Scenarios</a></li>
+<li><a href="../extending-simpleaudit/">Extending SimpleAudit</a></li>
 </ul>
 
 
@@ -3382,7 +3270,7 @@
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../domain-scenarios/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Domain scenarios">
+          <a href="../defining-test-scenarios/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Defining test scenarios">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3392,20 +3280,20 @@
                 Previous
               </span>
               <div class="md-ellipsis">
-                Domain scenarios
+                Defining test scenarios
               </div>
             </div>
           </a>
         
         
           
-          <a href="../advanced-techniques/" class="md-footer__link md-footer__link--next" aria-label="Next: Advanced techniques">
+          <a href="../advanced-judging-strategies/" class="md-footer__link md-footer__link--next" aria-label="Next: Advanced judging strategies">
             <div class="md-footer__title">
               <span class="md-footer__direction">
                 Next
               </span>
               <div class="md-ellipsis">
-                Advanced techniques
+                Advanced judging strategies
               </div>
             </div>
             <div class="md-footer__button md-icon">
@@ -3420,10 +3308,6 @@
   <div class="md-footer-meta md-typeset">
     <div class="md-footer-meta__inner md-grid">
       <div class="md-copyright">
-  
-    <div class="md-copyright__highlight">
-      Docs generated by <a href="https://github.com/SushantGautam/RepoQuill">RepoQuill</a> &middot; <a href="https://sushantgautam.github.io/simpleaudit-docs/SKILL.md">Agent Skill</a> &middot; <a href="https://sushantgautam.github.io/simpleaudit-docs/llms.txt">llms.txt</a>
-    </div>
   
   
     Made with
@@ -3446,7 +3330,7 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "navigation.indexes", "navigation.tracking", "content.code.copy", "content.code.annotate", "search.highlight", "search.suggest", "toc.follow", "toc.title"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
       <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
