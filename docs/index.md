@@ -1,69 +1,28 @@
-# simpleaudit
+# simpleaudit-docs
 
-Lightweight AI Safety Auditing Framework
+Documentation for simpleaudit-docs
 
 ## Quick Start
-
-```bash
-pip install simpleaudit
-```
 
 ## Guides
 
 ### Getting Started
 
-- [Quickstart](guides/quickstart.md) — Run your first local AI safety audit in under 5 minutes using the CLI.
-- [Installation](guides/installation.md) — Install SimpleAudit via PyPI or from source, including Python 3.11+ requirements.
+- [Quickstart](guides/quickstart.md) — Run your first local audit using a pre-built scenario and a local Ollama model in under 5 minutes.
+- [Installation](guides/installation.md) — Install SimpleAudit via pip or from source, including Python version requirements and optional dependencies for local model support.
 
 ### Core Concepts
 
-- [Architecture](guides/architecture.md) — High-level overview of the modular design: scenarios, judges, and the audit engine.
-- [Key Ideas](guides/key-ideas.md) — Core concepts: adversarial probing, local-first execution, and multilingual support.
+- [Architecture](guides/architecture.md) — High-level overview of the SimpleAudit components: ModelAuditor, Judges, Scenarios, and the Experiment runner.
+- [Key Ideas](guides/key-ideas.md) — Core concepts including adversarial probing, local-first design, multilingual support, and the judge-based evaluation methodology.
 
 ### More
 
-- [Command Line Interface](guides/cli-reference.md) — Complete reference for CLI commands, flags, and configuration options.
-- [Creating Custom Scenarios](guides/custom-scenarios.md) — Guide to building new test scenarios following the SimpleAudit scenario guidelines.
-- [Available Scenarios](guides/scenario-library.md) — Catalog of built-in scenarios including BullshitBench, Health, Safety, and RAG tests.
-- [Judges and Evaluation Metrics](guides/judges.md) — Understanding the judge modules: factuality, harm, helpfulness, and abstention logic.
-- [Cross-Judging and Validation](guides/cross-judging.md) — Methodology for validating comparative LLM safety scoring without ground-truth labels.
-- [Results and Visualization](guides/results-visualization.md) — Interpreting audit results and using the local visualization server.
-- [Vision and Image Integrity](guides/vision-integrity.md) — Testing multimodal models for image integrity and visual safety.
+- [CLI Reference](guides/cli-reference.md) — Command-line interface options for running audits, specifying models, scenarios, and output formats.
+- [Custom Judges](guides/custom-judges.md) — How to create and register custom judge functions for specific evaluation criteria like harm, helpfulness, or abstention.
+- [Custom Scenarios](guides/custom-scenarios.md) — Guidelines and examples for creating new test scenarios, including data structures and prompt templates.
+- [Local Model Setup](guides/local-model-setup.md) — Configuring Ollama and other local inference backends for running audits without external API dependencies.
+- [Results & Visualization](guides/results-visualization.md) — Understanding result formats, repeated experiments, and using the local visualization server to inspect audit outcomes.
+- [Testing & Development](guides/testing-development.md) — Running the test suite, using fakes for unit testing, and contributing to the SimpleAudit codebase.
 
 ## API Reference
-
-### Core
-
-- [`simpleaudit`](reference/simpleaudit.md) — 
-- [`simpleaudit.cli`](reference/simpleaudit_cli.md) — 
-- [`simpleaudit.cross_judge`](reference/simpleaudit_cross_judge.md) — 
-- [`simpleaudit.experiment`](reference/simpleaudit_experiment.md) — 
-- [`simpleaudit.judges`](reference/simpleaudit_judges.md) — 
-- [`simpleaudit.judges.abstention`](reference/simpleaudit_judges_abstention.md) — 
-- [`simpleaudit.judges.binary_abstention`](reference/simpleaudit_judges_binary_abstention.md) — 
-- [`simpleaudit.judges.factuality`](reference/simpleaudit_judges_factuality.md) — 
-- [`simpleaudit.judges.harm`](reference/simpleaudit_judges_harm.md) — 
-- [`simpleaudit.judges.helpfulness`](reference/simpleaudit_judges_helpfulness.md) — 
-- [`simpleaudit.judges.helsedir_sexhealth_no`](reference/simpleaudit_judges_helsedir_sexhealth_no.md) — 
-- [`simpleaudit.judges.helsedir_sexhealth_no_rag`](reference/simpleaudit_judges_helsedir_sexhealth_no_rag.md) — 
-- [`simpleaudit.judges.safety`](reference/simpleaudit_judges_safety.md) — 
-- [`simpleaudit.model_auditor`](reference/simpleaudit_model_auditor.md) — 
-- [`simpleaudit.reframing`](reference/simpleaudit_reframing.md) — 
-- [`simpleaudit.repeated_results`](reference/simpleaudit_repeated_results.md) — 
-- [`simpleaudit.results`](reference/simpleaudit_results.md) — 
-- [`simpleaudit.scenarios`](reference/simpleaudit_scenarios.md) — 
-- [`simpleaudit.scenarios.bullshitbench_health`](reference/simpleaudit_scenarios_bullshitbench_health.md) — 
-- [`simpleaudit.scenarios.bullshitbench_v1_v2`](reference/simpleaudit_scenarios_bullshitbench_v1_v2.md) — 
-- [`simpleaudit.scenarios.health`](reference/simpleaudit_scenarios_health.md) — 
-- [`simpleaudit.scenarios.hei_refusal`](reference/simpleaudit_scenarios_hei_refusal.md) — 
-- [`simpleaudit.scenarios.helfo`](reference/simpleaudit_scenarios_helfo.md) — 
-- [`simpleaudit.scenarios.helpmed`](reference/simpleaudit_scenarios_helpmed.md) — 
-- [`simpleaudit.scenarios.lanekassen`](reference/simpleaudit_scenarios_lanekassen.md) — 
-- [`simpleaudit.scenarios.nav_aap`](reference/simpleaudit_scenarios_nav_aap.md) — 
-- [`simpleaudit.scenarios.rag`](reference/simpleaudit_scenarios_rag.md) — 
-- [`simpleaudit.scenarios.safety`](reference/simpleaudit_scenarios_safety.md) — 
-- [`simpleaudit.scenarios.skatteetaten`](reference/simpleaudit_scenarios_skatteetaten.md) — 
-- [`simpleaudit.scenarios.system_prompt`](reference/simpleaudit_scenarios_system_prompt.md) — 
-- [`simpleaudit.scenarios.ung`](reference/simpleaudit_scenarios_ung.md) — 
-- [`simpleaudit.scenarios.vision_integrity`](reference/simpleaudit_scenarios_vision_integrity.md) — 
-- [`simpleaudit.utils`](reference/simpleaudit_utils.md) — 

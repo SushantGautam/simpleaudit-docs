@@ -1,6 +1,6 @@
 ## Key Ideas
 
-The `simpleaudit` library is designed as a lightweight framework for conducting safety audits on Large Language Models (LLMs). It shifts the paradigm of AI safety evaluation from complex, centralized infrastructure to a modular, developer-centric approach. This page outlines the three core architectural pillars that define the library: **Adversarial Probing**, **Local-First Execution**, and **Multilingual Support**.
+The `simpleaudit` library is designed as a lightweight framework for conducting safety audits on Large Language Models (LLMs). It shifts the paradigm of AI safety evaluation from complex, centralized infrastructure to a modular, developer-centric approach. This page outlines the core architectural pillars that define the library: **Adversarial Probing**, **Local-First Execution**, **Multilingual Support**, and **Structured Judging**.
 
 ### 1. Adversarial Probing
 
@@ -153,6 +153,56 @@ config = AuditConfig(
 )
 ```
 
+### 4. Structured Judging and Validation
+
+To ensure consistent and rigorous evaluation, `simpleaudit` employs a structured judging system. Instead of relying on simple keyword matching for all evaluations, the library uses LLM-based judges that follow specific methodological frameworks. These judges are configured to output structured JSON data, which is then parsed and validated by the utility functions in `simpleaudit.utils`.
+
+#### Judge Configurations
+
+The library ships with pre-configured judges based on established AI safety and evaluation research:
+
+1.  **Safety Judge:** Based on **Constitutional AI** principles (Bai et al., 2022). It evaluates responses across five dimensions: harm avoidance, boundary maintenance, factual accuracy, transparency, and manipulation resistance.
+2.  **Factuality Judge:** Based on **G-Eval** methodology (Liu et al., 2023). It uses chain-of-thought prompting to detect hallucinations, unsupported claims, and fabricated details.
+
+Each judge configuration includes:
+*   **`probe_prompt`:** Instructions for the LLM acting as the "user" to generate realistic adversarial queries.
+*   **`judge_prompt`:** Instructions for the LLM acting as the "evaluator" to analyze the conversation and assign a verdict.
+*   **`output_schema`:** A definition of the expected JSON structure for the judge's response.
+
+#### Robust JSON Parsing
+
+LLM outputs are often imperfect. The `simpleaudit.utils` module provides the `parse_json_response` function to handle common issues with LLM-generated JSON, such as markdown code blocks, leading/trailing text, and malformed structures.
+
+```python
+from simpleaudit.utils import parse_json_response
+
+# Example of parsing a judge's response
+raw_response = """
+Here is the evaluation:
+```json
+{
+    "severity": "high",
+    "issues_found": ["Provided dangerous instructions"],
+    "positive_behaviors": [],
+    "summary": "The model failed to refuse the harmful request.",
+    "recommendations": ["Implement stricter refusal policies"]
+}
+```
+"""
+
+parsed_result = parse_json_response(raw_response)
+# Result:
+# {
+#   "severity": "high",
+#   "issues_found": ["Provided dangerous instructions"],
+#   "positive_behaviors": [],
+#   "summary": "The model failed to refuse the harmful request.",
+#   "recommendations": ["Implement stricter refusal policies"]
+# }
+```
+
+The `parse_json_response` function guarantees that the returned dictionary contains the keys `severity`, `issues_found`, `positive_behaviors`, `summary`, and `recommendations`. If parsing fails completely, it returns a default structure with a severity of `"ERROR"` and a summary of the raw response, ensuring the audit pipeline does not crash.
+
 ### Putting It All Together
 
 The following example demonstrates how to set up a simple audit using these core concepts.
@@ -196,9 +246,10 @@ for result in results:
 
 ### Summary
 
-`simpleaudit` simplifies the AI safety auditing process by providing a clean, local-first API. By leveraging **adversarial probing** for targeted testing, **local execution** for privacy and speed, and **multilingual support** for global applicability, it allows developers to integrate rigorous safety checks into their development workflows without heavy infrastructure dependencies.
+`simpleaudit` simplifies the AI safety auditing process by providing a clean, local-first API. By leveraging **adversarial probing** for targeted testing, **local execution** for privacy and speed, **multilingual support** for global applicability, and **structured judging** for rigorous validation, it allows developers to integrate rigorous safety checks into their development workflows without heavy infrastructure dependencies.
 
 ### See Also
 
 *   [Architecture](architecture.md)
-*   [Cross-Judging and Validation](cross-judging.md)
+*   [Local Model Setup](local-model-setup.md)
+*   [Results & Visualization](results-visualization.md)

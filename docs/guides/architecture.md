@@ -4,7 +4,7 @@ The `simpleaudit` library is designed as a lightweight, modular framework for au
 
 ### Core Components
 
-The library follows a unidirectional data flow. An `AuditEngine` accepts a collection of `Scenario` objects and a `Judge` implementation. It iterates through the scenarios, executes the associated prompts or actions, and passes the results to the `Judge` for evaluation. The final output is a structured audit report.
+The library follows a unidirectional data flow. An `AuditEngine` (or `ModelAuditor`) accepts a collection of `Scenario` objects and a `Judge` implementation. It iterates through the scenarios, executes the associated prompts or actions, and passes the results to the `Judge` for evaluation. The final output is a structured audit report.
 
 #### 1. Scenarios
 
@@ -167,6 +167,5 @@ By adhering to this modular architecture, `simpleaudit` remains lightweight and 
 ### See Also
 
 *   [Key Ideas](key-ideas.md)
-*   [Cross-Judging and Validation](cross-judging.md)
-*   [Creating Custom Scenarios](custom-scenarios.md)
-*   [Results and Visualization](results-visualization.md)
+*   [Custom Scenarios](custom-scenarios.md)
+*   [Results & Visualization](results-visualization.md)

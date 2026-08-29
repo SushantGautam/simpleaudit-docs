@@ -167,3 +167,4 @@ Refer to the [Quick Start Guide](./quickstart.md) for a step-by-step tutorial on
 ### See Also
 
 *   [Quickstart](quickstart.md)
+*   [Local Model Setup](local-model-setup.md)

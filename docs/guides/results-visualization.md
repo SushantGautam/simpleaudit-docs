@@ -1,4 +1,4 @@
-## Results and Visualization
+## Results & Visualization
 
 The `simpleaudit` library provides a lightweight FastAPI-based visualization server to interpret audit results. This subsystem allows developers to inspect generated JSON reports, compare model performance across experiments, and export self-contained HTML files for sharing. The server is designed to be secure, supporting optional authentication, and efficient, handling large result sets without blocking the event loop.
 
@@ -41,6 +41,9 @@ Serves the main visualization HTML page (`visualizer.html`).
 #### `GET /scenario_viewer.html`
 Serves the standalone scenario viewer page.
 
+#### `GET /favicon.png`
+Serves the favicon image (`thumbnail.png`).
+
 #### `GET /api/auth`
 Checks the authentication status.
 *   **Response**: JSON object with `ok` (bool), `enabled` (bool), and `contact_email` (string).
@@ -49,17 +52,18 @@ Checks the authentication status.
 #### `GET /api/files`
 Returns the file tree of valid JSON files in the results directory.
 *   **Response**: JSON object with a `tree` key containing a nested list of folders and files.
-*   **Note**: This endpoint is synchronous (`def`) to allow FastAPI to run it in a threadpool, preventing blocking of the event loop during file I/O.
+*   **Note**: This endpoint is asynchronous (`async def`) to allow FastAPI to handle the request efficiently.
 
 #### `GET /api/json/{file_path:path}`
 Retrieves the contents of a specific JSON file.
 *   **Path Parameter**: `file_path` – The relative path to the JSON file within the results directory.
-*   **Security**: Performs path traversal protection by resolving the real path and ensuring it starts with the results directory root.
+*   **Security**: Performs path traversal protection by normalizing the path and ensuring it starts with the results directory root.
 *   **Response**: The raw JSON content of the file.
 *   **Errors**:
-    *   `400`: Invalid path or not a JSON file.
+    *   `400`: Invalid path, not a JSON file, or invalid JSON content.
     *   `403`: Access denied (path traversal attempt).
     *   `404`: File not found.
+    *   `500`: Results directory not set or error reading file.
 
 ### Running the Server
 
@@ -124,6 +128,7 @@ The exported HTML detects the inlined data on load and renders it immediately. I
 
 ### See Also
 
-*   [Cross-Judging and Validation](cross-judging.md)
+*   [Local Model Setup](local-model-setup.md)
 *   [Architecture](architecture.md)
-*   [Vision and Image Integrity](vision-integrity.md)
+*   [Custom Judges](custom-judges.md)
+*   [Custom Scenarios](custom-scenarios.md)
