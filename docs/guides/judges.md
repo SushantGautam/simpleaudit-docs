@@ -9,6 +9,8 @@ Each judge configuration is a dictionary containing:
 *   **`judge_prompt`**: Instructions for the "judge" LLM to evaluate the target model's response.
 *   **`output_schema`**: Human-readable description of the expected JSON output.
 *   **`response_schema`**: Machine-readable JSON Schema enforced by the framework when `json_format=True`.
+*   **`source`**: Metadata regarding the academic or domain-expert basis for the judge.
+*   **`metadata`**: Versioning and authorship information.
 
 **Scoring Conventions:**
 *   **Severity-Based Judges** (`safety`, `harm`): Output a categorical severity level (`critical`, `high`, `medium`, `low`, `pass`).
@@ -18,7 +20,7 @@ Each judge configuration is a dictionary containing:
     *   5–6: `medium`
     *   3–4: `high`
     *   1–2: `critical`
-*   **Binary/Boolean Judges** (`binary_abstention`, `judge_conviction`): Output boolean flags and reasoning. These do not emit a severity score directly; appropriateness or stability is typically determined in post-processing against ground-truth labels or previous states.
+*   **Binary/Boolean Judges** (`binary_abstention`): Output boolean flags and reasoning. These do not emit a severity score directly; appropriateness is typically determined in post-processing against ground-truth labels.
 
 ### Available Judges
 
@@ -30,9 +32,8 @@ Each judge configuration is a dictionary containing:
 | `helpfulness` | Response quality (MT-Bench) | Score (1-10) | `score`, `relevance`, `accuracy`, `clarity`, `completeness` |
 | `abstention` | Refusal appropriateness | Score (1-10) | `score`, `abstained`, `appropriate`, `category` |
 | `binary_abstention` | Binary refusal detection | Boolean | `abstained`, `reasoning` |
-| `helsedir_sexhealth_no` | Norwegian sexual-health compliance | Severity (mapped) | `severity`, `criteria_scores` |
-| `helsedir_sexhealth_no_rag` | Norwegian sexual-health (RAG) | Severity (mapped) | `severity`, `criteria_scores` |
-| `judge_conviction` | Judge stability meta-evaluation | Boolean/Verdict | `verdict`, `changed`, `reasoning` |
+| `helsedir_sexhealth_no` | Norwegian sexual-health compliance | Severity (mapped) | `severity`, `issues_found` |
+| `helsedir_sexhealth_no_rag` | Norwegian sexual-health (RAG) | Severity (mapped) | `severity`, `issues_found` |
 
 ### Usage
 
@@ -112,14 +113,6 @@ Two variants for evaluating Norwegian sexual-health bots for young users, based 
 *   **`helsedir_sexhealth_no_rag`**: RAG-specific variant. Same criteria, but prompts reference "the documents" (`dokumentene`) verbatim, intended for bots with a fixed source corpus.
 *   **Output**: Emits a severity level derived from the average of the six criteria scores.
 
-#### 7. Judge Conviction Observer
-A meta-judge used in "judge-the-judge" experiments (e.g., via `WiggleRunner`). It does not evaluate the correctness of a verdict, but rather extracts the **current verdict** held by a candidate judge after it has been subjected to pressure or counter-arguments.
-*   **Fields**:
-    *   `verdict`: The specific verdict term the candidate judge currently holds (e.g., "safe", "unsafe", "pass").
-    *   `changed`: Boolean indicating if the verdict differs from the initial (L0) verdict.
-    *   `reasoning`: Explanation of the extraction.
-*   **Use Case**: Tracking verdict stability under pressure (L1–L6) to determine if a judge is susceptible to manipulation or logical inconsistency.
-
 ### Customizing Judges
 
 While named judges provide robust defaults, you can override specific parts:
@@ -146,5 +139,4 @@ While named judges provide robust defaults, you can override specific parts:
 
 ### See Also
 
-*   [Advanced Analysis & Meta-Evaluation](advanced-analysis.md)
-*   [Available Scenarios](scenario-library.md)
+*   [Available Scenarios](scenarios.md)

@@ -1,8 +1,8 @@
 ## Key Ideas
 
-The `simpleaudit` library is designed to provide a lightweight, robust framework for auditing software systems, with a specific focus on security, privacy, and accessibility. This page outlines the three core architectural pillars that define the library's behavior: **Adversarial Probing**, **Local-First Execution**, and **Multilingual Support**.
+The `simpleaudit` library is designed to provide a lightweight, robust framework for auditing AI systems, with a specific focus on security, privacy, and factual integrity. This page outlines the core architectural pillars that define the library's behavior: **Adversarial Probing**, **Local-First Execution**, and **Structured Judging**.
 
-These concepts are not merely features but fundamental design constraints that dictate how the library interacts with target systems, handles data, and presents results. Understanding these ideas is essential for developers integrating `simpleaudit` into CI/CD pipelines or manual testing workflows.
+These concepts are not merely features but fundamental design constraints that dictate how the library interacts with target systems, handles data, and evaluates responses. Understanding these ideas is essential for developers integrating `simpleaudit` into CI/CD pipelines or manual testing workflows.
 
 ### 1. Adversarial Probing
 
@@ -94,60 +94,87 @@ When `local_log_dir` is specified, `simpleaudit` creates a timestamped directory
 *   `responses.json`: A log of all HTTP responses received.
 *   `findings.csv`: A machine-readable summary of all detected issues.
 
-### 3. Multilingual Support
+### 3. Structured Judging
 
-Software systems are often built using diverse technology stacks. `simpleaudit` supports **Multilingual Auditing** by providing adapters for different programming languages and frameworks. This allows developers to audit applications written in Python, JavaScript/Node.js, Go, and Java without switching tools.
+While adversarial probing identifies potential issues, `simpleaudit` relies on **Structured Judging** to evaluate the severity and nature of those issues. The library provides specialized judge configurations that apply rigorous, academically grounded methodologies to assess AI responses. Currently, the library supports two primary judging dimensions: **Factuality** and **Safety**.
 
-#### Language Adapters
+#### Judge Configurations
 
-The library includes a set of language-specific adapters that translate the generic audit actions into language-specific test cases. These adapters are located in the `simpleaudit.adapters` package.
+The library includes a set of judge configurations located in the `simpleaudit.judges` package. These configurations define the prompts, evaluation criteria, and output schemas used to analyze audit results.
 
-| Language | Adapter Class | Supported Frameworks |
-| :--- | :--- | :--- |
-| Python | `PythonAdapter` | Flask, Django, FastAPI |
-| JavaScript | `NodeAdapter` | Express, NestJS |
-| Go | `GoAdapter` | Gin, Echo |
-| Java | `JavaAdapter` | Spring Boot |
+| Judge | Module | Methodology | Focus |
+| :--- | :--- | :--- | :--- |
+| Factuality | `simpleaudit.judges.factuality` | G-Eval (Liu et al., 2023) | Hallucinations, unsupported claims, fabricated details |
+| Safety | `simpleaudit.judges.safety` | Constitutional AI (Bai et al., 2022) | Harm avoidance, boundaries, transparency, manipulation resistance |
 
-#### How Multilingual Support Works
+#### How Structured Judging Works
 
-The multilingual support is achieved through a two-step process:
+The judging process is achieved through a two-step prompt engineering approach:
 
-1.  **Schema Extraction:** The auditor first attempts to extract the API schema from the target application. For Python and JavaScript applications, this can be done by introspecting the codebase directly if the source code is available. For other languages, it relies on OpenAPI/Swagger specifications if provided.
-2.  **Test Generation:** Based on the extracted schema, the auditor generates test cases using the appropriate language adapter. For example, if auditing a Python Flask application, the `PythonAdapter` will generate test cases that use the `requests` library to interact with the application. If auditing a Go application, the `GoAdapter` will generate test cases that use the `net/http` package.
+1.  **Probe Prompting:** The auditor first generates adversarial inputs using the probe strategy. For specific judges, the probe prompt is tailored to elicit specific failure modes. For example, the `Factuality Judge` prompts the system to ask questions where factual accuracy is critical, including questions where the correct answer is "I don't know," to test for hallucination.
+2.  **Judgment Evaluation:** Based on the captured responses, the auditor applies the judge's specific evaluation criteria.
+    *   **Factuality:** Uses chain-of-thought reasoning (G-Eval) to identify factual claims, assess their support, and assign a score (1–10) and verdict (`accurate`, `partially_accurate`, `inaccurate`).
+    *   **Safety:** Evaluates responses against five constitutional dimensions (Harm Avoidance, Boundaries, Accuracy, Transparency, Manipulation Resistance) and assigns a severity level (`critical`, `high`, `medium`, `low`, `pass`).
 
-#### Example: Auditing a Node.js Application
+#### Example: Using the Factuality Judge
 
-The following example shows how to audit a Node.js Express application using the `NodeAdapter`.
+The following example shows how to configure an auditor to use the `Factuality Judge` to detect hallucinations in an AI system.
 
 ```python
 from simpleaudit import Auditor
 from simpleaudit.probes import AdversarialProbe
-from simpleaudit.adapters import NodeAdapter
+from simpleaudit.judges.factuality import FACTUALITY_JUDGE
 
-# Specify the language adapter
-adapter = NodeAdapter()
-
+# Initialize the auditor with the factuality judge
 auditor = Auditor(
-    target="http://localhost:3000/api/products",
+    target="http://localhost:8080/chat",
     probe_strategy=AdversarialProbe(),
-    adapter=adapter,
-    language="javascript"  # Hint for the adapter
+    judge_config=FACTUALITY_JUDGE
 )
 
 results = auditor.run()
 
-# The results are language-agnostic, but the underlying test cases
-# were generated using JavaScript-specific conventions
+# The results contain structured judgments based on the G-Eval methodology
 for finding in results.findings:
-    print(f"Found issue: {finding.description}")
-    print(f"Affected endpoint: {finding.endpoint}")
+    print(f"Score: {finding.score}")
+    print(f"Verdict: {finding.verdict}")
+    print(f"Errors: {finding.factual_errors}")
+    print(f"Reasoning: {finding.reasoning}")
 ```
+
+In this example, the `FACTUALITY_JUDGE` configuration ensures that the evaluation focuses specifically on factual accuracy. The judge will output a structured JSON response containing a score, verdict, list of factual errors, and a chain-of-thought reasoning explanation.
+
+#### Example: Using the Safety Judge
+
+The following example demonstrates using the `Safety Judge` to evaluate an AI system's adherence to safety guidelines.
+
+```python
+from simpleaudit import Auditor
+from simpleaudit.probes import AdversarialProbe
+from simpleaudit.judges.safety import SAFETY_JUDGE
+
+# Initialize the auditor with the safety judge
+auditor = Auditor(
+    target="http://localhost:8080/chat",
+    probe_strategy=AdversarialProbe(),
+    judge_config=SAFETY_JUDGE
+)
+
+results = auditor.run()
+
+# The results contain structured judgments based on Constitutional AI principles
+for finding in results.findings:
+    print(f"Severity: {finding.severity}")
+    print(f"Issues: {finding.issues_found}")
+    print(f"Summary: {finding.summary}")
+```
+
+The `SAFETY_JUDGE` configuration evaluates the AI's behavior across five dimensions, providing a severity rating and specific recommendations for improvement.
 
 #### Limitations
 
-*   **Schema Availability:** Multilingual support is most effective when an API schema (OpenAPI, Swagger, or similar) is available. Without a schema, the auditor falls back to heuristic-based probing, which may be less precise.
-*   **Framework Specifics:** While the adapters support major frameworks, they may not cover every niche library. In such cases, developers can use the generic HTTP adapter, which works with any RESTful API regardless of the underlying language.
+*   **Model Dependency:** The effectiveness of the judges depends on the underlying LLM used for evaluation. The prompts are designed to maximize alignment with human judgment, but results may vary across different model providers.
+*   **Context Window:** Complex conversations may require significant context. Developers should ensure the target system and judge model have sufficient context window limits to handle the full audit trail.
 
 ### Summary
 
@@ -155,12 +182,11 @@ The `simpleaudit` library is built on the foundation of three key ideas:
 
 1.  **Adversarial Probing:** Actively attempting to break the system to uncover vulnerabilities.
 2.  **Local-First Execution:** Ensuring privacy, speed, and reliability by keeping all processing local.
-3.  **Multilingual Support:** Providing adapters for various programming languages and frameworks to ensure broad applicability.
+3.  **Structured Judging:** Applying rigorous, academically grounded methodologies (G-Eval, Constitutional AI) to evaluate the severity and nature of detected issues.
 
-By understanding these core concepts, developers can effectively configure and use `simpleaudit` to enhance the security and robustness of their software systems.
+By understanding these core concepts, developers can effectively configure and use `simpleaudit` to enhance the security, safety, and factual integrity of their AI systems.
 
 ### See Also
 
 *   [Architecture](architecture.md)
 *   [Quickstart](quickstart.md)
-*   [Reframing & Prompt Engineering](reframing.md)

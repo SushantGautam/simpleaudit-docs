@@ -1,6 +1,6 @@
 ## Creating Custom Scenarios
 
-SimpleAudit provides a robust framework for evaluating AI system behavior through predefined test scenarios. While the library ships with extensive built-in packs (such as `safety`, `health`, `system_prompt`, `bullshitbench`, `epistemic_safety`, `rag`, `helpmed`, `ung`, `hei_refusal`, `nav_aap`, `skatteetaten`, `helfo`, and `lanekassen`), developers can create custom scenario lists to target specific domain risks, proprietary system prompts, or unique threat models.
+SimpleAudit provides a robust framework for evaluating AI system behavior through predefined test scenarios. While the library ships with extensive built-in packs (such as `safety`, `health`, `system_prompt`, `bullshitbench`, `epistemic_safety`, `rag`, `helpmed`, `ung`, `hei_refusal`, `nav_aap`, `skatteetaten`, `helfo`, `lanekassen`, `vision_integrity`, and `all`), developers can create custom scenario lists to target specific domain risks, proprietary system prompts, or unique threat models.
 
 This guide explains how to structure custom scenarios, how to validate them, and how to integrate them into an audit run.
 
@@ -164,14 +164,14 @@ The `description` field is the most important part of a custom scenario. Follow 
 ### Limitations and Notes
 
 *   **No Automatic Execution:** The `description` field is a guideline. The actual prompt generation and evaluation depend on the auditor implementation (e.g., `WiggleRunner` may use the description to generate multi-turn adversarial prompts, while a simpler auditor might use it as a static prompt).
-*   **Vision and Specialized Packs:** Some built-in packs like `vision_integrity` or `judge_the_judge` have specific requirements (e.g., vision-capable models, three distinct model roles). Custom scenarios do not inherently support these specialized execution paths unless the auditor is configured to handle them. Stick to standard text-based scenarios for custom packs unless you are extending the auditor logic.
+*   **Vision and Specialized Packs:** Some built-in packs like `vision_integrity` have specific requirements (e.g., vision-capable models, three distinct model roles). Custom scenarios do not inherently support these specialized execution paths unless the auditor is configured to handle them. Stick to standard text-based scenarios for custom packs unless you are extending the auditor logic.
 *   **Immutability:** When using `get_scenarios()`, the returned list is a shallow copy. You can safely modify your local copy (e.g., adding custom scenarios) without affecting the global `SCENARIO_PACKS` registry.
 
 By following this structure, you can extend SimpleAudit to cover any domain-specific risks while maintaining the integrity of the audit reporting pipeline.
 
 ### See Also
 
-*   [Available Scenarios](scenario-library.md)
-*   [Advanced Analysis & Meta-Evaluation](advanced-analysis.md)
-*   [Architecture](architecture.md)
 *   [Quickstart](quickstart.md)
+*   [Results and Analysis](results.md)
+*   [Available Scenarios](scenarios.md)
+*   [Architecture](architecture.md)

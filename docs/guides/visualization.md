@@ -1,4 +1,4 @@
-## Visualization & Reporting
+## Visualization Server
 
 The `simpleaudit.visualization` module provides a local web interface for exploring audit results and generating standalone reports. It consists of a FastAPI-based server (`server.py`) that serves an interactive visualizer, and utility functions for exporting self-contained HTML files. This subsystem allows developers to inspect detailed audit findings, compare multi-model experiment runs, and share results without requiring the recipient to have the `simpleaudit` library installed.
 
@@ -158,4 +158,7 @@ The generated HTML file includes the data in a `<script>` tag as `window.__inlin
 
 ### See Also
 
-*   [Advanced Analysis & Meta-Evaluation](advanced-analysis.md)
+*   [Architecture](architecture.md)
+*   [Command Line Interface](cli.md)
+*   [Creating Custom Scenarios](custom-scenarios.md)
+*   [Image Generation Utilities](image-utils.md)

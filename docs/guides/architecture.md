@@ -203,4 +203,5 @@ By leveraging this modular architecture, developers can create robust, maintaina
 
 *   [Key Ideas](key-ideas.md)
 *   [Creating Custom Scenarios](custom-scenarios.md)
-*   [Available Scenarios](scenario-library.md)
+*   [Model Auditor](model-auditor.md)
+*   [Results and Analysis](results.md)
