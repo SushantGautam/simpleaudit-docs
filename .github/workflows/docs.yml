@@ -48,6 +48,18 @@ jobs:
           export OPENAI_API_KEY="${LLM_API_KEY}"
           repoquill generate --config repoquill.yml --build
 
+      - name: Commit generated docs back to repo
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add docs/ mkdocs.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "docs: regenerate content [skip ci]"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
       - name: Upload site artifact
         uses: actions/upload-artifact@v4
         with:
