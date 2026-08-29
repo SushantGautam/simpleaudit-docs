@@ -503,10 +503,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#installing-the-package" class="md-nav__link">
+  <a href="#installing-the-library" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing the Package
+        Installing the Library
       
     </span>
   </a>
@@ -514,15 +514,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuring-local-model-paths" class="md-nav__link">
+  <a href="#configuring-local-model-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuring Local Model Paths
+        Configuring Local Model Dependencies
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuring Local Model Paths">
+    <nav class="md-nav" aria-label="Configuring Local Model Dependencies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -537,10 +537,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-vllm-or-openai-compatible-apis" class="md-nav__link">
+  <a href="#using-vllm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using vLLM or OpenAI-Compatible APIs
+        Using vLLM
       
     </span>
   </a>
@@ -553,10 +553,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verifying-installation" class="md-nav__link">
+  <a href="#verification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verifying Installation
+        Verification
       
     </span>
   </a>
@@ -564,10 +564,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#offline-development-fake-audit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        Offline Development (Fake Audit)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-key-configuration-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Key Configuration (Optional)
       
     </span>
   </a>
@@ -2444,10 +2455,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#installing-the-package" class="md-nav__link">
+  <a href="#installing-the-library" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Installing the Package
+        Installing the Library
       
     </span>
   </a>
@@ -2455,15 +2466,15 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#configuring-local-model-paths" class="md-nav__link">
+  <a href="#configuring-local-model-dependencies" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Configuring Local Model Paths
+        Configuring Local Model Dependencies
       
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Configuring Local Model Paths">
+    <nav class="md-nav" aria-label="Configuring Local Model Dependencies">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -2478,10 +2489,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#using-vllm-or-openai-compatible-apis" class="md-nav__link">
+  <a href="#using-vllm" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Using vLLM or OpenAI-Compatible APIs
+        Using vLLM
       
     </span>
   </a>
@@ -2494,10 +2505,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#verifying-installation" class="md-nav__link">
+  <a href="#verification" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Verifying Installation
+        Verification
       
     </span>
   </a>
@@ -2505,10 +2516,21 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#troubleshooting" class="md-nav__link">
+  <a href="#offline-development-fake-audit" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Troubleshooting
+        Offline Development (Fake Audit)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-key-configuration-optional" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        API Key Configuration (Optional)
       
     </span>
   </a>
@@ -2565,115 +2587,93 @@
   <h1>Installation</h1>
 
 <h2 id="installation">Installation</h2>
-<p>SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to validate comparative LLM safety scoring without requiring ground-truth labels. The library supports open models running locally (via providers like Ollama or vLLM) and can optionally connect to API-hosted models. By default, SimpleAudit does not collect or transmit user data, ensuring privacy during local development and auditing workflows.</p>
+<p>SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to validate comparative LLM safety scoring without requiring ground-truth labels. The library supports open models running locally via Ollama or vLLM, as well as API-hosted models. By default, SimpleAudit does not collect or transmit user data.</p>
 <h3 id="prerequisites">Prerequisites</h3>
 <ul>
-<li><strong>Python 3.11+</strong>: The library requires Python version 3.11 or higher.</li>
-<li><strong>Local Model Provider (Optional but Recommended)</strong>: For offline auditing, a local inference server such as <strong>Ollama</strong> or <strong>vLLM</strong> is required.<ul>
-<li>For Ollama: Ensure <code>ollama serve</code> is running.</li>
-<li>For vLLM: Ensure your vLLM server is accessible via the configured base URL.</li>
+<li><strong>Python:</strong> 3.11 or higher.</li>
+<li><strong>Local Model Runtime (Optional):</strong> If you intend to run models locally without API keys, you must have a local inference server running. The examples provided in the repository primarily use <strong>Ollama</strong>.</li>
 </ul>
-</li>
-</ul>
-<h3 id="installing-the-package">Installing the Package</h3>
+<h3 id="installing-the-library">Installing the Library</h3>
 <p>SimpleAudit is available on PyPI. You can install it using <code>pip</code>:</p>
 <pre><code class="language-bash">pip install simpleaudit
 </code></pre>
-<p>If you are working from the source code repository, you can install it in editable mode:</p>
+<p>If you are working directly from the source repository, you can install it in editable mode:</p>
 <pre><code class="language-bash">git clone https://github.com/kelkalot/simpleaudit.git
 cd simpleaudit
 pip install -e .
 </code></pre>
-<h3 id="configuring-local-model-paths">Configuring Local Model Paths</h3>
-<p>SimpleAudit does not hardcode model paths. Instead, it relies on the <strong>provider</strong> and <strong>model</strong> parameters passed to the <code>ModelAuditor</code> or <code>AuditExperiment</code> classes. These parameters determine how the library connects to the LLMs.</p>
+<h3 id="configuring-local-model-dependencies">Configuring Local Model Dependencies</h3>
+<p>SimpleAudit is "local-first," meaning it is optimized to work with models running on your local machine. To use local models, you must ensure your inference server is running and the required models are pulled.</p>
 <h4 id="using-ollama">Using Ollama</h4>
-<p>Ollama is the recommended provider for local, offline auditing. It supports JSON response formats for judge models, which is critical for structured output parsing.</p>
-<p>To configure Ollama, you specify the model name as it appears in your local Ollama registry (e.g., <code>llama3.2:3b</code>, <code>gemma3:latest</code>).</p>
-<p><strong>Example: Initializing a ModelAuditor with Ollama</strong></p>
-<pre><code class="language-python">from simpleaudit import ModelAuditor, get_scenarios
-
-# Define local Ollama model names
-TARGET_MODEL = &quot;llama3.2:3b&quot;
-JUDGE_MODEL  = &quot;gemma3:latest&quot;
-
-# Load a scenario pack
-# 'bullshitbench' is a built-in pack; others include 'safety', 'rag', 'health'
-scenarios = get_scenarios(&quot;bullshitbench&quot;)[:3]
-
-# Initialize the auditor
-# Note: json_format=False is often used for Ollama if the model does not strictly 
-# enforce JSON mode, though newer versions may support it.
-auditor = ModelAuditor(
-    model=TARGET_MODEL,
-    provider=&quot;ollama&quot;,
-    judge_model=JUDGE_MODEL,
-    judge_provider=&quot;ollama&quot;,
-    json_format=False,  # Adjust based on your Ollama model's capabilities
-    verbose=True
-)
-
-# Run the audit
-results = auditor.run(scenarios=scenarios, max_turns=3)
+<p>The provided examples (e.g., <code>examples/local_ollama_audit.py</code>, <code>examples/custom_judge_ollama.py</code>) rely on Ollama.</p>
+<ol>
+<li>
+<p><strong>Start the Ollama server:</strong>
+    <code>bash
+    ollama serve</code></p>
+</li>
+<li>
+<p><strong>Pull the required models:</strong>
+    You need at least two models: a <strong>target model</strong> (the model being audited) and a <strong>judge model</strong> (which evaluates the target's responses). The judge model should ideally support JSON output formats for structured scoring.</p>
+<p>For a quick start, the examples suggest:
+<code>bash
+ollama pull llama3.2:3b     # Target model (small/fast)
+ollama pull gemma3:latest   # Judge model (supports json_object response format)</code></p>
+<p><em>Note: You can substitute any other models available in Ollama by changing the <code>model</code> and <code>judge_model</code> parameters in the code.</em></p>
+</li>
+</ol>
+<h4 id="using-vllm">Using vLLM</h4>
+<p>SimpleAudit also supports vLLM for local inference. You must start your vLLM server with the desired model and ensure the <code>base_url</code> points to your local vLLM endpoint (typically <code>http://localhost:8000/v1</code>).</p>
+<h3 id="verification">Verification</h3>
+<p>To verify that the installation is successful and that your local models are accessible, you can run the provided quickstart example. This example uses Ollama and does not require API keys.</p>
+<ol>
+<li>Ensure Ollama is running and the models specified in the example are pulled.</li>
+<li>
+<p>Run the example script:</p>
+<p><code>bash
+python examples/local_ollama_audit.py</code></p>
+<p>Or, if you prefer a Jupyter notebook environment:</p>
+<p><code>bash
+jupyter notebook examples/quickstart.ipynb</code></p>
+<p><em>Note: The <code>quickstart.ipynb</code> and <code>quickstart_gemma_hf.ipynb</code> examples may require specific model configurations. The <code>local_ollama_audit.py</code> script is a good starting point for verifying local Ollama connectivity.</em></p>
+</li>
+</ol>
+<h3 id="offline-development-fake-audit">Offline Development (Fake Audit)</h3>
+<p>If you are setting up a development environment and do not yet have access to LLMs (local or API), you can use the <code>fake_audit.py</code> example. This script uses mock LLM clients to demonstrate the workflow without requiring any running model servers or API keys.</p>
+<pre><code class="language-bash">python examples/fake_audit.py
 </code></pre>
-<h4 id="using-vllm-or-openai-compatible-apis">Using vLLM or OpenAI-Compatible APIs</h4>
-<p>If you are using vLLM or another OpenAI-compatible server, you can use the <code>openai</code> provider (or a custom provider string if supported by your backend) and specify the <code>base_url</code>.</p>
-<p><strong>Example: Initializing with a Custom Base URL</strong></p>
+<p>This is useful for:
+*   Testing the installation.
+*   Understanding the output structure (<code>AuditResults</code>, <code>AuditResult</code>).
+*   CI/CD smoke tests.</p>
+<h3 id="api-key-configuration-optional">API Key Configuration (Optional)</h3>
+<p>If you plan to use API-hosted models (e.g., OpenAI, Anthropic) instead of local models, you will need to provide API keys. These are typically passed directly to the <code>ModelAuditor</code> or <code>AuditExperiment</code> constructors as parameters, such as <code>api_key</code>, <code>judge_api_key</code>, <code>auditor_api_key</code>, etc.</p>
+<p>Example structure for API usage (conceptual):</p>
 <pre><code class="language-python">from simpleaudit import ModelAuditor
 
 auditor = ModelAuditor(
-    model=&quot;my-local-model&quot;,
-    provider=&quot;openai&quot;,  # Or the specific provider string your backend expects
-    judge_model=&quot;my-judge-model&quot;,
+    model=&quot;gpt-4o&quot;,
+    provider=&quot;openai&quot;,
+    api_key=&quot;YOUR_OPENAI_API_KEY&quot;,
+    judge_model=&quot;gpt-4o&quot;,
     judge_provider=&quot;openai&quot;,
-    base_url=&quot;http://localhost:8000/v1&quot;,  # Path to your vLLM or compatible server
-    judge_base_url=&quot;http://localhost:8000/v1&quot;,
-    # api_key=&quot;EMPTY&quot;  # Often required for local OpenAI-compatible servers
+    judge_api_key=&quot;YOUR_OPENAI_API_KEY&quot;
 )
 </code></pre>
-<h3 id="verifying-installation">Verifying Installation</h3>
-<p>To verify that SimpleAudit is installed correctly and can connect to your local models, you can run a minimal smoke test using the <code>fake_audit.py</code> example provided in the repository, or a simple script that initializes the auditor.</p>
-<p><strong>Option 1: Using the Repository Example (Recommended for Smoke Tests)</strong></p>
-<p>The repository includes <code>examples/fake_audit.py</code>, which uses mock clients to verify the library structure without requiring actual LLM inference. This is useful for CI/CD pipelines or verifying Python environment setup.</p>
-<pre><code class="language-bash"># From the repository root
-python examples/fake_audit.py
-</code></pre>
-<p><strong>Option 2: Quick Local Check</strong></p>
-<p>If you have Ollama running, you can quickly check connectivity by initializing the auditor. If the connection fails, the library will raise an error during the <code>run</code> or <code>run_async</code> call.</p>
-<pre><code class="language-python">from simpleaudit import ModelAuditor, get_scenarios
-
-try:
-    auditor = ModelAuditor(
-        model=&quot;llama3.2:3b&quot;,
-        provider=&quot;ollama&quot;,
-        judge_model=&quot;gemma3:latest&quot;,
-        judge_provider=&quot;ollama&quot;
-    )
-    # Fetch a single scenario to test the pipeline
-    scenarios = get_scenarios(&quot;safety&quot;)[:1]
-
-    # Run a single scenario with minimal turns
-    result = auditor.run(scenarios=scenarios, max_turns=1)
-    print(&quot;Audit successful. Score:&quot;, result.score)
-except Exception as e:
-    print(f&quot;Connection or configuration error: {e}&quot;)
-</code></pre>
-<h3 id="troubleshooting">Troubleshooting</h3>
-<ol>
-<li><strong>Model Not Found</strong>: Ensure the model name passed to <code>model</code> and <code>judge_model</code> exactly matches the name in your local provider's registry (e.g., <code>ollama list</code>).</li>
-<li><strong>JSON Parsing Errors</strong>: If you encounter errors parsing judge responses, ensure your judge model supports structured output or set <code>json_format=False</code> and use a judge that outputs parseable text. The <code>parse_json_response</code> utility is used internally to handle these cases, but model compliance is required.</li>
-<li><strong>Base URL Issues</strong>: When using <code>vLLM</code> or custom OpenAI-compatible servers, verify that <code>base_url</code> points to the correct API endpoint (typically <code>/v1</code>).</li>
-<li><strong>Provider String</strong>: The <code>provider</code> parameter must match a supported provider string. Common values include <code>"ollama"</code> and <code>"openai"</code>. Check the <code>ModelAuditor</code> documentation for other supported providers.</li>
-</ol>
+<p><em>Note: Ensure you handle your API keys securely and do not commit them to version control.</em></p>
 <h3 id="next-steps">Next Steps</h3>
-<ul>
-<li><strong>Running Audits</strong>: See the <a href="#">Running Audits</a> documentation for details on <code>AuditExperiment</code> and <code>ModelAuditor</code> execution methods.</li>
-<li><strong>Custom Judges</strong>: Learn how to define custom judge prompts using <code>probe_prompt</code> and <code>judge_prompt</code> parameters in <code>ModelAuditor</code>.</li>
-<li><strong>Scenario Packs</strong>: Explore available scenario packs using <code>list_scenario_packs()</code> and <code>get_scenarios()</code>.</li>
-</ul>
+<p>Once installed and verified, you can begin running audits by:
+1.  Selecting a scenario pack using <code>get_scenarios(pack_name)</code>.
+2.  Initializing a <code>ModelAuditor</code> or <code>AuditExperiment</code>.
+3.  Running the audit using the <code>run()</code> or <code>run_async()</code> methods.</p>
+<p>Refer to the <strong>Usage</strong> and <strong>Scenario Packs</strong> documentation pages for detailed instructions on configuring audits and interpreting results.</p>
 <h3 id="see-also">See Also</h3>
 <ul>
 <li><a href="../quickstart/">Quickstart</a></li>
+<li><a href="../architecture/">Architecture</a></li>
+<li><a href="../key-ideas/">Key Ideas</a></li>
 </ul>
+<p><strong>Container capabilities:</strong> <code>AuditResults</code> can be iterated with <code>for</code> and supports index access with <code>[]</code> and supports <code>len()</code>.</p>
 
 
 

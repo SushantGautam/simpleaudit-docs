@@ -41,7 +41,14 @@ simpleaudit-docs is a testing/evaluation tool. You use it to:
 
 | Module | Description |
 |--------|-------------|
-| _none_ | _none_ |
+| `simpleaudit` | SimpleAudit - Lightweight AI Safety Auditing Framework |
+| `simpleaudit.cli` | CLI interface for SimpleAudit tools. |
+| `simpleaudit.judges` | Built-in judge configurations for SimpleAudit. |
+| `simpleaudit.model_auditor` | ModelAuditor for direct API-based model auditing. |
+| `simpleaudit.repeated_results` | Repeated-run results for SimpleAudit. |
+| `simpleaudit.results` | Results handling for SimpleAudit. |
+| `simpleaudit.scenarios` | Built-in scenario packs for SimpleAudit. |
+| `simpleaudit.utils` | Utility functions for SimpleAudit. |
 
 ## API Reference Sections
 
