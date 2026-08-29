@@ -1,7 +1,16 @@
 name: Docs
+
 on:
   workflow_dispatch:
+  # To auto-run on push, uncomment one of:
+  #   push:
+  #     branches: [main]
+  #   push:            # all branches
+  #   push:
+  #     tags: ['v*']   # on release
 
+# Required: the reusable workflow commits docs back to this repo, and
+# cross-repo workflow calls default to contents:read without this.
 permissions:
   contents: write
 
@@ -10,6 +19,8 @@ jobs:
     uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
     with:
       config: repoquill.yml
+      api_key_secret: LLM_API_KEY
+      api_key_env: OPENAI_API_KEY
       deploy_branch: gh-pages
       deploy_path: docs
     secrets:

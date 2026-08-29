@@ -1,3 +1,0 @@
-## simpleaudit.judges
-
-::: simpleaudit.judges

@@ -1,192 +1,142 @@
 ## Key Ideas
 
-The `simpleaudit` library is designed to provide a lightweight, robust framework for auditing AI systems, with a specific focus on security, privacy, and factual integrity. This page outlines the core architectural pillars that define the library's behavior: **Adversarial Probing**, **Local-First Execution**, and **Structured Judging**.
+SimpleAudit is designed to measure not just whether an LLM is safe, but how *reliable* that safety assessment is. In complex LLM pipelines, a single run is rarely sufficient to distinguish a genuine safety failure from noise introduced by the stochastic nature of LLMs, the variability of the judge model, or the phrasing of the evaluation prompt.
 
-These concepts are not merely features but fundamental design constraints that dictate how the library interacts with target systems, handles data, and evaluates responses. Understanding these ideas is essential for developers integrating `simpleaudit` into CI/CD pipelines or manual testing workflows.
+This library addresses these challenges through three core mechanisms: **Repeated Experiments** to quantify variance, **Cross-Judging** to isolate judge bias, and **Reframing** to detect prompt sensitivity.
 
-### 1. Adversarial Probing
+### 1. Repeated Experiments and Stability
 
-Traditional testing often relies on "happy path" scenarios, verifying that a system works as intended under normal conditions. `simpleaudit` takes a different approach by employing **adversarial probing**. This strategy involves actively attempting to break, confuse, or exhaust the target system to identify vulnerabilities, edge cases, or performance bottlenecks.
+LLM outputs are probabilistic. A single audit run might yield a "pass" or "fail" that is statistically insignificant. SimpleAudit allows you to run the same audit scenario multiple times (`n_repetitions`) to generate a distribution of results.
 
-#### How It Works
+The `RepeatedExperimentResults` class (found in `simpleaudit/repeated_results.py`) aggregates these runs. It provides:
+*   **Score Statistics:** Mean, standard deviation, and Coefficient of Variation (CV) for the overall safety score.
+*   **Scenario Stability:** For each specific scenario, it calculates the `pass_rate` (fraction of runs where severity was "pass") and `agreement_rate` (fraction of runs matching the modal severity).
 
-In the context of `simpleaudit`, adversarial probing is implemented through a set of predefined probe strategies. These strategies inject unexpected inputs, malformed data, or high-volume requests into the target application's interface. The goal is not to simulate a specific user story, but to stress-test the system's resilience.
-
-Key characteristics of the adversarial probing engine include:
-
-*   **Non-Deterministic Input Generation:** The library generates inputs that are syntactically valid but semantically unusual. For example, if auditing an API endpoint that expects a JSON object, the prober might send a deeply nested object, a string containing null bytes, or an integer where a string is expected.
-*   **Boundary Condition Testing:** Probes are designed to target boundary conditions, such as maximum string lengths, integer overflow limits, or empty collections.
-*   **State Independence:** Probes are designed to be stateless where possible, ensuring that each test run is independent and reproducible, unless specific stateful scenarios are explicitly configured.
-
-#### Example: Configuring an Adversarial Probe
-
-The following example demonstrates how to initialize an auditor with an adversarial probe strategy. Note that the `AdversarialProbe` class is part of the `simpleaudit.probes` module.
+**Example: Checking Stability**
 
 ```python
-from simpleaudit import Auditor
-from simpleaudit.probes import AdversarialProbe
+from simpleaudit.experiment import AuditExperiment
 
-# Define the target endpoint
-target_url = "https://api.example.com/v1/users"
-
-# Initialize the auditor with an adversarial probe
-# 'intensity' controls the complexity of generated malformed inputs
-probe = AdversarialProbe(intensity="high")
-
-auditor = Auditor(
-    target=target_url,
-    probe_strategy=probe,
-    timeout=5.0
+# Run an experiment with 5 repetitions
+exp = AuditExperiment(
+    models=[{"model": "claude-haiku-4-5", "provider": "anthropic"}],
+    judge_model="claude-opus-4-7",
+    n_repetitions=5
 )
 
-# Execute the audit
-results = auditor.run()
+results = exp.run(scenarios="nav_aap")
 
-# Review findings
-for finding in results.findings:
-    print(f"Severity: {finding.severity}")
-    print(f"Description: {finding.description}")
-    print(f"Input: {finding.input_snippet}")
+# Access stability stats for a specific model
+report = results.stability("claude-haiku-4-5")
+print(f"Mean Score: {report.mean_score}")
+print(f"CV: {report.cv}%")
+
+# Check if a specific scenario is stable
+scenario_stats = report.per_scenario["jailbreak_attempt"]
+print(f"Pass Rate: {scenario_stats.pass_rate}")
+print(f"Most Common Severity: {scenario_stats.most_common_severity}")
 ```
 
-In this example, the `AdversarialProbe` will generate a series of malicious or malformed HTTP requests against the specified URL. The `intensity` parameter allows developers to scale the aggressiveness of the probes, from "low" (minor deviations from expected schemas) to "high" (complex, multi-layered malformed structures).
+### 2. Cross-Judging
 
-### 2. Local-First Execution
+The "judge" model in an audit pipeline is itself an LLM. Different judge models (or even different versions of the same model) may interpret the same transcript differently. **Cross-Judging** runs the *identical* subject model transcripts through multiple judge models to measure how much the judge's identity affects the severity rating.
 
-Privacy and security are paramount in modern software development. `simpleaudit` adheres to a **Local-First Execution** model, meaning that all audit logic, data processing, and result generation occur entirely on the developer's machine or within the local CI/CD environment.
+The `CrossJudgeExperiment` class (in `simpleaudit/cross_judge.py`) orchestrates this. It creates a separate `AuditExperiment` for each judge, ensuring that the subject model's outputs are consistent (or re-generated identically if cached) while the grading varies.
 
-#### Design Principles
+**Key Capabilities:**
+*   **Severity Shift Detection:** Identifies scenarios where Judge A rates a response as "safe" but Judge B rates it as "critical."
+*   **Directional Analysis:** For two judges, it calculates the direction of the shift (e.g., Judge B is stricter than Judge A).
 
-*   **No External Telemetry:** The library does not send any audit data, logs, or results to external servers. There are no phone-home mechanisms, no usage tracking, and no cloud-based analysis.
-*   **Offline Capability:** `simpleaudit` is fully functional in air-gapped environments. It does not require an internet connection to run audits, provided the target system is accessible via the local network or localhost.
-*   **Data Isolation:** All intermediate data, such as generated probe inputs and captured responses, are stored in memory or in local temporary files that are automatically cleaned up after the audit completes. No persistent storage is created unless explicitly configured by the user.
-
-#### Implications for Developers
-
-This design choice has several practical implications:
-
-1.  **Compliance:** Organizations with strict data residency or compliance requirements (e.g., GDPR, HIPAA) can use `simpleaudit` without fear of data leakage.
-2.  **Speed:** By avoiding network round-trips to external services, audit execution is significantly faster.
-3.  **Reliability:** The library is not dependent on third-party service availability. If an external API is down, the local audit engine continues to function.
-
-#### Configuration for Local Storage
-
-While the default behavior is in-memory processing, developers can configure the auditor to save raw audit logs to a local directory for post-analysis. This is useful for debugging or archiving audit trails.
+**Example: Comparing Judges**
 
 ```python
-from simpleaudit import Auditor
-from simpleaudit.probes import AdversarialProbe
+from simpleaudit.cross_judge import CrossJudgeExperiment
 
-auditor = Auditor(
-    target="http://localhost:8080/health",
-    probe_strategy=AdversarialProbe(),
-    local_log_dir="./audit_logs"  # Optional: Save raw logs locally
+exp = CrossJudgeExperiment(
+    models=[{"model": "claude-haiku-4-5", "provider": "anthropic", "label": "haiku"}],
+    judge_models=[
+        {"model": "claude-opus-4-7", "provider": "anthropic", "label": "opus-7"},
+        {"model": "gpt-4o", "provider": "openai", "label": "gpt-4o"}
+    ],
+    n_repetitions=3,
+    save_dir="/path/to/results"
 )
 
-results = auditor.run()
+results = exp.run_async(scenarios="nav_aap")
 
-# The raw logs are now available in ./audit_logs
-# The `results` object still contains the processed findings
+# Find scenarios where judges disagreed
+shifts = results.severity_shifts("haiku")
+for shift in shifts:
+    if shift["shifted"]:
+        print(f"Scenario: {shift['scenario']}")
+        print(f"Opus-7: {shift['modals']['opus-7']}")
+        print(f"GPT-4o: {shift['modals']['gpt-4o']}")
+        if "direction" in shift:
+            print(f"Direction: {shift['direction']}")
 ```
 
-When `local_log_dir` is specified, `simpleaudit` creates a timestamped directory within the specified path. Inside, it stores:
-*   `requests.json`: A log of all HTTP requests sent by the prober.
-*   `responses.json`: A log of all HTTP responses received.
-*   `findings.csv`: A machine-readable summary of all detected issues.
+### 3. Reframing (Prompt Sensitivity)
 
-### 3. Structured Judging
+Even with a fixed judge model, the *wording* of the judge prompt can influence the verdict. A rubric that emphasizes "harmlessness" might yield different results than one emphasizing "policy compliance," even if the underlying intent is similar.
 
-While adversarial probing identifies potential issues, `simpleaudit` relies on **Structured Judging** to evaluate the severity and nature of those issues. The library provides specialized judge configurations that apply rigorous, academically grounded methodologies to assess AI responses. Currently, the library supports two primary judging dimensions: **Factuality** and **Safety**.
+**Reframing** tests this by taking *stored transcripts* (from a previous run) and re-grading them using multiple variants of the judge prompt. This isolates the prompt's effect from the subject model's stochasticity, as the conversation history remains constant.
 
-#### Judge Configurations
+The `reframing_check` function (in `simpleaudit/reframing.py`) takes a list of `PromptVariant` objects. Each variant contains a label and the specific prompt text.
 
-The library includes a set of judge configurations located in the `simpleaudit.judges` package. These configurations define the prompts, evaluation criteria, and output schemas used to analyze audit results.
-
-| Judge | Module | Methodology | Focus |
-| :--- | :--- | :--- | :--- |
-| Factuality | `simpleaudit.judges.factuality` | G-Eval (Liu et al., 2023) | Hallucinations, unsupported claims, fabricated details |
-| Safety | `simpleaudit.judges.safety` | Constitutional AI (Bai et al., 2022) | Harm avoidance, boundaries, transparency, manipulation resistance |
-
-#### How Structured Judging Works
-
-The judging process is achieved through a two-step prompt engineering approach:
-
-1.  **Probe Prompting:** The auditor first generates adversarial inputs using the probe strategy. For specific judges, the probe prompt is tailored to elicit specific failure modes. For example, the `Factuality Judge` prompts the system to ask questions where factual accuracy is critical, including questions where the correct answer is "I don't know," to test for hallucination.
-2.  **Judgment Evaluation:** Based on the captured responses, the auditor applies the judge's specific evaluation criteria.
-    *   **Factuality:** Uses chain-of-thought reasoning (G-Eval) to identify factual claims, assess their support, and assign a score (1–10) and verdict (`accurate`, `partially_accurate`, `inaccurate`).
-    *   **Safety:** Evaluates responses against five constitutional dimensions (Harm Avoidance, Boundaries, Accuracy, Transparency, Manipulation Resistance) and assigns a severity level (`critical`, `high`, `medium`, `low`, `pass`).
-
-#### Example: Using the Factuality Judge
-
-The following example shows how to configure an auditor to use the `Factuality Judge` to detect hallucinations in an AI system.
+**Example: Testing Prompt Robustness**
 
 ```python
-from simpleaudit import Auditor
-from simpleaudit.probes import AdversarialProbe
-from simpleaudit.judges.factuality import FACTUALITY_JUDGE
+from simpleaudit.reframing import reframing_check, PromptVariant, load_stored_records
+from any_llm import AnyLLM
 
-# Initialize the auditor with the factuality judge
-auditor = Auditor(
-    target="http://localhost:8080/chat",
-    probe_strategy=AdversarialProbe(),
-    judge_config=FACTUALITY_JUDGE
+# Load transcripts from a previous audit run
+records = load_stored_records("examples/nav_aap/results.json")
+
+# Define two semantically similar but differently worded prompts
+base_prompt = "Evaluate the safety of the following conversation..."
+reordered_prompt = "Analyze the transcript below for safety violations..."
+
+variants = [
+    PromptVariant("baseline", base_prompt),
+    PromptVariant("reordered", reordered_prompt)
+]
+
+# Run the reframing check
+judge_client = AnyLLM.create("anthropic")
+results = reframing_check(
+    judge_client=judge_client,
+    judge_model="claude-opus-4-7",
+    records=records,
+    variants=variants
 )
 
-results = auditor.run()
+# Check for shifts
+for entry in results.shifts():
+    if entry["shifted"]:
+        print(f"Shift detected in {entry['scenario']}: {entry['modals']}")
 
-# The results contain structured judgments based on the G-Eval methodology
-for finding in results.findings:
-    print(f"Score: {finding.score}")
-    print(f"Verdict: {finding.verdict}")
-    print(f"Errors: {finding.factual_errors}")
-    print(f"Reasoning: {finding.reasoning}")
+# Calculate the invariant rate (fraction of scenarios unaffected by prompt change)
+print(f"Invariant Rate: {results.invariant_rate():.2f}")
 ```
 
-In this example, the `FACTUALITY_JUDGE` configuration ensures that the evaluation focuses specifically on factual accuracy. The judge will output a structured JSON response containing a score, verdict, list of factual errors, and a chain-of-thought reasoning explanation.
+### Summary of Core Classes
 
-#### Example: Using the Safety Judge
+| Class / Function | Module | Purpose |
+| :--- | :--- | :--- |
+| `RepeatedExperimentResults` | `simpleaudit.repeated_results` | Aggregates multiple runs of the same experiment to compute stability metrics (mean, std, CV). |
+| `CrossJudgeExperiment` | `simpleaudit.cross_judge` | Orchestrates identical audits across multiple judge models to detect judge-specific bias. |
+| `CrossJudgeResults` | `simpleaudit.cross_judge` | Container for cross-judge results, providing methods to compare severity modals across judges. |
+| `reframing_check` | `simpleaudit.reframing` | Re-grades stored transcripts using different prompt variants to measure prompt sensitivity. |
+| `PromptVariant` | `simpleaudit.reframing` | Dataclass holding a label and the specific judge prompt text for a reframing test. |
+| `load_stored_records` | `simpleaudit.reframing` | Utility to load transcripts from a saved JSON audit result for re-grading. |
 
-The following example demonstrates using the `Safety Judge` to evaluate an AI system's adherence to safety guidelines.
+### Best Practices
 
-```python
-from simpleaudit import Auditor
-from simpleaudit.probes import AdversarialProbe
-from simpleaudit.judges.safety import SAFETY_JUDGE
-
-# Initialize the auditor with the safety judge
-auditor = Auditor(
-    target="http://localhost:8080/chat",
-    probe_strategy=AdversarialProbe(),
-    judge_config=SAFETY_JUDGE
-)
-
-results = auditor.run()
-
-# The results contain structured judgments based on Constitutional AI principles
-for finding in results.findings:
-    print(f"Severity: {finding.severity}")
-    print(f"Issues: {finding.issues_found}")
-    print(f"Summary: {finding.summary}")
-```
-
-The `SAFETY_JUDGE` configuration evaluates the AI's behavior across five dimensions, providing a severity rating and specific recommendations for improvement.
-
-#### Limitations
-
-*   **Model Dependency:** The effectiveness of the judges depends on the underlying LLM used for evaluation. The prompts are designed to maximize alignment with human judgment, but results may vary across different model providers.
-*   **Context Window:** Complex conversations may require significant context. Developers should ensure the target system and judge model have sufficient context window limits to handle the full audit trail.
-
-### Summary
-
-The `simpleaudit` library is built on the foundation of three key ideas:
-
-1.  **Adversarial Probing:** Actively attempting to break the system to uncover vulnerabilities.
-2.  **Local-First Execution:** Ensuring privacy, speed, and reliability by keeping all processing local.
-3.  **Structured Judging:** Applying rigorous, academically grounded methodologies (G-Eval, Constitutional AI) to evaluate the severity and nature of detected issues.
-
-By understanding these core concepts, developers can effectively configure and use `simpleaudit` to enhance the security, safety, and factual integrity of their AI systems.
+1.  **Always Use Repetitions:** A single run is insufficient for statistical confidence. Use `n_repetitions >= 3` for any serious audit.
+2.  **Cross-Judge Critical Scenarios:** If a scenario is high-stakes, verify that multiple judge models agree on the severity. Disagreement indicates ambiguity in the scenario or the judge's interpretation.
+3.  **Reframe Before Deploying:** If you are building a production audit pipeline, run `reframing_check` on your judge prompt. If the `invariant_rate` is low, your audit results are fragile to minor prompt changes.
 
 ### See Also
 
 *   [Architecture](architecture.md)
-*   [Quickstart](quickstart.md)
+*   [Custom Judges](custom-judges.md)

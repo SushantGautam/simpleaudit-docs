@@ -3,17 +3,17 @@
     {
       "title": "Quickstart",
       "slug": "quickstart",
-      "description": "Run your first audit in under 5 minutes using the CLI and a pre-built scenario.",
+      "description": "Run your first audit using the CLI or Python API with a minimal example.",
       "source_files": [
         "simpleaudit/cli.py",
-        "simpleaudit/experiment.py",
-        "scenarios/health.py"
+        "examples/local_ollama_audit.py",
+        "examples/fake_audit.py"
       ]
     },
     {
       "title": "Installation",
       "slug": "installation",
-      "description": "Install SimpleAudit via pip or from source, including Python version requirements and optional dependencies for local model inference.",
+      "description": "Install dependencies and configure environment variables for API keys.",
       "source_files": [
         "simpleaudit/__init__.py",
         "simpleaudit/utils.py"
@@ -22,158 +22,189 @@
     {
       "title": "Architecture",
       "slug": "architecture",
-      "description": "High-level overview of the SimpleAudit pipeline: how experiments, scenarios, judges, and results interact.",
+      "description": "Overview of the audit pipeline: scenarios, judges, and result aggregation.",
       "source_files": [
-        "simpleaudit/experiment.py",
         "simpleaudit/model_auditor.py",
-        "simpleaudit/results.py",
-        "simpleaudit/repeated_results.py"
+        "simpleaudit/experiment.py",
+        "simpleaudit/results.py"
       ]
     },
     {
       "title": "Key Ideas",
       "slug": "key-ideas",
-      "description": "Core concepts including adversarial probing, local-first design, multilingual support, and the methodology for comparative safety scoring.",
+      "description": "Core concepts including cross-judging, reframing, and repeated experiments.",
       "source_files": [
-        "simpleaudit/reframing.py",
         "simpleaudit/cross_judge.py",
-        "judges/factuality.py",
-        "judges/safety.py"
-      ]
-    },
-    {
-      "title": "Command Line Interface",
-      "slug": "cli",
-      "description": "Reference for all CLI commands, flags, and options for running audits, managing models, and visualizing results.",
-      "source_files": [
-        "simpleaudit/cli.py"
-      ]
-    },
-    {
-      "title": "Model Auditor",
-      "slug": "model-auditor",
-      "description": "How to configure and use the ModelAuditor class to run probes against local or API-hosted LLMs.",
-      "source_files": [
-        "simpleaudit/model_auditor.py",
-        "simpleaudit/utils.py"
-      ]
-    },
-    {
-      "title": "Creating Custom Scenarios",
-      "slug": "custom-scenarios",
-      "description": "Guide for building new test scenarios, including structure, system prompts, and best practices for adversarial probing.",
-      "source_files": [
-        "scenarios/__init__.py",
-        "scenarios/system_prompt.py",
-        "scenarios/health.py",
-        "scenarios/safety.py"
-      ]
-    },
-    {
-      "title": "Available Scenarios",
-      "slug": "scenarios",
-      "description": "Catalog of built-in scenarios covering health, safety, factuality, and specific Norwegian public sector use cases.",
-      "source_files": [
-        "scenarios/bullshitbench_health.py",
-        "scenarios/bullshitbench_v1_v2.py",
-        "scenarios/hei_refusal.py",
-        "scenarios/helfo.py",
-        "scenarios/helpmed.py",
-        "scenarios/lanekassen.py",
-        "scenarios/nav_aap.py",
-        "scenarios/rag.py",
-        "scenarios/skatteetaten.py",
-        "scenarios/ung.py",
-        "scenarios/vision_integrity.py"
-      ]
-    },
-    {
-      "title": "Judges and Evaluation",
-      "slug": "judges",
-      "description": "How to use and extend the judge system for evaluating model outputs, including abstention, harm, and helpfulness metrics.",
-      "source_files": [
-        "judges/__init__.py",
-        "judges/abstention.py",
-        "judges/binary_abstention.py",
-        "judges/factuality.py",
-        "judges/harm.py",
-        "judges/helpfulness.py",
-        "judges/safety.py",
-        "judges/helsedir_sexhealth_no.py",
-        "judges/helsedir_sexhealth_no_rag.py"
-      ]
-    },
-    {
-      "title": "Results and Analysis",
-      "slug": "results",
-      "description": "Understanding result structures, aggregating repeated runs, and interpreting audit outputs.",
-      "source_files": [
-        "simpleaudit/results.py",
+        "simpleaudit/reframing.py",
         "simpleaudit/repeated_results.py"
       ]
     },
     {
-      "title": "Visualization Server",
-      "slug": "visualization",
-      "description": "Launch the local web server to visualize audit results, compare models, and explore individual probe responses.",
+      "title": "Judges",
+      "slug": "judges",
+      "description": "Built-in judge implementations for safety, factuality, and helpfulness.",
       "source_files": [
-        "visualization/server.py"
+        "simpleaudit/judges/__init__.py",
+        "simpleaudit/judges/safety.py",
+        "simpleaudit/judges/factuality.py",
+        "simpleaudit/judges/helpfulness.py",
+        "simpleaudit/judges/abstention.py"
       ]
     },
     {
-      "title": "Image Generation Utilities",
-      "slug": "image-utils",
-      "description": "Tools for generating and processing images used in vision-based integrity tests and scenario assets.",
+      "title": "Scenarios",
+      "slug": "scenarios",
+      "description": "Predefined test scenarios for health, safety, and specific institutional contexts.",
       "source_files": [
-        "scenarios/images/make_images.py"
+        "simpleaudit/scenarios/__init__.py",
+        "simpleaudit/scenarios/health.py",
+        "simpleaudit/scenarios/safety.py",
+        "simpleaudit/scenarios/nav_aap.py",
+        "simpleaudit/scenarios/skatteetaten.py"
+      ]
+    },
+    {
+      "title": "Custom Judges",
+      "slug": "custom-judges",
+      "description": "How to create and register custom judge logic for specific evaluation needs.",
+      "source_files": [
+        "examples/custom_judge_ollama.py",
+        "examples/judge_configs_ollama.py",
+        "simpleaudit/judges/__init__.py"
+      ]
+    },
+    {
+      "title": "Visualization",
+      "slug": "visualization",
+      "description": "Serve and visualize audit results using the built-in web server.",
+      "source_files": [
+        "simpleaudit/visualization/server.py"
+      ]
+    },
+    {
+      "title": "Testing",
+      "slug": "testing",
+      "description": "Run the test suite and understand the mocking strategy for API calls.",
+      "source_files": [
+        "tests/conftest.py",
+        "tests/fakes.py",
+        "tests/test_audit_flow.py",
+        "tests/test_basic.py"
       ]
     }
   ],
   "file_hashes": {
-    "simpleaudit/results.py": "9b8e8c0de453410beeaaba37db32c96d02cc458bfb11ba801ef72f40b8766530",
-    "simpleaudit/__init__.py": "58a2db04e4209f3e6fb704018d999098170b746440053a79bcd61ce0e19de4fe",
-    "simpleaudit/utils.py": "53017fd2bfe8d2fd1a2d36b14aee29b093a348ca73a882fd0c3272c92556d3dd",
-    "simpleaudit/experiment.py": "8c567c6548c419e1f83171bf1ef0c5b71508c091411fa67cbfa4dde70d75e1f9",
-    "simpleaudit/model_auditor.py": "e25b5775cba07be85b426dc367b7a42fddedfd1bc383d96cedd7aac23caffbad",
-    "simpleaudit/repeated_results.py": "1d0db35758a4c588ab21e966f5b07db2d2258d42f4b7b1d573191dfcc2fc0283",
-    "simpleaudit/cross_judge.py": "952fda6bfa0786f8d6fc9928afebc0582abe5f236bbbc15f2d8f4e2a252e0ec7",
-    "simpleaudit/cli.py": "8b38a40a0d6c48702280dd6a6c4807b835544d6c4d833fc4cd17dec2c84ae913",
-    "simpleaudit/reframing.py": "fb200cc92b0b0c80938c3af0e3116329f9e3a7754bf5e45002106518209d5776",
-    "simpleaudit/judges/__init__.py": "45c0a540eebafdc14154ccf75d875c93530b2e672681472df3705101f22b5772",
-    "simpleaudit/judges/simpleaudit_judge_guidelines_v1.0.md": "bf30e8d27070608fc286066abd13e557025023fdadbffb5aa456fab4976f921b",
-    "simpleaudit/judges/factuality.py": "de4d0eff985a56808ba8bde782bfab99330bb997c69f3bd1b60d4e29b4eb5769",
-    "simpleaudit/judges/safety.py": "fed4555100e1b9d64f7c62f07244ec10af5069450c02624b22a6ae14eb2b9f89",
-    "simpleaudit/judges/helpfulness.py": "cd1414cd8cc10c8f7608968f2e9ef24731f3fc03552aa2ffec1a1e3f93a6123c",
-    "simpleaudit/judges/helsedir_sexhealth_no_rag.py": "d12ed27f17d9dbac67d9c0a1d5459209a9cec0409c341c4d082c263601c16b01",
-    "simpleaudit/judges/harm.py": "9cb13ea0e162791cdeb85d45df75022faa4691519e1b39f574d91e9a00a17e7a",
-    "simpleaudit/judges/helsedir_sexhealth_no.py": "331be73c9711768592de58c3167899049648da7686a3cd906ed49dabcf76d0d1",
-    "simpleaudit/judges/abstention.py": "6187411c3ba8a2ea54fbcf09063b1c0564b13a67aa72892113b99113c3f82347",
-    "simpleaudit/judges/binary_abstention.py": "12ee6027edd483cf9e78e762e6cd363dd9d9ec824f488e4c583510a115924285",
-    "simpleaudit/visualization/README.md": "fcd00a33dcbb9c187ba7990cb9ec42eaf902707829a1e0e1dba827793aa816f2",
-    "simpleaudit/visualization/server.py": "e3e026900698ef72df169b3ddb5300ac7cfca41918ab2f19cae9bce7c390e754",
-    "simpleaudit/scenarios/__init__.py": "b25f68f372cb45e873c7aea0639f066a80a1842d07858d9db59884aea0cc3da1",
-    "simpleaudit/scenarios/skatteetaten.py": "3fdcaa32cd076573a705b246dade933f160039b543a84f6dd442239f3bcf7572",
-    "simpleaudit/scenarios/health.py": "da9d4f2cf43f0f794451c4c9204091b4ad134c095ee511a790ca2ca9c93dc60f",
-    "simpleaudit/scenarios/lanekassen_README.md": "3d5d2f72b9872ca094e763cf620c7e64fa3c119e9f7d553a809e2d57188d60b9",
-    "simpleaudit/scenarios/helpmed.py": "52c67b7552ca080ae773f1148a23446cd2072f55f8509c109f07e48964fbb602",
-    "simpleaudit/scenarios/ung.py": "5fc87622993394e34e8a1028dbe42e80d2dccd8f3ed1d45f7086efab685f68aa",
-    "simpleaudit/scenarios/safety.py": "a5338b1e0bd9b29fbe1f6800cb95edfd142417cfd853b0e73c420c5d7e31a886",
-    "simpleaudit/scenarios/bullshitbench_v1_v2.py": "62a359404488040fa5946e2894acf8c8596e8f79757c239453e2b681a5d9bde9",
-    "simpleaudit/scenarios/nav_aap_README.md": "dd956bd1db64c0a889eeb480c1e3eaf97b62b72b6a61b69d70c404689caa18ca",
-    "simpleaudit/scenarios/helfo.py": "87feb72251d41c19c9d2d9d0084972eb59cf0834716b140163955e2c8df0190e",
-    "simpleaudit/scenarios/skatteetaten_README.md": "456a553c945582c63c972f659e4729d57344906e41081ea0c15b558cb960e992",
-    "simpleaudit/scenarios/system_prompt.py": "abdedeff320d30ad413ab1102e5eeb48b39ecc245dec3871663dd2e2af4f954a",
-    "simpleaudit/scenarios/rag.py": "e37d2f151b3d2497e87ca869a8e44b7ddd5d67586a3274587de16a598c281a6d",
-    "simpleaudit/scenarios/nav_aap.py": "919f55933fa9d2701ad47bfcbdf0950894c17beb4fac3b78c53c635971532fd1",
-    "simpleaudit/scenarios/hei_refusal.py": "5ed77925f42e7761a4ae0a7d689bfd63dc507802ca2b3357b854dfea2774d454",
-    "simpleaudit/scenarios/simpleaudit_scenario_guidelines_v1.0.md": "a624dd86eec42bb3ea748059484da2ec6fa887e8295f4d97712743a464482211",
-    "simpleaudit/scenarios/helfo_README.md": "2816c539eaad14ac297a1a0bdc2c89a62f84858cb65922ced3d674fea0479b11",
-    "simpleaudit/scenarios/vision_integrity.py": "d2c0f26dbec8479a8847d70d388158690431bae00ddf3d76c30b5e5c5fa9e729",
-    "simpleaudit/scenarios/bullshitbench_health.py": "d5bfb159d34de003fae6dd54b9e444f02024e916a4122e9e59ab5aecc95db26d",
-    "simpleaudit/scenarios/lanekassen.py": "0c42ba8033b658a2ad4e3cdb470a2e506915d6fdab59b92cd337630c4d3d823b",
-    "simpleaudit/scenarios/images/make_images.py": "9fdb8c01e3e38e95f63a3554f7d57de6978fd76ae05d90496be176064973c587",
-    "README.md": "d3f02dd1f87d949d884e003129cfd021f825d02523d03b9e0dc7b2e4fdafc895",
-    "pyproject.toml": "c9b9cea33dc1e8acc5fe0acab817df4fc3f122844dba8857a0413a1b73716506",
-    "FAQ.md": "7147b76bb504807458d323d30adbddcffcccef7edbce8160b87eadd2b4c2a702"
+    "simpleaudit/CODE_OF_CONDUCT.md": "39a89d79f1f44b1ffc07a859d4f653a13a881c15f84c1439388e4ac769b888e3",
+    "simpleaudit/GOVERNANCE.md": "5cb4a2d06714f6863c64aaaf729cc7591ae9c66a05a7d7717c269a8741c4ada2",
+    "simpleaudit/pyproject.toml": "c9b9cea33dc1e8acc5fe0acab817df4fc3f122844dba8857a0413a1b73716506",
+    "simpleaudit/FAQ.md": "7147b76bb504807458d323d30adbddcffcccef7edbce8160b87eadd2b4c2a702",
+    "simpleaudit/README.md": "d3f02dd1f87d949d884e003129cfd021f825d02523d03b9e0dc7b2e4fdafc895",
+    "simpleaudit/DPG.md": "ac4e138be1ff7f9695f490127c2d3e5684fff70ea779a658b55a9b36b9d27893",
+    "simpleaudit/SECURITY.md": "710f7f9b8a686ca73463d7d18d21789e6c6ca3ba83178677b85e20e29362db81",
+    "simpleaudit/tests/test_repeated_experiments.py": "0adc7138d6116212e180618a7f72ed1d51e5fce593daa7ab3db512b0bb3b1468",
+    "simpleaudit/tests/test_file_uri.py": "ddb0d032fcb7174d79709e192b14f6f2ff50af549535e1c57f74e7054f05782f",
+    "simpleaudit/tests/test_basic.py": "3d79570d18350ebee0da0b7362b1d81cca562e7349e06b8642a927d00e6ad3ee",
+    "simpleaudit/tests/test_model_auditor.py": "0aa884d750aa9eb99dd81fb8dfb338ada70f92ef186c210adba5b19dbc240d4a",
+    "simpleaudit/tests/conftest.py": "29a687de895c8b3c738d06d303a097a7ee782e24a732d6d0b186c59c0f290e10",
+    "simpleaudit/tests/test_reframing.py": "ce8ab49717a3a24db42b3e8fb83c16d67c0131a9e0968582420b3ebca54eaea4",
+    "simpleaudit/tests/test_judge_registry.py": "0d9945d1b8d72cb336a3c8416a35cdc5f158004f045797c884e3d49d42ac9a51",
+    "simpleaudit/tests/test_fakes.py": "5862067f241355d783607988079520e4e78dfaa01b0260aabae3baca09f5e019",
+    "simpleaudit/tests/test_target_api_key.py": "89f80f3edebddd78fe3609f88194475cc07881b4c00ab8270ff65bdb6689134e",
+    "simpleaudit/tests/test_cross_judge.py": "1bffa099059c8c1875e920ca7e5d64097c6bcf2c1ec42e40748e909e4f11bb7f",
+    "simpleaudit/tests/test_vision_integrity_pack.py": "4eb8774927b375e36979d0e11a1fd1f0eeca4d4c938554e0300f6155054a85ea",
+    "simpleaudit/tests/test_resumable_experiments.py": "756ed85bd3a52378390a483cc3a573d327989b9bf9e0621aaae459f6df23f535",
+    "simpleaudit/tests/test_custom_prompts.py": "d35d57a994cb061a6544ce5fc112398eea328cb014c068c9e96ae8511e4a2d15",
+    "simpleaudit/tests/test_json_format.py": "5e679e1ae7b19e30cc147a6b7fd55e863c88c4f201de5e8e4ac28c1ba0c2b2b9",
+    "simpleaudit/tests/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "simpleaudit/tests/test_anthropic_judge_default_path.py": "cb8089d1c0e4f3939753ecc9cf77d234d72f269d84b54aedf510b5f32dcfd3dd",
+    "simpleaudit/tests/test_strip_thinking.py": "0ec4acd35dbeb1974ce85e2e664092c6d2359f82d6dcddd2602e2c8692a4fbbc",
+    "simpleaudit/tests/test_judge_response_schema.py": "085c96386ae5f019dd8abcec0d672ba72bc740f78bd7b77cea5e26cb35f06059",
+    "simpleaudit/tests/test_bugfixes.py": "fc52c9a0c189670bff20bb9c45a09421733786913b4f36322e795c7f72dde39c",
+    "simpleaudit/tests/fakes.py": "308af68f40507268207fb8453143a969e4bdc612ee2dc2080a51d07c6524bb27",
+    "simpleaudit/tests/test_audit_flow.py": "8c1ee686ab5ad7ba4505006cfd2842a1549765a18b95bba06dd907326f984132",
+    "simpleaudit/tests/test_token_counting.py": "de4c736eba587d66809349ef12ff8c8ad8d8cf0a91bd977579d3c3d1e63e5e6e",
+    "simpleaudit/tests/test_scenario_data.py": "d2087ad4085c4ccaf2a113c2c6df75fa6fbddf266459757be54c2c89fb368477",
+    "simpleaudit/simpleaudit/model_auditor.py": "e25b5775cba07be85b426dc367b7a42fddedfd1bc383d96cedd7aac23caffbad",
+    "simpleaudit/simpleaudit/results.py": "9b8e8c0de453410beeaaba37db32c96d02cc458bfb11ba801ef72f40b8766530",
+    "simpleaudit/simpleaudit/repeated_results.py": "1d0db35758a4c588ab21e966f5b07db2d2258d42f4b7b1d573191dfcc2fc0283",
+    "simpleaudit/simpleaudit/__init__.py": "58a2db04e4209f3e6fb704018d999098170b746440053a79bcd61ce0e19de4fe",
+    "simpleaudit/simpleaudit/cross_judge.py": "952fda6bfa0786f8d6fc9928afebc0582abe5f236bbbc15f2d8f4e2a252e0ec7",
+    "simpleaudit/simpleaudit/experiment.py": "8c567c6548c419e1f83171bf1ef0c5b71508c091411fa67cbfa4dde70d75e1f9",
+    "simpleaudit/simpleaudit/reframing.py": "fb200cc92b0b0c80938c3af0e3116329f9e3a7754bf5e45002106518209d5776",
+    "simpleaudit/simpleaudit/cli.py": "8b38a40a0d6c48702280dd6a6c4807b835544d6c4d833fc4cd17dec2c84ae913",
+    "simpleaudit/simpleaudit/utils.py": "53017fd2bfe8d2fd1a2d36b14aee29b093a348ca73a882fd0c3272c92556d3dd",
+    "simpleaudit/simpleaudit/visualization/server.py": "e3e026900698ef72df169b3ddb5300ac7cfca41918ab2f19cae9bce7c390e754",
+    "simpleaudit/simpleaudit/visualization/README.md": "fcd00a33dcbb9c187ba7990cb9ec42eaf902707829a1e0e1dba827793aa816f2",
+    "simpleaudit/simpleaudit/judges/helpfulness.py": "cd1414cd8cc10c8f7608968f2e9ef24731f3fc03552aa2ffec1a1e3f93a6123c",
+    "simpleaudit/simpleaudit/judges/helsedir_sexhealth_no_rag.py": "d12ed27f17d9dbac67d9c0a1d5459209a9cec0409c341c4d082c263601c16b01",
+    "simpleaudit/simpleaudit/judges/__init__.py": "45c0a540eebafdc14154ccf75d875c93530b2e672681472df3705101f22b5772",
+    "simpleaudit/simpleaudit/judges/helsedir_sexhealth_no.py": "331be73c9711768592de58c3167899049648da7686a3cd906ed49dabcf76d0d1",
+    "simpleaudit/simpleaudit/judges/factuality.py": "de4d0eff985a56808ba8bde782bfab99330bb997c69f3bd1b60d4e29b4eb5769",
+    "simpleaudit/simpleaudit/judges/harm.py": "9cb13ea0e162791cdeb85d45df75022faa4691519e1b39f574d91e9a00a17e7a",
+    "simpleaudit/simpleaudit/judges/simpleaudit_judge_guidelines_v1.0.md": "bf30e8d27070608fc286066abd13e557025023fdadbffb5aa456fab4976f921b",
+    "simpleaudit/simpleaudit/judges/safety.py": "fed4555100e1b9d64f7c62f07244ec10af5069450c02624b22a6ae14eb2b9f89",
+    "simpleaudit/simpleaudit/judges/abstention.py": "6187411c3ba8a2ea54fbcf09063b1c0564b13a67aa72892113b99113c3f82347",
+    "simpleaudit/simpleaudit/judges/binary_abstention.py": "12ee6027edd483cf9e78e762e6cd363dd9d9ec824f488e4c583510a115924285",
+    "simpleaudit/simpleaudit/scenarios/helpmed.py": "52c67b7552ca080ae773f1148a23446cd2072f55f8509c109f07e48964fbb602",
+    "simpleaudit/simpleaudit/scenarios/bullshitbench_v1_v2.py": "62a359404488040fa5946e2894acf8c8596e8f79757c239453e2b681a5d9bde9",
+    "simpleaudit/simpleaudit/scenarios/skatteetaten.py": "3fdcaa32cd076573a705b246dade933f160039b543a84f6dd442239f3bcf7572",
+    "simpleaudit/simpleaudit/scenarios/ung.py": "5fc87622993394e34e8a1028dbe42e80d2dccd8f3ed1d45f7086efab685f68aa",
+    "simpleaudit/simpleaudit/scenarios/lanekassen_README.md": "3d5d2f72b9872ca094e763cf620c7e64fa3c119e9f7d553a809e2d57188d60b9",
+    "simpleaudit/simpleaudit/scenarios/health.py": "da9d4f2cf43f0f794451c4c9204091b4ad134c095ee511a790ca2ca9c93dc60f",
+    "simpleaudit/simpleaudit/scenarios/system_prompt.py": "abdedeff320d30ad413ab1102e5eeb48b39ecc245dec3871663dd2e2af4f954a",
+    "simpleaudit/simpleaudit/scenarios/__init__.py": "b25f68f372cb45e873c7aea0639f066a80a1842d07858d9db59884aea0cc3da1",
+    "simpleaudit/simpleaudit/scenarios/skatteetaten_README.md": "456a553c945582c63c972f659e4729d57344906e41081ea0c15b558cb960e992",
+    "simpleaudit/simpleaudit/scenarios/bullshitbench_health.py": "d5bfb159d34de003fae6dd54b9e444f02024e916a4122e9e59ab5aecc95db26d",
+    "simpleaudit/simpleaudit/scenarios/helfo_README.md": "2816c539eaad14ac297a1a0bdc2c89a62f84858cb65922ced3d674fea0479b11",
+    "simpleaudit/simpleaudit/scenarios/nav_aap.py": "919f55933fa9d2701ad47bfcbdf0950894c17beb4fac3b78c53c635971532fd1",
+    "simpleaudit/simpleaudit/scenarios/rag.py": "e37d2f151b3d2497e87ca869a8e44b7ddd5d67586a3274587de16a598c281a6d",
+    "simpleaudit/simpleaudit/scenarios/nav_aap_README.md": "dd956bd1db64c0a889eeb480c1e3eaf97b62b72b6a61b69d70c404689caa18ca",
+    "simpleaudit/simpleaudit/scenarios/lanekassen.py": "0c42ba8033b658a2ad4e3cdb470a2e506915d6fdab59b92cd337630c4d3d823b",
+    "simpleaudit/simpleaudit/scenarios/safety.py": "a5338b1e0bd9b29fbe1f6800cb95edfd142417cfd853b0e73c420c5d7e31a886",
+    "simpleaudit/simpleaudit/scenarios/helfo.py": "87feb72251d41c19c9d2d9d0084972eb59cf0834716b140163955e2c8df0190e",
+    "simpleaudit/simpleaudit/scenarios/hei_refusal.py": "5ed77925f42e7761a4ae0a7d689bfd63dc507802ca2b3357b854dfea2774d454",
+    "simpleaudit/simpleaudit/scenarios/vision_integrity.py": "d2c0f26dbec8479a8847d70d388158690431bae00ddf3d76c30b5e5c5fa9e729",
+    "simpleaudit/simpleaudit/scenarios/simpleaudit_scenario_guidelines_v1.0.md": "a624dd86eec42bb3ea748059484da2ec6fa887e8295f4d97712743a464482211",
+    "simpleaudit/simpleaudit/scenarios/images/make_images.py": "9fdb8c01e3e38e95f63a3554f7d57de6978fd76ae05d90496be176064973c587",
+    "simpleaudit/results/skatteetaten_baseline_combined_20260429.json": "d36dfb73081190d56fe4f2fdbd6781e77ab1745e60577ca7c2fb40ccd6f1e447",
+    "simpleaudit/results/skatteetaten_baseline_summary_20260429.md": "c4ca2dc1ff17d423f1e20e4fe1e808f025289c19768172e46a3cdf3b942b4d29",
+    "simpleaudit/results/run_skatteetaten_baseline.py": "ea97a9d71a831e9cce4c9e45cc9d139e84c211aaadb11e9f3bdb549ecc894645",
+    "simpleaudit/results/skatteetaten_baseline_sonnet46_20260429.json": "dac6273b768bb6fe4240edbe6f60cd0963df4a07e86a19683ac9921ec0e6ef68",
+    "simpleaudit/results/skatteetaten_baseline_haiku45_20260429.json": "7de7cab4c85b8f31d189b0e9c805dba9fac3e9bc55e8f949499c23083c75d3e9",
+    "simpleaudit/examples/judge_configs_ollama.py": "193a4ab5c7b9b03d332221c495056fabd555d4d8d893ef5b76be26e14d368cae",
+    "simpleaudit/examples/results_judge_safety.json": "b312550f3539ec443638ccf937cfca6e7a096c256f4adf7b5fd5cf086a719eeb",
+    "simpleaudit/examples/results_hei_custom_no.json": "034836af7b44ac05678c4fd0189c68ac873b9072520e473ef06fddf67262464a",
+    "simpleaudit/examples/results_judge_helpfulness.json": "7badecf8d98e4fb94a3962cdafcda4b90bfb3e39a4406c4df8c2e7e629bbbe8d",
+    "simpleaudit/examples/cross_judge_example.py": "d272c7a304d5bb208c4cff2337825affc15b483f8ef6b40b854f6780f7b2d70b",
+    "simpleaudit/examples/custom_judge_ollama.py": "9e0ba71642c0786208d50a07a1e6f8263d32785f1c09617baef25278dc2d8dd4",
+    "simpleaudit/examples/fake_audit.py": "2cf9d66ddfdfba2bf184cbf2512a1a30d67f0f4f02274c575f4e8dcad2fa9017",
+    "simpleaudit/examples/mock_server.py": "b773171b556b9e1ded9c747dacc8f29dd5f78afa58857fd7b34cbae15bb258a3",
+    "simpleaudit/examples/results_default_ollama.json": "e9cb705f8b599756edc1e14411afb168d2e766c5eff48895282c0804c02fba30",
+    "simpleaudit/examples/test_visualisation_results.json": "9f8ca88c2e5612a44e087a1397117e12e1322a04d90af9a24207ddaf612889da",
+    "simpleaudit/examples/hei_refusal_ollama.py": "78829835d5c8149dcd7dcba8f40ef1666c66211a298a3801c6c5b756d3aa8930",
+    "simpleaudit/examples/results_judge_factuality.json": "1f24baf988d211c8a9ef178b14e1e69750191b0ca50f7c38953fb2274d1dfa32",
+    "simpleaudit/examples/results_hei_abstention.json": "4125858e009e2d4e53daff7b067a7f7c1725d76562dc133a285731a5ee452895",
+    "simpleaudit/examples/results_custom_judge_ollama.json": "8123d7c82c7589fcf7e4ce449fc0610c7191d10b412f836df2ed0a6381820c91",
+    "simpleaudit/examples/local_ollama_audit.py": "50d0f5bb2bcda72d7d1f745046b13021578f27e12c0031635f71f5961325332a",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_safety.json": "8f92ab2a57c2b1c9ab76f491757ef860271ed539d0da1fccd556358b186802da",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_helsedir_no.json": "1c0ce144fa1ebf78c7b5abf722ac282e27cc7d8801fc6b7b38b516f3d60ebb4f",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_abstention.json": "dc58753aea6b2889e7811d7222bb42c83c3a15fd392cbd37b5d96ce30386086f",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_helsedir_no_rag.json": "5eae907ca5139c43d289dafe08c7f060865587bb30b87062e4bef534e54e9603",
+    "simpleaudit/examples/helsedir_sexhealth_no/rejudge_stored_conversations.py": "86dad1a45f41cfc862e01ed5a2a36d6b897d6afa33e69de0bfdaa355102ff442",
+    "simpleaudit/examples/helsedir_sexhealth_no/rejudge_abstention_experiment.py": "32e6b5979235f9e99538dfb733d942e9f22f2e42da84433817483e5f260662a6",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_conversations.json": "887b46b4c4e14e9ca7959a5f0c924be39eb9e77a32c1a9fdc00df451a56dc72d",
+    "simpleaudit/examples/helsedir_sexhealth_no/abstention_analysis.md": "7e44f14c33677ac03a562a62d8778f33cbbd217db2930cea4bff73258bc399d8",
+    "simpleaudit/examples/helsedir_sexhealth_no/extract_conversations.py": "705cdf8e71478afe9006bb0fb816a9ae1a903cbdf123ba4760a45900d206f3dd",
+    "simpleaudit/examples/helsedir_sexhealth_no/qwen_binary_abstention.json": "18bc6ecde04c52545995c9f00032f4076077b6701cd9e7d2b442ade3cf7417fb",
+    "simpleaudit/examples/bullshit_bench/bsb_gemma3_12b_health_20260318_1826.json": "94fc0a0fbfd8ceef9ca1459389bdab21611f10d0f3a93467f179cb71dcac7fc8",
+    "simpleaudit/examples/bullshit_bench/run_bullshitbench.py": "b7d9856f91efa18aa4ccd2bc53abb8984c42f74a97969afbd49a2405ef56afe9",
+    "simpleaudit/examples/nav_aap/smoke_test.py": "fb7223680824c9692c75cafa58dec596eb0de85547edfe7a6d71907f84ead30a",
+    "simpleaudit/examples/nav_aap/run_nav_aap_eval.py": "907e2839163b402a40759a346001451e217922b1aa698991a4a7b46bd79f1e02",
+    "simpleaudit/examples/nav_aap/nav_aap_sonnet_4_6.json": "deca0d818f994e2640ec963ac065df749ccbcef715c3500274d4452c01a8f6ff",
+    "simpleaudit/examples/nav_aap/nav_aap_haiku_4_5.json": "1420b8eda8ade3f256419ee458ed85469b9f1e65df52ab9edfd3710eb909a9a0",
+    "simpleaudit/examples/local_audit_example_results/readme.md": "a9fe5b598ae6dd58b5cfcafcff22aa31507984dd3a1f3c684942afdf6e3ec0bc",
+    "simpleaudit/examples/local_audit_example_results/local_audit_results.json": "ef4bf7d7338961ef700b2a589ff0497d37719a53e5c895bfeb0c74b2b63a7d24",
+    "simpleaudit/.github/workflows/publish.yml": "386c8d713c240f8a179c4bb20cf5dc6826c0f30509cd28877db140f8ccf829ed",
+    "simpleaudit/.github/workflows/tests.yml": "1661bbea31915fada68c99b18c87da4ae4107010d782264833778cfc313f2f0d"
   }
 }

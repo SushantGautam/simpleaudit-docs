@@ -1,3 +1,0 @@
-## simpleaudit.utils
-
-::: simpleaudit.utils

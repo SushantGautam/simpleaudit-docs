@@ -1,3 +1,0 @@
-## simpleaudit.reframing
-
-::: simpleaudit.reframing

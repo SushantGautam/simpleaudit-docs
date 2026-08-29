@@ -1,207 +1,132 @@
 ## Architecture
 
-The `simpleaudit` library is designed as a modular, event-driven framework for generating and validating audit trails in Python applications. Its architecture separates concerns into three distinct layers: **Scenarios** (input generation), **Judges** (logic validation), and the **Audit Engine** (execution and reporting). This separation allows developers to define complex business logic tests without coupling the test data generation to the validation rules or the execution environment.
+`simpleaudit` is an LLM safety auditing framework designed to evaluate the robustness of large language models against specific safety scenarios. The architecture is built around a modular pipeline consisting of **Scenarios** (test cases), **Judges** (evaluation logic), and **Result Aggregation** (analysis and reporting).
+
+The core execution engine is the `ModelAuditor` class, which orchestrates the interaction between the target model under test, the auditor (which generates or manages the conversation), and the judge (which evaluates the safety of the model's responses).
 
 ### Core Components
 
-The library operates on the principle of "Scenario-Driven Testing." Instead of writing individual unit tests for every possible state transition, developers define a set of *scenarios* that represent valid or invalid sequences of events. The *Audit Engine* executes these scenarios against the target system, while *Judges* evaluate the resulting audit log to determine if the system behaved as expected.
+The library is structured into four primary modules:
 
-#### 1. Scenarios
+1.  **`simpleaudit.model_auditor`**: Contains the `ModelAuditor` class, the primary interface for running audits. It handles API communication, conversation management, and retry logic.
+2.  **`simpleaudit.scenarios`**: Defines `SCENARIO_PACKS`, a registry of predefined safety test cases (e.g., prompt injection, PII leakage).
+3.  **`simpleaudit.judges`**: Provides `get_judge`, which retrieves judge configurations including prompts and response schemas.
+4.  **`simpleaudit.results`**: Contains `AuditResult` and `AuditResults` dataclasses for storing, analyzing, and exporting audit outcomes.
+5.  **`simpleaudit.experiment`**: Contains `AuditExperiment`, a higher-level orchestrator for running audits across multiple models or repetitions with caching support.
 
-A **Scenario** is a data structure that defines a sequence of actions or events to be performed. It serves as the input to the audit engine. Scenarios are typically defined as lists of dictionaries or custom objects that represent specific user actions, API calls, or state changes.
+### The Audit Pipeline
 
-*   **Structure**: A scenario is usually a list of steps. Each step contains an `action` (string identifier) and a `payload` (dictionary of arguments).
-*   **Purpose**: To simulate real-world usage patterns, including edge cases and error conditions.
+The audit process follows a three-stage pipeline for each scenario:
 
-```python
-# Example Scenario Definition
-scenario = [
-    {"action": "create_user", "payload": {"username": "alice", "email": "alice@example.com"}},
-    {"action": "login", "payload": {"username": "alice", "password": "secret"}},
-    {"action": "update_profile", "payload": {"field": "bio", "value": "Developer"}},
-    {"action": "logout", "payload": {}}
-]
-```
+#### 1. Scenario Execution
+The `ModelAuditor` initiates a conversation with the **Target Model**.
+-   **Input**: A scenario definition (from `SCENARIO_PACKS`) containing a prompt or conversation history.
+-   **Process**: The auditor sends the scenario to the target model via the `AnyLLM` client. It supports multi-turn conversations (up to `max_turns`).
+-   **File Handling**: If a scenario includes `file_uri` markers, the `_expand_files` helper converts these into OpenAI-compatible content blocks (e.g., image data URIs) before sending them to the provider. This allows auditing multimodal capabilities without mutating the stored conversation text.
 
-#### 2. Judges
+#### 2. Judging
+Once the target model responds, the **Judge Model** evaluates the safety of the interaction.
+-   **Configuration**: Judges are configured via the `judge` parameter in `ModelAuditor`. This can be a named configuration (e.g., `"factuality"`) or custom prompts.
+-   **Evaluation**: The judge receives the conversation transcript and a specific `judge_prompt`. It is instructed to return a structured JSON response.
+-   **Response Schema**: By default, the judge returns a JSON object with:
+    -   `severity`: One of `critical`, `high`, `medium`, `low`, or `pass`.
+    -   `issues_found`: List of specific safety violations.
+    -   `positive_behaviors`: List of safe behaviors observed.
+    -   `summary`: A textual summary of the judgment.
+    -   `recommendations`: Suggestions for improvement.
+-   **Thinking Stripping**: The `strip_thinking` static method removes `` blocks from model outputs, ensuring that chain-of-thought reasoning does not interfere with the final judgment or stored results.
 
-A **Judge** is a callable object or function responsible for validating the audit trail generated by the execution of a scenario. Judges inspect the sequence of recorded events and verify that they conform to expected business rules.
+#### 3. Result Aggregation
+The `ModelAuditor` parses the judge's response and constructs an `AuditResult` object.
+-   **Parsing**: The `parse_json_response` utility extracts the JSON payload from the judge's text output. If parsing fails, the result is marked with `severity: "ERROR"`.
+-   **Storage**: Each `AuditResult` contains the full conversation, the judge's verdict, and token usage metrics for the auditor, judge, and target models.
 
-*   **Interface**: A judge typically accepts two arguments:
-    1.  `audit_log`: A list of audit events generated during scenario execution.
-    2.  `scenario`: The original scenario definition, allowing the judge to correlate expected vs. actual behavior.
-*   **Return Value**: Judges return a boolean (`True` if the audit log is valid, `False` otherwise) or raise an exception with a descriptive message if validation fails.
-*   **Flexibility**: Developers can create custom judges for specific business logic (e.g., "Ensure no login occurs without a preceding user creation").
+### Key Classes
 
-```python
-def judge_login_sequence(audit_log, scenario):
-    """
-    Validates that a 'login' event is only recorded if a 'create_user' 
-    or existing 'user' event preceded it in the log.
-    """
-    user_exists = False
-    for event in audit_log:
-        if event["action"] == "create_user":
-            user_exists = True
-        elif event["action"] == "login":
-            if not user_exists:
-                raise ValueError("Login attempted for non-existent user")
-    return True
-```
+#### `ModelAuditor`
+The primary class for executing audits.
 
-#### 3. The Audit Engine
+**Initialization Parameters:**
+-   `model` (str): The name of the target model to audit.
+-   `provider` (str): The provider for the target model (e.g., `"openai"`, `"anthropic"`, `"ollama"`).
+-   `judge_model` (str): The model used for judging.
+-   `judge_provider` (str): The provider for the judge model.
+-   `judge` (str, optional): A named judge configuration key.
+-   `probe_prompt` (str, optional): Custom prompt for the auditor.
+-   `judge_prompt` (str, optional): Custom prompt for the judge.
+-   `max_turns` (int): Maximum number of conversation turns (default: 5).
+-   `max_retries` (int): Number of retries for API failures (default: 2).
 
-The **Audit Engine** is the central orchestrator of the `simpleaudit` library. It is responsible for:
+**Key Methods:**
+-   `run_async(scenarios, ...)`: Executes the audit pipeline asynchronously.
+-   `get_scenarios(pack_name)`: Retrieves a list of scenario dictionaries from a named pack.
 
-1.  **Execution**: Iterating through the steps of a scenario and invoking the corresponding handlers in the target application.
-2.  **Recording**: Capturing the audit events generated by the target application during execution.
-3.  **Validation**: Passing the recorded audit log to the specified judges.
-4.  **Reporting**: Aggregating results from all scenarios and judges into a final report.
+#### `AuditExperiment`
+A wrapper for running complex experiments, such as comparing multiple models or repeating audits to measure variance.
 
-The engine decouples the *what* (scenarios) from the *how* (execution) and the *why* (validation). This allows the same scenarios to be tested against different implementations or environments by simply swapping the execution handler.
+**Features:**
+-   **Multi-Model Support**: Accepts a list of model configurations.
+-   **Caching**: Automatically caches results to disk (`save_dir`) to allow resuming interrupted experiments. It uses a configuration fingerprint to ensure cached results are only reused if the configuration (judge, scenarios, etc.) has not changed.
+-   **Repetitions**: Supports `n_repetitions` to run the same audit multiple times for statistical analysis.
 
-### Class and Function Reference
+#### `AuditResults`
+A collection of `AuditResult` objects with analysis capabilities.
 
-#### `simpleaudit.Engine`
+**Properties:**
+-   `score`: A safety score (0-100) calculated from the severity of completed scenarios. `ERROR` results are excluded from the score calculation to prevent infrastructure failures from skewing safety metrics.
+-   `severity_distribution`: A dictionary mapping severity levels to their counts.
+-   `token_usage`: Aggregated token counts for auditor, judge, and target models.
 
-The main entry point for running audits.
+**Methods:**
+-   `summary()`: Prints a formatted console summary of the audit results.
+-   `save(filepath)`: Saves results to a JSON file atomically.
+-   `load(filepath)`: Loads results from a JSON file.
+-   `plot(save_path)`: Generates a visualization of the results using `matplotlib`.
 
-```python
-class Engine:
-    def __init__(self, handler, judges=None):
-        """
-        Initializes the Audit Engine.
-
-        Args:
-            handler (callable): A function that takes an action and payload,
-                                 executes it, and returns an audit event.
-            judges (list[callable], optional): A list of judge functions
-                                                to apply to the audit log.
-        """
-        pass
-
-    def run(self, scenario):
-        """
-        Executes a single scenario.
-
-        Args:
-            scenario (list[dict]): The scenario definition.
-
-        Returns:
-            dict: A result object containing:
-                - 'passed' (bool): Whether all judges passed.
-                - 'audit_log' (list): The generated audit events.
-                - 'errors' (list[str]): List of error messages if validation failed.
-        """
-        pass
-
-    def run_batch(self, scenarios):
-        """
-        Executes a list of scenarios.
-
-        Args:
-            scenarios (list[list[dict]]): A list of scenario definitions.
-
-        Returns:
-            list[dict]: A list of result objects for each scenario.
-        """
-        pass
-```
-
-#### `simpleaudit.judges`
-
-A module containing built-in judge functions.
-
-*   `no_duplicates(audit_log, scenario)`: Ensures no identical audit events are recorded consecutively.
-*   `order_check(audit_log, scenario)`: Verifies that events occur in the same order as defined in the scenario.
-*   `custom_judge(audit_log, scenario)`: A template for creating custom judges.
-
-### Usage Example
-
-The following example demonstrates how to set up a simple audit using `simpleaudit`.
-
-1.  **Define the Handler**: A mock function that simulates the application's behavior and generates audit events.
-2.  **Define Judges**: Use built-in or custom judges.
-3.  **Define Scenarios**: Create test cases.
-4.  **Run the Engine**: Execute the audit and check results.
+### Example Usage
 
 ```python
-from simpleaudit import Engine
-from simpleaudit.judges import order_check
+from simpleaudit.model_auditor import ModelAuditor
+from simpleaudit.results import AuditResults
 
-# 1. Define the Handler (Simulated Application Logic)
-def app_handler(action, payload):
-    """
-    Simulates an application that records audit events.
-    In a real scenario, this would call your actual API or service.
-    """
-    # Simulate logic: If action is 'login', check if user exists (mocked)
-    if action == "login" and payload.get("username") == "bob":
-        # Simulate a failure: Bob doesn't exist
-        return {"action": "login_failed", "payload": payload, "timestamp": "now"}
-    
-    # Success case
-    return {"action": action, "payload": payload, "timestamp": "now"}
+# Initialize the auditor
+auditor = ModelAuditor(
+    model="gpt-4o",
+    provider="openai",
+    judge_model="gpt-4o",
+    judge_provider="openai",
+    judge="safety",  # Use a predefined safety judge config
+    max_turns=3
+)
 
-# 2. Define Judges
-judges = [
-    order_check  # Ensures events match scenario order
-]
+# Get scenarios from a pack
+scenarios = auditor.get_scenarios("prompt_injection")
 
-# 3. Initialize Engine
-engine = Engine(handler=app_handler, judges=judges)
+# Run the audit
+results = auditor.run_async(scenarios)
 
-# 4. Define Scenarios
-scenarios = [
-    # Valid Scenario
-    [
-        {"action": "create_user", "payload": {"username": "alice"}},
-        {"action": "login", "payload": {"username": "alice"}},
-    ],
-    # Invalid Scenario (Login fails for 'bob')
-    [
-        {"action": "login", "payload": {"username": "bob"}},
-    ]
-]
-
-# 5. Run Audit
-results = engine.run_batch(scenarios)
-
-# 6. Process Results
-for i, result in enumerate(results):
-    if result["passed"]:
-        print(f"Scenario {i+1}: PASSED")
-    else:
-        print(f"Scenario {i+1}: FAILED")
-        for error in result["errors"]:
-            print(f"  - {error}")
+# Analyze results
+results.summary()
+print(f"Safety Score: {results.score}")
+results.save("audit_results.json")
 ```
 
-### Design Principles
+### Error Handling and Resilience
 
-1.  **Separation of Concerns**: Scenarios, Judges, and the Engine are independent. You can reuse scenarios with different judges or run the same engine with different handlers.
-2.  **Extensibility**: The `handler` parameter allows `simpleaudit` to integrate with any system that can be invoked via a function call. This includes REST APIs, database transactions, or in-memory state machines.
-3.  **Determinism**: The engine processes scenarios sequentially. This ensures that audit logs are reproducible for the same input scenario and handler implementation.
-4.  **Non-Intrusive**: The library does not require modifications to the target application's code. It relies on the application's existing audit logging capabilities or simulates them via the handler.
+-   **Retries**: The `_call_async` method implements exponential backoff for API calls. Transient network errors or rate limits will trigger retries up to `max_retries` times.
+-   **Atomic Writes**: Result files are written using a temporary file and atomic rename (`os.replace`) to prevent corruption if the process is interrupted.
+-   **Cache Validation**: `AuditExperiment` validates cached results against a SHA-256 fingerprint of the configuration. If the configuration changes, stale caches are ignored, and the audit is re-run.
 
-### File Structure
+### Configuration
 
-*   `simpleaudit/__init__.py`: Exposes the `Engine` class and version information.
-*   `simpleaudit/engine.py`: Contains the `Engine` class implementation.
-*   `simpleaudit/judges.py`: Contains built-in judge functions.
-*   `simpleaudit/scenarios.py`: Utilities for loading and validating scenario definitions.
+Judges can be customized via:
+1.  **Named Configs**: Using the `judge` parameter to load predefined prompts and schemas from `simpleaudit.judges`.
+2.  **Custom Prompts**: Passing `probe_prompt` and `judge_prompt` directly to `ModelAuditor`.
+3.  **Response Schema**: The `judge_response_schema` parameter allows defining a custom JSON schema for the judge's output, enabling binary classification or other non-standard formats.
 
-### Best Practices
-
-*   **Granular Scenarios**: Keep scenarios focused on a single business flow. Complex scenarios make it difficult to isolate failures.
-*   **Custom Judges**: Use built-in judges for structural validation (order, duplicates) and custom judges for business logic validation (permissions, state transitions).
-*   **Handler Isolation**: Ensure your handler is stateless or properly reset between scenarios to avoid cross-contamination of test results.
-
-By leveraging this modular architecture, developers can create robust, maintainable audit tests that scale with the complexity of their application.
+This architecture ensures that `simpleaudit` is flexible enough to test a wide range of models and safety criteria while providing robust tools for analyzing and reporting the results.
 
 ### See Also
 
 *   [Key Ideas](key-ideas.md)
-*   [Creating Custom Scenarios](custom-scenarios.md)
-*   [Model Auditor](model-auditor.md)
-*   [Results and Analysis](results.md)
+*   [Quickstart](quickstart.md)

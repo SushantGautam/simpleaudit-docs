@@ -1,3 +1,0 @@
-## simpleaudit.cli
-
-::: simpleaudit.cli

@@ -1,3 +1,0 @@
-## simpleaudit.experiment
-
-::: simpleaudit.experiment
