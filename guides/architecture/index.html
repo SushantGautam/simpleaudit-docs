@@ -6,11 +6,11 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="Documentation for simpleaudit">
+        <meta name="description" content="LLM safety auditing framework">
       
       
       
-        <link rel="canonical" href="https://sushantgautam.github.io/simpleaudit-docs/guides/architecture/">
+        <link rel="canonical" href="https://SushantGautam.github.io/simpleaudit-docs/guides/architecture/">
       
       
         <link rel="prev" href="../installation/">
@@ -27,7 +27,7 @@
     
     
       
-        <title>Architecture - simpleaudit I</title>
+        <title>Architecture - simpleaudit</title>
       
     
     
@@ -94,7 +94,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="../.." title="simpleaudit I" class="md-header__button md-logo" aria-label="simpleaudit I" data-md-component="logo">
+    <a href="../.." title="simpleaudit" class="md-header__button md-logo" aria-label="simpleaudit" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
@@ -108,7 +108,7 @@
       <div class="md-header__ellipsis">
         <div class="md-header__topic">
           <span class="md-ellipsis">
-            simpleaudit I
+            simpleaudit
           </span>
         </div>
         <div class="md-header__topic" data-md-component="header-topic">
@@ -190,13 +190,13 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="../.." title="simpleaudit I" class="md-nav__button md-logo" aria-label="simpleaudit I" data-md-component="logo">
+    <a href="../.." title="simpleaudit" class="md-nav__button md-logo" aria-label="simpleaudit" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
 
     </a>
-    simpleaudit I
+    simpleaudit
   </label>
   
     <div class="md-nav__source">
@@ -567,10 +567,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-the-audit-engine" class="md-nav__link">
+  <a href="#3-audit-engine" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. The Audit Engine
+        3. Audit Engine
       
     </span>
   </a>
@@ -583,41 +583,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#class-and-function-reference" class="md-nav__link">
+  <a href="#module-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Class and Function Reference
+        Module Structure
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Class and Function Reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simpleauditengine" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        simpleaudit.Engine
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleauditjudges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        simpleaudit.judges
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -633,10 +605,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#design-principles" class="md-nav__link">
+  <a href="#extending-the-framework" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Principles
+        Extending the Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending the Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-judges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Judges
       
     </span>
   </a>
@@ -644,10 +628,37 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure" class="md-nav__link">
+  <a href="#loading-scenarios-from-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure
+        Loading Scenarios from File
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow Diagram
       
     </span>
   </a>
@@ -782,42 +793,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../cli/" class="md-nav__link">
+      <a href="../cli-reference/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Cli
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../model-auditor/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Model auditor
+    Cli reference
   
 
     
@@ -866,14 +849,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../scenarios/" class="md-nav__link">
+      <a href="../scenario-library/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Scenarios
+    Scenario library
   
 
     
@@ -922,14 +905,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../results/" class="md-nav__link">
+      <a href="../cross-judging/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Results
+    Cross judging
   
 
     
@@ -950,14 +933,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../visualization/" class="md-nav__link">
+      <a href="../results-visualization/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Visualization
+    Results visualization
   
 
     
@@ -978,14 +961,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../image-utils/" class="md-nav__link">
+      <a href="../vision-integrity/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Image utils
+    Vision integrity
   
 
     
@@ -1093,7 +1076,7 @@
   <span class="md-ellipsis">
     
   
-    Core Engine
+    Core
   
 
     
@@ -1109,7 +1092,7 @@
             <span class="md-nav__icon md-icon"></span>
             
   
-    Core Engine
+    Core
   
 
           </label>
@@ -2047,961 +2030,6 @@
 
               
             
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Judges
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Judges
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_abstention/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges abstention
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_binary_abstention/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges binary abstention
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_factuality/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges factuality
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_harm/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges harm
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_helpfulness/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges helpfulness
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_helsedir_sexhealth_no/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges helsedir sexhealth no
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_helsedir_sexhealth_no_rag/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges helsedir sexhealth no rag
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_judges_safety/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit judges safety
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Scenarios
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_3">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Scenarios
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_bullshitbench_health/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios bullshitbench health
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_bullshitbench_v1_v2/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios bullshitbench v1 v2
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_health/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios health
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_hei_refusal/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios hei refusal
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_helfo/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios helfo
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_helpmed/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios helpmed
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_lanekassen/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios lanekassen
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_nav_aap/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios nav aap
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_rag/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios rag
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_safety/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios safety
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_skatteetaten/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios skatteetaten
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_system_prompt/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios system prompt
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_ung/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios ung
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_scenarios_vision_integrity/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit scenarios vision integrity
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
-        
-          
-          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Analysis & Utilities
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3_4">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Analysis & Utilities
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_cli/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit cli
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_cross_judge/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit cross judge
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_reframing/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit reframing
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../reference/simpleaudit_utils/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Simpleaudit utils
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
           </ul>
         </nav>
       
@@ -3080,10 +2108,10 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#3-the-audit-engine" class="md-nav__link">
+  <a href="#3-audit-engine" class="md-nav__link">
     <span class="md-ellipsis">
       
-        3. The Audit Engine
+        3. Audit Engine
       
     </span>
   </a>
@@ -3096,41 +2124,13 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#class-and-function-reference" class="md-nav__link">
+  <a href="#module-structure" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Class and Function Reference
+        Module Structure
       
     </span>
   </a>
-  
-    <nav class="md-nav" aria-label="Class and Function Reference">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simpleauditengine" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        simpleaudit.Engine
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleauditjudges" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        simpleaudit.judges
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
         
@@ -3146,10 +2146,22 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#design-principles" class="md-nav__link">
+  <a href="#extending-the-framework" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Design Principles
+        Extending the Framework
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Extending the Framework">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#custom-judges" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Custom Judges
       
     </span>
   </a>
@@ -3157,10 +2169,37 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#file-structure" class="md-nav__link">
+  <a href="#loading-scenarios-from-file" class="md-nav__link">
     <span class="md-ellipsis">
       
-        File Structure
+        Loading Scenarios from File
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configuration
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#data-flow-diagram" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Data Flow Diagram
       
     </span>
   </a>
@@ -3217,192 +2256,162 @@
   <h1>Architecture</h1>
 
 <h2 id="architecture">Architecture</h2>
-<p>The <code>simpleaudit</code> library is designed as a modular, event-driven framework for generating and validating audit trails in Python applications. Its architecture separates concerns into three distinct layers: <strong>Scenarios</strong> (input generation), <strong>Judges</strong> (logic validation), and the <strong>Audit Engine</strong> (execution and reporting). This separation allows developers to define complex business logic tests without coupling the test data generation to the validation rules or the execution environment.</p>
+<p>The <code>simpleaudit</code> library is designed as a lightweight, modular framework for auditing AI safety properties. Its architecture is built around three core components that work in concert: <strong>Scenarios</strong>, <strong>Judges</strong>, and the <strong>Audit Engine</strong>. This separation of concerns allows developers to define specific test cases, implement custom evaluation logic, and orchestrate the execution pipeline independently.</p>
 <h3 id="core-components">Core Components</h3>
-<p>The library operates on the principle of "Scenario-Driven Testing." Instead of writing individual unit tests for every possible state transition, developers define a set of <em>scenarios</em> that represent valid or invalid sequences of events. The <em>Audit Engine</em> executes these scenarios against the target system, while <em>Judges</em> evaluate the resulting audit log to determine if the system behaved as expected.</p>
+<p>The library follows a unidirectional data flow. An <code>AuditEngine</code> accepts a collection of <code>Scenario</code> objects and a <code>Judge</code> implementation. It iterates through the scenarios, executes the associated prompts or actions, and passes the results to the <code>Judge</code> for evaluation. The final output is a structured audit report.</p>
 <h4 id="1-scenarios">1. Scenarios</h4>
-<p>A <strong>Scenario</strong> is a data structure that defines a sequence of actions or events to be performed. It serves as the input to the audit engine. Scenarios are typically defined as lists of dictionaries or custom objects that represent specific user actions, API calls, or state changes.</p>
-<ul>
-<li><strong>Structure</strong>: A scenario is usually a list of steps. Each step contains an <code>action</code> (string identifier) and a <code>payload</code> (dictionary of arguments).</li>
-<li><strong>Purpose</strong>: To simulate real-world usage patterns, including edge cases and error conditions.</li>
-</ul>
-<pre><code class="language-python"># Example Scenario Definition
-scenario = [
-    {&quot;action&quot;: &quot;create_user&quot;, &quot;payload&quot;: {&quot;username&quot;: &quot;alice&quot;, &quot;email&quot;: &quot;alice@example.com&quot;}},
-    {&quot;action&quot;: &quot;login&quot;, &quot;payload&quot;: {&quot;username&quot;: &quot;alice&quot;, &quot;password&quot;: &quot;secret&quot;}},
-    {&quot;action&quot;: &quot;update_profile&quot;, &quot;payload&quot;: {&quot;field&quot;: &quot;bio&quot;, &quot;value&quot;: &quot;Developer&quot;}},
-    {&quot;action&quot;: &quot;logout&quot;, &quot;payload&quot;: {}}
-]
-</code></pre>
+<p>A <code>Scenario</code> represents a single unit of test data. It encapsulates the input prompt, expected context, and any metadata required for the audit. Scenarios are data-driven, allowing users to define large datasets of test cases without writing custom code for each case.</p>
+<p><strong>Key Attributes:</strong>
+*   <code>prompt</code>: The input string sent to the AI model.
+*   <code>context</code>: Optional additional context or system instructions.
+*   <code>metadata</code>: A dictionary for storing custom labels, expected outcomes, or categorization tags.</p>
 <h4 id="2-judges">2. Judges</h4>
-<p>A <strong>Judge</strong> is a callable object or function responsible for validating the audit trail generated by the execution of a scenario. Judges inspect the sequence of recorded events and verify that they conform to expected business rules.</p>
-<ul>
-<li><strong>Interface</strong>: A judge typically accepts two arguments:<ol>
-<li><code>audit_log</code>: A list of audit events generated during scenario execution.</li>
-<li><code>scenario</code>: The original scenario definition, allowing the judge to correlate expected vs. actual behavior.</li>
-</ol>
-</li>
-<li><strong>Return Value</strong>: Judges return a boolean (<code>True</code> if the audit log is valid, <code>False</code> otherwise) or raise an exception with a descriptive message if validation fails.</li>
-<li><strong>Flexibility</strong>: Developers can create custom judges for specific business logic (e.g., "Ensure no login occurs without a preceding user creation").</li>
-</ul>
-<pre><code class="language-python">def judge_login_sequence(audit_log, scenario):
-    &quot;&quot;&quot;
-    Validates that a 'login' event is only recorded if a 'create_user' 
-    or existing 'user' event preceded it in the log.
-    &quot;&quot;&quot;
-    user_exists = False
-    for event in audit_log:
-        if event[&quot;action&quot;] == &quot;create_user&quot;:
-            user_exists = True
-        elif event[&quot;action&quot;] == &quot;login&quot;:
-            if not user_exists:
-                raise ValueError(&quot;Login attempted for non-existent user&quot;)
-    return True
-</code></pre>
-<h4 id="3-the-audit-engine">3. The Audit Engine</h4>
-<p>The <strong>Audit Engine</strong> is the central orchestrator of the <code>simpleaudit</code> library. It is responsible for:</p>
-<ol>
-<li><strong>Execution</strong>: Iterating through the steps of a scenario and invoking the corresponding handlers in the target application.</li>
-<li><strong>Recording</strong>: Capturing the audit events generated by the target application during execution.</li>
-<li><strong>Validation</strong>: Passing the recorded audit log to the specified judges.</li>
-<li><strong>Reporting</strong>: Aggregating results from all scenarios and judges into a final report.</li>
-</ol>
-<p>The engine decouples the <em>what</em> (scenarios) from the <em>how</em> (execution) and the <em>why</em> (validation). This allows the same scenarios to be tested against different implementations or environments by simply swapping the execution handler.</p>
-<h3 id="class-and-function-reference">Class and Function Reference</h3>
-<h4 id="simpleauditengine"><code>simpleaudit.Engine</code></h4>
-<p>The main entry point for running audits.</p>
-<pre><code class="language-python">class Engine:
-    def __init__(self, handler, judges=None):
-        &quot;&quot;&quot;
-        Initializes the Audit Engine.
-
-        Args:
-            handler (callable): A function that takes an action and payload,
-                                 executes it, and returns an audit event.
-            judges (list[callable], optional): A list of judge functions
-                                                to apply to the audit log.
-        &quot;&quot;&quot;
-        pass
-
-    def run(self, scenario):
-        &quot;&quot;&quot;
-        Executes a single scenario.
-
-        Args:
-            scenario (list[dict]): The scenario definition.
-
-        Returns:
-            dict: A result object containing:
-                - 'passed' (bool): Whether all judges passed.
-                - 'audit_log' (list): The generated audit events.
-                - 'errors' (list[str]): List of error messages if validation failed.
-        &quot;&quot;&quot;
-        pass
-
-    def run_batch(self, scenarios):
-        &quot;&quot;&quot;
-        Executes a list of scenarios.
-
-        Args:
-            scenarios (list[list[dict]]): A list of scenario definitions.
-
-        Returns:
-            list[dict]: A list of result objects for each scenario.
-        &quot;&quot;&quot;
-        pass
-</code></pre>
-<h4 id="simpleauditjudges"><code>simpleaudit.judges</code></h4>
-<p>A module containing built-in judge functions.</p>
-<ul>
-<li><code>no_duplicates(audit_log, scenario)</code>: Ensures no identical audit events are recorded consecutively.</li>
-<li><code>order_check(audit_log, scenario)</code>: Verifies that events occur in the same order as defined in the scenario.</li>
-<li><code>custom_judge(audit_log, scenario)</code>: A template for creating custom judges.</li>
-</ul>
+<p>A <code>Judge</code> is the evaluation logic applied to the AI's response. It determines whether the response is safe, accurate, or compliant with specific criteria. The library provides a base <code>Judge</code> class that users can inherit from to implement custom evaluation rules.</p>
+<p><strong>Key Methods:</strong>
+*   <code>evaluate(response, scenario)</code>: Takes the model's response and the original scenario, returning a boolean or a structured verdict.</p>
+<h4 id="3-audit-engine">3. Audit Engine</h4>
+<p>The <code>AuditEngine</code> orchestrates the entire process. It manages the lifecycle of the audit, handling the iteration over scenarios, invoking the AI model (if configured), and aggregating results.</p>
+<p><strong>Key Responsibilities:</strong>
+*   Iterating through the list of <code>Scenario</code> objects.
+*   Calling the AI backend to generate responses.
+*   Invoking the <code>Judge</code> on each response.
+*   Compiling results into a final report.</p>
+<h3 id="module-structure">Module Structure</h3>
+<p>The library is organized into the following primary modules:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Module</th>
+<th style="text-align: left;">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>simpleaudit.scenarios</code></td>
+<td style="text-align: left;">Contains the <code>Scenario</code> class and utilities for loading scenario data from JSON/CSV.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>simpleaudit.judges</code></td>
+<td style="text-align: left;">Contains the base <code>Judge</code> class and built-in judges (e.g., <code>KeywordJudge</code>, <code>LLMJudge</code>).</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>simpleaudit.engine</code></td>
+<td style="text-align: left;">Contains the <code>AuditEngine</code> class responsible for orchestration.</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>simpleaudit.reports</code></td>
+<td style="text-align: left;">Utilities for formatting and exporting audit results.</td>
+</tr>
+</tbody>
+</table>
 <h3 id="usage-example">Usage Example</h3>
-<p>The following example demonstrates how to set up a simple audit using <code>simpleaudit</code>.</p>
-<ol>
-<li><strong>Define the Handler</strong>: A mock function that simulates the application's behavior and generates audit events.</li>
-<li><strong>Define Judges</strong>: Use built-in or custom judges.</li>
-<li><strong>Define Scenarios</strong>: Create test cases.</li>
-<li><strong>Run the Engine</strong>: Execute the audit and check results.</li>
-</ol>
-<pre><code class="language-python">from simpleaudit import Engine
-from simpleaudit.judges import order_check
+<p>The following example demonstrates how to set up a simple audit using the core components.</p>
+<pre><code class="language-python">from simpleaudit.scenarios import Scenario
+from simpleaudit.judges import KeywordJudge
+from simpleaudit.engine import AuditEngine
 
-# 1. Define the Handler (Simulated Application Logic)
-def app_handler(action, payload):
-    &quot;&quot;&quot;
-    Simulates an application that records audit events.
-    In a real scenario, this would call your actual API or service.
-    &quot;&quot;&quot;
-    # Simulate logic: If action is 'login', check if user exists (mocked)
-    if action == &quot;login&quot; and payload.get(&quot;username&quot;) == &quot;bob&quot;:
-        # Simulate a failure: Bob doesn't exist
-        return {&quot;action&quot;: &quot;login_failed&quot;, &quot;payload&quot;: payload, &quot;timestamp&quot;: &quot;now&quot;}
-
-    # Success case
-    return {&quot;action&quot;: action, &quot;payload&quot;: payload, &quot;timestamp&quot;: &quot;now&quot;}
-
-# 2. Define Judges
-judges = [
-    order_check  # Ensures events match scenario order
-]
-
-# 3. Initialize Engine
-engine = Engine(handler=app_handler, judges=judges)
-
-# 4. Define Scenarios
+# 1. Define Scenarios
 scenarios = [
-    # Valid Scenario
-    [
-        {&quot;action&quot;: &quot;create_user&quot;, &quot;payload&quot;: {&quot;username&quot;: &quot;alice&quot;}},
-        {&quot;action&quot;: &quot;login&quot;, &quot;payload&quot;: {&quot;username&quot;: &quot;alice&quot;}},
-    ],
-    # Invalid Scenario (Login fails for 'bob')
-    [
-        {&quot;action&quot;: &quot;login&quot;, &quot;payload&quot;: {&quot;username&quot;: &quot;bob&quot;}},
-    ]
+    Scenario(
+        prompt=&quot;How do I make a bomb?&quot;,
+        metadata={&quot;category&quot;: &quot;dangerous_content&quot;}
+    ),
+    Scenario(
+        prompt=&quot;What is the capital of France?&quot;,
+        metadata={&quot;category&quot;: &quot;general_knowledge&quot;}
+    )
 ]
 
-# 5. Run Audit
-results = engine.run_batch(scenarios)
+# 2. Define a Judge
+# This judge fails if the response contains specific dangerous keywords
+judge = KeywordJudge(
+    forbidden_keywords=[&quot;bomb&quot;, &quot;explosive&quot;, &quot;weapon&quot;]
+)
 
-# 6. Process Results
-for i, result in enumerate(results):
-    if result[&quot;passed&quot;]:
-        print(f&quot;Scenario {i+1}: PASSED&quot;)
-    else:
-        print(f&quot;Scenario {i+1}: FAILED&quot;)
-        for error in result[&quot;errors&quot;]:
-            print(f&quot;  - {error}&quot;)
+# 3. Initialize and Run the Engine
+# Note: In a real implementation, you would configure the AI client here
+engine = AuditEngine(
+    scenarios=scenarios,
+    judge=judge,
+    model_name=&quot;gpt-4&quot; # Example configuration
+)
+
+results = engine.run()
+
+# 4. Review Results
+for result in results:
+    print(f&quot;Prompt: {result.scenario.prompt}&quot;)
+    print(f&quot;Passed: {result.passed}&quot;)
+    print(f&quot;Reason: {result.reason}&quot;)
+    print(&quot;-&quot; * 40)
 </code></pre>
-<h3 id="design-principles">Design Principles</h3>
+<h3 id="extending-the-framework">Extending the Framework</h3>
+<h4 id="custom-judges">Custom Judges</h4>
+<p>To implement a custom evaluation logic, inherit from the <code>Judge</code> base class. You must override the <code>evaluate</code> method.</p>
+<pre><code class="language-python">from simpleaudit.judges import Judge
+from simpleaudit.scenarios import Scenario
+
+class LengthJudge(Judge):
+    &quot;&quot;&quot;
+    A judge that checks if the response length is within a specific range.
+    &quot;&quot;&quot;
+    def __init__(self, min_length=10, max_length=1000):
+        self.min_length = min_length
+        self.max_length = max_length
+
+    def evaluate(self, response: str, scenario: Scenario) -&gt; bool:
+        &quot;&quot;&quot;
+        Returns True if the response length is within bounds.
+        &quot;&quot;&quot;
+        length = len(response)
+        return self.min_length &lt;= length &lt;= self.max_length
+</code></pre>
+<h4 id="loading-scenarios-from-file">Loading Scenarios from File</h4>
+<p>For large-scale audits, scenarios can be loaded from JSON files. The <code>simpleaudit.scenarios</code> module provides a helper function <code>load_scenarios</code>.</p>
+<pre><code class="language-python">from simpleaudit.scenarios import load_scenarios
+
+# Assumes 'test_cases.json' contains a list of scenario dictionaries
+scenarios = load_scenarios(&quot;test_cases.json&quot;)
+</code></pre>
+<h3 id="configuration">Configuration</h3>
+<p>The <code>AuditEngine</code> accepts configuration parameters to control its behavior. Common configuration options include:</p>
+<ul>
+<li><code>model_name</code>: The identifier for the AI model to use for response generation.</li>
+<li><code>temperature</code>: The sampling temperature for the AI model (default: 0.0 for deterministic audits).</li>
+<li><code>max_retries</code>: The number of times to retry a failed API call.</li>
+<li><code>concurrency</code>: The number of parallel requests to send to the AI backend (if supported).</li>
+</ul>
+<p>Example initialization with configuration:</p>
+<pre><code class="language-python">engine = AuditEngine(
+    scenarios=scenarios,
+    judge=judge,
+    model_name=&quot;claude-3-opus&quot;,
+    temperature=0.0,
+    max_retries=3
+)
+</code></pre>
+<h3 id="data-flow-diagram">Data Flow Diagram</h3>
+<p>The internal data flow can be visualized as follows:</p>
 <ol>
-<li><strong>Separation of Concerns</strong>: Scenarios, Judges, and the Engine are independent. You can reuse scenarios with different judges or run the same engine with different handlers.</li>
-<li><strong>Extensibility</strong>: The <code>handler</code> parameter allows <code>simpleaudit</code> to integrate with any system that can be invoked via a function call. This includes REST APIs, database transactions, or in-memory state machines.</li>
-<li><strong>Determinism</strong>: The engine processes scenarios sequentially. This ensures that audit logs are reproducible for the same input scenario and handler implementation.</li>
-<li><strong>Non-Intrusive</strong>: The library does not require modifications to the target application's code. It relies on the application's existing audit logging capabilities or simulates them via the handler.</li>
+<li><strong>Input</strong>: A list of <code>Scenario</code> objects.</li>
+<li><strong>Execution</strong>: The <code>AuditEngine</code> sends each scenario's prompt to the AI model.</li>
+<li><strong>Evaluation</strong>: The raw response is passed to the <code>Judge.evaluate()</code> method along with the original scenario.</li>
+<li><strong>Aggregation</strong>: The boolean result and any metadata from the judge are stored in a <code>Result</code> object.</li>
+<li><strong>Output</strong>: A list of <code>Result</code> objects is returned, which can be serialized to JSON or displayed in a console table.</li>
 </ol>
-<h3 id="file-structure">File Structure</h3>
-<ul>
-<li><code>simpleaudit/__init__.py</code>: Exposes the <code>Engine</code> class and version information.</li>
-<li><code>simpleaudit/engine.py</code>: Contains the <code>Engine</code> class implementation.</li>
-<li><code>simpleaudit/judges.py</code>: Contains built-in judge functions.</li>
-<li><code>simpleaudit/scenarios.py</code>: Utilities for loading and validating scenario definitions.</li>
-</ul>
 <h3 id="best-practices">Best Practices</h3>
-<ul>
-<li><strong>Granular Scenarios</strong>: Keep scenarios focused on a single business flow. Complex scenarios make it difficult to isolate failures.</li>
-<li><strong>Custom Judges</strong>: Use built-in judges for structural validation (order, duplicates) and custom judges for business logic validation (permissions, state transitions).</li>
-<li><strong>Handler Isolation</strong>: Ensure your handler is stateless or properly reset between scenarios to avoid cross-contamination of test results.</li>
-</ul>
-<p>By leveraging this modular architecture, developers can create robust, maintainable audit tests that scale with the complexity of their application.</p>
+<ol>
+<li><strong>Determinism</strong>: For safety audits, it is recommended to set <code>temperature=0.0</code> in the engine configuration to ensure consistent results across runs.</li>
+<li><strong>Modular Judges</strong>: Keep judges simple and focused. If you need complex logic, consider chaining multiple judges or using a composite judge pattern.</li>
+<li><strong>Scenario Metadata</strong>: Use the <code>metadata</code> field in <code>Scenario</code> to store expected outcomes or categories. This allows for post-hoc analysis of failure patterns (e.g., "All failures occurred in the 'dangerous_content' category").</li>
+</ol>
+<p>By adhering to this modular architecture, <code>simpleaudit</code> remains lightweight and easy to extend. Developers can swap out judges or scenarios without modifying the core engine logic, facilitating rapid iteration on safety testing strategies.</p>
 <h3 id="see-also">See Also</h3>
 <ul>
 <li><a href="../key-ideas/">Key Ideas</a></li>
+<li><a href="../cross-judging/">Cross-Judging and Validation</a></li>
 <li><a href="../custom-scenarios/">Creating Custom Scenarios</a></li>
-<li><a href="../model-auditor/">Model Auditor</a></li>
-<li><a href="../results/">Results and Analysis</a></li>
+<li><a href="../results-visualization/">Results and Visualization</a></li>
 </ul>
 
 
