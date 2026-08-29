@@ -9,15 +9,23 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
         with: { repository: SushantGautam/RepoQuill, ref: main, path: _repoquill }
+      - name: Read source repo
+        id: src
+        run: |
+          R=$(grep -E '^source_repo:' repoquill.yml | sed 's/^source_repo:[[:space:]]*//' | tr -d '"')
+          F=$(grep -E '^source_ref:' repoquill.yml | sed 's/^source_ref:[[:space:]]*//' | tr -d '"')
+          echo "repo=$R" >> "$GITHUB_OUTPUT"
+          echo "ref=${F:-main}" >> "$GITHUB_OUTPUT"
       - uses: actions/checkout@v4
-        with: { repository: kelkalot/simpleaudit, ref: main, path: source }
+        if: steps.src.outputs.repo != ''
+        with: { repository: ${{ steps.src.outputs.repo }}, ref: ${{ steps.src.outputs.ref }}, path: source }
       - uses: actions/setup-python@v5
         with: { python-version: "3.11" }
       - run: pip install ./_repoquill
       - name: Generate
         env:
           OPENAI_API_KEY: ${{ secrets.LLM_API_KEY }}
-          SOURCE_ROOT: ${{ github.workspace }}/source
+          SOURCE_ROOT: ${{ steps.src.outputs.repo != '' && format('{0}/source', github.workspace) || '' }}
         run: repoquill generate --config repoquill.yml --build
       - name: Commit docs
         run: |
