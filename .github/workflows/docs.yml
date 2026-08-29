@@ -3,47 +3,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/checkout@v4
-        with: { repository: SushantGautam/RepoQuill, ref: main, path: _repoquill }
-      - name: Read source repo
-        id: src
-        run: |
-          R=$(grep -E '^source_repo:' repoquill.yml | sed 's/^source_repo:[[:space:]]*//' | tr -d '"')
-          F=$(grep -E '^source_ref:' repoquill.yml | sed 's/^source_ref:[[:space:]]*//' | tr -d '"')
-          echo "repo=$R" >> "$GITHUB_OUTPUT"
-          echo "ref=${F:-main}" >> "$GITHUB_OUTPUT"
-      - uses: actions/checkout@v4
-        if: steps.src.outputs.repo != ''
-        with: { repository: ${{ steps.src.outputs.repo }}, ref: ${{ steps.src.outputs.ref }}, path: source }
-      - uses: actions/setup-python@v5
-        with: { python-version: "3.11" }
-      - run: pip install ./_repoquill
-      - name: Generate
-        env:
-          OPENAI_API_KEY: ${{ secrets.LLM_API_KEY }}
-          SOURCE_ROOT: ${{ steps.src.outputs.repo != '' && format('{0}/source', github.workspace) || '' }}
-        run: repoquill generate --config repoquill.yml --build
-      - name: Commit docs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add docs/
-          if ! git diff --cached --quiet; then
-            git commit -m "docs: regenerate [skip ci]" && git push
-          fi
-      - uses: actions/upload-artifact@v4
-        with: { name: site, path: site }
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions: { contents: write }
-    steps:
-      - uses: actions/download-artifact@v4
-        with: { name: site, path: site }
-      - uses: peaceiris/actions-gh-pages@v3
-        with: { github_token: ${{ secrets.GITHUB_TOKEN }}, publish_dir: ./site, publish_branch: gh-pages }
+  docs:
+    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
+    with:
+      config: repoquill.yml
+      deploy_branch: gh-pages
+    secrets:
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
