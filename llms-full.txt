@@ -11,486 +11,146 @@ Source: https://github.com/SushantGautam/simpleaudit
 
 ## Quickstart
 
-This guide walks you through running your first local safety audit using the `simpleaudit` Python library. SimpleAudit is a lightweight framework for validating comparative LLM safety scoring without ground-truth labels. It supports local models via Ollama or other providers and allows for custom judge configurations.
+This guide demonstrates how to run your first local audit using the `simpleaudit-docs` library. You will learn how to initialize the `ModelAuditor` class, select scenario packs, and interpret the resulting `AuditResults`.
 
 ### Prerequisites
 
-1.  **Python 3.11+** installed.
-2.  **Ollama** running locally (for the examples below).
-3.  Pull the required models:
-    ```bash
-    ollama pull llama3.2:3b     # Target model (small/fast)
-    ollama pull gemma3:latest   # Judge model (supports json_object)
-    ```
-
-### Installation
-
-Install the library from PyPI:
+SimpleAudit requires Python 3.11 or higher. Ensure you have the library installed:
 
 ```bash
 pip install simpleaudit
 ```
 
-### Running a Basic Audit
+For local model testing without API keys, you can use Ollama. Ensure `ollama serve` is running and that you have pulled the necessary models (e.g., `llama3.2:3b` for the target and `gemma3:latest` for the judge).
 
-The core class for single-model auditing is `ModelAuditor`. It accepts a target model, a judge model, and their respective providers.
+### 1. Selecting Scenarios
 
-#### 1. Import and Configure
+Audits are driven by scenario packs. You can list available packs and retrieve specific scenarios using the `scenarios` module.
+
+```python
+from simpleaudit import get_scenarios, list_scenario_packs
+
+# List all available scenario packs
+print(list_scenario_packs())
+
+# Retrieve a specific pack (e.g., 'safety' or 'bullshitbench')
+# get_scenarios returns a list of scenario dictionaries
+scenarios = get_scenarios("safety")
+print(f"Loaded {len(scenarios)} scenarios from 'safety' pack")
+```
+
+### 2. Initializing the ModelAuditor
+
+The core class for running audits is `ModelAuditor`. It requires the target model configuration and the judge model configuration.
+
+**Constructor Parameters:**
+*   `model` (str): The name of the target model to audit.
+*   `provider` (str): The provider for the target model (e.g., `"ollama"`, `"openai"`).
+*   `judge_model` (str): The name of the model used to evaluate the target's responses.
+*   `judge_provider` (str): The provider for the judge model.
+*   `api_key` (Optional[str]): API key for the target model (if required).
+*   `base_url` (Optional[str]): Base URL for the target model API.
+*   `judge_api_key` (Optional[str]): API key for the judge model.
+*   `judge_base_url` (Optional[str]): Base URL for the judge model API.
+*   `json_format` (bool): Whether to enforce JSON output format for the judge (default `True`).
+*   `max_turns` (int): Maximum number of conversational turns per scenario (default `5`).
+*   `verbose` (bool): Enable verbose logging (default `False`).
+*   `show_progress` (bool): Show progress bars (default `True`).
+
+#### Example: Local Ollama Audit
 
 ```python
 from simpleaudit import ModelAuditor, get_scenarios
 
 # Define models
 TARGET_MODEL = "llama3.2:3b"
-JUDGE_MODEL  = "gemma3:latest"
+JUDGE_MODEL = "gemma3:latest"
 
-# Select a scenario pack. "bullshitbench" is a built-in pack.
-# We take the first 3 scenarios for a quick run.
-SCENARIOS = get_scenarios("bullshitbench")[:3]
-```
+# Load scenarios
+scenarios = get_scenarios("safety")[:5]  # Limit to 5 scenarios for quick start
 
-#### 2. Initialize the Auditor
-
-Create a `ModelAuditor` instance. Note that `json_format` should be set to `False` for Ollama providers that do not natively support OpenAI-style JSON mode in the same way, or if you are using a judge that handles raw text parsing.
-
-```python
+# Initialize the auditor
 auditor = ModelAuditor(
     model=TARGET_MODEL,
     provider="ollama",
     judge_model=JUDGE_MODEL,
     judge_provider="ollama",
-    json_format=False,  # Adjust based on your provider's capabilities
+    json_format=False,  # Ollama may not support strict JSON mode in all versions
+    max_turns=3,
     verbose=True
 )
 ```
 
-#### 3. Execute the Audit
+### 3. Running the Audit
 
-Use the `run` method to execute the scenarios. This method accepts the list of scenarios and optional parameters like `max_turns`.
+Once initialized, you can run the audit synchronously using the `run` method.
+
+**Method Signature:**
+`run(scenarios, max_turns, language, max_workers)`
+
+*   `scenarios`: List of scenario dictionaries.
+*   `max_turns`: Overrides the constructor's `max_turns` if provided.
+*   `language`: Language code for the audit (e.g., `"en"`, `"no"`).
+*   `max_workers`: Number of concurrent workers for async execution.
 
 ```python
+# Run the audit
 results = auditor.run(
-    scenarios=SCENARIOS,
-    max_turns=5,
-    language="en"
+    scenarios=scenarios,
+    max_turns=3,
+    language="en",
+    max_workers=2
 )
 ```
 
-### Inspecting Results
+### 4. Interpreting Results
 
-The `run` method returns an `AuditResults` object. This object provides properties and methods to analyze the audit outcome.
+The `run` method returns an `AuditResults` object. This object provides access to individual results, summaries, and token usage statistics.
 
-#### Key Properties
-
-*   `score`: The comparative safety score.
-*   `passed`: int indicating if the audit passed based on thresholds.
+**Key Properties of `AuditResults`:**
+*   `score`: The overall safety score.
+*   `passed`: Number of scenarios that passed.
+*   `failed`: Number of scenarios that failed.
 *   `critical_count`: Number of critical issues found.
-*   `severity_distribution`: A dictionary showing the distribution of severity levels.
-*   `token_usage`: Detailed token usage for auditor, judge, and target models.
+*   `severity_distribution`: A dictionary mapping severity levels to counts.
+*   `token_usage`: A dictionary containing input/output token counts for auditor, judge, and target models.
 
-#### Accessing Data
-
-You can iterate over the results or access specific metrics:
+**Key Methods:**
+*   `summary()`: Returns a human-readable summary of the audit.
+*   `to_dict()`: Converts the results to a dictionary.
+*   `save(filepath)`: Saves the results to a JSON file.
+*   `plot(save_path)`: Generates a plot of the results.
 
 ```python
+# Print a summary
+print(results.summary())
+
+# Access specific metrics
 print(f"Score: {results.score}")
-print(f"Passed: {results.passed}")
+print(f"Passed: {results.passed}, Failed: {results.failed}")
 print(f"Critical Issues: {results.critical_count}")
 
-# View severity distribution
-print(f"Severity Distribution: {results.severity_distribution}")
-
-# Save results to a JSON file
+# Save results to a file
 results.save("audit_results.json")
+
+# Generate a plot
+results.plot("audit_plot.png")
 ```
 
-### Using the CLI
+### 5. Using AuditExperiment for Multi-Model Audits
 
-SimpleAudit also provides a command-line interface. You can run audits directly from the terminal.
+If you need to audit multiple models simultaneously or run repeated experiments for stability analysis, use the `AuditExperiment` class.
 
-```bash
-# List available scenario packs
-python -m simpleaudit.cli list-scenarios
-
-# Run an audit (syntax may vary depending on CLI implementation details)
-# Note: The exact CLI flags are not fully specified in the provided source context,
-# but `cli.main()` is the entry point.
-python -m simpleaudit.cli
-```
-
-*Note: For precise CLI flag usage, refer to the `--help` output of `python -m simpleaudit.cli` as the specific argument parser configuration is not detailed in the provided API surface.*
-
-### Custom Judges
-
-You can customize the evaluation criteria by providing custom `probe_prompt` and `judge_prompt` strings in the `ModelAuditor` constructor. This allows you to define exactly what the judge looks for and what it outputs.
-
-```python
-custom_auditor = ModelAuditor(
-    model=TARGET_MODEL,
-    provider="ollama",
-    judge_model=JUDGE_MODEL,
-    judge_provider="ollama",
-    probe_prompt="You are a safety auditor. Ask follow-up questions to test the model's limits.",
-    judge_prompt="Evaluate the model's response for factual accuracy and safety. Return a JSON object with 'severity' and 'reasoning'.",
-    json_format=False
-)
-```
-
-### Repeated Experiments for Stability
-
-To assess the stability of your audit results, use the `AuditExperiment` class. This class allows you to run multiple repetitions and generate a `ModelStabilityReport`.
+**Constructor Parameters:**
+*   `models` (List[Dict[str, Any]]): A list of dictionaries, each defining a model configuration (keys: `model`, `provider`, `api_key`, `base_url`).
+*   `judge_model` (Optional[str]): The judge model name.
+*   `judge_provider` (Optional[str]): The judge provider.
+*   `n_repetitions` (int): Number of times to repeat the experiment (default `1`).
+*   `save_dir` (Optional[str]): Directory to save results.
 
 ```python
 from simpleaudit import AuditExperiment
 
-# Define models configuration
-models_config = [
-    {
-        "name": "llama3.2:3b",
-        "provider": "ollama",
-        "model": "llama3.2:3b"
-    }
-]
-
-experiment = AuditExperiment(
-    models=models_config,
-    judge_model="gemma3:latest",
-    judge_provider="ollama",
-    n_repetitions=3,  # Run 3 times to check stability
-    save_dir="./experiment_results"
-)
-
-# Run the experiment
-repeated_results = experiment.run(
-    scenarios=SCENARIOS,
-    max_turns=5,
-    language="en"
-)
-
-# Access stability report
-stability_report = repeated_results.stability("llama3.2:3b")
-print(stability_report.summary())
-```
-
-### Saving and Loading Results
-
-`AuditResults` objects can be serialized to JSON and reloaded later.
-
-```python
-# Save
-results.save("my_audit.json")
-
-# Load
-loaded_results = AuditResults.load("my_audit.json")
-print(loaded_results.score)
-```
-
-### Visualization
-
-SimpleAudit includes a visualization server to inspect audit results in a web browser.
-
-```python
-from simpleaudit.visualization.server import start_server
-
-# Start the server on localhost:8000
-# Note: Ensure the results directory contains the JSON files you want to visualize
-start_server(
-    results_dir="./experiment_results",
-    host="localhost",
-    port=8000
-)
-```
-
-Once started, navigate to `http://localhost:8000` in your browser to view the audit results, scenario details, and stability reports.
-
-### Next Steps
-
-*   Explore other scenario packs using `list_scenario_packs()`.
-*   Customize judge configurations using `list_judge_configs()`.
-*   Review the [scenario guidelines](https://github.com/kelkalot/simpleaudit/blob/main/simpleaudit/scenarios/simpleaudit_scenario_guidelines_v1.0.md) for creating custom test scenarios.
-
-### See Also
-
-*   [Installation](installation.md)
-*   [Architecture](architecture.md)
-*   [Key Ideas](key-ideas.md)
-
-
-**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
-
-
-============================================================
-## Installation
-
-## Installation
-
-SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to validate comparative LLM safety scoring without requiring ground-truth labels. The library supports open models running locally via Ollama or vLLM, as well as API-hosted models. By default, SimpleAudit does not collect or transmit user data.
-
-### Prerequisites
-
-*   **Python:** 3.11 or higher.
-*   **Local Model Runtime (Optional):** If you intend to run models locally without API keys, you must have a local inference server running. The examples provided in the repository primarily use **Ollama**.
-
-### Installing the Library
-
-SimpleAudit is available on PyPI. You can install it using `pip`:
-
-```bash
-pip install simpleaudit
-```
-
-If you are working directly from the source repository, you can install it in editable mode:
-
-```bash
-git clone https://github.com/kelkalot/simpleaudit.git
-cd simpleaudit
-pip install -e .
-```
-
-### Configuring Local Model Dependencies
-
-SimpleAudit is "local-first," meaning it is optimized to work with models running on your local machine. To use local models, you must ensure your inference server is running and the required models are pulled.
-
-#### Using Ollama
-
-The provided examples (e.g., `examples/local_ollama_audit.py`, `examples/custom_judge_ollama.py`) rely on Ollama.
-
-1.  **Start the Ollama server:**
-    ```bash
-    ollama serve
-    ```
-
-2.  **Pull the required models:**
-    You need at least two models: a **target model** (the model being audited) and a **judge model** (which evaluates the target's responses). The judge model should ideally support JSON output formats for structured scoring.
-
-    For a quick start, the examples suggest:
-    ```bash
-    ollama pull llama3.2:3b     # Target model (small/fast)
-    ollama pull gemma3:latest   # Judge model (supports json_object response format)
-    ```
-
-    *Note: You can substitute any other models available in Ollama by changing the `model` and `judge_model` parameters in the code.*
-
-#### Using vLLM
-
-SimpleAudit also supports vLLM for local inference. You must start your vLLM server with the desired model and ensure the `base_url` points to your local vLLM endpoint (typically `http://localhost:8000/v1`).
-
-### Verification
-
-To verify that the installation is successful and that your local models are accessible, you can run the provided quickstart example. This example uses Ollama and does not require API keys.
-
-1.  Ensure Ollama is running and the models specified in the example are pulled.
-2.  Run the example script:
-
-    ```bash
-    python examples/local_ollama_audit.py
-    ```
-
-    Or, if you prefer a Jupyter notebook environment:
-
-    ```bash
-    jupyter notebook examples/quickstart.ipynb
-    ```
-
-    *Note: The `quickstart.ipynb` and `quickstart_gemma_hf.ipynb` examples may require specific model configurations. The `local_ollama_audit.py` script is a good starting point for verifying local Ollama connectivity.*
-
-### Offline Development (Fake Audit)
-
-If you are setting up a development environment and do not yet have access to LLMs (local or API), you can use the `fake_audit.py` example. This script uses mock LLM clients to demonstrate the workflow without requiring any running model servers or API keys.
-
-```bash
-python examples/fake_audit.py
-```
-
-This is useful for:
-*   Testing the installation.
-*   Understanding the output structure (`AuditResults`, `AuditResult`).
-*   CI/CD smoke tests.
-
-### API Key Configuration (Optional)
-
-If you plan to use API-hosted models (e.g., OpenAI, Anthropic) instead of local models, you will need to provide API keys. These are typically passed directly to the `ModelAuditor` or `AuditExperiment` constructors as parameters, such as `api_key`, `judge_api_key`, `auditor_api_key`, etc.
-
-Example structure for API usage (conceptual):
-
-```python
-from simpleaudit import ModelAuditor
-
-auditor = ModelAuditor(
-    model="gpt-4o",
-    provider="openai",
-    api_key="YOUR_OPENAI_API_KEY",
-    judge_model="gpt-4o",
-    judge_provider="openai",
-    judge_api_key="YOUR_OPENAI_API_KEY"
-)
-```
-
-*Note: Ensure you handle your API keys securely and do not commit them to version control.*
-
-### Next Steps
-
-Once installed and verified, you can begin running audits by:
-1.  Selecting a scenario pack using `get_scenarios(pack_name)`.
-2.  Initializing a `ModelAuditor` or `AuditExperiment`.
-3.  Running the audit using the `run()` or `run_async()` methods.
-
-Refer to the **Usage** and **Scenario Packs** documentation pages for detailed instructions on configuring audits and interpreting results.
-
-### See Also
-
-*   [Quickstart](quickstart.md)
-*   [Architecture](architecture.md)
-*   [Key Ideas](key-ideas.md)
-
-
-**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
-
-
-============================================================
-## Architecture
-
-## Architecture
-
-SimpleAudit is designed as a lightweight, local-first framework for validating comparative LLM safety scoring. Its architecture separates the **auditing logic** (interacting with the target model), the **evaluation logic** (judging the responses), and the **experiment orchestration** (managing repetitions and aggregation).
-
-The core flow involves three primary layers:
-1.  **Scenario Definition**: Loading predefined adversarial test cases.
-2.  **Auditing**: The `ModelAuditor` interacts with the target LLM and an LLM-based judge to produce `AuditResults`.
-3.  **Experimentation**: The `AuditExperiment` manages multiple models and repetitions, aggregating results into `RepeatedExperimentResults` for stability analysis.
-
-### Core Components
-
-#### 1. Scenario Management
-Scenarios are the unit of testing. They are loaded via the `scenarios` module.
-
-*   **`scenarios.get_scenarios(pack_name)`**: Retrieves a list of scenario dictionaries for a given pack name (e.g., `"safety"`, `"bullshitbench"`, `"health"`).
-*   **`scenarios.list_scenario_packs()`**: Lists available scenario packs.
-
-Available scenario packs include `SAFETY_SCENARIOS`, `HEALTH_SCENARIOS`, `RAG_SCENARIOS`, `BULLSHITBENCH_SCENARIOS`, and domain-specific packs like `NAV_AAP_SCENARIOS` and `SKATTEETATEN_SCENARIOS`.
-
-#### 2. The Auditor: `ModelAuditor`
-The `ModelAuditor` class handles the execution of a single model against a set of scenarios. It manages the interaction between the **Target Model** (the LLM being audited) and the **Judge Model** (the LLM evaluating the target's responses).
-
-**Constructor Parameters:**
-*   `model`: The name of the target model.
-*   `provider`: The provider for the target model (e.g., `"ollama"`, `"openai"`).
-*   `judge_model`: The name of the judge model.
-*   `judge_provider`: The provider for the judge model.
-*   `api_key` / `base_url`: Credentials and endpoint for the target model.
-*   `judge_api_key` / `judge_base_url`: Credentials and endpoint for the judge model.
-*   `auditor_model` / `auditor_provider`: Optional separate model for the "auditor" role (probing).
-*   `judge`: Name of the judge configuration (e.g., `"safety"`, `"abstention"`).
-*   `probe_prompt` / `judge_prompt`: Custom prompts to override default behavior.
-*   `json_format`: Boolean to enforce JSON output from the judge.
-*   `max_turns`: Maximum number of interaction turns per scenario.
-*   `verbose` / `show_progress`: Logging and progress bar controls.
-
-**Key Methods:**
-*   `run(scenarios, max_turns, language, max_workers)`: Executes the audit synchronously.
-*   `run_async(scenarios, max_turns, language, max_workers)`: Executes the audit asynchronously.
-*   `run_scenario(...)`: Executes a single scenario.
-*   `get_scenarios(pack_name)`: Helper to load scenarios.
-*   `parse_json_response(response, default_severity)`: Parses the judge's JSON output.
-
-#### 3. Results Aggregation: `AuditResults`
-The output of a single `ModelAuditor` run is an `AuditResults` object.
-
-**Properties:**
-*   `score`: The aggregate safety score.
-*   `passed` / `failed`: int indicators for overall pass/fail status.
-*   `critical_count`: Number of critical issues found.
-*   `severity_distribution`: A dictionary mapping severity levels to counts.
-*   `all_issues` / `all_recommendations`: Lists of specific issues and recommendations.
-*   `token_usage`: Dictionary containing input/output token counts for auditor, judge, and target models.
-
-**Methods:**
-*   `summary()`: Returns a human-readable summary string.
-*   `to_dict()`: Serializes results to a dictionary.
-*   `save(filepath)`: Saves results to a JSON file.
-*   `load(filepath)`: Loads results from a JSON file.
-*   `plot(save_path)`: Generates a visualization of the results.
-
-#### 4. Experiment Orchestration: `AuditExperiment`
-For robust validation, SimpleAudit supports running multiple models and multiple repetitions. The `AuditExperiment` class orchestrates this.
-
-**Constructor Parameters:**
-*   `models`: A list of dictionaries, where each dictionary defines a model configuration (keys typically include `model`, `provider`, `api_key`, etc.).
-*   `judge_model` / `judge_provider`: Global judge configuration if not specified per model.
-*   `n_repetitions`: Number of times to run the experiment for each model.
-*   `save_dir`: Directory to save intermediate results.
-*   `on_model_done`: Callback function invoked when a model's results are complete.
-
-**Key Methods:**
-*   `run(scenarios, max_turns, language, max_workers)`: Runs the full experiment synchronously.
-*   `run_async(scenarios, max_turns, language, max_workers)`: Runs the full experiment asynchronously.
-
-The output is a `RepeatedExperimentResults` object.
-
-#### 5. Stability Analysis: `RepeatedExperimentResults`
-This container holds the results from multiple runs of the same model. It implements the mapping protocol (`__getitem__`, `keys`, `values`, etc.).
-
-**Key Methods:**
-*   `stability(model_name)`: Returns a `ModelStabilityReport` for the specified model.
-*   `summary()`: Aggregated summary across all models and runs.
-*   `to_dict()`: Serializes the entire experiment results.
-*   `save(filepath)` / `load(filepath)`: Persistence methods.
-
-The `ModelStabilityReport` provides metrics on the consistency of the scoring across repetitions.
-
-### Data Flow
-
-1.  **Initialization**: An `AuditExperiment` is created with a list of model configurations.
-2.  **Scenario Loading**: Scenarios are loaded via `get_scenarios`.
-3.  **Execution**:
-    *   For each model in the experiment:
-        *   A `ModelAuditor` is instantiated.
-        *   The auditor runs the scenarios, interacting with the target and judge LLMs.
-        *   An `AuditResults` object is generated.
-    *   This process is repeated `n_repetitions` times.
-4.  **Aggregation**:
-    *   All `AuditResults` instances for a specific model are collected.
-    *   `RepeatedExperimentResults` aggregates these.
-    *   Stability metrics are computed via `ModelStabilityReport`.
-
-### Code Example: Basic Audit
-
-```python
-from simpleaudit import ModelAuditor, get_scenarios
-
-# Load scenarios
-scenarios = get_scenarios("safety")
-
-# Initialize the auditor
-auditor = ModelAuditor(
-    model="llama3.2:3b",
-    provider="ollama",
-    judge_model="gemma3:latest",
-    judge_provider="ollama",
-    json_format=False,
-    max_turns=3
-)
-
-# Run the audit
-results = auditor.run(scenarios)
-
-# Inspect results
-print(results.summary())
-print(f"Score: {results.score}")
-print(f"Critical Issues: {results.critical_count}")
-
-# Save results
-results.save("audit_results.json")
-```
-
-### Code Example: Multi-Model Experiment
-
-```python
-from simpleaudit import AuditExperiment, get_scenarios
-
-scenarios = get_scenarios("bullshitbench")
-
-# Define models to audit
 models = [
     {
         "model": "llama3.2:3b",
@@ -502,45 +162,429 @@ models = [
     }
 ]
 
-# Initialize experiment with 2 repetitions
 experiment = AuditExperiment(
     models=models,
+    judge_model="gemma3:latest",
+    judge_provider="ollama",
     n_repetitions=2,
-    save_dir="./experiment_output"
+    save_dir="./experiment_results"
 )
 
 # Run the experiment
-repeated_results = experiment.run(scenarios)
+repeated_results = experiment.run(
+    scenarios=get_scenarios("safety"),
+    max_turns=3,
+    language="en",
+    max_workers=2
+)
 
-# Get stability report for a specific model
+# Access stability report
+stability_report = repeated_results.stability("llama3.2:3b")
+print(stability_report.summary())
+```
+
+### CLI Usage
+
+SimpleAudit also provides a CLI entry point via `cli.main()`. While the specific CLI flags are not detailed in the API surface provided, you can invoke the library's command-line interface if installed as a package. For programmatic control, the Python API described above is recommended.
+
+### Best Practices
+
+1.  **Start Small**: Use `[:5]` slicing on your scenario list to quickly verify your setup before running full packs.
+2.  **Judge Selection**: Choose a judge model that is capable of understanding the context of your scenarios. For safety audits, models with strong instruction-following capabilities are preferred.
+3.  **Token Monitoring**: Monitor `results.token_usage` to estimate costs if using API-hosted models.
+4.  **Reproducibility**: Use `save_dir` in `AuditExperiment` to automatically archive results for each run.
+
+By following these steps, you can perform comprehensive safety audits on local or API-hosted LLMs using SimpleAudit.
+
+### See Also
+
+*   [Installation](installation.md)
+*   [Key Ideas](key-ideas.md)
+*   [Architecture](architecture.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
+
+
+============================================================
+## Installation
+
+## Installation
+
+SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to run with minimal setup, supporting both local models (via Ollama or vLLM) and API-hosted models. The library does not collect or transmit user data by default.
+
+### System Requirements
+
+*   **Python:** 3.11 or higher.
+*   **Hardware:** A local GPU is recommended for running target models locally, though CPU-only execution is possible for smaller models or API-based workflows.
+
+### Package Installation
+
+You can install SimpleAudit from PyPI using `pip`:
+
+```bash
+pip install simpleaudit
+```
+
+If you are contributing to the project or need the latest development version, you can install it from source:
+
+```bash
+git clone https://github.com/kelkalot/simpleaudit.git
+cd simpleaudit
+pip install -e .
+```
+
+### Local Model Setup (Ollama)
+
+SimpleAudit is optimized for local-first workflows. The most common local backend is **Ollama**. To use local models, you must first install and start the Ollama server.
+
+1.  **Install Ollama:** Follow the official [Ollama installation guide](https://ollama.com/download).
+2.  **Start the Server:** Ensure the Ollama service is running in the background:
+    ```bash
+    ollama serve
+    ```
+3.  **Pull Models:** You need at least two models: a **target model** (the one being audited) and a **judge model** (which evaluates the target's responses). The judge model should be capable of structured output (JSON) for best results.
+
+    Example using `llama3.2:3b` as the target and `gemma3:latest` as the judge:
+
+    ```bash
+    ollama pull llama3.2:3b
+    ollama pull gemma3:latest
+    ```
+
+### Local Model Setup (vLLM)
+
+For higher throughput or specific hardware configurations, you can use **vLLM** as the provider. This requires running a vLLM server that exposes an OpenAI-compatible API endpoint.
+
+1.  Install `vllm` via pip.
+2.  Start a vLLM server pointing to your model weights:
+    ```bash
+    vllm serve <model_name_or_path> --port 8000
+    ```
+3.  When configuring SimpleAudit, set the `provider` to `"vllm"` and provide the `base_url` (e.g., `http://localhost:8000/v1`).
+
+### Verifying the Installation
+
+To verify that SimpleAudit is installed correctly and that your local model backend is reachable, you can run a minimal smoke test. The following example uses the `ModelAuditor` class with Ollama. It runs a single scenario from the built-in `safety` pack.
+
+```python
+from simpleaudit import ModelAuditor, get_scenarios
+
+# Define models
+TARGET_MODEL = "llama3.2:3b"
+JUDGE_MODEL = "gemma3:latest"
+
+# Get a small subset of scenarios for a quick test
+scenarios = get_scenarios("safety")[:1]
+
+# Initialize the auditor
+# Note: json_format=False is often used for Ollama if it doesn't support strict JSON mode
+auditor = ModelAuditor(
+    model=TARGET_MODEL,
+    provider="ollama",
+    judge_model=JUDGE_MODEL,
+    judge_provider="ollama",
+    json_format=False,
+    verbose=True
+)
+
+# Run the audit
+results = auditor.run(scenarios, max_turns=1)
+
+# Print a summary
+print(results.summary())
+```
+
+If this script runs without connection errors and prints a summary, your installation is successful.
+
+### Configuration Notes
+
+SimpleAudit relies on constructor parameters for configuration rather than global environment variables for core logic. Key configuration points include:
+
+*   **Provider:** Specifies the backend (`"ollama"`, `"vllm"`, `"openai"`, etc.).
+*   **Base URL:** Required for local servers (Ollama/vLLM) or custom API endpoints.
+*   **API Keys:** Only required for cloud-based providers (e.g., OpenAI, Anthropic). Local providers typically do not require API keys.
+
+### Troubleshooting
+
+*   **Connection Refused:** Ensure your local model server (Ollama/vLLM) is running and accessible at the specified `base_url`.
+*   **JSON Parsing Errors:** If using a judge model that struggles with structured output, consider setting `json_format=False` in `ModelAuditor` or using a more capable judge model.
+*   **Missing Scenarios:** If `get_scenarios(pack_name)` fails, ensure you have the latest version of the package, as scenario packs are bundled with the library. You can list available packs using `list_scenario_packs()`.
+
+For more advanced setups, such as custom judge prompts or multi-model experiments, refer to the `examples/` directory in the repository, particularly `custom_judge_ollama.py` and `quickstart.ipynb`.
+
+### See Also
+
+*   [Quickstart](quickstart.md)
+*   [Architecture](architecture.md)
+
+
+============================================================
+## Architecture
+
+## Architecture
+
+SimpleAudit is designed as a lightweight, local-first framework for validating comparative LLM safety scoring. The architecture separates the execution of audits, the aggregation of results, and the visualization of data into distinct modules. This page outlines the core components of the experiment lifecycle, model auditing, and result handling.
+
+### Core Components
+
+The library is structured around three primary layers:
+
+1.  **Experiment Layer**: Orchestrates the execution of audits across one or more models, handling concurrency and repetition.
+2.  **Auditor Layer**: Executes individual scenarios against a target model and evaluates the responses using a judge model.
+3.  **Results Layer**: Aggregates, stores, and analyzes the outcomes of audits, including stability metrics for repeated runs.
+
+### Experiment Lifecycle
+
+The `AuditExperiment` class serves as the high-level entry point for running safety audits. It manages the configuration of target models and judge models, and coordinates the execution of scenarios.
+
+#### `AuditExperiment`
+
+The `AuditExperiment` class allows you to define a set of models to audit and run them against specific scenario packs.
+
+**Constructor Parameters:**
+*   `models` (List[Dict[str, Any]]): A list of dictionaries defining the target models to be audited.
+*   `judge_model` (Optional[str]): The name of the model used for judging.
+*   `judge_provider` (Optional[str]): The provider for the judge model (e.g., "ollama", "openai").
+*   `judge_api_key` (Optional[str]): API key for the judge provider.
+*   `judge_base_url` (Optional[str]): Base URL for the judge provider.
+*   `auditor_model` (Optional[str]): The model used for generating probe prompts (if different from the judge).
+*   `auditor_provider` (Optional[str]): Provider for the auditor model.
+*   `auditor_api_key` (Optional[str]): API key for the auditor provider.
+*   `auditor_base_url` (Optional[str]): Base URL for the auditor provider.
+*   `judge` (Optional[str]): The name of the judge configuration to use (e.g., "safety", "abstention").
+*   `probe_prompt` (Optional[str]): Custom prompt for the auditor to generate probes.
+*   `judge_prompt` (Optional[str]): Custom prompt for the judge to evaluate responses.
+*   `json_format` (bool): Whether to enforce JSON output format for the judge.
+*   `verbose` (bool): Enable verbose logging.
+*   `show_progress` (bool): Display progress bars during execution.
+*   `n_repetitions` (int): Number of times to repeat the experiment for stability analysis.
+*   `save_dir` (Optional[str]): Directory to save results.
+*   `on_model_done` (Optional[Callable]): Callback function invoked when a model's audit is complete.
+
+**Methods:**
+*   `run(scenarios, max_turns, language, max_workers)`: Executes the audit synchronously.
+*   `run_async(scenarios, max_turns, language, max_workers)`: Executes the audit asynchronously.
+
+**Example: Running an Experiment**
+
+```python
+from simpleaudit.experiment import AuditExperiment
+from simpleaudit.scenarios import get_scenarios
+
+# Define the models to audit
+models = [
+    {
+        "name": "llama3.2:3b",
+        "provider": "ollama",
+        "base_url": "http://localhost:11434"
+    }
+]
+
+# Initialize the experiment
+experiment = AuditExperiment(
+    models=models,
+    judge_model="gemma3:latest",
+    judge_provider="ollama",
+    judge="safety",
+    n_repetitions=2,
+    save_dir="./results"
+)
+
+# Get scenarios
+scenarios = get_scenarios("safety")
+
+# Run the experiment
+results = experiment.run(
+    scenarios=scenarios,
+    max_turns=5,
+    language="en",
+    max_workers=2
+)
+```
+
+### Model Auditing
+
+The `ModelAuditor` class handles the low-level execution of a single model against a set of scenarios. It manages the interaction between the target model, the auditor (probe generator), and the judge.
+
+#### `ModelAuditor`
+
+**Constructor Parameters:**
+*   `model` (str): The name of the target model.
+*   `provider` (str): The provider for the target model.
+*   `judge_model` (str): The name of the judge model.
+*   `judge_provider` (str): The provider for the judge model.
+*   `api_key` (Optional[str]): API key for the target model.
+*   `base_url` (Optional[str]): Base URL for the target model.
+*   `system_prompt` (Optional[str]): System prompt for the target model.
+*   `judge_api_key` (Optional[str]): API key for the judge.
+*   `judge_base_url` (Optional[str]): Base URL for the judge.
+*   `auditor_model` (Optional[str]): Model for generating probes.
+*   `auditor_provider` (Optional[str]): Provider for the auditor.
+*   `auditor_api_key` (Optional[str]): API key for the auditor.
+*   `auditor_base_url` (Optional[str]): Base URL for the auditor.
+*   `judge` (Optional[str]): Judge configuration name.
+*   `probe_prompt` (Optional[str]): Custom probe prompt.
+*   `judge_prompt` (Optional[str]): Custom judge prompt.
+*   `judge_response_schema` (Optional[Dict[str, Any]]): Schema for judge response.
+*   `json_format` (bool): Enforce JSON output.
+*   `max_turns` (int): Maximum number of turns per scenario.
+*   `verbose` (bool): Enable verbose logging.
+*   `show_progress` (bool): Display progress bars.
+
+**Methods:**
+*   `run(scenarios, max_turns, language, max_workers)`: Executes the audit for this specific model.
+*   `run_async(scenarios, max_turns, language, max_workers)`: Asynchronous execution.
+*   `run_scenario(name, description, expected_behavior, test_prompt, max_turns, language, pbar_audit, pbar_judge, max_workers)`: Runs a single scenario.
+*   `strip_thinking(text)`: Removes thinking tokens from model output.
+*   `parse_json_response(response, default_severity)`: Parses JSON response from the judge.
+*   `get_scenarios(pack_name)`: Retrieves scenarios by pack name.
+
+**Example: Direct Model Auditing**
+
+```python
+from simpleaudit.model_auditor import ModelAuditor
+from simpleaudit.scenarios import get_scenarios
+
+auditor = ModelAuditor(
+    model="llama3.2:3b",
+    provider="ollama",
+    judge_model="gemma3:latest",
+    judge_provider="ollama",
+    judge="safety",
+    max_turns=3
+)
+
+scenarios = get_scenarios("safety")[:5]
+results = auditor.run(
+    scenarios=scenarios,
+    max_turns=3,
+    language="en",
+    max_workers=1
+)
+```
+
+### Result Handling
+
+Audit results are encapsulated in the `AuditResults` and `RepeatedExperimentResults` classes. These classes provide methods for summarizing, saving, and analyzing the outcomes.
+
+#### `AuditResults`
+
+Represents the results of a single run of an audit.
+
+**Properties:**
+*   `total_auditor_input_tokens`: Total input tokens used by the auditor.
+*   `total_auditor_output_tokens`: Total output tokens used by the auditor.
+*   `total_judge_input_tokens`: Total input tokens used by the judge.
+*   `total_judge_output_tokens`: Total output tokens used by the judge.
+*   `total_target_input_tokens`: Total input tokens used by the target model.
+*   `total_target_output_tokens`: Total output tokens used by the target model.
+*   `token_usage`: Aggregated token usage statistics.
+*   `severity_distribution`: Distribution of severity levels.
+*   `all_issues`: List of all identified issues.
+*   `all_recommendations`: List of all recommendations.
+*   `passed`: Number of passed scenarios.
+*   `failed`: Number of failed scenarios.
+*   `critical_count`: Number of critical issues.
+*   `score`: Overall safety score.
+
+**Methods:**
+*   `summary()`: Returns a summary of the results.
+*   `to_dict()`: Converts results to a dictionary.
+*   `save(filepath)`: Saves results to a file.
+*   `load(filepath)`: Loads results from a file.
+*   `plot(save_path)`: Generates a plot of the results.
+
+#### `RepeatedExperimentResults`
+
+Aggregates results from multiple runs of the same experiment, enabling stability analysis.
+
+**Methods:**
+*   `keys()`: Returns the model names.
+*   `values()`: Returns the results for each model.
+*   `items()`: Returns (model_name, results) pairs.
+*   `stability(model_name)`: Returns a `ModelStabilityReport` for the specified model.
+*   `summary()`: Returns a summary of the repeated results.
+*   `to_dict()`: Converts results to a dictionary.
+*   `save(filepath)`: Saves results to a file.
+*   `load(filepath)`: Loads results from a file.
+
+**Example: Analyzing Stability**
+
+```python
+from simpleaudit.repeated_results import RepeatedExperimentResults
+
+# Assuming 'repeated_results' is an instance of RepeatedExperimentResults
 stability_report = repeated_results.stability("llama3.2:3b")
 print(stability_report.summary())
 
-# Save full experiment data
-repeated_results.save("experiment_results.json")
+# Save the repeated results
+repeated_results.save("./results/repeated_audit.json")
 ```
 
 ### Visualization
 
-SimpleAudit includes a visualization server for exploring results.
+The `visualization.server` module provides a web interface for viewing audit results.
 
-*   `visualization.server.start_server(results_dir, host, port)`: Starts a local web server to view audit results.
-*   The server provides endpoints for viewing file trees, JSON files, and scenario details.
+**Functions:**
+*   `start_server(results_dir, host, port)`: Starts the visualization server.
+*   `root()`: Handles the root route.
+*   `get_files()`: Lists available result files.
+*   `get_json_file(file_path)`: Retrieves a specific JSON file.
+*   `is_valid_audit_json(file_path)`: Validates if a file is a valid audit JSON.
 
-To start the server:
+**Example: Starting the Server**
 
 ```python
 from simpleaudit.visualization.server import start_server
 
-start_server(results_dir="./experiment_output", host="localhost", port=8000)
+start_server(
+    results_dir="./results",
+    host="localhost",
+    port=8050
+)
 ```
 
-### Key Design Principles
+### Scenario Packs
 
-1.  **No Ground-Truth Labels**: The system relies on comparative scoring by a judge LLM rather than human-labeled ground truth.
-2.  **Local-First**: Designed to work with local models (e.g., via Ollama) without requiring external API keys by default.
-3.  **Extensibility**: Custom judges and prompts can be injected via `judge_prompt` and `probe_prompt` parameters.
-4.  **Reproducibility**: The `AuditExperiment` class ensures that results are reproducible by managing repetitions and saving intermediate data.
+Scenarios are organized into packs, which can be retrieved using the `get_scenarios` function.
+
+**Available Packs:**
+*   `safety`: General safety scenarios.
+*   `bullshitbench`: Scenarios for detecting hallucinations and factual errors.
+*   `health`: Health-related scenarios.
+*   `hei_refusal`: Scenarios for evaluating refusal behavior.
+*   `rag`: Retrieval-Augmented Generation scenarios.
+
+**Example: Listing Scenario Packs**
+
+```python
+from simpleaudit.scenarios import list_scenario_packs
+
+packs = list_scenario_packs()
+print(packs)
+```
+
+### Judge Configurations
+
+Judges are configured using predefined configurations. The `get_judge` function retrieves a specific judge configuration.
+
+**Available Judges:**
+*   `safety`: Evaluates AI safety.
+*   `abstention`: Evaluates refusal/abstention behavior.
+*   `factuality`: Evaluates factual accuracy.
+*   `helpfulness`: Evaluates helpfulness of responses.
+
+**Example: Listing Judge Configs**
+
+```python
+from simpleaudit.judges import list_judge_configs
+
+configs = list_judge_configs()
+print(configs)
+```
+
+This architecture allows for flexible and extensible auditing of LLMs, with clear separation of concerns between execution, evaluation, and analysis.
 
 ### See Also
 
@@ -560,205 +604,191 @@ start_server(results_dir="./experiment_output", host="localhost", port=8000)
 
 ## Key Ideas
 
-SimpleAudit operates on a comparative evaluation model: it does not require ground-truth labels to determine if a model is "safe." Instead, it uses a **Judge** model to evaluate the responses of a **Target** model against a specific **Scenario**. The system validates the consistency and comparative safety of LLMs by analyzing how the target model behaves under adversarial or domain-specific probes.
+SimpleAudit operates on a dual-agent architecture designed to validate comparative LLM safety scoring without relying on ground-truth labels. The system separates the **auditing process** (probing the target model) from the **evaluation process** (judging the target's responses). This separation allows developers to define specific adversarial strategies via **Scenarios** and evaluation criteria via **Judges**.
 
-The three core components—Judges, Scenarios, and Visualization—integrate as follows:
-1.  **Scenarios** define the test cases (prompts and expected behaviors).
-2.  **Judges** define the criteria and output schema for evaluating the target model's responses.
-3.  **Visualization** provides a local web interface to inspect the resulting JSON data.
+### The Dual-Agent Architecture
 
-### Judges
+The core of the library is the `ModelAuditor` class, which orchestrates the interaction between two distinct LLM roles:
 
-Judges are configurations that dictate how the evaluation is performed. They consist of a `probe_prompt` (instructions for the auditor to interact with the target) and a `judge_prompt` (instructions for the judge model to score the target's response).
+1.  **The Target Model**: The AI system under audit. It receives prompts generated by the auditor and produces responses.
+2.  **The Auditor (Probe) Model**: An LLM that acts as a red-teamer. It generates follow-up questions or adversarial prompts based on the scenario description and the target's previous responses.
+3.  **The Judge Model**: An LLM that evaluates the final conversation transcript against specific safety or quality criteria.
 
-SimpleAudit provides several built-in judges, accessible via `simpleaudit.judges`.
+This tripartite setup (Target, Auditor, Judge) is configured through the `ModelAuditor` constructor.
 
-#### Built-in Judges
+### Scenarios: Defining Adversarial Strategies
 
-| Judge Name | Description |
-| :--- | :--- |
-| `safety` | Constitutional AI safety evaluation. Severity: critical, high, medium, low, pass. |
-| `abstention` | Refusal/abstention appropriateness. Score 1–10. |
-| `helpfulness` | Response quality across MT-Bench dimensions. Score 1–10. |
-| `factuality` | Hallucination and factual error detection. Score 1–10. |
-| `harm` | HELM Safety harm categorisation. |
-| `helsedir_sexhealth_no` | Norwegian sexual-health judge for young users. |
-| `helsedir_sexhealth_no_rag` | Norwegian sexual-health judge with RAG framing. |
-| `binary_abstention` | Language-agnostic binary classifier for abstention. |
+Scenarios define *what* the auditor should test. They are structured as dictionaries containing a `name` and a `description`. The description serves as the instruction set for the auditor model, guiding it on how to probe the target.
 
-#### Using Judges
+SimpleAudit provides several built-in scenario packs, accessible via the `get_scenarios` function.
 
-You can select a judge by name when initializing `ModelAuditor`. You can also override the default prompts using `probe_prompt` and `judge_prompt` parameters.
+#### Available Scenario Packs
+
+You can list all available packs and their sizes using `list_scenario_packs()`:
+
+```python
+from simpleaudit.scenarios import list_scenario_packs
+
+packs = list_scenario_packs()
+for name, count in packs.items():
+    print(f"{name}: {count} scenarios")
+```
+
+Key packs include:
+*   `safety`: General AI safety scenarios (hallucinations, fictional content).
+*   `health`: Healthcare domain scenarios (emergency response, diagnosis boundaries).
+*   `bullshitbench`: Combined v1 and v2 BullshitBench scenarios for detecting nonsensical or fabricated claims.
+*   `hei_refusal`: Norwegian youth Q&A refusal/guidance edge cases.
+*   `rag`: RAG-specific scenarios (source misattribution).
+
+#### Retrieving Scenarios
+
+Use `get_scenarios(pack_name)` to retrieve a list of scenario dictionaries. If the pack name is invalid, a `ValueError` is raised listing available packs.
+
+```python
+from simpleaudit.scenarios import get_scenarios
+
+# Retrieve the first 3 scenarios from the 'health' pack
+health_scenarios = get_scenarios("health")[:3]
+
+# Each scenario is a dict with 'name' and 'description'
+print(health_scenarios[0]["name"])
+print(health_scenarios[0]["description"])
+```
+
+### Judges: Defining Evaluation Criteria
+
+Judges define *how* the target's responses are evaluated. A judge configuration is a dictionary containing:
+*   `probe_prompt`: Instructions for the auditor model on how to conduct the probe.
+*   `judge_prompt`: Instructions for the judge model on how to score the conversation.
+*   `output_schema`: The expected JSON structure for the judge's output.
+*   `source`: Academic references for the evaluation methodology.
+
+#### Available Judges
+
+You can list all available judge configurations using `list_judge_configs()`:
+
+```python
+from simpleaudit.judges import list_judge_configs
+
+judges = list_judge_configs()
+for name, desc in judges.items():
+    print(f"{name}: {desc}")
+```
+
+Key judges include:
+*   `safety`: Constitutional AI safety evaluation (Bai et al., 2022). Outputs severity levels (`critical`, `high`, `medium`, `low`, `pass`).
+*   `factuality`: G-Eval based hallucination detection (Liu et al., 2023). Outputs a score (1-10) and verdict.
+*   `abstention`: Evaluates if the model appropriately refused or answered (Feng et al., 2024).
+*   `helpfulness`: MT-Bench style response quality evaluation (Zheng et al., 2023).
+*   `binary_abstention`: A language-agnostic binary classifier for refusal detection.
+
+#### Retrieving Judge Configs
+
+Use `get_judge(name)` to retrieve a specific judge configuration.
+
+```python
+from simpleaudit.judges import get_judge
+
+safety_judge = get_judge("safety")
+print(safety_judge["name"])
+print(safety_judge["description"])
+```
+
+### Configuring the Audit
+
+The `ModelAuditor` class ties scenarios and judges together. You can use built-in judges by name or provide custom prompts.
+
+#### Using Built-in Judges
+
+When you specify a `judge` name (e.g., `"safety"`), the `ModelAuditor` automatically loads the corresponding `probe_prompt` and `judge_prompt` from the judge configuration.
 
 ```python
 from simpleaudit import ModelAuditor
+from simpleaudit.scenarios import get_scenarios
 
-# Use a named judge config
+# Get scenarios
+scenarios = get_scenarios("safety")[:2]
+
+# Initialize auditor with built-in 'safety' judge
 auditor = ModelAuditor(
-    model="llama3.2:3b",
+    model="llama3.2:3b",       # Target model
     provider="ollama",
-    judge_model="gemma3:latest",
+    judge_model="gemma3:latest", # Judge model
     judge_provider="ollama",
-    judge="safety"
+    judge="safety",             # Uses SAFETY_JUDGE config
+    max_turns=3,
+    verbose=True
 )
 
-# Named judge + custom probe
+# Run the audit
+results = auditor.run(scenarios)
+```
+
+#### Customizing Probes and Judges
+
+You can override the default prompts for a specific judge or provide fully custom prompts.
+
+1.  **Override Probe Prompt**: Keep the judge's evaluation criteria but change how the auditor probes.
+2.  **Custom Judge Prompt**: Provide a completely custom `judge_prompt`. This takes precedence over any named judge's `judge_prompt`.
+
+```python
+# Example: Using 'factuality' judge but with a custom probe strategy
 auditor = ModelAuditor(
     model="llama3.2:3b",
     provider="ollama",
     judge_model="gemma3:latest",
     judge_provider="ollama",
     judge="factuality",
-    probe_prompt="Ask about specific historical dates to test recall."
-)
-
-# Fully custom judge (judge_prompt takes precedence over named judge)
-auditor = ModelAuditor(
-    model="llama3.2:3b",
-    provider="ollama",
-    judge_model="gemma3:latest",
-    judge_provider="ollama",
-    judge_prompt="You are a custom judge. Evaluate if the response is polite."
+    probe_prompt="Ask specifically about dates and statistics to test factual accuracy.",
+    max_turns=3
 )
 ```
 
-To list available judges programmatically:
+If you provide a `judge_prompt` parameter, it overrides the `judge_prompt` from the named judge configuration. This allows for fully custom evaluation logic while potentially reusing the `probe_prompt` from a built-in judge.
+
+### Running Experiments
+
+The `ModelAuditor.run()` method executes the audit for a list of scenarios. It returns an `AuditResults` object, which contains:
+*   `summary()`: A high-level summary of the audit.
+*   `to_dict()`: The full results in dictionary format.
+*   `save(filepath)`: Saves results to a JSON file.
+*   `plot(save_path)`: Generates visualizations of the results.
+
+For multi-model comparisons or repeated runs, use the `AuditExperiment` class, which supports `n_repetitions` and generates `ModelStabilityReport` objects to assess consistency.
 
 ```python
-from simpleaudit.judges import list_judge_configs
+from simpleaudit.experiment import AuditExperiment
 
-configs = list_judge_configs()
-for name, desc in configs.items():
-    print(f"{name}: {desc}")
-```
-
-### Scenarios
-
-Scenarios are lists of dictionaries containing test cases. Each scenario typically includes a `name`, `description`, `test_prompt`, and `expected_behavior`.
-
-SimpleAudit includes several built-in scenario packs, accessible via `simpleaudit.scenarios`.
-
-#### Built-in Scenario Packs
-
-| Pack Name | Description |
-| :--- | :--- |
-| `safety` | General AI safety scenarios |
-| `rag` | RAG-specific scenarios |
-| `health` | Healthcare domain scenarios |
-| `system_prompt` | System prompt adherence/bypass testing |
-| `helpmed` | Help and medical scenarios |
-| `ung` | UNG scenarios |
-| `bullshitbench` | BullshitBench v1+v2 combined (155 scenarios) |
-| `hei_refusal` | Norwegian youth Q&A refusal/guidance edge cases |
-| `nav_aap` | Norwegian welfare scenarios |
-| `all` | All scenarios combined |
-
-#### Using Scenarios
-
-You can retrieve scenarios by pack name. These can be passed directly to `ModelAuditor.run()` or `AuditExperiment.run()`.
-
-```python
-from simpleaudit.scenarios import get_scenarios, list_scenario_packs
-
-# List available packs and their sizes
-packs = list_scenario_packs()
-print(packs)
-
-# Get scenarios for a specific pack
-scenarios = get_scenarios("safety")
-print(f"Loaded {len(scenarios)} safety scenarios")
-
-# Run audit with specific scenarios
-auditor = ModelAuditor(
-    model="llama3.2:3b",
-    provider="ollama",
-    judge_model="gemma3:latest",
-    judge_provider="ollama",
-    judge="safety"
-)
-
-results = auditor.run(scenarios, max_turns=5)
-```
-
-### Visualization
-
-SimpleAudit includes a local FastAPI server for visualizing audit results. This server reads JSON files from a specified directory and provides a web interface to explore the data.
-
-#### Starting the Server
-
-The `start_server` function initializes the visualization server. It requires a `results_dir` containing the JSON output from your audits.
-
-**Environment Variables:**
-*   `SIMPLEAUDIT_VISUALIZER_SECRET`: If set, the server requires an `X-Secret` header for API requests.
-*   `SIMPLEAUDIT_VISUALIZER_EMAIL`: Contact email displayed in the authentication overlay.
-
-```python
-import os
-from simpleaudit.visualization.server import start_server
-
-# Set optional secret for authentication
-os.environ["SIMPLEAUDIT_VISUALIZER_SECRET"] = "my-secret-key"
-
-# Start the server on port 8000
-start_server(
-    results_dir="./audit_results",
-    host="127.0.0.1",
-    port=8000
-)
-```
-
-#### Server Endpoints
-
-*   `/`: Serves the main visualization HTML page.
-*   `/scenario_viewer.html`: Serves the standalone scenario viewer.
-*   `/api/auth`: Checks authentication status and returns the contact email.
-*   `/api/files`: Returns a tree structure of valid JSON audit files in the results directory.
-*   `/api/json/{file_path}`: Returns the contents of a specific JSON file.
-
-The server validates JSON files before including them in the file tree. A file is considered valid if it is a non-empty array or an object with a non-empty `results` array.
-
-### Integration Example
-
-A typical workflow involves running an experiment and then visualizing the results.
-
-```python
-import os
-from simpleaudit import ModelAuditor
-from simpleaudit.scenarios import get_scenarios
-from simpleaudit.visualization.server import start_server
-
-# 1. Define Auditor
-auditor = ModelAuditor(
-    model="llama3.2:3b",
-    provider="ollama",
+experiment = AuditExperiment(
+    models=[
+        {"name": "model_a", "model": "llama3.2:3b", "provider": "ollama"},
+        {"name": "model_b", "model": "gemma3:latest", "provider": "ollama"}
+    ],
     judge_model="gemma3:latest",
     judge_provider="ollama",
     judge="safety",
-    save_dir="./my_audit_results"
+    n_repetitions=3
 )
 
-# 2. Run Audit
-scenarios = get_scenarios("safety")[:5] # Run first 5 scenarios for demo
-results = auditor.run(scenarios, max_turns=3)
-
-# 3. Save Results (handled by save_dir in ModelAuditor if configured, 
-#    or manually via results.save())
-# Note: ModelAuditor with save_dir typically handles saving internally 
-#    or results can be saved explicitly:
-# results.save("./my_audit_results/run1.json")
-
-# 4. Visualize
-# Ensure the directory exists and contains the JSON files
-start_server(results_dir="./my_audit_results", port=8000)
+# Run async experiment
+results = experiment.run_async(scenarios, max_turns=3)
 ```
 
-This workflow demonstrates how the components integrate: the `ModelAuditor` executes the scenarios using the specified judge, produces structured results, and the `start_server` function provides a local interface to inspect those results.
+### Key Takeaways
+
+1.  **Separation of Concerns**: Scenarios define *what* to test; Judges define *how* to evaluate.
+2.  **Configurability**: Both probes and judges can be customized via `probe_prompt` and `judge_prompt` parameters in `ModelAuditor`.
+3.  **Built-in Standards**: SimpleAudit ships with academically grounded judges (Constitutional AI, G-Eval, MT-Bench) to ensure rigorous evaluation.
+4.  **Local-First**: The framework is designed to work with local models (e.g., via Ollama) without requiring external API keys, ensuring privacy and minimal setup.
 
 ### See Also
 
-*   [Architecture](architecture.md)
 *   [Quickstart](quickstart.md)
-*   [Installation](installation.md)
+*   [Architecture](architecture.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
 
 
 ============================================================
@@ -783,6 +813,8 @@ Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simple
 ## simpleaudit.experiment
 
 ## simpleaudit.experiment
+
+audit experiment
 
 Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_experiment/
 
@@ -908,12 +940,16 @@ Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simple
 
 ## simpleaudit.scenarios.bullshitbench_health
 
+Bullshitbench health scenarios for SimpleAudit
+
 Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_health/
 
 ============================================================
 ## simpleaudit.scenarios.bullshitbench_v1_v2
 
 ## simpleaudit.scenarios.bullshitbench_v1_v2
+
+BullshitBench Scenario Pack for SimpleAudit
 
 Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_v1_v2/
 
@@ -993,6 +1029,8 @@ Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simple
 ## simpleaudit.scenarios.ung
 
 ## simpleaudit.scenarios.ung
+
+ung scenarios
 
 Full API docs: https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_ung/
 
