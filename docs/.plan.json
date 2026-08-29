@@ -3,17 +3,17 @@
     {
       "title": "Quickstart",
       "slug": "quickstart",
-      "description": "Run your first local LLM safety audit using the CLI or Python API.",
+      "description": "Run your first local audit using the CLI or a minimal Python script.",
       "source_files": [
         "simpleaudit/cli.py",
-        "simpleaudit/model_auditor.py",
-        "examples/local_ollama_audit.py"
+        "examples/local_ollama_audit.py",
+        "examples/fake_audit.py"
       ]
     },
     {
       "title": "Installation",
       "slug": "installation",
-      "description": "Install SimpleAudit and configure local model environments.",
+      "description": "Install SimpleAudit and verify your Python 3.11+ environment setup.",
       "source_files": [
         "simpleaudit/__init__.py",
         "simpleaudit/utils.py"
@@ -22,8 +22,9 @@
     {
       "title": "Architecture",
       "slug": "architecture",
-      "description": "Understand the audit pipeline, judge registry, and scenario structure.",
+      "description": "Understand the core audit loop, judge registry, and scenario structure.",
       "source_files": [
+        "simpleaudit/model_auditor.py",
         "simpleaudit/experiment.py",
         "simpleaudit/results.py",
         "simpleaudit/judges/__init__.py",
@@ -33,12 +34,13 @@
     {
       "title": "Key Ideas",
       "slug": "key-ideas",
-      "description": "Learn how adversarial probing and safety metrics are defined.",
+      "description": "Learn how adversarial probing and LLM-as-a-judge metrics work.",
       "source_files": [
+        "simpleaudit/judges/factuality.py",
         "simpleaudit/judges/safety.py",
-        "simpleaudit/judges/harm.py",
-        "simpleaudit/scenarios/health.py",
-        "simpleaudit/scenarios/safety.py"
+        "simpleaudit/judges/helpfulness.py",
+        "simpleaudit/judges/abstention.py",
+        "simpleaudit/scenarios/health.py"
       ]
     }
   ],

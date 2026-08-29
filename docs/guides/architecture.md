@@ -1,188 +1,132 @@
 ## Architecture
 
-SimpleAudit is a lightweight framework for validating LLM safety through comparative scoring. It operates without ground-truth labels by using a "judge" model to evaluate the responses of a "target" model against a set of adversarial scenarios. The architecture is divided into three core subsystems: the **Audit Pipeline** (orchestration and execution), the **Judge Registry** (evaluation criteria and prompts), and the **Scenario Structure** (test data).
+SimpleAudit is a lightweight framework for validating LLM safety through comparative auditing. It operates without ground-truth labels by using a "judge" model to evaluate the outputs of a "target" model against specific safety scenarios. The architecture is modular, separating scenario definitions, judge configurations, the core audit loop, and result aggregation.
 
-### 1. The Audit Pipeline
+### Core Components
 
-The pipeline is responsible for managing the interaction between the target model, the auditor (prober), and the judge. It consists of two primary classes: `ModelAuditor` for single-model execution and `AuditExperiment` for multi-model, multi-run orchestration.
+The system is built around four primary modules:
 
-#### ModelAuditor
-`ModelAuditor` executes a single audit session against a specific target model. It manages the conversation loop, where an "auditor" model generates probes (questions) to test the target, and a "judge" model evaluates the target's responses.
+1.  **Scenarios (`simpleaudit.scenarios`)**: Defines the test cases. Scenarios are grouped into "packs" (e.g., `safety`, `rag`, `bullshitbench`). Each scenario is a dictionary containing a `name`, `description`, `test_prompt`, and optional `expected_behavior`.
+2.  **Judges (`simpleaudit.judges`)**: Defines the evaluation criteria. Judges are configurations that specify the `probe_prompt` (how to attack the model) and `judge_prompt` (how to evaluate the response). Built-in judges include `safety`, `abstention`, `helpfulness`, `factuality`, and `harm`.
+3.  **ModelAuditor (`simpleaudit.model_auditor`)**: The core engine. It manages the interaction between the target model, the auditor (probe generator), and the judge model. It handles multi-turn conversations, token counting, and JSON parsing of judge responses.
+4.  **AuditExperiment (`simpleaudit.experiment`)**: The high-level orchestrator. It allows running audits across multiple models, handling repetitions for stability analysis, and managing result persistence.
 
-**Key Parameters:**
-*   `model`: The target model name.
-*   `provider`: The provider for the target model (e.g., `"ollama"`, `"openai"`).
-*   `judge_model`: The model used for evaluation.
-*   `judge_provider`: The provider for the judge model.
-*   `judge`: Optional name of a built-in judge configuration (see Judge Registry).
-*   `probe_prompt`: Custom system prompt for the auditor (overrides named judge defaults).
-*   `judge_prompt`: Custom system prompt for the judge (overrides named judge defaults).
-*   `json_format`: Boolean flag to enforce JSON response format (default `True`).
-*   `max_turns`: Maximum number of conversation turns per scenario (default `5`).
+### The Audit Loop
 
-**Execution Methods:**
-*   `run(scenarios, max_turns, language, max_workers)`: Synchronous execution.
-*   `run_async(scenarios, max_turns, language, max_workers)`: Asynchronous execution.
+The fundamental unit of work is the **scenario audit**, executed by `ModelAuditor.run_scenario()`. The process follows a multi-turn loop:
 
-#### AuditExperiment
-`AuditExperiment` orchestrates audits across multiple models and supports repeated runs for stability analysis. It merges common configuration (judge, prompts) into individual model configurations and handles caching for resumable experiments.
+1.  **Probe Generation**:
+    *   **Turn 0**: If the scenario defines a `test_prompt`, it is used verbatim. Otherwise, the auditor model generates a probe based on the scenario description.
+    *   **Subsequent Turns**: The auditor model generates the next user message based on the conversation history.
+2.  **Target Response**: The target model responds to the probe.
+3.  **Judgment**: After the specified number of turns (`max_turns`), the judge model evaluates the full conversation.
+    *   The judge receives the conversation history and the scenario's `expected_behavior` (if defined).
+    *   It outputs a JSON object containing `severity` (critical, high, medium, low, pass), `issues_found`, `positive_behaviors`, `summary`, and `recommendations`.
+    *   If `json_format=True`, a strict JSON schema is enforced via the API's `response_format` parameter.
 
-**Key Parameters:**
-*   `models`: A list of dictionaries, each containing at least a `"model"` key. Optional keys include `"label"`, `"provider"`, and model-specific overrides.
-*   `judge_model`, `judge_provider`: Default judge settings applied to all models if not overridden.
-*   `n_repetitions`: Number of times to run the audit for each model (default `1`).
-*   `save_dir`: Directory to save intermediate and final results for resuming.
-*   `on_model_done`: Callback invoked after each model completes.
+### Judge Registry
 
-**Execution Methods:**
-*   `run(scenarios, max_turns, language, max_workers)`: Synchronous wrapper.
-*   `run_async(scenarios, max_turns, language, max_workers)`: Asynchronous orchestration.
+The judge registry (`simpleaudit.judges`) provides a standardized way to load evaluation criteria.
 
-### 2. Judge Registry
+*   **`get_judge(name)`**: Returns a configuration dictionary for a named judge (e.g., `"safety"`). The config includes `probe_prompt`, `judge_prompt`, and optionally `response_schema`.
+*   **`list_judge_configs()`**: Returns a dictionary mapping judge names to their descriptions.
 
-The judge registry provides pre-defined evaluation criteria. Judges define the "system prompt" for the judge model and the expected output schema.
+When initializing a `ModelAuditor`, you can specify a named judge via the `judge` parameter. This automatically populates `probe_prompt` and `judge_prompt`. However, explicit `probe_prompt` or `judge_prompt` arguments always override the named judge's defaults, allowing for partial customization.
 
-**Available Judges:**
-*   `safety`: Constitutional AI safety evaluation.
-*   `abstention`: Refusal/abstention appropriateness.
-*   `helpfulness`: Response quality (relevance, accuracy, clarity, completeness).
-*   `factuality`: Hallucination and factual error detection.
-*   `harm`: HELM Safety harm categorization.
-*   `helsedir_sexhealth_no`: Norwegian sexual-health judge (generic).
-*   `helsedir_sexhealth_no_rag`: Norwegian sexual-health judge (RAG framing).
-*   `binary_abstention`: Binary classifier for abstention behavior.
+### Scenario Structure
 
-**API Functions:**
-*   `get_judge(name)`: Returns the configuration dictionary for a named judge.
-*   `list_judge_configs()`: Returns a dictionary mapping judge names to their descriptions.
+Scenarios are accessed via `get_scenarios(pack_name)`. Available packs include:
 
-**Resolution Logic:**
-When `ModelAuditor` is initialized:
-1.  If `judge_prompt` is provided, it takes precedence.
-2.  Else, if `judge` is provided, the corresponding `judge_prompt` and `probe_prompt` from the registry are loaded.
-3.  Else, default safety prompts are used.
-4.  `probe_prompt` can always override the probe prompt from a named judge.
+*   `safety`: General AI safety scenarios.
+*   `rag`: Retrieval-Augmented Generation specific scenarios.
+*   `bullshitbench`: Combined v1 and v2 scenarios for detecting nonsensical or broken-premise responses.
+*   `hei_refusal`: Norwegian youth Q&A refusal/guidance edge cases.
+*   `all`: A union of all available packs.
 
-### 3. Scenario Structure
+Each scenario dictionary must contain:
+*   `name` (str): Unique identifier.
+*   `description` (str): Context for the auditor.
+*   `test_prompt` (str): The initial user message.
+*   `expected_behavior` (List[str], optional): Specific criteria the judge should verify.
 
-Scenarios are defined as dictionaries within "packs." Each scenario contains:
-*   `name`: Unique identifier.
-*   `description`: Context for the scenario.
-*   `test_prompt`: The initial user message to the target model.
-*   `expected_behavior`: (Optional) List of expected behaviors for the judge to verify.
+### High-Level Experiments
 
-**API Functions:**
-*   `get_scenarios(pack_name)`: Returns the list of scenario dictionaries for a pack.
-*   `list_scenario_packs()`: Returns a dictionary mapping pack names to the number of scenarios in each.
+For comparative analysis across multiple models, use `AuditExperiment`. It wraps `ModelAuditor` and adds:
 
-**Available Packs:**
-`safety`, `rag`, `health`, `system_prompt`, `helpmed`, `ung`, `bullshitbench_v1`, `bullshitbench_v2`, `bullshitbench`, `health_bullshit`, `epistemic_safety`, `hei_refusal`, `nav_aap`, `skatteetaten`, `all`.
+*   **Multi-Model Support**: Accepts a list of model configurations.
+*   **Repetitions**: Runs each model `n_repetitions` times to calculate stability metrics.
+*   **Persistence**: If `save_dir` is provided, results are saved to disk after each run, enabling resumable experiments.
+*   **Stability Reporting**: Generates `ModelStabilityReport` objects via `RepeatedExperimentResults.stability(model_name)`.
 
-### 4. Results and Analysis
-
-Audit results are encapsulated in `AuditResult` (single scenario) and `AuditResults` (collection) classes.
-
-**AuditResults Properties:**
-*   `score`: A float (0-100) calculated from severity scores.
-*   `severity_distribution`: Dictionary of severity counts.
-*   `token_usage`: Dictionary of input/output tokens for auditor, judge, and target.
-*   `passed` / `failed`: Counts of scenarios with `pass` severity vs. others.
-
-**Analysis Methods:**
-*   `summary()`: Prints a formatted console summary.
-*   `plot(save_path)`: Generates a matplotlib visualization (requires `matplotlib`).
-*   `save(filepath)` / `load(filepath)`: Serializes/deserializes results to/from JSON.
-
-For repeated experiments, `RepeatedExperimentResults` provides:
-*   `stability(model_name)`: Returns a `ModelStabilityReport` with mean score, standard deviation, and per-scenario pass rates.
-*   `save(filepath)` / `load(filepath)`: Handles serialization of multi-run data.
-
-### Code Examples
-
-#### Basic Single-Model Audit
+### Code Example: Basic Audit
 
 ```python
 from simpleaudit import ModelAuditor, get_scenarios
 
-# Load a small subset of safety scenarios
-scenarios = get_scenarios("safety")[:5]
+# Load scenarios
+scenarios = get_scenarios("safety")[:3]
 
 # Initialize the auditor
+# Note: 'judge' parameter loads a built-in config. 
+# 'model' is the target, 'judge_model' is the evaluator.
 auditor = ModelAuditor(
     model="llama3.2:3b",
     provider="ollama",
     judge_model="gemma3:latest",
     judge_provider="ollama",
-    judge="safety",  # Use built-in safety judge
-    max_turns=3
+    judge="safety",  # Uses built-in safety judge config
+    max_turns=3,
+    verbose=True
 )
 
 # Run the audit
 results = auditor.run(scenarios)
 
-# Analyze
+# Print summary
 results.summary()
-print(f"Score: {results.score}")
 ```
 
-#### Multi-Model Experiment with Repetitions
+### Code Example: Comparative Experiment
 
 ```python
 from simpleaudit.experiment import AuditExperiment
+from simpleaudit import get_scenarios
 
+# Define models to compare
 models = [
     {"model": "llama3.2:3b", "provider": "ollama", "label": "Llama 3.2 3B"},
     {"model": "gemma3:latest", "provider": "ollama", "label": "Gemma 3"},
 ]
 
+# Initialize experiment
 experiment = AuditExperiment(
     models=models,
     judge_model="gemma3:latest",
     judge_provider="ollama",
-    judge="abstention",
-    n_repetitions=3,  # Run 3 times for stability
-    save_dir="./audit_runs"
+    judge="safety",
+    n_repetitions=2,  # Run each model twice for stability
+    save_dir="./audit_results"
 )
 
-# Run asynchronously
-import asyncio
-results = asyncio.run(experiment.run_async("safety"))
+# Run experiment
+# scenarios can be a pack name string or a list of dicts
+results = experiment.run("safety", max_turns=2)
 
-# Check stability for a specific model
-stability = results.stability("Llama 3.2 3B")
-stability.summary()
+# Access stability report for a specific model
+stability_report = results.stability("Llama 3.2 3B")
+stability_report.summary()
 ```
 
-#### Custom Judge Prompts
+### Result Aggregation
 
-```python
-from simpleaudit import ModelAuditor
+`AuditResults` provides aggregated metrics:
 
-custom_judge_prompt = """
-You are a strict factuality judge. 
-Evaluate the response for factual errors.
-Return JSON with keys: 'severity' (pass|low|medium|high|critical), 'errors' (list).
-"""
+*   `score`: A 0-100 safety score based on severity distribution.
+*   `severity_distribution`: Counts of each severity level.
+*   `token_usage`: Detailed input/output token counts for auditor, judge, and target.
+*   `passed` / `failed`: Counts of scenarios that passed or failed.
 
-auditor = ModelAuditor(
-    model="target_model",
-    provider="openai",
-    judge_model="gpt-4o",
-    judge_provider="openai",
-    judge_prompt=custom_judge_prompt,  # Overrides any named judge
-    json_format=True
-)
-```
-
-### Data Flow
-
-1.  **Initialization**: `AuditExperiment` or `ModelAuditor` is configured with model details and judge settings.
-2.  **Scenario Loading**: `get_scenarios` retrieves test data.
-3.  **Probing**: The auditor model generates a probe based on `test_prompt` and `probe_prompt`.
-4.  **Target Response**: The target model responds to the probe.
-5.  **Judging**: The judge model evaluates the conversation history against `judge_prompt` criteria.
-6.  **Parsing**: The judge's JSON response is parsed into an `AuditResult` with a `severity` score.
-7.  **Aggregation**: Results are aggregated into `AuditResults` or `RepeatedExperimentResults` for analysis.
+`RepeatedExperimentResults` extends this by storing multiple runs per model, enabling the calculation of mean scores, standard deviations, and per-scenario agreement rates.
 
 ### See Also
 
