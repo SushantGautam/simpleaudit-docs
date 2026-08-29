@@ -1,18 +1,26 @@
 {
   "pages": [
     {
-      "title": "Getting Started",
-      "slug": "getting-started",
-      "description": "Installation, environment setup, and running your first audit with a local model.",
+      "title": "Quickstart",
+      "slug": "quickstart",
+      "description": "Run your first local AI safety audit in under 5 minutes using the CLI.",
       "source_files": [
-        "simpleaudit/__init__.py",
-        "simpleaudit/utils.py"
+        "simpleaudit/cli.py",
+        "simpleaudit/__init__.py"
       ]
     },
     {
-      "title": "Core Architecture",
-      "slug": "core-architecture",
-      "description": "Overview of the auditing pipeline, data flow, and how components interact.",
+      "title": "Installation",
+      "slug": "installation",
+      "description": "Install SimpleAudit via PyPI or from source, including Python 3.11+ requirements.",
+      "source_files": [
+        "simpleaudit/__init__.py"
+      ]
+    },
+    {
+      "title": "Architecture",
+      "slug": "architecture",
+      "description": "High-level overview of the modular design: scenarios, judges, and the audit engine.",
       "source_files": [
         "simpleaudit/model_auditor.py",
         "simpleaudit/experiment.py",
@@ -20,69 +28,93 @@
       ]
     },
     {
-      "title": "CLI Usage",
-      "slug": "cli-usage",
-      "description": "Command-line interface options, flags, and examples for running audits.",
+      "title": "Key Ideas",
+      "slug": "key-ideas",
+      "description": "Core concepts: adversarial probing, local-first execution, and multilingual support.",
+      "source_files": [
+        "simpleaudit/model_auditor.py",
+        "simpleaudit/utils.py"
+      ]
+    },
+    {
+      "title": "Command Line Interface",
+      "slug": "cli-reference",
+      "description": "Complete reference for CLI commands, flags, and configuration options.",
       "source_files": [
         "simpleaudit/cli.py"
       ]
     },
     {
       "title": "Creating Custom Scenarios",
-      "slug": "creating-custom-scenarios",
-      "description": "How to define new test scenarios, including system prompts and data structures.",
+      "slug": "custom-scenarios",
+      "description": "Guide to building new test scenarios following the SimpleAudit scenario guidelines.",
       "source_files": [
         "scenarios/__init__.py",
-        "scenarios/system_prompt.py",
-        "scenarios/health.py"
+        "scenarios/health.py",
+        "scenarios/safety.py",
+        "scenarios/system_prompt.py"
       ]
     },
     {
-      "title": "Implementing Judges",
-      "slug": "implementing-judges",
-      "description": "Guide to creating custom LLM judges for specific evaluation criteria.",
+      "title": "Available Scenarios",
+      "slug": "scenario-library",
+      "description": "Catalog of built-in scenarios including health, safety, and RAG benchmarks.",
+      "source_files": [
+        "scenarios/health.py",
+        "scenarios/safety.py",
+        "scenarios/rag.py",
+        "scenarios/bullshitbench_health.py",
+        "scenarios/helfo.py",
+        "scenarios/helpmed.py",
+        "scenarios/hei_refusal.py",
+        "scenarios/lanekassen.py",
+        "scenarios/nav_aap.py",
+        "scenarios/skatteetaten.py",
+        "scenarios/ung.py",
+        "scenarios/vision_integrity.py"
+      ]
+    },
+    {
+      "title": "Judges and Evaluation Metrics",
+      "slug": "judges",
+      "description": "Understanding the judge modules: factuality, harm, helpfulness, and abstention logic.",
       "source_files": [
         "judges/__init__.py",
         "judges/factuality.py",
-        "judges/safety.py"
+        "judges/harm.py",
+        "judges/helpfulness.py",
+        "judges/abstention.py",
+        "judges/binary_abstention.py",
+        "judges/safety.py",
+        "judges/judge_conviction.py"
       ]
     },
     {
-      "title": "Advanced Evaluation Metrics",
-      "slug": "advanced-evaluation-metrics",
-      "description": "Using cross-judging, repeated results, and meta-evaluation techniques.",
+      "title": "Advanced Analysis & Meta-Evaluation",
+      "slug": "advanced-analysis",
+      "description": "Tools for cross-judging, repeated results analysis, and validating the judges themselves.",
       "source_files": [
         "simpleaudit/cross_judge.py",
+        "simpleaudit/judge_the_judge.py",
         "simpleaudit/repeated_results.py",
-        "simpleaudit/judge_the_judge.py"
+        "scenarios/judge_the_judge.py"
       ]
     },
     {
-      "title": "Reframing and Data Processing",
-      "slug": "reframing-and-data-processing",
-      "description": "Techniques for reframing prompts and processing audit data for analysis.",
+      "title": "Visualization & Reporting",
+      "slug": "visualization",
+      "description": "Launch the local visualization server to explore audit results and generate reports.",
       "source_files": [
-        "simpleaudit/reframing.py",
-        "simpleaudit/utils.py"
+        "visualization/server.py",
+        "simpleaudit/results.py"
       ]
     },
     {
-      "title": "Visualization and Reporting",
-      "slug": "visualization-and-reporting",
-      "description": "Using the local server to visualize audit results and generate reports.",
+      "title": "Reframing & Prompt Engineering",
+      "slug": "reframing",
+      "description": "Techniques for reframing prompts to test model robustness and consistency.",
       "source_files": [
-        "visualization/server.py"
-      ]
-    },
-    {
-      "title": "Built-in Scenarios and Judges",
-      "slug": "built-in-scenarios-and-judges",
-      "description": "Reference for the included health, safety, and factuality scenarios and judges.",
-      "source_files": [
-        "scenarios/safety.py",
-        "scenarios/rag.py",
-        "judges/harm.py",
-        "judges/helpfulness.py"
+        "simpleaudit/reframing.py"
       ]
     }
   ],

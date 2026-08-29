@@ -10,17 +10,25 @@ pip install simpleaudit
 
 ## Guides
 
+### Getting Started
+
+- [Quickstart](guides/quickstart.md) — Run your first local AI safety audit in under 5 minutes using the CLI.
+- [Installation](guides/installation.md) — Install SimpleAudit via PyPI or from source, including Python 3.11+ requirements.
+
+### Core Concepts
+
+- [Architecture](guides/architecture.md) — High-level overview of the modular design: scenarios, judges, and the audit engine.
+- [Key Ideas](guides/key-ideas.md) — Core concepts: adversarial probing, local-first execution, and multilingual support.
+
 ### More
 
-- [Getting Started](guides/getting-started.md) — Installation, environment setup, and running your first audit with a local model.
-- [Core Architecture](guides/core-architecture.md) — Overview of the auditing pipeline, data flow, and how components interact.
-- [CLI Usage](guides/cli-usage.md) — Command-line interface options, flags, and examples for running audits.
-- [Creating Custom Scenarios](guides/creating-custom-scenarios.md) — How to define new test scenarios, including system prompts and data structures.
-- [Implementing Judges](guides/implementing-judges.md) — Guide to creating custom LLM judges for specific evaluation criteria.
-- [Advanced Evaluation Metrics](guides/advanced-evaluation-metrics.md) — Using cross-judging, repeated results, and meta-evaluation techniques.
-- [Reframing and Data Processing](guides/reframing-and-data-processing.md) — Techniques for reframing prompts and processing audit data for analysis.
-- [Visualization and Reporting](guides/visualization-and-reporting.md) — Using the local server to visualize audit results and generate reports.
-- [Built-in Scenarios and Judges](guides/built-in-scenarios-and-judges.md) — Reference for the included health, safety, and factuality scenarios and judges.
+- [Command Line Interface](guides/cli-reference.md) — Complete reference for CLI commands, flags, and configuration options.
+- [Creating Custom Scenarios](guides/custom-scenarios.md) — Guide to building new test scenarios following the SimpleAudit scenario guidelines.
+- [Available Scenarios](guides/scenario-library.md) — Catalog of built-in scenarios including health, safety, and RAG benchmarks.
+- [Judges and Evaluation Metrics](guides/judges.md) — Understanding the judge modules: factuality, harm, helpfulness, and abstention logic.
+- [Advanced Analysis & Meta-Evaluation](guides/advanced-analysis.md) — Tools for cross-judging, repeated results analysis, and validating the judges themselves.
+- [Visualization & Reporting](guides/visualization.md) — Launch the local visualization server to explore audit results and generate reports.
+- [Reframing & Prompt Engineering](guides/reframing.md) — Techniques for reframing prompts to test model robustness and consistency.
 
 ## API Reference
 
