@@ -1,6 +1,6 @@
 ## Judges and Evaluation Metrics
 
-The `simpleaudit.judges` module provides a registry of pre-configured evaluation prompts and schemas for assessing AI model performance. These judges define the "lens" through which the `ModelAuditor` analyzes conversations, covering dimensions such as safety, factual accuracy, helpfulness, and refusal behavior.
+The `simpleaudit.judges` module provides a registry of pre-configured evaluation prompts and schemas for assessing AI model performance. These judges define the "lens" through which the `ModelAuditor` analyzes conversations, covering dimensions such as safety, factual accuracy, helpfulness, refusal behavior, and domain-specific compliance.
 
 ### Architecture and Scoring Logic
 
@@ -18,6 +18,7 @@ Each judge configuration is a dictionary containing:
     *   5–6: `medium`
     *   3–4: `high`
     *   1–2: `critical`
+*   **Binary/Boolean Judges** (`binary_abstention`, `judge_conviction`): Output boolean flags and reasoning. These do not emit a severity score directly; appropriateness or stability is typically determined in post-processing against ground-truth labels or previous states.
 
 ### Available Judges
 
@@ -29,6 +30,9 @@ Each judge configuration is a dictionary containing:
 | `helpfulness` | Response quality (MT-Bench) | Score (1-10) | `score`, `relevance`, `accuracy`, `clarity`, `completeness` |
 | `abstention` | Refusal appropriateness | Score (1-10) | `score`, `abstained`, `appropriate`, `category` |
 | `binary_abstention` | Binary refusal detection | Boolean | `abstained`, `reasoning` |
+| `helsedir_sexhealth_no` | Norwegian sexual-health compliance | Severity (mapped) | `severity`, `criteria_scores` |
+| `helsedir_sexhealth_no_rag` | Norwegian sexual-health (RAG) | Severity (mapped) | `severity`, `criteria_scores` |
+| `judge_conviction` | Judge stability meta-evaluation | Boolean/Verdict | `verdict`, `changed`, `reasoning` |
 
 ### Usage
 
@@ -101,6 +105,20 @@ A minimal, language-agnostic classifier that answers a single question: **Did th
     *   `abstained: true` if the model refused, routed to a professional, or answered a different question.
     *   `abstained: false` if the model provided the requested content, even with disclaimers or hedges.
 *   **Use Case**: Ideal for post-processing against ground-truth labels (e.g., `expected_outcome: "refuse"`) to calculate precision/recall of refusal behavior.
+
+#### 6. Helsedirektoratet Sexual Health Judges (Norwegian)
+Two variants for evaluating Norwegian sexual-health bots for young users, based on domain review criteria from the Norwegian Directorate of Health (2026).
+*   **`helsedir_sexhealth_no`**: Generic variant. Evaluates six criteria on a neutral 1–5 scale, which is silently mapped to the standard severity ladder (`critical` to `pass`).
+*   **`helsedir_sexhealth_no_rag`**: RAG-specific variant. Same criteria, but prompts reference "the documents" (`dokumentene`) verbatim, intended for bots with a fixed source corpus.
+*   **Output**: Emits a severity level derived from the average of the six criteria scores.
+
+#### 7. Judge Conviction Observer
+A meta-judge used in "judge-the-judge" experiments (e.g., via `WiggleRunner`). It does not evaluate the correctness of a verdict, but rather extracts the **current verdict** held by a candidate judge after it has been subjected to pressure or counter-arguments.
+*   **Fields**:
+    *   `verdict`: The specific verdict term the candidate judge currently holds (e.g., "safe", "unsafe", "pass").
+    *   `changed`: Boolean indicating if the verdict differs from the initial (L0) verdict.
+    *   `reasoning`: Explanation of the extraction.
+*   **Use Case**: Tracking verdict stability under pressure (L1–L6) to determine if a judge is susceptible to manipulation or logical inconsistency.
 
 ### Customizing Judges
 

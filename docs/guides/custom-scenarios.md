@@ -1,6 +1,6 @@
 ## Creating Custom Scenarios
 
-SimpleAudit provides a robust framework for evaluating AI system behavior through predefined test scenarios. While the library ships with extensive built-in packs (such as `safety`, `health`, and `system_prompt`), developers can create custom scenario lists to target specific domain risks, proprietary system prompts, or unique threat models.
+SimpleAudit provides a robust framework for evaluating AI system behavior through predefined test scenarios. While the library ships with extensive built-in packs (such as `safety`, `health`, `system_prompt`, `bullshitbench`, `epistemic_safety`, `rag`, `helpmed`, `ung`, `hei_refusal`, `nav_aap`, `skatteetaten`, `helfo`, and `lanekassen`), developers can create custom scenario lists to target specific domain risks, proprietary system prompts, or unique threat models.
 
 This guide explains how to structure custom scenarios, how to validate them, and how to integrate them into an audit run.
 

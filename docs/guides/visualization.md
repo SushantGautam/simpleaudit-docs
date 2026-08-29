@@ -46,6 +46,9 @@ Serves the main visualization interface (`visualizer.html`).
 #### `GET /scenario_viewer.html`
 Serves the standalone scenario viewer page.
 
+#### `GET /favicon.png`
+Serves the application favicon (`thumbnail.png`).
+
 #### `GET /api/auth`
 Checks the authentication status.
 *   **Response**: `{"ok": true, "enabled": bool, "contact_email": str}`
