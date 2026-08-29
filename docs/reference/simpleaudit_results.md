@@ -1,3 +1,0 @@
-## simpleaudit.results
-
-::: simpleaudit.results

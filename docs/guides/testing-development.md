@@ -143,3 +143,6 @@ By following these practices, you ensure that the test suite remains fast, deter
 *   [Local Model Setup](local-model-setup.md)
 *   [Custom Scenarios](custom-scenarios.md)
 *   [Results & Visualization](results-visualization.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

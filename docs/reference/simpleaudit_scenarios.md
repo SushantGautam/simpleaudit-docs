@@ -1,3 +1,0 @@
-## simpleaudit.scenarios
-
-::: simpleaudit.scenarios

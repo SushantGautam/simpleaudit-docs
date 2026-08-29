@@ -1,3 +1,0 @@
-## tests.fakes
-
-::: tests.fakes
