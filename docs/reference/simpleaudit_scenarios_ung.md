@@ -1,5 +1,5 @@
 ## simpleaudit.scenarios.ung
 
-ung scenarios
+ung scenario pack.
 
 ::: simpleaudit.scenarios.ung

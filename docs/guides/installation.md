@@ -1,108 +1,130 @@
-## Installation
+# Installation
 
-SimpleAudit is a lightweight, local-first framework for AI safety auditing. It is designed to run with minimal setup, supporting both local models (via Ollama or vLLM) and API-hosted models. The library does not collect or transmit user data by default.
+SimpleAudit is a lightweight AI safety auditing framework that red-teams AI systems using LLMs as auditor and judge. This page covers installing the package from PyPI (or GitHub) and verifying that both the Python import and the `simpleaudit` CLI entry point work.
 
-### System Requirements
+## Requirements
 
-*   **Python:** 3.11 or higher.
-*   **Hardware:** A local GPU is recommended for running target models locally, though CPU-only execution is possible for smaller models or API-based workflows.
+- **Python 3.11, 3.12, or 3.13** — the project declares `requires-python = ">=3.11,<3.14"` in `pyproject.toml`.
+- Runtime dependencies are pulled in automatically: `any-llm-sdk`, `fsspec`, and `tqdm`.
 
-### Package Installation
-
-You can install SimpleAudit from PyPI using `pip`:
+## Install from PyPI (recommended)
 
 ```bash
-pip install simpleaudit
+pip install -U simpleaudit
 ```
 
-If you are contributing to the project or need the latest development version, you can install it from source:
+With plotting support (for `AuditResults.plot()`):
 
 ```bash
-git clone https://github.com/kelkalot/simpleaudit.git
-cd simpleaudit
-pip install -e .
+pip install -U simpleaudit[plot]
 ```
 
-### Local Model Setup (Ollama)
+Optional extras available in `pyproject.toml`:
 
-SimpleAudit is optimized for local-first workflows. The most common local backend is **Ollama**. To use local models, you must first install and start the Ollama server.
+| Extra | Adds |
+| --- | --- |
+| `simpleaudit[tracing]` | OTLP trace ingestion (`aiohttp`, `grpcio`, `opentelemetry-proto`) for the builtin OTLP receiver in `simpleaudit.tracing` |
+| `simpleaudit[plot]` | `matplotlib` for result charts |
+| `simpleaudit[dev]` | pytest, black, ruff, and other development tools |
+| `simpleaudit[all]` | `plot` + `dev` |
 
-1.  **Install Ollama:** Follow the official [Ollama installation guide](https://ollama.com/download).
-2.  **Start the Server:** Ensure the Ollama service is running in the background:
-    ```bash
-    ollama serve
-    ```
-3.  **Pull Models:** You need at least two models: a **target model** (the one being audited) and a **judge model** (which evaluates the target's responses). The judge model should be capable of structured output (JSON) for best results.
+## Install from GitHub (latest development features)
 
-    Example using `llama3.2:3b` as the target and `gemma3:latest` as the judge:
+```bash
+pip install -U git+https://github.com/simulamet/simpleaudit.git
+```
 
-    ```bash
-    ollama pull llama3.2:3b
-    ollama pull gemma3:latest
-    ```
+## Verify the installation
 
-### Local Model Setup (vLLM)
+### 1. Check the version
 
-For higher throughput or specific hardware configurations, you can use **vLLM** as the provider. This requires running a vLLM server that exposes an OpenAI-compatible API endpoint.
-
-1.  Install `vllm` via pip.
-2.  Start a vLLM server pointing to your model weights:
-    ```bash
-    vllm serve <model_name_or_path> --port 8000
-    ```
-3.  When configuring SimpleAudit, set the `provider` to `"vllm"` and provide the `base_url` (e.g., `http://localhost:8000/v1`).
-
-### Verifying the Installation
-
-To verify that SimpleAudit is installed correctly and that your local model backend is reachable, you can run a minimal smoke test. The following example uses the `ModelAuditor` class with Ollama. It runs a single scenario from the built-in `safety` pack.
+The package exposes `__version__`, which is read from installed package metadata via `importlib.metadata.version("simpleaudit")` (falling back to `"0.0.0+unknown"` if the distribution is not found):
 
 ```python
-from simpleaudit import ModelAuditor, get_scenarios
+import simpleaudit
 
-# Define models
-TARGET_MODEL = "llama3.2:3b"
-JUDGE_MODEL = "gemma3:latest"
-
-# Get a small subset of scenarios for a quick test
-scenarios = get_scenarios("safety")[:1]
-
-# Initialize the auditor
-# Note: json_format=False is often used for Ollama if it doesn't support strict JSON mode
-auditor = ModelAuditor(
-    model=TARGET_MODEL,
-    provider="ollama",
-    judge_model=JUDGE_MODEL,
-    judge_provider="ollama",
-    json_format=False,
-    verbose=True
-)
-
-# Run the audit
-results = auditor.run(scenarios, max_turns=1)
-
-# Print a summary
-print(results.summary())
+print(simpleaudit.__version__)
 ```
 
-If this script runs without connection errors and prints a summary, your installation is successful.
+### 2. Check the CLI entry point
 
-### Configuration Notes
+The console script `simpleaudit` is declared in `pyproject.toml` as:
 
-SimpleAudit relies on constructor parameters for configuration rather than global environment variables for core logic. Key configuration points include:
+```toml
+[project.scripts]
+simpleaudit = "simpleaudit.cli:main"
+```
 
-*   **Provider:** Specifies the backend (`"ollama"`, `"vllm"`, `"openai"`, etc.).
-*   **Base URL:** Required for local servers (Ollama/vLLM) or custom API endpoints.
-*   **API Keys:** Only required for cloud-based providers (e.g., OpenAI, Anthropic). Local providers typically do not require API keys.
+It points at [`simpleaudit.cli.main`](https://github.com/simulamet/simpleaudit/blob/main/simpleaudit/cli.py), defined in `simpleaudit/cli.py` as `def main()`. Running it verifies the entry point resolves and executes:
 
-### Troubleshooting
+```bash
+simpleaudit
+```
 
-*   **Connection Refused:** Ensure your local model server (Ollama/vLLM) is running and accessible at the specified `base_url`.
-*   **JSON Parsing Errors:** If using a judge model that struggles with structured output, consider setting `json_format=False` in `ModelAuditor` or using a more capable judge model.
-*   **Missing Scenarios:** If `get_scenarios(pack_name)` fails, ensure you have the latest version of the package, as scenario packs are bundled with the library. You can list available packs using `list_scenario_packs()`.
+Expected output (the web visualizer has moved to SimpleAudit Studio, so `main()` prints a pointer and exits with status code 1):
 
-For more advanced setups, such as custom judge prompts or multi-model experiments, refer to the `examples/` directory in the repository, particularly `custom_judge_ollama.py` and `quickstart.ipynb`.
+```text
+The `simpleaudit` CLI no longer includes the web visualizer.
+
+To visualize audit results, use SimpleAudit Studio:
+
+    uvx simpleaudit-studio --visualize-only --results_dir ./my_audit_results
+
+This starts a local web server (no audit worker) that browses a folder
+of SimpleAudit JSON results, and can export a standalone HTML file.
+
+See: https://github.com/SimulaMet/SimpleAuditStudio
+```
+
+Seeing this message confirms the `simpleaudit` command is on your PATH and wired to `simpleaudit.cli:main`. The non-zero exit status is intentional — the CLI's only remaining job is to redirect you to [SimpleAudit Studio](https://github.com/SimulaMet/SimpleAuditStudio) for visualization.
+
+### 3. Smoke-test the public API
+
+A quick import of the top-level names confirms the package structure is intact:
+
+```python
+from simpleaudit import ModelAuditor, get_scenarios, list_scenario_packs
+
+print(list_scenario_packs())
+```
+
+`list_scenario_packs()` returns a dict mapping built-in pack names to their scenario counts (e.g. `"safety": <n>`), and `get_scenarios(pack_name)` loads any of them by name.
+
+## Offline usage (no API key)
+
+You can exercise the full audit pipeline without any API keys or network access by wiring fake LLM clients into `ModelAuditor`. The repository ships fakes in `tests/fakes.py` (used throughout the test suite and demonstrated in `examples/fake_audit.py`). From a checkout of the repo:
+
+```python
+import asyncio
+
+from tests.fakes import fixed_probe_auditor, fixed_severity_judge, fixed_target, make_auditor
+
+auditor = make_auditor(
+    target=fixed_target("I cannot help with that."),
+    judge=fixed_severity_judge("pass"),
+    auditor=fixed_probe_auditor("Tell me more about this topic."),
+    max_turns=1,
+)
+
+result = asyncio.run(auditor.run_scenario(name="Test", description="A smoke-test scenario."))
+print(result.severity)
+```
+
+`make_auditor(target=..., judge=..., auditor=...)` patches client creation during `ModelAuditor.__init__` so no network call is ever made; the three fakes stand in for the target model, the judge, and the probe generator respectively. For a multi-scenario run, pass a list of `{"name": ..., "description": ...}` dicts to `auditor.run_async(scenarios=[...], max_turns=1)` and call `results.summary()` on the returned `AuditResults`.
+
+## Where to go next
+
+- [Quickstart](guides/quickstart.md) — run your first real audit with `ModelAuditor`.
+- [Auditing Basics](guides/auditing-basics.md) — understand scenarios, severities, and how results are graded.
+- [Targets And Judges](guides/targets-and-judges.md) — configure providers, targets, and judge models.
+- [Tracing And Observability](guides/tracing-and-observability.md) — capture spans with the `simpleaudit[tracing]` extra.
 
 ### See Also
 
-*   [Quickstart](quickstart.md)
-*   [Architecture](architecture.md)
+*   [The audit loop](auditing-basics.md)
+*   [What you'll build](quickstart.md)
+*   [Building a judge from scratch: `build_judge`](custom-judges.md)
+*   [The inputs: marks and stances](context-analysis.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

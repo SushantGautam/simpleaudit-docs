@@ -1,5 +1,5 @@
 ## simpleaudit.experiment
 
-audit experiment
+experiment event
 
 ::: simpleaudit.experiment

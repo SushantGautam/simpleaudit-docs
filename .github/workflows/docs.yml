@@ -21,9 +21,15 @@ permissions:
 
 jobs:
   docs:
-    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@main
+    # The Pi narrative engine (documentation.engine: pi in repoquill.yml)
+    # currently lives on RepoQuill's `dev` branch; the reusable workflow is
+    # also referenced from `dev` so it can provision Node + the pinned Pi
+    # runtime and run the Pi-capable generator. Once the Pi engine is merged
+    # to `main`, switch both refs back to `main` (and drop repoquill_ref).
+    uses: SushantGautam/RepoQuill/.github/workflows/reusable.yml@dev
     with:
       config: repoquill.yml
+      repoquill_ref: dev
       api_key_secret: LLM_API_KEY
       api_key_env: OPENAI_API_KEY
       deploy_branch: gh-pages

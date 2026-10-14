@@ -1,69 +1,134 @@
-project_name: simpleaudit-docs
+project_name: SimpleAudit
 package_dir: simpleaudit
 source_repo: SushantGautam/simpleaudit
 source_ref: main
+documentation:
+  # The narrative guides are authored by the Pi coding-agent engine
+  # (first-class, tool-using documentation author). Deterministic reference
+  # pages are still generated from the source AST/Griffe independently.
+  engine: pi
 llm:
   provider: openai
   model: Qwen/Qwen3.8-27B-FP8
   base_url: https://simulachat.sushant.info.np/api/v1
   api_key_env: OPENAI_API_KEY
+  max_concurrent: 4
+  include_tests: true
+  agentic:
+    timeout_s: 900
+    context_window: 100000
+    compaction_keep_recent_tokens: 60000
+    max_file_chars: 40000
+    max_repeat_calls: 6
 site:
-  name: simpleaudit-docs
-  description: Documentation for simpleaudit-docs
+  name: SimpleAudit Documentation
+  description: Framework for LLM-based auditing of models, systems and decisions
   url: https://SushantGautam.github.io/simpleaudit-docs/
   repo_url: https://github.com/SushantGautam/simpleaudit
   repo_name: SushantGautam/simpleaudit
 narrative_sections:
 - title: Getting Started
   slugs:
-  - quickstart
   - installation
+  - quickstart
 - title: Core Concepts
   slugs:
-  - architecture
-  - key-ideas
+  - auditing-basics
+  - targets-and-judges
+  - scenarios
+- title: Advanced Usage
+  slugs:
+  - context-analysis
+  - tracing-and-observability
+  - custom-judges
 reference_sections:
-- title: Core
+- title: Core Engine
   modules:
-  - simpleaudit
-  - simpleaudit.experiment
+  - simpleaudit.auditor
   - simpleaudit.model_auditor
+  - simpleaudit.experiment
   - simpleaudit.results
   - simpleaudit.repeated_results
-- title: CLI
+  - simpleaudit.decision
+  - simpleaudit.single_turn
+  - simpleaudit.checklist
+  - simpleaudit.stats
+- title: Targets
   modules:
-  - simpleaudit.cli
+  - simpleaudit.targets.base
+  - simpleaudit.targets.callable
+  - simpleaudit.targets.decision
+  - simpleaudit.targets.http
+  - simpleaudit.targets.model
 - title: Judges
   modules:
-  - simpleaudit.judges
-  - simpleaudit.judges.abstention
-  - simpleaudit.judges.binary_abstention
-  - simpleaudit.judges.factuality
+  - simpleaudit.judges.default
+  - simpleaudit.judges.safety
   - simpleaudit.judges.harm
   - simpleaudit.judges.helpfulness
+  - simpleaudit.judges.factuality
+  - simpleaudit.judges.groundedness
+  - simpleaudit.judges.abstention
+  - simpleaudit.judges.binary_abstention
+  - simpleaudit.judges.choice_match
+  - simpleaudit.judges.compose
+  - simpleaudit.judges.checklist
+  - simpleaudit.judges.fact_check
   - simpleaudit.judges.helsedir_sexhealth_no
   - simpleaudit.judges.helsedir_sexhealth_no_rag
-  - simpleaudit.judges.safety
+- title: Context Analysis
+  modules:
+  - simpleaudit.context_attribution
+  - simpleaudit.context_derivations
+  - simpleaudit.context_findings
+  - simpleaudit.context_marks
+  - simpleaudit.spans
+  - simpleaudit.perturbations
+  - simpleaudit.reframing
+  - simpleaudit.cross_judge
 - title: Scenarios
   modules:
-  - simpleaudit.scenarios
+  - simpleaudit.scenarios.safety
+  - simpleaudit.scenarios.health
+  - simpleaudit.scenarios.rag
+  - simpleaudit.scenarios.system_prompt
   - simpleaudit.scenarios.bullshitbench_health
   - simpleaudit.scenarios.bullshitbench_v1_v2
-  - simpleaudit.scenarios.health
+  - simpleaudit.scenarios.context_grounding
+  - simpleaudit.scenarios.healthbench_behaviours
+  - simpleaudit.scenarios.healthbench_loader
   - simpleaudit.scenarios.hei_refusal
+  - simpleaudit.scenarios.helfo
   - simpleaudit.scenarios.helpmed
+  - simpleaudit.scenarios.human_rights_education
+  - simpleaudit.scenarios.human_rights_fair_trial
+  - simpleaudit.scenarios.human_rights_water
+  - simpleaudit.scenarios.lanekassen
   - simpleaudit.scenarios.nav_aap
-  - simpleaudit.scenarios.rag
-  - simpleaudit.scenarios.safety
+  - simpleaudit.scenarios.nb_kryss_ordning
+  - simpleaudit.scenarios.nb_rag_kontekst
   - simpleaudit.scenarios.skatteetaten
-  - simpleaudit.scenarios.system_prompt
+  - simpleaudit.scenarios.skatteetaten_legitimasjon
+  - simpleaudit.scenarios.toll_reisegodskvote
   - simpleaudit.scenarios.ung
-- title: Utilities & Visualization
+  - simpleaudit.scenarios.vision_integrity
+  - simpleaudit.scenarios.arbeidstilsynet_arbeidstid
+- title: Tracing & Observability
   modules:
+  - simpleaudit.tracing.auth
+  - simpleaudit.tracing.context
+  - simpleaudit.tracing.otlp
+  - simpleaudit.tracing.provider
+  - simpleaudit.tracing.selection
+  - simpleaudit.tracing.shared
+  - simpleaudit.tracing.store
+- title: CLI & Utilities
+  modules:
+  - simpleaudit.cli
   - simpleaudit.utils
-  - simpleaudit.visualization.server
+  - simpleaudit._event_loop
 index:
-  tagline: Lightweight AI safety auditing tool that validates comparative LLM safety
-    scoring without ground-truth labels.
+  tagline: Lightweight AI safety auditing framework that validates comparative LLM
+    safety scoring without ground-truth labels.
   quick_start:
     install: pip install simpleaudit
