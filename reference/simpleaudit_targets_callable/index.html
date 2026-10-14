@@ -884,27 +884,50 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.callable" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.targets.callable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        callable
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.callable.CallableTarget" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#callabletarget" class="md-nav__link">
     <span class="md-ellipsis">
       
         CallableTarget
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2930,27 +2953,50 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.callable" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.targets.callable">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        callable
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.callable.CallableTarget" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#callabletarget" class="md-nav__link">
     <span class="md-ellipsis">
       
         CallableTarget
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Constants
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2978,172 +3024,17 @@
 
 <h2 id="simpleaudittargetscallable">simpleaudit.targets.callable</h2>
 <p>CallableTarget — an in-process Python callable as an audit target.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.targets.callable"></a>
-    <div class="doc doc-contents first">
-
-        <p>CallableTarget — an in-process Python callable as an audit target.</p>
-
-
-<details class="useful-for" open>
-  <summary>Useful for</summary>
-  <ul>
-<li>unit/integration tests of the audit engine without a network</li>
-<li>auditing a local function that wraps an agent, RAG pipeline, or tool</li>
-<li>quick experiments before wiring up a real HTTP endpoint</li>
+<h3 id="classes">Classes</h3>
+<h4 id="callabletarget"><code>CallableTarget</code></h4>
+<p>Wrap an in-process callable as a <code>Target</code>.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>async send(system: Optional[str] = None, user: str, history: Optional[List[Dict[str, Any]]] = None, file_uri: Optional[Union[str, List[str]]] = None, documents: Optional[List[Union[str, Dict[str, Any]]]] = None, response_format: Optional[Dict[str, Any]] = None, params: Optional[Dict[str, Any]] = None, context: Optional[TargetContext] = None) -&gt; TargetResponse</code></li>
 </ul>
-</details>        <p>The callable receives the same logical inputs as any Target and must return
-either a plain string (treated as <code>content</code>) or a :class:<code>TargetResponse</code>.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="simpleaudit.targets.callable.CallableTarget" class="doc doc-heading">
-            <code>CallableTarget</code>
-
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-
-
-        <p>Wrap an in-process callable as a :class:<code>Target</code>.</p>
-
-
-
-
-
-
-
-
-              <details class="mkdocstrings-source">
-                <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/callable.py#L23-L56" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/callable.py#L23-L56</a></code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">23</span>
-<span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">CallableTarget</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Wrap an in-process callable as a :class:`Target`."""</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fn</span><span class="p">:</span> <span class="n">TargetCallable</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span> <span class="o">=</span> <span class="n">fn</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">system</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">history</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">file_uri</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">documents</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">response_format</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">params</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">context</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">TargetContext</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TargetResponse</span><span class="p">:</span>
-        <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_fn</span><span class="p">(</span>
-            <span class="n">system</span><span class="o">=</span><span class="n">system</span><span class="p">,</span>
-            <span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span>
-            <span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">,</span>
-            <span class="n">file_uri</span><span class="o">=</span><span class="n">file_uri</span><span class="p">,</span>
-            <span class="n">documents</span><span class="o">=</span><span class="n">documents</span><span class="p">,</span>
-            <span class="n">response_format</span><span class="o">=</span><span class="n">response_format</span><span class="p">,</span>
-            <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
-            <span class="n">context</span><span class="o">=</span><span class="n">context</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="c1"># Support both sync and async callables.</span>
-        <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="s2">"__await__"</span><span class="p">):</span>
-            <span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">result</span>
-        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">TargetResponse</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">result</span>
-        <span class="k">return</span> <span class="n">TargetResponse</span><span class="p">(</span><span class="n">content</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">result</span><span class="p">))</span>
-</code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>TargetCallable</code></li>
+</ul>
 
 
 

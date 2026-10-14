@@ -1783,25 +1783,14 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.arbeidstilsynet_arbeidstid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        arbeidstilsynet_arbeidstid
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="arbeidstilsynet_arbeidstid">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.arbeidstilsynet_arbeidstid">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.arbeidstilsynet_arbeidstid--the-divergence-and-why-the-ground-truth-is-the-statute" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The divergence, and why the ground truth is the statute
+        Constants
       
     </span>
   </a>
@@ -2936,25 +2925,14 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.arbeidstilsynet_arbeidstid" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        arbeidstilsynet_arbeidstid
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="arbeidstilsynet_arbeidstid">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.arbeidstilsynet_arbeidstid">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.arbeidstilsynet_arbeidstid--the-divergence-and-why-the-ground-truth-is-the-statute" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The divergence, and why the ground truth is the statute
+        Constants
       
     </span>
   </a>
@@ -2990,99 +2968,10 @@
 
 <h2 id="simpleauditscenariosarbeidstilsynet_arbeidstid">simpleaudit.scenarios.arbeidstilsynet_arbeidstid</h2>
 <p>Arbeidstilsynet arbeidstid (working hours) scenario pack.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.scenarios.arbeidstilsynet_arbeidstid"></a>
-    <div class="doc doc-contents first">
-
-        <p>Arbeidstilsynet arbeidstid (working hours) scenario pack.</p>
-<p>Status: BASELINE, not domain-reviewed. 11 scenarios: four matched pairs (eight
-scenarios) and one branch set of three (P4, night work for young workers).</p>
-<p>Tests Norwegian AI models on working-time rules in arbeidsmiljøloven. The rules
-are two rule sets, not one rule with different numbers: kapittel 10 governs adult
-employees, kapittel 11 governs people under 18, and their thresholds are built
-differently rather than merely set at different values.</p>
-<p>Three axes, all verified against the statute:</p>
-<p>Person category (§ 10-12)
-    ordinary employee          chapter 10 applies
-    ledende stilling           chapter 10 does not apply, bar § 10-2 (1),(2),(4)
-    særlig uavhengig stilling  same</p>
-<p>Age — different rule sets, not different numbers
-    pause threshold      adult 5.5 hours (§ 10-9)  ·  under 18: 4.5 hours (§ 11-5)
-    daily rest           adult 11 hours (§ 10-8)   ·  under 15: 14 h, 15–18: 12 h (§ 11-5)
-    night work           adults § 10-11            ·  under 15: banned 2000–0600,
-                         15–18: 8 free hours covering 2300–0600, and 2100–2300 is
-                         night work permitted only on stated conditions (§ 11-3)</p>
-<p>Working-time arrangement (§ 10-4)
-    ordinary             9 h / 24 h and 40 h / 7 days
-    38-hour week         four alternative grounds in fjerde ledd
-    36-hour week         helkontinuerlig shift work, and work underground in mines,
-                         tunnelling and rock-chamber blasting</p>
-<p>The person-category and age axes are qualitative: § 10-12 switches an entire
-chapter off, and the under-18 rules are a separate regime with lower pause
-thresholds and longer rest. The 40/38/36 axis is closer to number variation,
-though its grounds are qualitative — and that is where the source divergence sits.</p>
-<h3 id="simpleaudit.scenarios.arbeidstilsynet_arbeidstid--the-divergence-and-why-the-ground-truth-is-the-statute">The divergence, and why the ground truth is the statute</h3>
-<p><code>§ 10-4 femte ledd</code> gives a 36-hour week on two alternative grounds:
-«helkontinuerlig skiftarbeid og sammenlignbart turnusarbeid» and «arbeid under
-jord i gruver, tunneldrift og utsprengning av bergrom under jord».</p>
-<p>Arbeidstilsynet.no renders the reduced weeks as «38 timer i løpet av 7 dager for
-arbeid som drives døgnet rundt på hverdager» and «36 timer i løpet av 7 dager for
-arbeid som drives døgnet rundt, hele uken igjennom». The words «helkontinuerlig»
-and «gruver» do not appear on the page at all.</p>
-<p>A miner working underground has a 36-hour week under the statute and no way to
-recognise that from the agency page, because underground work is not round-the-
-clock work; it is a separate ground. The claim stops there: the page introduces
-the reduced weeks with «for eksempel skift-, turnus-, natt- og søndagsarbeid», so
-night and Sunday work are named, and the omission the pack scores is mines and
-helkontinuerlig only (a raw grep of the page finds neither «gruve» nor
-«helkontinuerlig»).</p>
-<p>The pack takes the statute as ground truth, because the statute is the binding
-rule. The rubric for that pair states explicitly what the agency page says, so a
-model that has read the official page and answers from it is recorded as
-following published guidance rather than as inventing a rule.</p>
-<p>This is an omission on a summary page, recorded as an observation about two
-sources. It is not a claim that either is at fault.</p>
-<p>All facts verified verbatim against arbeidsmiljøloven (LOV-2005-06-17-62) via the
-authoring project's NLOD-licensed corpus copy, sha256 <code>729aff34d2…</code>, last change
-in force 2026-07-01, and against arbeidstilsynet.no as of 2026-08-27. Each
-scenario carries the source quote inline (<code>metadata.source_quote</code>);
-<code>metadata.register_rows</code> holds row IDs (AT-nn) from the authoring project's
-register and is provenance, not required to run the pack.</p>
-<p>Schema: v2, mirroring nb_kryss_ordning.py, skatteetaten_legitimasjon.py and
-toll_reisegodskvote.py.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>ARBEIDSTILSYNET_ARBEIDSTID_SCENARIOS</code></li>
+</ul>
 
 
 

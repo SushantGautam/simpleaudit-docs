@@ -603,49 +603,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        decision
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validate_decisiondecision-any-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_decision(decision: Any) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.public_decision" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#public_decisiondecision-mappingstr-any-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        public_decision
+        public_decision(decision: Mapping[str, Any]) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.render_decision_prompt" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#render_decision_promptdecision-mappingstr-any-str" class="md-nav__link">
     <span class="md-ellipsis">
       
-        render_decision_prompt
+        render_decision_prompt(decision: Mapping[str, Any]) -&gt; str
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.validate_decision" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate_decision
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2952,49 +2975,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        decision
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#validate_decisiondecision-any-dictstr-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        validate_decision(decision: Any) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.public_decision" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#public_decisiondecision-mappingstr-any-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        public_decision
+        public_decision(decision: Mapping[str, Any]) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.render_decision_prompt" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#render_decision_promptdecision-mappingstr-any-str" class="md-nav__link">
     <span class="md-ellipsis">
       
-        render_decision_prompt
+        render_decision_prompt(decision: Mapping[str, Any]) -&gt; str
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.decision.validate_decision" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        validate_decision
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3022,334 +3068,33 @@
 
 <h2 id="simpleauditdecision">simpleaudit.decision</h2>
 <p>Structured decision questions for scenarios.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.decision"></a>
-    <div class="doc doc-contents first">
-
-        <p>Structured decision questions for scenarios.</p>
-<p>A scenario may carry a <code>decision</code> block: one closed question with a fixed set
-of answer options and, optionally, the accepted answer. The same scenario then
-serves two kinds of target:</p>
-<ol>
-<li>A <strong>chat model</strong> gets the question as text: the scenario's <code>test_prompt</code>,
-   or :func:<code>render_decision_prompt</code> when the scenario has none.</li>
-<li>A <strong>decision model</strong> (a model that returns a choice and probabilities
-   rather than prose, e.g. served through a System One <code>/v1/systemone</code>
-   endpoint) gets the structured question through
-   <code>TargetContext.extra["decision"]</code>.</li>
-</ol>
-<p>Two rules, the same as for document marks (see <code>context_marks</code>):</p>
-<ol>
-<li><strong>Unknown keys raise.</strong> A mis-spelled <code>acepted</code> would otherwise leave the
-   scenario without an answer key and quietly stop grading it.</li>
-<li><strong>The answer key never reaches the target.</strong> :func:<code>public_decision</code> drops
-   <code>accepted</code> before the block is handed to a target. The full block reaches
-   only the judge, through <code>scenario_meta["decision"]</code>.</li>
-</ol>
-<p>A decision block::</p>
-<pre><code>"decision": {
-    "id": "verdict",                       # optional, default "answer"
-    "type": "choice",                      # the only type so far
-    "instructions": "Did the court find the defendant guilty?",
-    "criteria": {"yes": "Found guilty", "no": "Not found guilty"},
-    "accepted": ["yes"],                   # optional; never sent to the target
-    "state": {"jurisdiction": "Kosovo"},   # optional extra input for decision models
-}
-</code></pre>
-<p><code>criteria</code> maps each option key to its description (or <code>None</code>). Limits on
-the number of options belong to the target that enforces them, not to the
-scenario: a chat model can choose among any number of options.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.decision.public_decision" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">public_decision</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The decision block as a target may see it: everything except <code>accepted</code>.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L118-L120" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L118-L120</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">public_decision</span><span class="p">(</span><span class="n">decision</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The decision block as a target may see it: everything except ``accepted``."""</span>
-    <span class="k">return</span> <span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">decision</span><span class="o">.</span><span class="n">items</span><span class="p">()</span> <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">"accepted"</span><span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.decision.render_decision_prompt" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">render_decision_prompt</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The decision question as a chat prompt, for scenarios without a <code>test_prompt</code>.</p>
-<p>Lists every option with its key and asks for the key on the first line, so
-a chat model's answer can be matched against the options. <code>accepted</code> and
-<code>state</code> are never rendered.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L123-L138" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L123-L138</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">render_decision_prompt</span><span class="p">(</span><span class="n">decision</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    The decision question as a chat prompt, for scenarios without a ``test_prompt``.</span>
-
-<span class="sd">    Lists every option with its key and asks for the key on the first line, so</span>
-<span class="sd">    a chat model's answer can be matched against the options. ``accepted`` and</span>
-<span class="sd">    ``state`` are never rendered.</span>
-<span class="sd">    """</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">decision</span><span class="p">[</span><span class="s2">"instructions"</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="s2">""</span><span class="p">,</span> <span class="s2">"Options:"</span><span class="p">]</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"criteria"</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="n">lines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">description</span> <span class="k">else</span> <span class="sa">f</span><span class="s2">"- </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="n">lines</span> <span class="o">+=</span> <span class="p">[</span>
-        <span class="s2">""</span><span class="p">,</span>
-        <span class="s2">"Reply with the key of exactly one option on the first line, then explain your answer briefly."</span><span class="p">,</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.decision.validate_decision" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">validate_decision</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Check a scenario's <code>decision</code> block and return a normalised copy.</p>
+<h3 id="functions">Functions</h3>
+<h4 id="validate_decisiondecision-any-dictstr-any"><code>validate_decision(decision: Any) -&gt; dict[str, Any]</code></h4>
+<p>Check a scenario's <code>decision</code> block and return a normalised copy.</p>
 <p>The copy has every optional key filled in (<code>id</code>, <code>type</code>) and its own
 <code>criteria</code> and <code>accepted</code> containers, so callers can pass it on
 without sharing state with the scenario.</p>
-
-
-<p><span class="doc-section-title">Raises:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="ValueError">ValueError</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>if the block is malformed, with a message naming the problem.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L52-L115" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/decision.py#L52-L115</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
-<span class="normal"> 65</span>
-<span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">validate_decision</span><span class="p">(</span><span class="n">decision</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""</span>
-<span class="sd">    Check a scenario's ``decision`` block and return a normalised copy.</span>
-
-<span class="sd">    The copy has every optional key filled in (``id``, ``type``) and its own</span>
-<span class="sd">    ``criteria`` and ``accepted`` containers, so callers can pass it on</span>
-<span class="sd">    without sharing state with the scenario.</span>
-
-<span class="sd">    Raises:</span>
-<span class="sd">        ValueError: if the block is malformed, with a message naming the problem.</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">decision</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">):</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision must be a mapping, got </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-    <span class="n">unknown</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">decision</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">DECISION_KEYS</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">unknown</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision has unknown keys </span><span class="si">{</span><span class="n">unknown</span><span class="si">}</span><span class="s2">; allowed: </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">DECISION_KEYS</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-    <span class="n">decision_id</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"id"</span><span class="p">,</span> <span class="n">DEFAULT_DECISION_ID</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">decision_id</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">decision_id</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.id must be a non-empty string"</span><span class="p">)</span>
-
-    <span class="n">decision_type</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">"choice"</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">decision_type</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">DECISION_TYPES</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision.type </span><span class="si">{</span><span class="n">decision_type</span><span class="si">!r}</span><span class="s2"> not in </span><span class="si">{</span><span class="nb">list</span><span class="p">(</span><span class="n">DECISION_TYPES</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-
-    <span class="n">instructions</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"instructions"</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">instructions</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">instructions</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.instructions must be a non-empty string"</span><span class="p">)</span>
-
-    <span class="n">criteria</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"criteria"</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">criteria</span><span class="p">,</span> <span class="n">Mapping</span><span class="p">)</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.criteria must map at least two option keys to descriptions"</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">description</span> <span class="ow">in</span> <span class="n">criteria</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">key</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.criteria keys must be non-empty strings"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">description</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">description</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision.criteria[</span><span class="si">{</span><span class="n">key</span><span class="si">!r}</span><span class="s2">] must be a string or None"</span><span class="p">)</span>
-
-    <span class="n">normalised</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"id"</span><span class="p">:</span> <span class="n">decision_id</span><span class="p">,</span>
-        <span class="s2">"type"</span><span class="p">:</span> <span class="n">decision_type</span><span class="p">,</span>
-        <span class="s2">"instructions"</span><span class="p">:</span> <span class="n">instructions</span><span class="p">,</span>
-        <span class="s2">"criteria"</span><span class="p">:</span> <span class="nb">dict</span><span class="p">(</span><span class="n">criteria</span><span class="p">),</span>
-    <span class="p">}</span>
-
-    <span class="k">if</span> <span class="s2">"accepted"</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">:</span>
-        <span class="n">accepted</span> <span class="o">=</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"accepted"</span><span class="p">]</span>
-        <span class="k">if</span> <span class="p">(</span>
-            <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">accepted</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">))</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="n">accepted</span>
-            <span class="ow">or</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">accepted</span><span class="p">)</span>
-        <span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.accepted must be a non-empty list of option keys"</span><span class="p">)</span>
-        <span class="n">missing</span> <span class="o">=</span> <span class="p">[</span><span class="n">key</span> <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">accepted</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">criteria</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">missing</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision.accepted keys </span><span class="si">{</span><span class="n">missing</span><span class="si">}</span><span class="s2"> are not in decision.criteria"</span><span class="p">)</span>
-        <span class="n">normalised</span><span class="p">[</span><span class="s2">"accepted"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accepted</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="s2">"state"</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">:</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">decision</span><span class="p">[</span><span class="s2">"state"</span><span class="p">],</span> <span class="n">Mapping</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"decision.state must be a mapping"</span><span class="p">)</span>
-        <span class="n">normalised</span><span class="p">[</span><span class="s2">"state"</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">decision</span><span class="p">[</span><span class="s2">"state"</span><span class="p">])</span>
-
-    <span class="k">return</span> <span class="n">normalised</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<p><strong>Raises</strong>
+    ValueError: if the block is malformed, with a message naming the problem.</p>
+<h4 id="public_decisiondecision-mappingstr-any-dictstr-any"><code>public_decision(decision: Mapping[str, Any]) -&gt; dict[str, Any]</code></h4>
+<p>The decision block as a target may see it: everything except <code>accepted</code>.</p>
+<h4 id="render_decision_promptdecision-mappingstr-any-str"><code>render_decision_prompt(decision: Mapping[str, Any]) -&gt; str</code></h4>
+<p>The decision question as a chat prompt, for scenarios without a <code>test_prompt</code>.</p>
+<p>Lists every option with its key and asks for the key on the first line, so
+a chat model's answer can be matched against the options. <code>accepted</code> and
+<code>state</code> are never rendered.</p>
+<h3 id="constants">Constants</h3>
+<ul>
+<li>
+<p><code>DECISION_KEYS</code></p>
+</li>
+<li>
+<p><code>DECISION_TYPES</code></p>
+</li>
+<li>
+<p><code>DEFAULT_DECISION_ID</code></p>
+</li>
+</ul>
 
 
 

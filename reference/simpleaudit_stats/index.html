@@ -771,38 +771,61 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.stats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        stats
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wilson_intervalk-int-n-int-z-float-default_z-tuplefloat-float" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wilson_interval(k: int, n: int, z: float = DEFAULT_Z) -&gt; Tuple[float, float]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats.two_proportion_z" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#two_proportion_zk1-int-n1-int-k2-int-n2-int-optionalfloat" class="md-nav__link">
     <span class="md-ellipsis">
       
-        two_proportion_z
+        two_proportion_z(k1: int, n1: int, k2: int, n2: int) -&gt; Optional[float]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats.wilson_interval" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        wilson_interval
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2941,38 +2964,61 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.stats">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        stats
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wilson_intervalk-int-n-int-z-float-default_z-tuplefloat-float" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        wilson_interval(k: int, n: int, z: float = DEFAULT_Z) -&gt; Tuple[float, float]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats.two_proportion_z" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#two_proportion_zk1-int-n1-int-k2-int-n2-int-optionalfloat" class="md-nav__link">
     <span class="md-ellipsis">
       
-        two_proportion_z
+        two_proportion_z(k1: int, n1: int, k2: int, n2: int) -&gt; Optional[float]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.stats.wilson_interval" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        wilson_interval
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3000,396 +3046,38 @@
 
 <h2 id="simpleauditstats">simpleaudit.stats</h2>
 <p>Pure statistics over audit verdicts.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.stats"></a>
-    <div class="doc doc-contents first">
-
-        <p>Pure statistics over audit verdicts.</p>
-<p>These are the small, dependency-free building blocks that turn a count of
-passing trials into something interpretable: a confidence interval on a pass
-rate, and a test of whether two pass rates differ. They operate on plain
-counts (<code>k</code> successes out of <code>n</code> trials) — no runs, results, or storage —
-so they can be shared by the in-process engine, a CLI, and out-of-process
-callers (e.g. a web studio that tracks a recurring audit over time) without
-each re-implementing the formula.</p>
-<p>They are deliberately the <em>statistics only</em>. Deciding which trials count as
-pass / fail / error, and how to group runs into a baseline, is the caller's
-domain logic and stays out of here.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.stats.two_proportion_z" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">two_proportion_z</span><span class="p">(</span><span class="n">k1</span><span class="p">,</span> <span class="n">n1</span><span class="p">,</span> <span class="n">k2</span><span class="p">,</span> <span class="n">n2</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Pooled two-proportion z statistic for <code>p2 - p1</code>.</p>
-<p>Tests whether the second proportion differs from the first, pooling the
-two samples under the null hypothesis that they share one proportion. A
-large magnitude (|z| &gt;= 1.96 for 95%) indicates a real difference rather
-than sampling noise.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>k1, n1</code>
-            </td>
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>successes and trials for the first (baseline) group.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>k2, n2</code>
-            </td>
-            <td>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>successes and trials for the second group.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>The z statistic, or <code>None</code> when it is undefined — either group has</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>no trials, or the pooled standard error is zero (both groups agree</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.Optional">Optional</span>[<span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>perfectly, so there is no variance to test against).</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/stats.py#L51-L74" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/stats.py#L51-L74</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">two_proportion_z</span><span class="p">(</span><span class="n">k1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n1</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">k2</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n2</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Pooled two-proportion z statistic for ``p2 - p1``.</span>
-
-<span class="sd">    Tests whether the second proportion differs from the first, pooling the</span>
-<span class="sd">    two samples under the null hypothesis that they share one proportion. A</span>
-<span class="sd">    large magnitude (|z| &gt;= 1.96 for 95%) indicates a real difference rather</span>
-<span class="sd">    than sampling noise.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        k1, n1: successes and trials for the first (baseline) group.</span>
-<span class="sd">        k2, n2: successes and trials for the second group.</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        The z statistic, or ``None`` when it is undefined — either group has</span>
-<span class="sd">        no trials, or the pooled standard error is zero (both groups agree</span>
-<span class="sd">        perfectly, so there is no variance to test against).</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">n1</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">n2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="n">pooled</span> <span class="o">=</span> <span class="p">(</span><span class="n">k1</span> <span class="o">+</span> <span class="n">k2</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n1</span> <span class="o">+</span> <span class="n">n2</span><span class="p">)</span>
-    <span class="n">se</span> <span class="o">=</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">pooled</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pooled</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">n1</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">n2</span><span class="p">))</span>
-    <span class="k">if</span> <span class="n">se</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">k2</span> <span class="o">/</span> <span class="n">n2</span> <span class="o">-</span> <span class="n">k1</span> <span class="o">/</span> <span class="n">n1</span><span class="p">)</span> <span class="o">/</span> <span class="n">se</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.stats.wilson_interval" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">wilson_interval</span><span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="n">DEFAULT_Z</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Wilson score interval for a binomial proportion.</p>
+<h3 id="functions">Functions</h3>
+<h4 id="wilson_intervalk-int-n-int-z-float-default_z-tuplefloat-float"><code>wilson_interval(k: int, n: int, z: float = DEFAULT_Z) -&gt; Tuple[float, float]</code></h4>
+<p>Wilson score interval for a binomial proportion.</p>
 <p>The Wilson interval is preferred over the naive Wald interval for small
 <code>n</code> or proportions near 0 or 1, where the Wald interval is badly
 calibrated. This is the standard form: a centre pulled toward 0.5 by the
 <code>z^2/(2n)</code> term, with a half-width that shrinks as <code>n</code> grows.</p>
-
-
-<p><span class="doc-section-title">Parameters:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Default</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                <code>k</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>number of successes (passing trials).</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>n</code>
-            </td>
-            <td>
-                  <code><span title="int">int</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>total number of trials.</p>
-              </div>
-            </td>
-            <td>
-                <em>required</em>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                <code>z</code>
-            </td>
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>critical value (default 1.96 ≈ 95%).</p>
-              </div>
-            </td>
-            <td>
-                  <code><span title="simpleaudit.stats.DEFAULT_Z">DEFAULT_Z</span></code>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-    <p><span class="doc-section-title">Returns:</span></p>
-    <table>
-      <thead>
-        <tr>
-          <th>Type</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p><code>(lower, upper)</code> clamped to <code>[0, 1]</code>. When <code>n == 0</code> there is no</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="float">float</span></code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>evidence, so the full range <code>(0.0, 1.0)</code> is returned rather than a</p>
-              </div>
-            </td>
-          </tr>
-          <tr class="doc-section-item">
-            <td>
-                  <code><span title="typing.Tuple">Tuple</span>[<span title="float">float</span>, <span title="float">float</span>]</code>
-            </td>
-            <td>
-              <div class="doc-md-description">
-                <p>degenerate point.</p>
-              </div>
-            </td>
-          </tr>
-      </tbody>
-    </table>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/stats.py#L24-L48" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/stats.py#L24-L48</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">24</span>
-<span class="normal">25</span>
-<span class="normal">26</span>
-<span class="normal">27</span>
-<span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">wilson_interval</span><span class="p">(</span><span class="n">k</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">z</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT_Z</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Wilson score interval for a binomial proportion.</span>
-
-<span class="sd">    The Wilson interval is preferred over the naive Wald interval for small</span>
-<span class="sd">    ``n`` or proportions near 0 or 1, where the Wald interval is badly</span>
-<span class="sd">    calibrated. This is the standard form: a centre pulled toward 0.5 by the</span>
-<span class="sd">    ``z^2/(2n)`` term, with a half-width that shrinks as ``n`` grows.</span>
-
-<span class="sd">    Args:</span>
-<span class="sd">        k: number of successes (passing trials).</span>
-<span class="sd">        n: total number of trials.</span>
-<span class="sd">        z: critical value (default 1.96 ≈ 95%).</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        ``(lower, upper)`` clamped to ``[0, 1]``. When ``n == 0`` there is no</span>
-<span class="sd">        evidence, so the full range ``(0.0, 1.0)`` is returned rather than a</span>
-<span class="sd">        degenerate point.</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span>
-    <span class="n">p</span> <span class="o">=</span> <span class="n">k</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="n">denom</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="n">centre</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span>
-    <span class="n">half</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="o">+</span> <span class="n">z</span> <span class="o">*</span> <span class="n">z</span> <span class="o">/</span> <span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="n">n</span> <span class="o">*</span> <span class="n">n</span><span class="p">))</span> <span class="o">/</span> <span class="n">denom</span>
-    <span class="k">return</span> <span class="nb">max</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">centre</span> <span class="o">-</span> <span class="n">half</span><span class="p">),</span> <span class="nb">min</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">centre</span> <span class="o">+</span> <span class="n">half</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<p><strong>Args</strong>
+    k: number of successes (passing trials).
+    n: total number of trials.
+    z: critical value (default 1.96 ≈ 95%).</p>
+<p><strong>Returns</strong>
+    <code>(lower, upper)</code> clamped to <code>[0, 1]</code>. When <code>n == 0</code> there is no
+    evidence, so the full range <code>(0.0, 1.0)</code> is returned rather than a
+    degenerate point.</p>
+<h4 id="two_proportion_zk1-int-n1-int-k2-int-n2-int-optionalfloat"><code>two_proportion_z(k1: int, n1: int, k2: int, n2: int) -&gt; Optional[float]</code></h4>
+<p>Pooled two-proportion z statistic for <code>p2 - p1</code>.</p>
+<p>Tests whether the second proportion differs from the first, pooling the
+two samples under the null hypothesis that they share one proportion. A
+large magnitude (|z| &gt;= 1.96 for 95%) indicates a real difference rather
+than sampling noise.</p>
+<p><strong>Args</strong>
+    k1, n1: successes and trials for the first (baseline) group.
+    k2, n2: successes and trials for the second group.</p>
+<p><strong>Returns</strong>
+    The z statistic, or <code>None</code> when it is undefined — either group has
+    no trials, or the pooled standard error is zero (both groups agree
+    perfectly, so there is no variance to test against).</p>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>DEFAULT_Z</code></li>
+</ul>
 
 
 

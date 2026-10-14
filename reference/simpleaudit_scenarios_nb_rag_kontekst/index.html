@@ -2231,16 +2231,22 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.nb_rag_kontekst" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.nb_rag_kontekst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        nb_rag_kontekst
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2919,16 +2925,22 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.nb_rag_kontekst" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.nb_rag_kontekst">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        nb_rag_kontekst
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2956,67 +2968,10 @@
 
 <h2 id="simpleauditscenariosnb_rag_kontekst">simpleaudit.scenarios.nb_rag_kontekst</h2>
 <p>NB RAG-kontekst (Nasjonalbiblioteket, støyende hentekontekst) — ett scenario.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.scenarios.nb_rag_kontekst"></a>
-    <div class="doc doc-contents first">
-
-        <p>NB RAG-kontekst (Nasjonalbiblioteket, støyende hentekontekst) — ett scenario.</p>
-<p>Arbeidsstykke til designdiskusjonen i #64, som foreslår et topp-nivå <code>documents</code>-felt
-for RAG-chunks. Feltet finnes ikke i koden ennå: <code>model_auditor.py</code> bygger kun
-innholdsblokker for <code>file_uri</code> (<code>_expand_files</code>), så <code>documents</code> er inert her.
-Scenarioet er derfor en form-demonstrasjon, ikke en kjørbar prøve, og pakken er
-bevisst IKKE registrert i <code>scenarios/__init__.py</code> — den skal ikke se kjørbar ut,
-og en registrering ville dessuten kollidere med den åpne PR #63 i de samme tre
-stedene i den fila.</p>
-<p><code>documents</code> er brukt nøyaktig slik #64 foreslår det: en flat liste med strenger.
-Det er selve poenget. En flat streng bærer ingen identitet, så scenarioet kan ikke
-si i feltet HVILKEN chunk som bærer den plantede feilen. Merkingen må derfor legges
-ved siden av, i <code>metadata</code>, indeksert mot posisjon i lista. Uten den merkingen kan
-ingen dommer skille «modellen ble distrahert av feil chunk» fra «modellen svarte
-riktig av feil grunn» — begge gir samme sluttsvar.</p>
-<p>Presedensen finnes allerede i koden: <code>_render_conversation</code> nummererer vedlegg som
-<code>[file N]</code> nettopp fordi dommeren leser en samtale den ikke var vitne til. Samme
-behov gjelder chunks.</p>
-<p>Domenevalg: NB-krysset (ISBN/ISSN) er valgt fordi den plantede feilen ikke trenger
-å oppfinnes. Regelen «eget nummer per filformat» er ekte og kildeverifisert — den
-gjelder ISBN (NB-02). Byttes ordningsnavnet til ISSN, blir den usann (NB-03), uten
-at noe påstandsinnhold er fabrikkert. Feilen ligger i omfanget, ikke i innholdet,
-og hvert faktum i scenarioet har en rad i NDVL-REG-0002.</p>
-<p>Alle sitat er verbatim fra nb.no, verifisert 2026-08-07 (jf. NB-radene).</p>
-<p>Schema: v2.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>NB_RAG_KONTEKST_SCENARIOS</code></li>
+</ul>
 
 
 

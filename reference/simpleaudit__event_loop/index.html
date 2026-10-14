@@ -2793,27 +2793,39 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit._event_loop" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit._event_loop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _event_loop
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run_synccoro-coroutineany-any-any-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_sync(coro: Coroutine[Any, Any, Any]) -&gt; Any
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit._event_loop.run_sync" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        run_sync
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2930,27 +2942,39 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit._event_loop" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit._event_loop">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        _event_loop
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#run_synccoro-coroutineany-any-any-any" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        run_sync(coro: Coroutine[Any, Any, Any]) -&gt; Any
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit._event_loop.run_sync" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        run_sync
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2978,75 +3002,9 @@
 
 <h2 id="simpleaudit_event_loop">simpleaudit._event_loop</h2>
 <p>Running SimpleAudit's coroutines from synchronous code.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit._event_loop"></a>
-    <div class="doc doc-contents first">
-
-        <p>Running SimpleAudit's coroutines from synchronous code.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit._event_loop.run_sync" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">run_sync</span><span class="p">(</span><span class="n">coro</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p><code>asyncio.run(coro)</code>, minus the stale-client message described above.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/_event_loop.py#L36-L40" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/_event_loop.py#L36-L40</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">run_sync</span><span class="p">(</span><span class="n">coro</span><span class="p">:</span> <span class="n">Coroutine</span><span class="p">[</span><span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""``asyncio.run(coro)``, minus the stale-client message described above."""</span>
-    <span class="k">with</span> <span class="n">asyncio</span><span class="o">.</span><span class="n">Runner</span><span class="p">()</span> <span class="k">as</span> <span class="n">runner</span><span class="p">:</span>
-        <span class="n">runner</span><span class="o">.</span><span class="n">get_loop</span><span class="p">()</span><span class="o">.</span><span class="n">set_exception_handler</span><span class="p">(</span><span class="n">_exception_handler</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">coro</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="functions">Functions</h3>
+<h4 id="run_synccoro-coroutineany-any-any-any"><code>run_sync(coro: Coroutine[Any, Any, Any]) -&gt; Any</code></h4>
+<p><code>asyncio.run(coro)</code>, minus the stale-client message described above.</p>
 
 
 

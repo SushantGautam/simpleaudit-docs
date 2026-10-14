@@ -912,21 +912,23 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.targets.decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        decision
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decisiontarget" class="md-nav__link">
     <span class="md-ellipsis">
       
         DecisionTarget
@@ -934,36 +936,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="DecisionTarget">
-      <ul class="md-nav__list">
+</li>
         
-          <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.build_request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        build_request
-      
-    </span>
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.ollama" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ollama
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.openrouter" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        openrouter
+        Constants
       
     </span>
   </a>
@@ -2969,21 +2953,23 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.targets.decision">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        decision
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#decisiontarget" class="md-nav__link">
     <span class="md-ellipsis">
       
         DecisionTarget
@@ -2991,36 +2977,18 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="DecisionTarget">
-      <ul class="md-nav__list">
+</li>
         
-          <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.build_request" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        build_request
-      
-    </span>
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.ollama" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ollama
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.targets.decision.DecisionTarget.openrouter" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        openrouter
+        Constants
       
     </span>
   </a>
@@ -3056,630 +3024,29 @@
 
 <h2 id="simpleaudittargetsdecision">simpleaudit.targets.decision</h2>
 <p>DecisionTarget — audit a decision model through a System One endpoint.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.targets.decision"></a>
-    <div class="doc doc-contents first">
-
-        <p>DecisionTarget — audit a decision model through a System One endpoint.</p>
-<p>A decision model does not write prose. It reads a <em>state</em> (any text or JSON)
-and a set of typed questions with fixed options, and returns the chosen option
-for each question with a probability for every option. Examples are Clef
-served by Ollama (<code>POST /v1/systemone</code>) and Jev on OpenRouter's Decisions
-API. This target turns a scenario's <code>decision</code> block (see
-<code>simpleaudit/decision.py</code>) into one such request:</p>
-<pre><code>{"model": ..., "state": ..., "questions": {&lt;id&gt;: {"type": "choice",
-                                                  "instructions": ...,
-                                                  "criteria": {...}}}}
-</code></pre>
-<p>and the answer back into a :class:<code>TargetResponse</code> whose <code>content</code> names the
-chosen option (<code>"yes: Found guilty"</code>), so judges, summaries and the viewer
-work unchanged. The full answer (choice, probabilities, confidence) is in
-<code>TargetResponse.decision</code>; the auditor stores it in the transcript.</p>
-
-
-<details class="design-notes" open>
-  <summary>Design notes</summary>
-  <ul>
-<li><strong>The answer key never travels.</strong> The auditor hands this target the
-  decision block without <code>accepted</code> (<code>TargetContext.extra</code>).</li>
-<li><strong>State.</strong> The scenario's <code>decision.state</code> plus the text of its
-  <code>documents</code> (document marks are never sent). A scenario with neither
-  sends the prompt text as the state.</li>
-<li><strong>Limits are checked before sending.</strong> System One endpoints accept 2–26
-  options per question, and Ollama caps a request body at 64 KiB. Breaking
-  a limit raises <code>ValueError</code> before any request, so the scenario is
-  recorded as an error rather than silently shortened.</li>
-<li><strong>One turn.</strong> A decision model answers a question once; it cannot take
-  part in a conversation. <code>max_turns = 1</code> tells the auditor to stop after
-  the first turn.</li>
+<h3 id="classes">Classes</h3>
+<h4 id="decisiontarget"><code>DecisionTarget</code></h4>
+<p>Send a scenario's decision question to a System One endpoint.</p>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>ollama(model: str, base_url: str = 'http://localhost:11434', **kwargs: Any) -&gt; DecisionTarget</code> — A decision model served by Ollama, e.g. <code>DecisionTarget.ollama("clef")</code>.</li>
+<li><code>openrouter(model: str, api_key: str | None = None, **kwargs: Any) -&gt; DecisionTarget</code> — A decision model on OpenRouter's Decisions API, e.g. <code>"typesafe/jev-1.13"</code>.</li>
+<li><code>build_request(decision: Mapping[str, Any], user: str, documents: list[str | dict[str, Any]] | None = None) -&gt; dict[str, Any]</code> — The request body for one decision question. Raises <code>ValueError</code> on a broken limit.</li>
+<li><code>async send(system: str | None = None, user: str, history: list[dict[str, Any]] | None = None, file_uri: str | list[str] | None = None, documents: list[str | dict[str, Any]] | None = None, response_format: dict[str, Any] | None = None, params: dict[str, Any] | None = None, context: TargetContext | None = None) -&gt; TargetResponse</code></li>
 </ul>
-</details>
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="simpleaudit.targets.decision.DecisionTarget" class="doc doc-heading">
-            <code>DecisionTarget</code>
-
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-
-
-        <p>Send a scenario's decision question to a System One endpoint.</p>
-
-
-
-
-
-
-
-
-              <details class="mkdocstrings-source">
-                <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L52-L211" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L52-L211</a></code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 52</span>
-<span class="normal"> 53</span>
-<span class="normal"> 54</span>
-<span class="normal"> 55</span>
-<span class="normal"> 56</span>
-<span class="normal"> 57</span>
-<span class="normal"> 58</span>
-<span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
-<span class="normal"> 62</span>
-<span class="normal"> 63</span>
-<span class="normal"> 64</span>
-<span class="normal"> 65</span>
-<span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span>
-<span class="normal">142</span>
-<span class="normal">143</span>
-<span class="normal">144</span>
-<span class="normal">145</span>
-<span class="normal">146</span>
-<span class="normal">147</span>
-<span class="normal">148</span>
-<span class="normal">149</span>
-<span class="normal">150</span>
-<span class="normal">151</span>
-<span class="normal">152</span>
-<span class="normal">153</span>
-<span class="normal">154</span>
-<span class="normal">155</span>
-<span class="normal">156</span>
-<span class="normal">157</span>
-<span class="normal">158</span>
-<span class="normal">159</span>
-<span class="normal">160</span>
-<span class="normal">161</span>
-<span class="normal">162</span>
-<span class="normal">163</span>
-<span class="normal">164</span>
-<span class="normal">165</span>
-<span class="normal">166</span>
-<span class="normal">167</span>
-<span class="normal">168</span>
-<span class="normal">169</span>
-<span class="normal">170</span>
-<span class="normal">171</span>
-<span class="normal">172</span>
-<span class="normal">173</span>
-<span class="normal">174</span>
-<span class="normal">175</span>
-<span class="normal">176</span>
-<span class="normal">177</span>
-<span class="normal">178</span>
-<span class="normal">179</span>
-<span class="normal">180</span>
-<span class="normal">181</span>
-<span class="normal">182</span>
-<span class="normal">183</span>
-<span class="normal">184</span>
-<span class="normal">185</span>
-<span class="normal">186</span>
-<span class="normal">187</span>
-<span class="normal">188</span>
-<span class="normal">189</span>
-<span class="normal">190</span>
-<span class="normal">191</span>
-<span class="normal">192</span>
-<span class="normal">193</span>
-<span class="normal">194</span>
-<span class="normal">195</span>
-<span class="normal">196</span>
-<span class="normal">197</span>
-<span class="normal">198</span>
-<span class="normal">199</span>
-<span class="normal">200</span>
-<span class="normal">201</span>
-<span class="normal">202</span>
-<span class="normal">203</span>
-<span class="normal">204</span>
-<span class="normal">205</span>
-<span class="normal">206</span>
-<span class="normal">207</span>
-<span class="normal">208</span>
-<span class="normal">209</span>
-<span class="normal">210</span>
-<span class="normal">211</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">DecisionTarget</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Send a scenario's decision question to a System One endpoint."""</span>
-
-    <span class="c1">#: A decision model answers once; the auditor caps scenarios at this many turns.</span>
-    <span class="n">max_turns</span> <span class="o">=</span> <span class="mi">1</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">url</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">headers</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">extra_body</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">timeout</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">300.0</span><span class="p">,</span>
-        <span class="n">client</span><span class="p">:</span> <span class="n">Any</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">min_options</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
-        <span class="n">max_options</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">26</span><span class="p">,</span>
-        <span class="n">max_body_bytes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">url</span> <span class="o">=</span> <span class="n">url</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">model</span> <span class="o">=</span> <span class="n">model</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">headers</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">headers</span> <span class="ow">or</span> <span class="p">{})</span>
-        <span class="k">if</span> <span class="n">api_key</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"Authorization"</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">api_key</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">extra_body</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">extra_body</span> <span class="ow">or</span> <span class="p">{})</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="o">=</span> <span class="n">client</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">min_options</span> <span class="o">=</span> <span class="n">min_options</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span> <span class="o">=</span> <span class="n">max_options</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_body_bytes</span> <span class="o">=</span> <span class="n">max_body_bytes</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">ollama</span><span class="p">(</span>
-        <span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"http://localhost:11434"</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecisionTarget</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""A decision model served by Ollama, e.g. ``DecisionTarget.ollama("clef")``."""</span>
-        <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"max_body_bytes"</span><span class="p">,</span> <span class="n">OLLAMA_MAX_BODY_BYTES</span><span class="p">)</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span><span class="si">}</span><span class="s2">/v1/systemone"</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="nd">@classmethod</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">openrouter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecisionTarget</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""A decision model on OpenRouter's Decisions API, e.g. ``"typesafe/jev-1.13"``.</span>
-
-<span class="sd">        The key defaults to ``OPENROUTER_API_KEY``. Provider routing (for example</span>
-<span class="sd">        ``{"provider": {"zdr": True}}``) can be passed as ``extra_body``.</span>
-<span class="sd">        """</span>
-        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-            <span class="n">OPENROUTER_SYSTEMONE_URL</span><span class="p">,</span>
-            <span class="n">model</span><span class="p">,</span>
-            <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"OPENROUTER_API_KEY"</span><span class="p">),</span>
-            <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-        <span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">build_request</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">decision</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-        <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">        </span><span class="sd">"""The request body for one decision question. Raises ``ValueError`` on a broken limit."""</span>
-        <span class="n">criteria</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">decision</span><span class="p">[</span><span class="s2">"criteria"</span><span class="p">])</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_options</span> <span class="ow">or</span> <span class="p">(</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span>
-        <span class="p">):</span>
-            <span class="n">limit</span> <span class="o">=</span> <span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_options</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_options</span><span class="si">}</span><span class="s2">"</span>
-                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span>
-                <span class="k">else</span> <span class="sa">f</span><span class="s2">"≥</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_options</span><span class="si">}</span><span class="s2">"</span>
-            <span class="p">)</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"decision </span><span class="si">{</span><span class="n">decision</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="si">!r}</span><span class="s2"> has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span><span class="si">}</span><span class="s2"> options; this endpoint accepts </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">"</span>
-            <span class="p">)</span>
-
-        <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"state"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span>
-        <span class="k">if</span> <span class="n">documents</span><span class="p">:</span>
-            <span class="c1"># Only the text: document marks are the judge's ground truth.</span>
-            <span class="n">state</span><span class="p">[</span><span class="s2">"documents"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">mark</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">mark</span> <span class="ow">in</span> <span class="n">parse_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)]</span>
-        <span class="k">return</span> <span class="p">{</span>
-            <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_body</span><span class="p">,</span>
-            <span class="s2">"model"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-            <span class="s2">"state"</span><span class="p">:</span> <span class="n">state</span> <span class="ow">or</span> <span class="n">user</span><span class="p">,</span>
-            <span class="s2">"questions"</span><span class="p">:</span> <span class="p">{</span>
-                <span class="n">decision</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]:</span> <span class="p">{</span>
-                    <span class="s2">"type"</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">"choice"</span><span class="p">),</span>
-                    <span class="s2">"instructions"</span><span class="p">:</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"instructions"</span><span class="p">],</span>
-                    <span class="s2">"criteria"</span><span class="p">:</span> <span class="n">criteria</span><span class="p">,</span>
-                <span class="p">}</span>
-            <span class="p">},</span>
-        <span class="p">}</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">send</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">system</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-        <span class="n">history</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">file_uri</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">response_format</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">context</span><span class="p">:</span> <span class="n">TargetContext</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">TargetResponse</span><span class="p">:</span>
-        <span class="n">decision</span> <span class="o">=</span> <span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">extra</span> <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">decision</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="s2">"DecisionTarget needs a scenario with a 'decision' block "</span>
-                <span class="s2">"(see the scenario guidelines, 'Decision Field')"</span>
-            <span class="p">)</span>
-        <span class="c1"># The auditor attaches a scenario's documents to the first user turn.</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="n">documents</span><span class="p">:</span>
-            <span class="n">documents</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">m</span><span class="p">[</span><span class="s2">"documents"</span><span class="p">]</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="n">history</span> <span class="ow">or</span> <span class="p">[]</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"documents"</span><span class="p">)),</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="n">body</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">build_request</span><span class="p">(</span><span class="n">decision</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">documents</span><span class="p">)</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">body</span><span class="p">,</span> <span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">separators</span><span class="o">=</span><span class="p">(</span><span class="s2">","</span><span class="p">,</span> <span class="s2">":"</span><span class="p">))</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">"utf-8"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_body_bytes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_body_bytes</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"request is </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="si">}</span><span class="s2"> bytes, over this endpoint's </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_body_bytes</span><span class="si">}</span><span class="s2">-byte "</span>
-                <span class="s2">"limit; the documents are not shortened"</span>
-            <span class="p">)</span>
-
-        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">headers</span><span class="p">,</span> <span class="s2">"Content-Type"</span><span class="p">:</span> <span class="s2">"application/json"</span><span class="p">}</span>
-        <span class="k">if</span> <span class="n">context</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">headers</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">context</span><span class="o">.</span><span class="n">trace_headers</span><span class="p">)</span>
-
-        <span class="n">owns_client</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span> <span class="ow">is</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="n">client</span> <span class="o">:=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_client</span><span class="p">:</span>
-            <span class="k">pass</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="kn">import</span><span class="w"> </span><span class="nn">httpx</span>
-
-            <span class="n">client</span> <span class="o">=</span> <span class="n">httpx</span><span class="o">.</span><span class="n">AsyncClient</span><span class="p">(</span><span class="n">timeout</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">timeout</span><span class="p">)</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">content</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">resp</span><span class="o">.</span><span class="n">status_code</span> <span class="o">&gt;=</span> <span class="mi">400</span><span class="p">:</span>
-                <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                    <span class="sa">f</span><span class="s2">"decision endpoint returned HTTP </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">resp</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">300</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span>
-                <span class="p">)</span>
-            <span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="k">if</span> <span class="n">owns_client</span><span class="p">:</span>
-                <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">aclose</span><span class="p">()</span>
-
-        <span class="n">answer</span> <span class="o">=</span> <span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"answers"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">decision</span><span class="p">[</span><span class="s2">"id"</span><span class="p">])</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">answer</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"decision endpoint returned no answer for </span><span class="si">{</span><span class="n">decision</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="si">!r}</span><span class="s2">"</span><span class="p">)</span>
-        <span class="n">choice</span> <span class="o">=</span> <span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"choice"</span><span class="p">)</span>
-        <span class="k">if</span> <span class="n">choice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"criteria"</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-                <span class="sa">f</span><span class="s2">"decision endpoint chose </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">, which is not one of the options"</span>
-            <span class="p">)</span>
-
-        <span class="n">description</span> <span class="o">=</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"criteria"</span><span class="p">][</span><span class="n">choice</span><span class="p">]</span>
-        <span class="n">usage</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"usage"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-        <span class="k">return</span> <span class="n">TargetResponse</span><span class="p">(</span>
-            <span class="n">content</span><span class="o">=</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">choice</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">description</span><span class="si">}</span><span class="s2">"</span> <span class="k">if</span> <span class="n">description</span> <span class="k">else</span> <span class="n">choice</span><span class="p">,</span>
-            <span class="n">raw</span><span class="o">=</span><span class="n">data</span><span class="p">,</span>
-            <span class="n">input_tokens</span><span class="o">=</span><span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"input_tokens"</span><span class="p">),</span>
-            <span class="n">output_tokens</span><span class="o">=</span><span class="n">usage</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"output_tokens"</span><span class="p">),</span>
-            <span class="n">decision</span><span class="o">=</span><span class="n">answer</span><span class="p">,</span>
-        <span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="simpleaudit.targets.decision.DecisionTarget.build_request" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">build_request</span><span class="p">(</span><span class="n">decision</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">documents</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The request body for one decision question. Raises <code>ValueError</code> on a broken limit.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L106-L141" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L106-L141</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span>
-<span class="normal">132</span>
-<span class="normal">133</span>
-<span class="normal">134</span>
-<span class="normal">135</span>
-<span class="normal">136</span>
-<span class="normal">137</span>
-<span class="normal">138</span>
-<span class="normal">139</span>
-<span class="normal">140</span>
-<span class="normal">141</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_request</span><span class="p">(</span>
-    <span class="bp">self</span><span class="p">,</span>
-    <span class="n">decision</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
-    <span class="n">user</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-    <span class="n">documents</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The request body for one decision question. Raises ``ValueError`` on a broken limit."""</span>
-    <span class="n">criteria</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">decision</span><span class="p">[</span><span class="s2">"criteria"</span><span class="p">])</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">min_options</span> <span class="ow">or</span> <span class="p">(</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span>
-    <span class="p">):</span>
-        <span class="n">limit</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_options</span><span class="si">}</span><span class="s2">–</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">max_options</span><span class="si">}</span><span class="s2">"</span>
-            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_options</span>
-            <span class="k">else</span> <span class="sa">f</span><span class="s2">"≥</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">min_options</span><span class="si">}</span><span class="s2">"</span>
-        <span class="p">)</span>
-        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
-            <span class="sa">f</span><span class="s2">"decision </span><span class="si">{</span><span class="n">decision</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span><span class="si">!r}</span><span class="s2"> has </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">criteria</span><span class="p">)</span><span class="si">}</span><span class="s2"> options; this endpoint accepts </span><span class="si">{</span><span class="n">limit</span><span class="si">}</span><span class="s2">"</span>
-        <span class="p">)</span>
-
-    <span class="n">state</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"state"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{})</span>
-    <span class="k">if</span> <span class="n">documents</span><span class="p">:</span>
-        <span class="c1"># Only the text: document marks are the judge's ground truth.</span>
-        <span class="n">state</span><span class="p">[</span><span class="s2">"documents"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">mark</span><span class="o">.</span><span class="n">text</span> <span class="k">for</span> <span class="n">mark</span> <span class="ow">in</span> <span class="n">parse_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="p">{</span>
-        <span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">extra_body</span><span class="p">,</span>
-        <span class="s2">"model"</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">,</span>
-        <span class="s2">"state"</span><span class="p">:</span> <span class="n">state</span> <span class="ow">or</span> <span class="n">user</span><span class="p">,</span>
-        <span class="s2">"questions"</span><span class="p">:</span> <span class="p">{</span>
-            <span class="n">decision</span><span class="p">[</span><span class="s2">"id"</span><span class="p">]:</span> <span class="p">{</span>
-                <span class="s2">"type"</span><span class="p">:</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"type"</span><span class="p">,</span> <span class="s2">"choice"</span><span class="p">),</span>
-                <span class="s2">"instructions"</span><span class="p">:</span> <span class="n">decision</span><span class="p">[</span><span class="s2">"instructions"</span><span class="p">],</span>
-                <span class="s2">"criteria"</span><span class="p">:</span> <span class="n">criteria</span><span class="p">,</span>
-            <span class="p">}</span>
-        <span class="p">},</span>
-    <span class="p">}</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="simpleaudit.targets.decision.DecisionTarget.ollama" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">ollama</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">base_url</span><span class="o">=</span><span class="s1">'http://localhost:11434'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
-  </span>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>A decision model served by Ollama, e.g. <code>DecisionTarget.ollama("clef")</code>.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L84-L90" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L84-L90</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">ollama</span><span class="p">(</span>
-    <span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">base_url</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"http://localhost:11434"</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecisionTarget</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A decision model served by Ollama, e.g. ``DecisionTarget.ollama("clef")``."""</span>
-    <span class="n">kwargs</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">"max_body_bytes"</span><span class="p">,</span> <span class="n">OLLAMA_MAX_BODY_BYTES</span><span class="p">)</span>
-    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">base_url</span><span class="o">.</span><span class="n">rstrip</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)</span><span class="si">}</span><span class="s2">/v1/systemone"</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h3 id="simpleaudit.targets.decision.DecisionTarget.openrouter" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">openrouter</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">api_key</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-classmethod"><code>classmethod</code></small>
-  </span>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>A decision model on OpenRouter's Decisions API, e.g. <code>"typesafe/jev-1.13"</code>.</p>
-<p>The key defaults to <code>OPENROUTER_API_KEY</code>. Provider routing (for example
-<code>{"provider": {"zdr": True}}</code>) can be passed as <code>extra_body</code>.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L92-L104" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/targets/decision.py#L92-L104</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="nd">@classmethod</span>
-<span class="k">def</span><span class="w"> </span><span class="nf">openrouter</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">api_key</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">DecisionTarget</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""A decision model on OpenRouter's Decisions API, e.g. ``"typesafe/jev-1.13"``.</span>
-
-<span class="sd">    The key defaults to ``OPENROUTER_API_KEY``. Provider routing (for example</span>
-<span class="sd">    ``{"provider": {"zdr": True}}``) can be passed as ``extra_body``.</span>
-<span class="sd">    """</span>
-    <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
-        <span class="n">OPENROUTER_SYSTEMONE_URL</span><span class="p">,</span>
-        <span class="n">model</span><span class="p">,</span>
-        <span class="n">api_key</span><span class="o">=</span><span class="n">api_key</span> <span class="ow">or</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"OPENROUTER_API_KEY"</span><span class="p">),</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-    <span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<p><strong>Attributes:</strong></p>
+<ul>
+<li><code>max_turns</code></li>
+</ul>
+<h3 id="constants">Constants</h3>
+<ul>
+<li>
+<p><code>OLLAMA_MAX_BODY_BYTES</code></p>
+</li>
+<li>
+<p><code>OPENROUTER_SYSTEMONE_URL</code></p>
+</li>
+</ul>
 
 
 

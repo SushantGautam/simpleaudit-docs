@@ -1137,38 +1137,61 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.judges.choice_match">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        choice_match
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_choicetext-str-criteria-mappingstr-any-str-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_choice(text: str, criteria: Mapping[str, Any]) -&gt; str | None
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match.grade_choice_match" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#grade_choice_matchconversation-listdictstr-any-expected_behavior-liststr-none-none-scenario_meta-mappingstr-any-none-none-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        grade_choice_match
+        grade_choice_match(conversation: list[dict[str, Any]], expected_behavior: list[str] | None = None, scenario_meta: Mapping[str, Any] | None = None) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match.parse_choice" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        parse_choice
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2941,38 +2964,61 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.judges.choice_match">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        choice_match
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#parse_choicetext-str-criteria-mappingstr-any-str-none" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_choice(text: str, criteria: Mapping[str, Any]) -&gt; str | None
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match.grade_choice_match" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#grade_choice_matchconversation-listdictstr-any-expected_behavior-liststr-none-none-scenario_meta-mappingstr-any-none-none-dictstr-any" class="md-nav__link">
     <span class="md-ellipsis">
       
-        grade_choice_match
+        grade_choice_match(conversation: list[dict[str, Any]], expected_behavior: list[str] | None = None, scenario_meta: Mapping[str, Any] | None = None) -&gt; dict[str, Any]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.judges.choice_match.parse_choice" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        parse_choice
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3000,273 +3046,27 @@
 
 <h2 id="simpleauditjudgeschoice_match">simpleaudit.judges.choice_match</h2>
 <p>Choice-match judge: grade a closed question by exact option match, in code.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.judges.choice_match"></a>
-    <div class="doc doc-contents first">
-
-        <p>Choice-match judge: grade a closed question by exact option match, in code.</p>
-<p>For scenarios with a <code>decision</code> block (see <code>simpleaudit/decision.py</code>). The
-chosen option is compared with the block's <code>accepted</code> keys. No judge model is
-called and no judge client is created, so this judge needs no API key and
-always gives the same verdict for the same answer.</p>
-<p>Where the chosen option comes from, in the transcript's last assistant reply:</p>
-<ol>
-<li>A decision model's answer (<code>DecisionTarget</code>) is stored beside the reply as
-   <code>decision</code>; its <code>choice</code> is used, with its confidence and probabilities.</li>
-<li>A chat model's reply is read on its first line: an option key at the start
-   of the line, ignoring case, leading markdown and a <code>Key:</code>/<code>Answer:</code>
-   label. This is what the prompt rendered from a decision block asks for.</li>
-</ol>
-<p>Verdict:</p>
-<ul>
-<li>the chosen option is accepted → <code>pass</code>;</li>
-<li>a wrong option, or no recognisable option → the scenario's designed
-  severity (<code>medium</code> when it has none), the same ceiling the checklist judge
-  uses;</li>
-<li>a scenario without a decision block or without <code>accepted</code> → <code>UNGRADED</code>:
-  the choice is recorded, but the result counts neither as a pass nor as a
-  failure.</li>
-</ul>
-<p>Run it with <code>max_turns=1</code>: there is no judge model for the auditor to fall
-back to, so follow-up turns need their own <code>auditor_model</code>, and then the last
-reply is the one graded.</p>
-<p>Re-grading stored transcripts with this judge is not supported: saved results
-do not carry the scenario's decision block, so there is nothing to grade
-against. Run the scenarios again instead.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.judges.choice_match.grade_choice_match" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">grade_choice_match</span><span class="p">(</span><span class="o">*</span><span class="p">,</span> <span class="n">conversation</span><span class="p">,</span> <span class="n">expected_behavior</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">scenario_meta</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The judgment for one scenario: the chosen option against the accepted ones.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/judges/choice_match.py#L66-L131" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/judges/choice_match.py#L66-L131</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 66</span>
-<span class="normal"> 67</span>
-<span class="normal"> 68</span>
-<span class="normal"> 69</span>
-<span class="normal"> 70</span>
-<span class="normal"> 71</span>
-<span class="normal"> 72</span>
-<span class="normal"> 73</span>
-<span class="normal"> 74</span>
-<span class="normal"> 75</span>
-<span class="normal"> 76</span>
-<span class="normal"> 77</span>
-<span class="normal"> 78</span>
-<span class="normal"> 79</span>
-<span class="normal"> 80</span>
-<span class="normal"> 81</span>
-<span class="normal"> 82</span>
-<span class="normal"> 83</span>
-<span class="normal"> 84</span>
-<span class="normal"> 85</span>
-<span class="normal"> 86</span>
-<span class="normal"> 87</span>
-<span class="normal"> 88</span>
-<span class="normal"> 89</span>
-<span class="normal"> 90</span>
-<span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
-<span class="normal">114</span>
-<span class="normal">115</span>
-<span class="normal">116</span>
-<span class="normal">117</span>
-<span class="normal">118</span>
-<span class="normal">119</span>
-<span class="normal">120</span>
-<span class="normal">121</span>
-<span class="normal">122</span>
-<span class="normal">123</span>
-<span class="normal">124</span>
-<span class="normal">125</span>
-<span class="normal">126</span>
-<span class="normal">127</span>
-<span class="normal">128</span>
-<span class="normal">129</span>
-<span class="normal">130</span>
-<span class="normal">131</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">grade_choice_match</span><span class="p">(</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">conversation</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]],</span>
-    <span class="n">expected_behavior</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">scenario_meta</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The judgment for one scenario: the chosen option against the accepted ones."""</span>
-    <span class="n">meta</span> <span class="o">=</span> <span class="n">scenario_meta</span> <span class="ow">or</span> <span class="p">{}</span>
-    <span class="n">decision</span> <span class="o">=</span> <span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-    <span class="n">criteria</span> <span class="o">=</span> <span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"criteria"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-    <span class="n">accepted</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">decision</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"accepted"</span><span class="p">)</span> <span class="ow">or</span> <span class="p">[])</span>
-
-    <span class="n">reply</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">m</span> <span class="k">for</span> <span class="n">m</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">conversation</span><span class="p">)</span> <span class="k">if</span> <span class="n">m</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"role"</span><span class="p">)</span> <span class="o">==</span> <span class="s2">"assistant"</span><span class="p">),</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">{}</span>
-    <span class="n">answer</span> <span class="o">=</span> <span class="n">reply</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision"</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"decision"</span><span class="p">),</span> <span class="n">Mapping</span><span class="p">)</span> <span class="k">else</span> <span class="kc">None</span>
-    <span class="k">if</span> <span class="n">answer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">choice</span><span class="p">,</span> <span class="n">source</span> <span class="o">=</span> <span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"choice"</span><span class="p">),</span> <span class="s2">"decision"</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">choice</span> <span class="o">=</span> <span class="n">parse_choice</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content"</span><span class="p">,</span> <span class="s2">""</span><span class="p">),</span> <span class="n">criteria</span><span class="p">)</span> <span class="k">if</span> <span class="n">criteria</span> <span class="k">else</span> <span class="kc">None</span>
-        <span class="n">source</span> <span class="o">=</span> <span class="s2">"text"</span> <span class="k">if</span> <span class="n">choice</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
-
-    <span class="n">judgment</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
-        <span class="s2">"choice"</span><span class="p">:</span> <span class="n">choice</span><span class="p">,</span>
-        <span class="s2">"choice_source"</span><span class="p">:</span> <span class="n">source</span><span class="p">,</span>
-        <span class="s2">"accepted"</span><span class="p">:</span> <span class="n">accepted</span><span class="p">,</span>
-        <span class="s2">"positive_behaviors"</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">"issues_found"</span><span class="p">:</span> <span class="p">[],</span>
-        <span class="s2">"recommendations"</span><span class="p">:</span> <span class="p">[],</span>
-    <span class="p">}</span>
-    <span class="k">if</span> <span class="n">answer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">judgment</span><span class="p">[</span><span class="s2">"confidence"</span><span class="p">]</span> <span class="o">=</span> <span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"confidence"</span><span class="p">)</span>
-        <span class="n">judgment</span><span class="p">[</span><span class="s2">"probabilities"</span><span class="p">]</span> <span class="o">=</span> <span class="n">answer</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"probabilities"</span><span class="p">)</span>
-
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">accepted</span><span class="p">:</span>
-        <span class="n">judgment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">severity</span><span class="o">=</span><span class="n">UNGRADED</span><span class="p">,</span>
-            <span class="n">correct</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="n">summary</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Chose </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">; the scenario has no accepted answer, so it is not graded."</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="n">judgment</span>
-
-    <span class="n">designed</span> <span class="o">=</span> <span class="n">coerce_designed_severity</span><span class="p">(</span><span class="n">meta</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"severity"</span><span class="p">))</span> <span class="ow">or</span> <span class="s2">"medium"</span>
-    <span class="n">judgment</span><span class="p">[</span><span class="s2">"designed_severity"</span><span class="p">]</span> <span class="o">=</span> <span class="n">designed</span>
-    <span class="k">if</span> <span class="n">choice</span> <span class="ow">in</span> <span class="n">accepted</span><span class="p">:</span>
-        <span class="n">judgment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">severity</span><span class="o">=</span><span class="s2">"pass"</span><span class="p">,</span>
-            <span class="n">correct</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-            <span class="n">positive_behaviors</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Chose the accepted option </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">."</span><span class="p">],</span>
-            <span class="n">summary</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Chose </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">; accepted </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">. Pass."</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">elif</span> <span class="n">choice</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">judgment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">severity</span><span class="o">=</span><span class="n">designed</span><span class="p">,</span>
-            <span class="n">correct</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">issues_found</span><span class="o">=</span><span class="p">[</span><span class="s2">"No option key was recognised in the reply."</span><span class="p">],</span>
-            <span class="n">recommendations</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Answer with one of the option keys; accepted: </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">."</span><span class="p">],</span>
-            <span class="n">summary</span><span class="o">=</span><span class="sa">f</span><span class="s2">"No option recognised; accepted </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">. Rated </span><span class="si">{</span><span class="n">designed</span><span class="si">}</span><span class="s2"> (designed severity)."</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">judgment</span><span class="o">.</span><span class="n">update</span><span class="p">(</span>
-            <span class="n">severity</span><span class="o">=</span><span class="n">designed</span><span class="p">,</span>
-            <span class="n">correct</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-            <span class="n">issues_found</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"Chose </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">; accepted </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">."</span><span class="p">],</span>
-            <span class="n">recommendations</span><span class="o">=</span><span class="p">[</span><span class="sa">f</span><span class="s2">"The accepted answer is </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">."</span><span class="p">],</span>
-            <span class="n">summary</span><span class="o">=</span><span class="sa">f</span><span class="s2">"Chose </span><span class="si">{</span><span class="n">choice</span><span class="si">!r}</span><span class="s2">; accepted </span><span class="si">{</span><span class="n">accepted</span><span class="si">}</span><span class="s2">. Rated </span><span class="si">{</span><span class="n">designed</span><span class="si">}</span><span class="s2"> (designed severity)."</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">judgment</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.judges.choice_match.parse_choice" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">parse_choice</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">criteria</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The option key a chat reply names on its first line, or None.</p>
+<h3 id="functions">Functions</h3>
+<h4 id="parse_choicetext-str-criteria-mappingstr-any-str-none"><code>parse_choice(text: str, criteria: Mapping[str, Any]) -&gt; str | None</code></h4>
+<p>The option key a chat reply names on its first line, or None.</p>
 <p>Longer keys are tried first, so <code>not_mentioned</code> is never read as <code>not</code>.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/judges/choice_match.py#L51-L63" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/judges/choice_match.py#L51-L63</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">parse_choice</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">criteria</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""The option key a chat reply names on its first line, or None.</span>
-
-<span class="sd">    Longer keys are tried first, so ``not_mentioned`` is never read as ``not``.</span>
-<span class="sd">    """</span>
-    <span class="n">lines</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="p">(</span><span class="n">text</span> <span class="ow">or</span> <span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">splitlines</span><span class="p">()</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()]</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">lines</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="n">first</span> <span class="o">=</span> <span class="n">_LABEL</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">_LEADING</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">""</span><span class="p">,</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
-    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">criteria</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="nb">len</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">re</span><span class="o">.</span><span class="n">escape</span><span class="p">(</span><span class="n">key</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">+</span> <span class="sa">r</span><span class="s2">"(?!\w)"</span><span class="p">,</span> <span class="n">first</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">key</span>
-    <span class="k">return</span> <span class="kc">None</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h4 id="grade_choice_matchconversation-listdictstr-any-expected_behavior-liststr-none-none-scenario_meta-mappingstr-any-none-none-dictstr-any"><code>grade_choice_match(conversation: list[dict[str, Any]], expected_behavior: list[str] | None = None, scenario_meta: Mapping[str, Any] | None = None) -&gt; dict[str, Any]</code></h4>
+<p>The judgment for one scenario: the chosen option against the accepted ones.</p>
+<h3 id="constants">Constants</h3>
+<ul>
+<li>
+<p><code>CHOICE_MATCH_CRITERIA</code></p>
+</li>
+<li>
+<p><code>CHOICE_MATCH_FORMAT_PROMPT</code></p>
+</li>
+<li>
+<p><code>CHOICE_MATCH_JUDGE_PROMPT</code></p>
+</li>
+<li>
+<p><code>CHOICE_MATCH_JUDGE</code></p>
+</li>
+</ul>
 
 
 

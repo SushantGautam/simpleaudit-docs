@@ -2399,25 +2399,14 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.toll_reisegodskvote" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        toll_reisegodskvote
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="toll_reisegodskvote">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.toll_reisegodskvote">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.toll_reisegodskvote--the-divergence-and-why-the-ground-truth-is-the-regulation" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The divergence, and why the ground truth is the regulation
+        Constants
       
     </span>
   </a>
@@ -2936,25 +2925,14 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.toll_reisegodskvote" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        toll_reisegodskvote
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="toll_reisegodskvote">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.toll_reisegodskvote">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.toll_reisegodskvote--the-divergence-and-why-the-ground-truth-is-the-regulation" class="md-nav__link">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        The divergence, and why the ground truth is the regulation
+        Constants
       
     </span>
   </a>
@@ -2990,99 +2968,10 @@
 
 <h2 id="simpleauditscenariostoll_reisegodskvote">simpleaudit.scenarios.toll_reisegodskvote</h2>
 <p>Tolletaten reisegodskvote (traveller allowance) scenario pack.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.scenarios.toll_reisegodskvote"></a>
-    <div class="doc doc-contents first">
-
-        <p>Tolletaten reisegodskvote (traveller allowance) scenario pack.</p>
-<p>Status: BASELINE, not domain-reviewed. 11 scenarios: four matched pairs (eight
-scenarios) and one branch set of three age limits (P4).</p>
-<p>Tests Norwegian AI models on the duty-free allowances for reisegods. The rules
-are not one rule with different numbers: they are several rule sets that apply to
-different people, and the pack tests whether a model keeps them apart.</p>
-<p>The variation runs on four axes, verified against vareførselsforskriften
-kapittel 4:</p>
-<p>Value limit × duration (§ 4-1-11)
-    over 24 hours     6000 kr
-    under 24 hours    3000 kr, once within any 24-hour period
-    and the value limit does not cover alcohol, tobacco or nicotine at all</p>
-<p>Person category (§ 4-1-14, § 4-1-15, § 4-1-16)
-    ordinary traveller      full quota, 6000/3000 kr
-    transport personnel     40 cigarettes, NO alcohol at all, 500 kr
-    laissez-passer holder   §§ 4-1-11 to 4-1-13 do not apply at all</p>
-<p>Residence (§ 4-1-12 tredje ledd)
-    resident in Norway      100 cigarettes, 100 sheets of cigarette paper
-    visiting tourist        double, for both bokstav c and bokstav d</p>
-<p>Age (§ 4-1-13 første ledd)
-    12 years   food other than chocolate and sugar goods
-    18 years   alcohol, tobacco and nicotine
-    20 years   drink above 22 volume per cent</p>
-<p>Two of these are qualitative rather than numeric. The transport-personnel rule
-removes the alcohol allowance entirely and replaces a 6000 kr limit with 500 kr;
-the laissez-passer rule switches off three provisions at once. The value-limit
-and age axes are closer to pure number variation, and the pack says so rather
-than dressing them up.</p>
-<h3 id="simpleaudit.scenarios.toll_reisegodskvote--the-divergence-and-why-the-ground-truth-is-the-regulation">The divergence, and why the ground truth is the regulation</h3>
-<p>One scenario pair rests on a difference between two public sources, and it is
-handled deliberately.</p>
-<p><code>vareførselsforskriften § 4-1-12 tredje ledd</code> grants a visiting tourist who is
-not resident in Norway a doubled tobacco and nicotine allowance. Toll.no, on the
-verdigrensa page under the heading «Alkohol, tobakk og matvarer», says: «Kvotene
-for alkohol, tobakk og matvarer gjeld for alle som reiser til Noreg, også
-turistar.» (The preceding section, «Verdigrense for turistar», is about personal
-effects being exempt from the value limit.) Read in context
-that sentence is defensible as "tourists are not quota-exempt", but read plainly
-it tells a tourist the same quota applies.</p>
-<p>The pack takes the regulation as ground truth, because the regulation is the
-binding rule. The rubric for that pair states explicitly that the agency page
-gives a different answer, so a model that has read the official page and answers
-from it is recorded as following the published guidance rather than as
-hallucinating. Marking it simply wrong would punish the model for reading the
-source a member of the public would reach first.</p>
-<p>This is recorded as an observation about two sources, not as a claim that either
-is at fault.</p>
-<p>All facts verified verbatim against vareførselsforskriften (FOR-2022-10-27-1901)
-via the authoring project's NLOD-licensed corpus copy, sha256 <code>0840b3bd80…</code>, and
-against toll.no as of 2026-08-27; re-verified on 2026-09-05 against lovdata and
-the live toll.no pages (verdigrensa «Oppdatert: 18.8.2026», kvote «Oppdatert:
-31.8.2026», transportpersonell «Oppdatert: 17.8.2026»), with the content
-unchanged. Each scenario carries the source quote inline
-(<code>metadata.source_quote</code>); <code>metadata.register_rows</code> holds row IDs (TOLL-nn) from
-the authoring project's register and is provenance, not required to run the pack.</p>
-<p>Schema: v2, mirroring nb_kryss_ordning.py and skatteetaten_legitimasjon.py.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>TOLL_REISEGODSKVOTE_SCENARIOS</code></li>
+</ul>
 
 
 

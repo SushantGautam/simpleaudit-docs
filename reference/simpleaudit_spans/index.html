@@ -1698,49 +1698,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.spans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        spans
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalisetext-optionalstr-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalise(text: Optional[str]) -&gt; str
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.assistant_texts" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#find_spanspan-optionalstr-texts-sequencestr-min_chars-int-min_span_chars-optionalint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        assistant_texts
+        find_span(span: Optional[str], texts: Sequence[str], min_chars: int = MIN_SPAN_CHARS) -&gt; Optional[int]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.find_span" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#assistant_textsconversation-sequencemappingstr-any-liststr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        find_span
+        assistant_texts(conversation: Sequence[Mapping[str, Any]]) -&gt; List[str]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.normalise" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        normalise
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2952,49 +2975,72 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.spans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#functions" class="md-nav__link">
     <span class="md-ellipsis">
       
-        spans
+        Functions
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Functions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalisetext-optionalstr-str" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalise(text: Optional[str]) -&gt; str
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.assistant_texts" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#find_spanspan-optionalstr-texts-sequencestr-min_chars-int-min_span_chars-optionalint" class="md-nav__link">
     <span class="md-ellipsis">
       
-        assistant_texts
+        find_span(span: Optional[str], texts: Sequence[str], min_chars: int = MIN_SPAN_CHARS) -&gt; Optional[int]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.find_span" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#assistant_textsconversation-sequencemappingstr-any-liststr" class="md-nav__link">
     <span class="md-ellipsis">
       
-        find_span
+        assistant_texts(conversation: Sequence[Mapping[str, Any]]) -&gt; List[str]
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.spans.normalise" class="md-nav__link">
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        normalise
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -3022,217 +3068,27 @@
 
 <h2 id="simpleauditspans">simpleaudit.spans</h2>
 <p>Locate quoted spans in stored transcripts.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.spans"></a>
-    <div class="doc doc-contents first">
-
-        <p>Locate quoted spans in stored transcripts.</p>
-<p>A judge that must prove an observation quotes a span of the transcript. The
-quote is copied by a model from a rendered transcript, so it arrives with the
-usual drift: different casing, curly quotes folded to straight ones, markdown
-emphasis kept or dropped, a non-breaking space in <code>50 000</code> turned into a
-plain one. Verification therefore compares <em>normalised</em> forms: the span and the
-candidate text are both reduced to lowercase words separated by single spaces,
-with every non-word character (punctuation, markdown symbols, emoji) treated as
-a separator. What survives is the wording; what is dropped is formatting.</p>
-<p>The functions here import nothing from the rest of the package so that any
-judge which returns spans can use them.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.spans.assistant_texts" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">assistant_texts</span><span class="p">(</span><span class="n">conversation</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The string content of every assistant turn, in order.</p>
-<p>Non-string content (structured blocks) yields an empty string for that
-turn so indices stay aligned with the conversation's assistant turns.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L83-L95" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L83-L95</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">assistant_texts</span><span class="p">(</span><span class="n">conversation</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">Mapping</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]])</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""The string content of every assistant turn, in order.</span>
-
-<span class="sd">    Non-string content (structured blocks) yields an empty string for that</span>
-<span class="sd">    turn so indices stay aligned with the conversation's assistant turns.</span>
-<span class="sd">    """</span>
-    <span class="n">out</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">message</span> <span class="ow">in</span> <span class="n">conversation</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"role"</span><span class="p">)</span> <span class="o">!=</span> <span class="s2">"assistant"</span><span class="p">:</span>
-            <span class="k">continue</span>
-        <span class="n">content</span> <span class="o">=</span> <span class="n">message</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">"content"</span><span class="p">)</span>
-        <span class="n">out</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">content</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">""</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">out</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.spans.find_span" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">find_span</span><span class="p">(</span><span class="n">span</span><span class="p">,</span> <span class="n">texts</span><span class="p">,</span> <span class="o">*</span><span class="p">,</span> <span class="n">min_chars</span><span class="o">=</span><span class="n">MIN_SPAN_CHARS</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Index of the first text that contains <em>span</em>, or None.</p>
-<p>Both sides are normalised. A span shorter than <em>min_chars</em> after
-normalisation is never matched: it is too short to be evidence. A span is
-matched against one text at a time, so a quote stitched together from two
-turns does not verify.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L61-L80" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L61-L80</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_span</span><span class="p">(</span>
-    <span class="n">span</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="n">texts</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
-    <span class="o">*</span><span class="p">,</span>
-    <span class="n">min_chars</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">MIN_SPAN_CHARS</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">"""Index of the first text that contains *span*, or None.</span>
-
-<span class="sd">    Both sides are normalised. A span shorter than *min_chars* after</span>
-<span class="sd">    normalisation is never matched: it is too short to be evidence. A span is</span>
-<span class="sd">    matched against one text at a time, so a quote stitched together from two</span>
-<span class="sd">    turns does not verify.</span>
-<span class="sd">    """</span>
-    <span class="n">needle</span> <span class="o">=</span> <span class="n">normalise</span><span class="p">(</span><span class="n">span</span><span class="p">)</span>
-    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">needle</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">min_chars</span><span class="p">:</span>
-        <span class="k">return</span> <span class="kc">None</span>
-    <span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">text</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">texts</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">needle</span> <span class="ow">in</span> <span class="n">normalise</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
-            <span class="k">return</span> <span class="n">index</span>
-    <span class="k">return</span> <span class="kc">None</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-<div class="doc doc-object doc-function">
-
-
-<h2 id="simpleaudit.spans.normalise" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">normalise</span><span class="p">(</span><span class="n">text</span><span class="p">)</span></code>
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-        <p>Reduce <em>text</em> to lowercase words separated by single spaces.</p>
+<h3 id="functions">Functions</h3>
+<h4 id="normalisetext-optionalstr-str"><code>normalise(text: Optional[str]) -&gt; str</code></h4>
+<p>Reduce <em>text</em> to lowercase words separated by single spaces.</p>
 <p>NFKC folds compatibility characters (non-breaking space, full-width
 digits); typographic quotes and dashes are folded to ASCII; every
 remaining non-word character becomes a separator; whitespace collapses.
 Letters outside ASCII (å, ø, æ) are word characters and survive.</p>
-
-
-            <details class="mkdocstrings-source">
-              <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L47-L58" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/spans.py#L47-L58</a></code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalise</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Reduce *text* to lowercase words separated by single spaces.</span>
-
-<span class="sd">    NFKC folds compatibility characters (non-breaking space, full-width</span>
-<span class="sd">    digits); typographic quotes and dashes are folded to ASCII; every</span>
-<span class="sd">    remaining non-word character becomes a separator; whitespace collapses.</span>
-<span class="sd">    Letters outside ASCII (å, ø, æ) are word characters and survive.</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">""</span>
-    <span class="n">folded</span> <span class="o">=</span> <span class="n">unicodedata</span><span class="o">.</span><span class="n">normalize</span><span class="p">(</span><span class="s2">"NFKC"</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">text</span><span class="p">))</span><span class="o">.</span><span class="n">translate</span><span class="p">(</span><span class="n">_FOLD</span><span class="p">)</span><span class="o">.</span><span class="n">casefold</span><span class="p">()</span>
-    <span class="k">return</span> <span class="s2">" "</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_SEPARATOR</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s2">" "</span><span class="p">,</span> <span class="n">folded</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-</code></pre></div></td></tr></table></div>
-            </details>
-    </div>
-
-</div>
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h4 id="find_spanspan-optionalstr-texts-sequencestr-min_chars-int-min_span_chars-optionalint"><code>find_span(span: Optional[str], texts: Sequence[str], min_chars: int = MIN_SPAN_CHARS) -&gt; Optional[int]</code></h4>
+<p>Index of the first text that contains <em>span</em>, or None.</p>
+<p>Both sides are normalised. A span shorter than <em>min_chars</em> after
+normalisation is never matched: it is too short to be evidence. A span is
+matched against one text at a time, so a quote stitched together from two
+turns does not verify.</p>
+<h4 id="assistant_textsconversation-sequencemappingstr-any-liststr"><code>assistant_texts(conversation: Sequence[Mapping[str, Any]]) -&gt; List[str]</code></h4>
+<p>The string content of every assistant turn, in order.</p>
+<p>Non-string content (structured blocks) yields an empty string for that
+turn so indices stay aligned with the conversation's assistant turns.</p>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>MIN_SPAN_CHARS</code></li>
+</ul>
 
 
 

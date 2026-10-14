@@ -547,21 +547,23 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.auditor" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.auditor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        auditor
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auditor" class="md-nav__link">
     <span class="md-ellipsis">
       
         Auditor
@@ -569,39 +571,10 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Auditor">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parameters
-      
-    </span>
-  </a>
-  
 </li>
         
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor--notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor.engine" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        engine
-      
-    </span>
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
@@ -2969,21 +2942,23 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.auditor" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.auditor">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#classes" class="md-nav__link">
     <span class="md-ellipsis">
       
-        auditor
+        Classes
       
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor" class="md-nav__link">
+    <nav class="md-nav" aria-label="Classes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#auditor" class="md-nav__link">
     <span class="md-ellipsis">
       
         Auditor
@@ -2991,39 +2966,10 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Auditor">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor--parameters" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Parameters
-      
-    </span>
-  </a>
-  
 </li>
         
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor--notes" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Notes
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#simpleaudit.auditor.Auditor.engine" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        engine
-      
-    </span>
-  </a>
+      </ul>
+    </nav>
   
 </li>
         
@@ -3056,286 +3002,30 @@
 
 <h2 id="simpleauditauditor">simpleaudit.auditor</h2>
 <p>Auditor — the primary, target-agnostic entry point.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.auditor"></a>
-    <div class="doc doc-contents first">
-
-        <p>Auditor — the primary, target-agnostic entry point.</p>
-<p><code>Auditor</code> is the long-term primary class. It accepts any :class:<code>Target</code>
-(model, HTTP app, callable) and any judge configuration, and delegates to the
-full :class:<code>ModelAuditor</code> engine (scenarios, judges, findings, reports).</p>
-<pre><code>auditor = Auditor(
-    target=HTTPAppTarget(url="https://agent.example.com/chat",
-                         response_path="answer"),
-    judge_model="gpt-4o",
-    judge_provider="openai",
-)
-results = await auditor.run_async("safety")
-</code></pre>
-<p><code>ModelAuditor</code> remains available as a backwards-compatible convenience
-wrapper for model-only audits.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<h2 id="simpleaudit.auditor.Auditor" class="doc doc-heading">
-            <code>Auditor</code>
-
-
-</h2>
-
-
-    <div class="doc doc-contents ">
-
-
-
-        <p>Target-agnostic auditor.</p>
-<h4 id="simpleaudit.auditor.Auditor--parameters">Parameters</h4>
-<p>target:
-    Any :class:<code>~simpleaudit.targets.Target</code>. Required.
+<h3 id="classes">Classes</h3>
+<h4 id="auditor"><code>Auditor</code></h4>
+<p>Target-agnostic auditor.</p>
+<p><strong>Parameters</strong>
+target:
+    Any <code>Target</code>. Required.
 judge_model / judge_provider / judge_api_key / judge_base_url:
     Judge LLM configuration (defaults to OpenAI).
-**kwargs:
-    Forwarded to :class:<code>ModelAuditor</code> for advanced options (scenarios,
+<code>**kwargs</code>:
+    Forwarded to <code>ModelAuditor</code> for advanced options (scenarios,
     system_prompt, max_retries, on_turn, etc.).</p>
-<h4 id="simpleaudit.auditor.Auditor--notes">Notes</h4>
-<p>Because the engine's scenario/judge/report machinery lives in
-:class:<code>ModelAuditor</code>, <code>Auditor</code> constructs one and overrides its target.
+<p><strong>Notes</strong>
+Because the engine's scenario/judge/report machinery lives in
+<code>ModelAuditor</code>, <code>Auditor</code> constructs one and overrides its target.
 The <code>model</code> / <code>provider</code> / <code>api_key</code> / <code>base_url</code> arguments are
 accepted for compatibility but are ignored when an explicit <code>target</code> is
 provided (the target already knows how to reach the system under test).</p>
-
-
-
-
-
-
-
-
-              <details class="mkdocstrings-source">
-                <summary>Source code in <code><a href="https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/auditor.py#L28-L99" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline">https://github.com/SimulaMet/SimpleAudit/blob/19ef6ca64226659c7e12bc5211f10f7074b8c0f4/simpleaudit/auditor.py#L28-L99</a></code></summary>
-                <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">28</span>
-<span class="normal">29</span>
-<span class="normal">30</span>
-<span class="normal">31</span>
-<span class="normal">32</span>
-<span class="normal">33</span>
-<span class="normal">34</span>
-<span class="normal">35</span>
-<span class="normal">36</span>
-<span class="normal">37</span>
-<span class="normal">38</span>
-<span class="normal">39</span>
-<span class="normal">40</span>
-<span class="normal">41</span>
-<span class="normal">42</span>
-<span class="normal">43</span>
-<span class="normal">44</span>
-<span class="normal">45</span>
-<span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span>
-<span class="normal">89</span>
-<span class="normal">90</span>
-<span class="normal">91</span>
-<span class="normal">92</span>
-<span class="normal">93</span>
-<span class="normal">94</span>
-<span class="normal">95</span>
-<span class="normal">96</span>
-<span class="normal">97</span>
-<span class="normal">98</span>
-<span class="normal">99</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span><span class="w"> </span><span class="nc">Auditor</span><span class="p">:</span>
-<span class="w">    </span><span class="sd">"""Target-agnostic auditor.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    target:</span>
-<span class="sd">        Any :class:`~simpleaudit.targets.Target`. Required.</span>
-<span class="sd">    judge_model / judge_provider / judge_api_key / judge_base_url:</span>
-<span class="sd">        Judge LLM configuration (defaults to OpenAI).</span>
-<span class="sd">    **kwargs:</span>
-<span class="sd">        Forwarded to :class:`ModelAuditor` for advanced options (scenarios,</span>
-<span class="sd">        system_prompt, max_retries, on_turn, etc.).</span>
-
-<span class="sd">    Notes</span>
-<span class="sd">    -----</span>
-<span class="sd">    Because the engine's scenario/judge/report machinery lives in</span>
-<span class="sd">    :class:`ModelAuditor`, ``Auditor`` constructs one and overrides its target.</span>
-<span class="sd">    The ``model`` / ``provider`` / ``api_key`` / ``base_url`` arguments are</span>
-<span class="sd">    accepted for compatibility but are ignored when an explicit ``target`` is</span>
-<span class="sd">    provided (the target already knows how to reach the system under test).</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-        <span class="bp">self</span><span class="p">,</span>
-        <span class="n">target</span><span class="p">:</span> <span class="n">Target</span><span class="p">,</span>
-        <span class="o">*</span><span class="p">,</span>
-        <span class="n">judge_model</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"gpt-4o"</span><span class="p">,</span>
-        <span class="n">judge_provider</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"openai"</span><span class="p">,</span>
-        <span class="n">judge_api_key</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="n">judge_base_url</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-        <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-    <span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="k">if</span> <span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">"Auditor requires a target"</span><span class="p">)</span>
-
-        <span class="c1"># Build the underlying engine. Since an explicit target is provided,</span>
-        <span class="c1"># skip creating the (unused) AnyLLM target client so we don't require</span>
-        <span class="c1"># an API key / network for a target we will never call.</span>
-        <span class="n">ModelAuditor</span><span class="o">.</span><span class="n">_skip_target_client</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="k">try</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span> <span class="o">=</span> <span class="n">ModelAuditor</span><span class="p">(</span>
-                <span class="n">model</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"model"</span><span class="p">,</span> <span class="s2">"unused"</span><span class="p">),</span>
-                <span class="n">provider</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="s2">"provider"</span><span class="p">,</span> <span class="s2">"openai"</span><span class="p">),</span>
-                <span class="n">judge_model</span><span class="o">=</span><span class="n">judge_model</span><span class="p">,</span>
-                <span class="n">judge_provider</span><span class="o">=</span><span class="n">judge_provider</span><span class="p">,</span>
-                <span class="n">judge_api_key</span><span class="o">=</span><span class="n">judge_api_key</span><span class="p">,</span>
-                <span class="n">judge_base_url</span><span class="o">=</span><span class="n">judge_base_url</span><span class="p">,</span>
-                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-            <span class="p">)</span>
-        <span class="k">finally</span><span class="p">:</span>
-            <span class="n">ModelAuditor</span><span class="o">.</span><span class="n">_skip_target_client</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">set_target</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_target</span> <span class="o">=</span> <span class="n">target</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">target</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Target</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_target</span>
-
-    <span class="nd">@property</span>
-    <span class="k">def</span><span class="w"> </span><span class="nf">engine</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelAuditor</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">"""The underlying :class:`ModelAuditor` engine (advanced access)."""</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="fm">__getattr__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="c1"># Delegate everything else (run_async, run, results, etc.) to the engine.</span>
-        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
-
-    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">run_async</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="k">await</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">run_async</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_engine</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-</code></pre></div></td></tr></table></div>
-              </details>
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-<div class="doc doc-object doc-attribute">
-
-
-
-<h3 id="simpleaudit.auditor.Auditor.engine" class="doc doc-heading">
-            <code class="highlight language-python"><span class="n">engine</span></code>
-
-  <span class="doc doc-labels">
-      <small class="doc doc-label doc-label-property"><code>property</code></small>
-  </span>
-
-</h3>
-
-
-    <div class="doc doc-contents ">
-
-        <p>The underlying :class:<code>ModelAuditor</code> engine (advanced access).</p>
-
-    </div>
-
-</div>
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<p><strong>Methods:</strong></p>
+<ul>
+<li><code>target() -&gt; Target</code></li>
+<li><code>engine() -&gt; ModelAuditor</code> — The underlying <code>ModelAuditor</code> engine (advanced access).</li>
+<li><code>async run_async(*args: Any, **kwargs: Any) -&gt; Any</code></li>
+<li><code>run(*args: Any, **kwargs: Any) -&gt; Any</code></li>
+</ul>
 
 
 

@@ -1867,16 +1867,22 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.context_grounding" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.context_grounding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        context_grounding
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2919,16 +2925,22 @@
     </span>
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#simpleaudit.scenarios.context_grounding" class="md-nav__link">
+    <nav class="md-nav" aria-label="simpleaudit.scenarios.context_grounding">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#constants" class="md-nav__link">
     <span class="md-ellipsis">
       
-        context_grounding
+        Constants
       
     </span>
   </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -2956,71 +2968,10 @@
 
 <h2 id="simpleauditscenarioscontext_grounding">simpleaudit.scenarios.context_grounding</h2>
 <p>Context-grounding scenario pack — marked retrieval context, three conflict classes.</p>
-
-
-<div class="doc doc-object doc-module">
-
-
-
-<a id="simpleaudit.scenarios.context_grounding"></a>
-    <div class="doc doc-contents first">
-
-        <p>Context-grounding scenario pack — marked retrieval context, three conflict classes.</p>
-<p>Seed pack for the groundedness judge designed in docs/design/context-grounding-judge.md
-(§6). Each scenario ships a <code>documents</code> list where every chunk carries its own marks
-inline — <code>relevant</code>, <code>true</code>, <code>valid_from</code>/<code>valid_until</code>, <code>authority</code>, <code>source</code>,
-<code>decisive</code> — plus a scenario-level <code>as_of</code>, the date the question is asked.</p>
-<p>The marks are what the flat string list in nb_rag_kontekst.py could not carry. There
-the chunk identity had to be bolted on beside the field, in <code>metadata.document_roles</code>,
-indexed by position; here it sits on the document itself, so the set-level properties
-(counterfactual, temporal conflict, authority conflict) are <em>derived</em> rather than
-asserted by the author. Scenario 3 is the nb_rag_kontekst scenario carried over into
-that form, unchanged in substance.</p>
-<p>Only <code>text</code> reaches the target: <code>_expand_documents</code> renders the blocks and drops the
-marks, so no plant is ever aimed at. The mark table goes to the judge alone.</p>
-<p>Three scenarios, three conflict classes, three judge fields:</p>
-<ol>
-<li>Helfo aldersgrense — temporal conflict, <code>used_superseded_context</code>.</li>
-<li>Turistkvote — authority conflict, <code>followed_lower_authority</code>.</li>
-<li>ISSN per filformat — counterfactual, <code>repeated_false_claim</code>.</li>
-</ol>
-<p>Every factual claim is verbatim from a VERIFISERT row in NDVL-REG-0002; the register
-row ids are in <code>metadata.register_rows</code>. The one deliberate falsehood in the pack is
-the planted chunk in scenario 3, and it is a scope substitution of a real rule (the
-ISBN per-format rule relabelled ISSN), not an invention. Helfo-siden bruker HF-01
-alene: HF-03 står som KORRIGERT i registeret og kan ikke bære en påstand.</p>
-<p>Dates are ISO strings rather than <code>datetime.date</code> objects so a scenario survives the
-round trip through the JSON result files unchanged; <code>parse_document</code> and <code>parse_as_of</code>
-accept either.</p>
-<p>Schema: v2.</p>
-
-
-
-
-
-
-
-
-
-
-<div class="doc doc-children">
-
-
-
-
-
-
-
-
-
-
-
-
-  </div>
-
-    </div>
-
-</div>
+<h3 id="constants">Constants</h3>
+<ul>
+<li><code>CONTEXT_GROUNDING_SCENARIOS</code></li>
+</ul>
 
 
 
