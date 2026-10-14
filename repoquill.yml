@@ -9,7 +9,10 @@ documentation:
   engine: pi
 llm:
   provider: openai
-  model: Qwen/Qwen3.8-27B-FP8
+  # `default` is the endpoint's always-routable auto-fallback (resolves to the
+  # current 27B model). A pinned model id (e.g. Qwen/Qwen3.8-27B-FP8) can 400
+  # with 'no router for requested model' when its backend router is inactive.
+  model: default
   base_url: https://simulachat.sushant.info.np/api/v1
   api_key_env: OPENAI_API_KEY
   max_concurrent: 4
