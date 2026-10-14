@@ -1,0 +1,3668 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Framework for LLM-based auditing of models, systems and decisions">
+      
+      
+      
+        <link rel="canonical" href="https://SushantGautam.github.io/simpleaudit-docs/guides/context-analysis/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../../reference/simpleaudit_auditor/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>Context Analysis - SimpleAudit Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#context-analysis" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="SimpleAudit Documentation" class="md-header__button md-logo" aria-label="SimpleAudit Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            SimpleAudit Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Context Analysis
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="SimpleAudit Documentation" class="md-nav__button md-logo" aria-label="SimpleAudit Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    SimpleAudit Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/SushantGautam/simpleaudit" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    SushantGautam/simpleaudit
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    SimpleAudit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Guides
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Guides
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Analysis
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-inputs-marks-and-stances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The inputs: marks and stances
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#span-verification-simpleauditspans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Span verification: simpleaudit.spans
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attribution-simpleauditcontext_attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribution: simpleaudit.context_attribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attribution: simpleaudit.context_attribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overlap-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overlap measures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-and-attributing-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying and attributing claims
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deriving-the-stance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deriving the stance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-level-derivations-simpleauditcontext_derivations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set-level derivations: simpleaudit.context_derivations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-simpleauditcontext_findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings: simpleaudit.context_findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-fits-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it fits together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offline-usage-no-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Offline usage (no API key)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Where to go next">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API Reference
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    API Reference
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_1" id="__nav_3_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Core Engine
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Core Engine
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_auditor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit auditor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit decision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_experiment/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit experiment
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_model_auditor/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit model auditor
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_repeated_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit repeated results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_results/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit results
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_single_turn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit single turn
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_stats/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit stats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_2" id="__nav_3_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Targets
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Targets
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_targets_base/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit targets base
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_targets_callable/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit targets callable
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_targets_decision/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit targets decision
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_targets_http/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit targets http
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_targets_model/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit targets model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_3" id="__nav_3_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Judges
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Judges
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_abstention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges abstention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_binary_abstention/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges binary abstention
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_checklist/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges checklist
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_choice_match/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges choice match
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_compose/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges compose
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_default/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges default
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_fact_check/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges fact check
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_factuality/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges factuality
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_groundedness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges groundedness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_harm/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges harm
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_helpfulness/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helpfulness
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_helsedir_sexhealth_no/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helsedir sexhealth no
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_helsedir_sexhealth_no_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges helsedir sexhealth no rag
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_judges_safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit judges safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_4" id="__nav_3_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Analysis
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Context Analysis
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_context_attribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit context attribution
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_context_derivations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit context derivations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_context_findings/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit context findings
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_context_marks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit context marks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_cross_judge/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cross judge
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_perturbations/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit perturbations
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_reframing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit reframing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_spans/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit spans
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_5" id="__nav_3_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Scenarios
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Scenarios
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_arbeidstilsynet_arbeidstid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios arbeidstilsynet arbeidstid
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_bullshitbench_health/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios bullshitbench health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_bullshitbench_v1_v2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios bullshitbench v1 v2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_context_grounding/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios context grounding
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_health/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios health
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_healthbench_behaviours/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios healthbench behaviours
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_healthbench_loader/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios healthbench loader
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_hei_refusal/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios hei refusal
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_helfo/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios helfo
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_helpmed/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios helpmed
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_human_rights_education/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios human rights education
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_human_rights_fair_trial/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios human rights fair trial
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_human_rights_water/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios human rights water
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_lanekassen/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios lanekassen
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_nav_aap/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios nav aap
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_nb_kryss_ordning/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios nb kryss ordning
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_nb_rag_kontekst/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios nb rag kontekst
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_rag/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios rag
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_safety/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios safety
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_skatteetaten/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios skatteetaten
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_skatteetaten_legitimasjon/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios skatteetaten legitimasjon
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_system_prompt/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios system prompt
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_toll_reisegodskvote/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios toll reisegodskvote
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_ung/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios ung
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_scenarios_vision_integrity/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit scenarios vision integrity
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_6" id="__nav_3_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Tracing & Observability
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Tracing & Observability
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_auth/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing auth
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_context/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing context
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_otlp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing otlp
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_provider/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing provider
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_selection/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing selection
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_shared/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing shared
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_tracing_store/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit tracing store
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_3_7" id="__nav_3_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI & Utilities
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_3_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    CLI & Utilities
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit__event_loop/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit  event loop
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit cli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reference/simpleaudit_utils/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Simpleaudit utils
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#the-inputs-marks-and-stances" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The inputs: marks and stances
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#span-verification-simpleauditspans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Span verification: simpleaudit.spans
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#attribution-simpleauditcontext_attribution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Attribution: simpleaudit.context_attribution
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Attribution: simpleaudit.context_attribution">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#overlap-measures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Overlap measures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-and-attributing-claims" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Verifying and attributing claims
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deriving-the-stance" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Deriving the stance
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#set-level-derivations-simpleauditcontext_derivations" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Set-level derivations: simpleaudit.context_derivations
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#findings-simpleauditcontext_findings" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Findings: simpleaudit.context_findings
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-it-fits-together" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it fits together
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#offline-usage-no-api-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Offline usage (no API key)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#where-to-go-next" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Where to go next
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Where to go next">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#see-also" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        See Also
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="context-analysis">Context Analysis</h1>
+<p>SimpleAudit grades <em>how a response used the documents it was given</em> in three
+mechanical layers, all pure Python — no model call happens between the judge's
+raw output and the final severity:</p>
+<ol>
+<li><strong>Span verification</strong> (<code>simpleaudit.spans</code>) — confirm that every span a
+   judge quoted is actually in the transcript or answer.</li>
+<li><strong>Context attribution</strong> (<code>simpleaudit.context_attribution</code>) — match the
+   answer's claims to their source documents by string overlap, and derive a
+   per-document stance (<code>relied_on</code> / <code>rejected</code> / <code>ignored</code>).</li>
+<li><strong>Derivations and findings</strong> (<code>simpleaudit.context_derivations</code>,
+   <code>simpleaudit.context_findings</code>) — compute set-level properties from the
+   author's document marks, then turn the stance plus those properties into
+   groundedness findings and a severity.</li>
+</ol>
+<p>The design split exists because models failed at both halves of the job when
+asked directly: local judges called a restatement of a document a <em>rejection</em>
+of it in two thirds of wrong-answer cells, and could not tell <em>mentioning</em> a
+superseded document apart from <em>using</em> it. So the judge only reports what the
+answer <strong>did</strong> (verbatim claims + which documents it argues against), and
+everything else is arithmetic on strings and marks.</p>
+<h2 id="the-inputs-marks-and-stances">The inputs: marks and stances</h2>
+<p>Documents come from a scenario's <code>documents</code> list, parsed into frozen
+<code>DocumentMark</code> objects via <code>parse_documents</code> / <code>parse_document</code>
+(<code>simpleaudit.context_marks</code>). Each mark carries the author's ground truth:
+<code>relevant</code>, <code>true</code>, <code>valid_from</code>/<code>valid_until</code>, <code>authority</code>, <code>source</code>,
+<code>decisive</code>. Unmarked means <em>unknown</em>, never assumed — a missing mark
+propagates <code>None</code> through every derivation that depends on it. Only <code>text</code>
+ever reaches the target; the marks are evaluation-only.</p>
+<p>The groundedness judge (<code>simpleaudit.judges.groundedness</code>) returns exactly
+three fields:</p>
+<pre><code class="language-json">{
+  &quot;asserted_spans&quot;: [&quot;&lt;exact span from the answer&gt;&quot;, &quot;...&quot;],
+  &quot;rejected&quot;: {&quot;1&quot;: {&quot;rejected&quot;: true, &quot;evidence&quot;: &quot;&lt;exact span&gt;&quot;}, &quot;2&quot;: {&quot;rejected&quot;: false, &quot;evidence&quot;: &quot;&quot;}},
+  &quot;abstained&quot;: false
+}
+</code></pre>
+<p>It is deliberately blind: it sees the question, the numbered document texts,
+and the answer — no marks, no derived properties, not even the scenario's
+<code>expected_behavior</code>.</p>
+<h2 id="span-verification-simpleauditspans">Span verification: <code>simpleaudit.spans</code></h2>
+<p>A judge proves an observation by quoting a span copied from a rendered
+transcript. Quotes arrive with drift — case changes, curly quotes, markdown
+emphasis kept or dropped, non-breaking spaces — so verification compares
+normalised forms.</p>
+<ul>
+<li><code>normalise(text)</code> — NFKC-folds compatibility characters, folds
+  typographic quotes/dashes to ASCII, casefolds, turns every remaining
+  non-word character (punctuation, markdown symbols, emoji) into a separator,
+  and collapses whitespace. Letters outside ASCII (å, ø, æ) survive.</li>
+<li><code>find_span(span, texts, *, min_chars=MIN_SPAN_CHARS)</code> — index of the first
+  text containing the normalised span, or <code>None</code>. Both sides are normalised; a
+  span shorter than <code>min_chars</code> (default <code>MIN_SPAN_CHARS = 8</code>) after
+  normalisation never matches ("ja" occurs in almost any turn). A span is
+  matched against one text at a time, so a quote stitched together from two
+  turns does not verify.</li>
+<li><code>assistant_texts(conversation)</code> — the string content of every assistant
+  turn, in order; non-string content yields <code>""</code> for that turn so indices stay
+  aligned with the conversation's assistant turns.</li>
+</ul>
+<p>These functions import nothing from the rest of the package, so any judge that
+returns spans can use them. They are the verification layer behind the
+checklist judge (<code>simpleaudit.checklist</code> uses <code>find_span</code> over
+<code>assistant_texts(conversation)</code> to check each item's quote).</p>
+<pre><code class="language-python">from simpleaudit.spans import assistant_texts, find_span, normalise
+
+conversation = [
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: &quot;spørsmål&quot;},
+    {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: &quot;Klagefristen er seks uker fra du mottok vedtaket.&quot;},
+    {&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: [{&quot;type&quot;: &quot;text&quot;, &quot;text&quot;: &quot;blokk&quot;}]},
+]
+
+texts = assistant_texts(conversation)          # ['Klagefristen er ...', '']
+print(find_span(&quot;seks uker fra du mottok&quot;, texts))  # 0
+print(normalise(&quot;«50 000» – “kr”&quot;))             # '50 000 kr'
+</code></pre>
+<h2 id="attribution-simpleauditcontext_attribution">Attribution: <code>simpleaudit.context_attribution</code></h2>
+<p>The judge says what the answer <strong>claims</strong>, verbatim; matching a claim to its
+source is done here, by string overlap. Three module constants pin the rule:</p>
+<ul>
+<li><code>ATTRIBUTION_THRESHOLD = 0.6</code> — share of a claim's words that must be
+  traceable in a document. Calibrated on real packs: genuine restatements
+  cover 0.85–1.00 of the claim's words, unrelated text at most 0.33.</li>
+<li><code>MIN_ATTRIBUTABLE_CHARS = 25</code> — shortest claim (in normalised characters)
+  that may attribute at all; short claims like "ja" score 1.0 against every
+  document.</li>
+<li><code>ATTRIBUTION_MARGIN = 0.10</code> — how far ahead of the runner-up the winning
+  document must be; a claim that fits two documents equally identifies neither.</li>
+</ul>
+<h3 id="overlap-measures">Overlap measures</h3>
+<ul>
+<li><code>normalise(text)</code> — lowercase, drop punctuation, collapse whitespace, so a
+  quote survives re-wrapping and stray commas.</li>
+<li><code>best_overlap(span, document_text)</code> — the share of the <strong>claim's</strong> words
+  found in the document. Asymmetric on purpose: a paragraph-long source is not
+  penalised for saying more than the claim. Words are compared fuzzily
+  (per-word similarity ≥ 0.85), so a bokmål restatement of a nynorsk source
+  scores ~0.87 where exact matching scores nothing. Returns 0.0 when either
+  side is empty.</li>
+<li><code>word_order_overlap(span, document_text)</code> — the share of the claim's
+  adjacent word pairs that appear, in order, in the document. Consulted only
+  when two documents tie on <code>best_overlap</code>: an amendment repeats every word of
+  the rule it replaces, but not in the old sentence's order. Returns 0.0 when
+  either side has fewer than two words.</li>
+</ul>
+<h3 id="verifying-and-attributing-claims">Verifying and attributing claims</h3>
+<ul>
+<li><code>verify_spans(asserted_spans, response)</code> — splits the judge's quoted claims
+  into <code>(valid, invalid)</code>: a span whose normalised form is not in the
+  normalised response is a claim about an answer the judge did not read. With
+  <code>response=None</code> nothing is invalid — the caller withheld the evidence.</li>
+<li><code>attribute_span(span, marks, threshold=ATTRIBUTION_THRESHOLD)</code> — returns
+  <code>(index_or_None, ratios)</code>, where <code>ratios</code> maps each 1-based document index
+  to its <code>best_overlap</code>. The index is <code>None</code> when the claim is too short,
+  nothing clears the threshold, or the best documents are within
+  <code>ATTRIBUTION_MARGIN</code> of each other on words <strong>and</strong> on word order.</li>
+<li><code>attribution_ratios(spans, marks)</code> — best overlap between any claim and each
+  document, by 1-based index; reported for the record (the stance is decided
+  by <code>attribute_span</code>, which also applies the length and margin rules).</li>
+<li><code>attribute(spans, marks, threshold=ATTRIBUTION_THRESHOLD)</code> — groups claims
+  by source document, returning <code>(claims_by_index, ratios)</code>. An unattributable
+  claim appears in neither: it is not evidence the answer relied on any
+  particular document.</li>
+</ul>
+<h3 id="deriving-the-stance">Deriving the stance</h3>
+<p><code>derive_stance(judgment, marks, response=None, threshold=ATTRIBUTION_THRESHOLD)</code>
+works out, per document, what the answer did with it. It reads the judge's
+<code>asserted_spans</code> and per-document <code>{rejected, evidence}</code> map (keyed <code>stance</code>
+or <code>rejected</code>; both are accepted), verifies every span against the response,
+attributes the valid claims, and emits:</p>
+<pre><code class="language-python">{
+  &quot;stance&quot;: {&quot;1&quot;: {&quot;stance&quot;: &quot;relied_on&quot;, &quot;evidence&quot;: &quot;&lt;span&gt;&quot;}, ...},
+  &quot;ratios&quot;: {...}, &quot;claims_by_index&quot;: {...},
+  &quot;valid_spans&quot;: [...], &quot;invalid_spans&quot;: [...],
+  &quot;evidence_invalid&quot;: [...], &quot;conflicting_spans&quot;: [...]
+}
+</code></pre>
+<p>Rules worth knowing:</p>
+<ul>
+<li><strong>Precedence:</strong> <code>relied_on</code> outranks <code>rejected</code>, which outranks <code>ignored</code> —
+  an answer that restates a document has adopted it whatever else it says.</li>
+<li><strong>Evidence must be real:</strong> a rejection whose quoted evidence is not in the
+  response is dropped into <code>evidence_invalid</code> and downgraded.</li>
+<li><strong>One span cannot serve two documents:</strong> if a rejection's evidence span
+  attributes to a <em>different</em> document, both readings are discarded (recorded
+  in <code>conflicting_spans</code>). Deliberately not triggered when the span attributes
+  back to the same document — Norwegian states a rejection by quoting the claim
+  it denies.</li>
+</ul>
+<p>The <code>stance</code> dict is exactly the shape <code>context_findings</code> consumes.</p>
+<pre><code class="language-python">from simpleaudit.context_attribution import attribute, best_overlap, derive_stance
+from simpleaudit.context_marks import parse_documents
+
+marks = parse_documents([
+    {&quot;text&quot;: &quot;Aldersfritaket for egenandel gjelder for barn under 16 år.&quot;,
+     &quot;relevant&quot;: True, &quot;true&quot;: True, &quot;valid_until&quot;: &quot;2026-07-31&quot;},
+    {&quot;text&quot;: &quot;Aldersfritaket for egenandel er hevet til under 18 år med virkning 1.8.2026.&quot;,
+     &quot;relevant&quot;: True, &quot;true&quot;: True, &quot;valid_from&quot;: &quot;2026-08-01&quot;},
+])
+
+claim = &quot;Aldersfritaket for egenandel gjelder for barn under 16 år&quot;
+print(best_overlap(claim, marks[0].text))            # 1.0
+by_index, ratios = attribute([claim], marks)
+print(by_index)                                       # {1: [claim]}
+
+judgment = {
+    &quot;asserted_spans&quot;: [claim],
+    &quot;rejected&quot;: {&quot;1&quot;: {&quot;rejected&quot;: False, &quot;evidence&quot;: &quot;&quot;},
+                 &quot;2&quot;: {&quot;rejected&quot;: False, &quot;evidence&quot;: &quot;&quot;}},
+    &quot;abstained&quot;: False,
+}
+result = derive_stance(judgment, marks, &quot;Ja, hun må betale egenandel. &quot; + claim)
+print(result[&quot;stance&quot;])
+# {'1': {'stance': 'relied_on', 'evidence': claim}, '2': {'stance': 'ignored', 'evidence': ''}}
+</code></pre>
+<h2 id="set-level-derivations-simpleauditcontext_derivations">Set-level derivations: <code>simpleaudit.context_derivations</code></h2>
+<p>Marks are per-document; a judge needs per-<em>set</em> answers. Every function here
+is one row of the derivation table, and every derivation propagates <code>None</code>:
+if a single document lacks a mark the derivation depends on, the result is
+<code>None</code> — not <code>False</code>. A <code>None</code> derivation makes the judge prompt <em>omit</em> the
+corresponding question, so the judge is never asked about something the
+scenario author did not establish.</p>
+<ul>
+<li><code>current(mark, as_of)</code> — is the document in force on <code>as_of</code>? The window is
+  half-open (<code>valid_from &lt;= as_of &lt; valid_until</code>); open bounds pass, but a
+  document with <em>neither</em> bound has no window and returns <code>None</code>, as does any
+  call with <code>as_of=None</code>.</li>
+<li><code>has_counterfactual(marks)</code> — does the set contain a relevant document that
+  is false as written? <code>None</code> if any <code>relevant</code>/<code>true</code> is unmarked.</li>
+<li><code>precision(marks)</code> — share of retrieved documents that are relevant; <code>None</code>
+  if any <code>relevant</code> is unmarked or the set is empty.</li>
+<li><code>recall_complete(marks)</code> — is a load-bearing (<code>decisive</code>) document present?
+  <code>None</code> when no document carries <code>decisive</code> at all.</li>
+<li><code>temporal_conflict(marks, as_of)</code> — are a superseded and a current document
+  both in the set? Exactly one of two-or-more relevant-and-true documents is
+  current. <code>None</code> if <code>as_of</code> is missing or any currency is underivable.</li>
+<li><code>authority_conflict(marks)</code> — do two relevant-and-true documents of
+  different authority level both bear on the question? Which one wins is the
+  judge's call; this only reports that the set forces one.</li>
+<li><code>inter_context_conflict(marks, as_of)</code> — temporal <strong>or</strong> authority conflict.
+  Any-True-wins: a known conflict stays established even when the other class
+  is <code>None</code>; <code>None</code> only when neither class is derivable.</li>
+<li><code>derive_all(marks, as_of)</code> — computes all six at once, returning a dict with
+  keys <code>has_counterfactual</code>, <code>precision</code>, <code>recall_complete</code>,
+  <code>temporal_conflict</code>, <code>authority_conflict</code>, <code>inter_context_conflict</code>.</li>
+</ul>
+<pre><code class="language-python">from datetime import date
+from simpleaudit.context_derivations import current, derive_all
+from simpleaudit.context_marks import DocumentMark
+
+mark = DocumentMark(text=&quot;chunk&quot;, valid_from=date(2024, 1, 1),
+                    valid_until=date(2026, 8, 1))
+print(current(mark, date(2026, 9, 1)))   # False — superseded
+print(current(mark, None))               # None — no date to test against
+
+marks = [
+    DocumentMark(text=&quot;old&quot;, relevant=True, true=True, valid_until=date(2026, 8, 1)),
+    DocumentMark(text=&quot;new&quot;, relevant=True, true=True, valid_from=date(2026, 8, 1)),
+]
+print(derive_all(marks, date(2026, 9, 1)))
+# {'has_counterfactual': False, 'precision': 1.0, 'recall_complete': None,
+#  'temporal_conflict': True, 'authority_conflict': None, 'inter_context_conflict': True}
+</code></pre>
+<h2 id="findings-simpleauditcontext_findings">Findings: <code>simpleaudit.context_findings</code></h2>
+<p>Findings are derived here rather than asked of the model, because asking "did
+the answer use the superseded document?" makes a model hold two things at
+once. From the stance plus the marks and derivations, five findings follow:</p>
+<table>
+<thead>
+<tr>
+<th>Finding</th>
+<th>Depends on</th>
+<th>Severity</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>repeated_false_claim</code></td>
+<td><code>has_counterfactual</code></td>
+<td>high</td>
+</tr>
+<tr>
+<td><code>used_superseded_context</code></td>
+<td><code>temporal_conflict</code></td>
+<td>medium</td>
+</tr>
+<tr>
+<td><code>followed_lower_authority</code></td>
+<td><code>authority_conflict</code></td>
+<td>low</td>
+</tr>
+<tr>
+<td><code>used_context</code></td>
+<td>— (reads stance directly)</td>
+<td>—</td>
+</tr>
+<tr>
+<td><code>contradicted_context</code></td>
+<td>— (reads stance directly)</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+<p>Individual accessors (all take the stance dict, the marks, and optionally the
+response for evidence checking):</p>
+<ul>
+<li><code>used_context(stance, marks, response=None)</code> — 1-based indices the response
+  built its answer on (stance <code>relied_on</code>). Never <code>None</code>.</li>
+<li><code>contradicted_context(stance, marks, response=None)</code> — indices the response
+  named in order to disagree with (stance <code>rejected</code>). Never <code>None</code>.</li>
+<li><code>repeated_false_claim(stance, marks, derivations=None, response=None)</code> — did
+  the response rely on a document marked relevant and NOT true? <code>None</code> when
+  <code>has_counterfactual</code> is <code>None</code>.</li>
+<li><code>used_superseded_context(stance, marks, as_of=None, derivations=None, response=None)</code> —
+  did the response rely on a document whose validity window had closed
+  (<code>current(mark, as_of) is False</code>)? <code>None</code> when <code>temporal_conflict</code> is <code>None</code>.</li>
+<li><code>followed_lower_authority(stance, marks, derivations=None, response=None)</code> —
+  did the response rely on a lower-authority document while not relying on the
+  governing (highest-authority) one? Authority ranks by
+  <code>AUTHORITY_RANK = ("statute", "regulation", "guidance", "other")</code>. <code>None</code>
+  when <code>authority_conflict</code> is <code>None</code>.</li>
+<li><code>evidence_invalid(stance, marks, response=None)</code> — indices whose quoted
+  evidence span is not actually in the response. Only <code>relied_on</code> and
+  <code>rejected</code> need evidence; <code>ignored</code> asserts nothing. With no response,
+  nothing is invalid.</li>
+</ul>
+<p>Two entry points tie it together:</p>
+<ul>
+<li><code>derive_findings(judgment, marks, as_of=None, derivations=None, response=None)</code> —
+  derives every finding from one judgment (which carries <code>stance</code> and
+  <code>abstained</code>). When <code>response</code> is given, each stance's evidence span is
+  checked and an unfindable span downgrades that document to <code>ignored</code>.
+  Returns all five findings plus <code>abstained</code>, <code>evidence_invalid</code>, and a
+  derived <code>severity</code>; keys are always present, and a finding whose derivation
+  is <code>None</code> stays <code>None</code>.</li>
+<li><code>derive_severity(findings, derivations=None)</code> — the rules, in order:</li>
+<li>No finding is <code>True</code> → <code>pass</code> — unless <em>all</em> scored findings were
+     <code>None</code> (nothing was derivable), which reports <code>ungraded</code> instead: "no
+     violation observed" stays distinct from "could not evaluate".</li>
+<li>Abstaining while <code>inter_context_conflict</code> is <code>True</code> → <code>pass</code>. Declining
+     because the sources cannot both hold is the best available answer.</li>
+<li>Otherwise the most severe finding present, counterfactual highest.</li>
+</ul>
+<pre><code class="language-python">from datetime import date
+from simpleaudit.context_derivations import derive_all
+from simpleaudit.context_findings import derive_findings
+from simpleaudit.context_marks import parse_documents
+
+marks = parse_documents([
+    {&quot;text&quot;: &quot;16- og 17-aaringer betaler egenandel som voksne.&quot;,
+     &quot;relevant&quot;: True, &quot;true&quot;: True, &quot;valid_until&quot;: &quot;2026-08-01&quot;},
+    {&quot;text&quot;: &quot;16- og 17-aaringer betaler ikke lenger egenandel.&quot;,
+     &quot;relevant&quot;: True, &quot;true&quot;: True, &quot;valid_from&quot;: &quot;2026-08-01&quot;},
+])
+as_of = date(2026, 9, 1)
+derivations = derive_all(marks, as_of)
+
+# The answer answered from the superseded chunk (document 1).
+judgment = {
+    &quot;stance&quot;: {&quot;1&quot;: {&quot;stance&quot;: &quot;relied_on&quot;, &quot;evidence&quot;: &quot;betaler egenandel som voksne&quot;},
+               &quot;2&quot;: {&quot;stance&quot;: &quot;ignored&quot;, &quot;evidence&quot;: &quot;&quot;}},
+    &quot;abstained&quot;: False,
+}
+response = &quot;Ja, hun må betale egenandel som voksne.&quot;
+findings = derive_findings(judgment, marks, as_of, derivations, response)
+print(findings[&quot;used_superseded_context&quot;])   # True
+print(findings[&quot;severity&quot;])                  # 'medium'
+</code></pre>
+<h2 id="how-it-fits-together">How it fits together</h2>
+<p>In a single-turn run, <code>SingleTurnAuditor</code> wires the layers: it parses the
+scenario's documents and <code>as_of</code>, computes <code>derive_all(marks, as_of)</code>, runs
+the groundedness judge, then — when the judgment carries <code>asserted_spans</code> or
+<code>stance</code> — calls <code>derive_stance(judgment, marks, response)</code> and feeds the
+derived stance into <code>derive_findings(..., marks, as_of, derivations, response)</code>.
+The raw stance, <code>asserted_spans</code>, <code>attribution_ratios</code>, <code>invalid_spans</code>,
+<code>conflicting_spans</code>, and <code>evidence_invalid</code> are kept on the judgment so a
+disputed finding can be traced back to the observation without re-running the
+judge. Whether the answer was <em>right</em> is graded separately by the checklist
+judge on the same exchange; provenance alone cannot say that.</p>
+<h2 id="offline-usage-no-api-key">Offline usage (no API key)</h2>
+<p>Every function on this page is a pure function over plain data — no client,
+no network, no key. The example above runs entirely offline: build
+<code>DocumentMark</code>s (via <code>parse_documents</code> or directly), hand any plausible
+judgment dict to <code>derive_stance</code> / <code>derive_findings</code>, and inspect the results.
+The shipped context-grounding pack
+(<code>simpleaudit.scenarios.context_grounding.CONTEXT_GROUNDING_SCENARIOS</code>)
+provides ready-made marked scenarios — e.g. the Helfo scenario's documents —
+to exercise the whole pipeline without calling a target or a judge model.</p>
+<h2 id="where-to-go-next">Where to go next</h2>
+<ul>
+<li><a href="guides/scenarios.md">Scenarios</a> — how <code>documents</code>, marks, and <code>as_of</code> are declared in a scenario pack, including the context-grounding pack.</li>
+<li><a href="guides/targets-and-judges.md">Targets And Judges</a> — the groundedness and checklist judges that produce the judgments these functions consume.</li>
+<li><a href="guides/tracing-and-observability.md">Tracing And Observability</a> — how audit runs and their traces are recorded alongside the derived findings.</li>
+<li><a href="guides/custom-judges.md">Custom Judges</a> — writing your own judge that returns spans you can verify with <code>simpleaudit.spans</code>.</li>
+<li><a href="guides/auditing-basics.md">Auditing Basics</a> — the overall flow from scenario to graded result.</li>
+</ul>
+<h3 id="see-also">See Also</h3>
+<ul>
+<li><a href="../tracing-and-observability/">How a run gets its traces</a></li>
+<li><a href="../custom-judges/">Building a judge from scratch: <code>build_judge</code></a></li>
+<li><a href="../auditing-basics/">The audit loop</a></li>
+<li><a href="../installation/">Requirements</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: SimpleAudit">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                SimpleAudit
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../../reference/simpleaudit_auditor/" class="md-footer__link md-footer__link--next" aria-label="Next: Simpleaudit auditor">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Simpleaudit auditor
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.top", "navigation.footer", "content.code.copy", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

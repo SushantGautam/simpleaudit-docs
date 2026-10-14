@@ -1,45 +1,92 @@
-# simpleaudit-docs
+# SimpleAudit Documentation
 
-Documentation for simpleaudit-docs
+Framework for LLM-based auditing of models, systems and decisions
 
 > https://github.com/SushantGautam/simpleaudit
 
 ## Guides
 
-- [Quickstart](https://SushantGautam.github.io/simpleaudit-docs/guides/quickstart/): Run your first local audit using the CLI and core auditor classes.
-- [Installation](https://SushantGautam.github.io/simpleaudit-docs/guides/installation/): Install dependencies and configure the local-first environment.
-- [Architecture](https://SushantGautam.github.io/simpleaudit-docs/guides/architecture/): Understand the experiment lifecycle, model auditing, and result handling.
-- [Key Ideas](https://SushantGautam.github.io/simpleaudit-docs/guides/key-ideas/): Learn how judges and scenarios define adversarial probing strategies.
+- Installation (NOT AVAILABLE — planned page, not yet generated): Install SimpleAudit via pip and verify the CLI entry point.
+- Quickstart (NOT AVAILABLE — planned page, not yet generated): Run your first single-turn audit and inspect the resulting report.
+- Auditing Basics (NOT AVAILABLE — planned page, not yet generated): Understand the audit loop, experiment configuration, and perturbation strategies.
+- Targets And Judges (NOT AVAILABLE — planned page, not yet generated): Configure local or API model targets and select built-in evaluation judges.
+- Scenarios (NOT AVAILABLE — planned page, not yet generated): Explore predefined test scenarios for health, safety, and RAG contexts.
+- [Context Analysis](https://SushantGautam.github.io/simpleaudit-docs/guides/context-analysis/): Analyze context attribution, derivations, and span-level findings in responses.
+- Tracing And Observability (NOT AVAILABLE — planned page, not yet generated): Enable OpenTelemetry tracing and aggregate statistical metrics from audits.
+- Custom Judges (NOT AVAILABLE — planned page, not yet generated): Build custom composite judges using checklists and cross-validation logic.
 
 ## API Reference
 
-- [simpleaudit](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit/): SimpleAudit - Lightweight AI Safety Auditing Framework
-- [simpleaudit.cli](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_cli/): CLI interface for SimpleAudit tools.
-- [simpleaudit.experiment](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_experiment/): audit experiment
-- [simpleaudit.judges](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges/): Built-in judge configurations for SimpleAudit.
+- [simpleaudit.auditor](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_auditor/): Auditor — the primary, target-agnostic entry point.
+- [simpleaudit.checklist](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_checklist/): Evidence-anchored checklist grading: verification and deterministic derivation.
+- [simpleaudit.decision](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_decision/): Structured decision questions for scenarios.
+- [simpleaudit.experiment](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_experiment/): experiment event
+- [simpleaudit.model_auditor](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_model_auditor/): ModelAuditor for direct API-based model auditing.
+- [simpleaudit.repeated_results](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_repeated_results/): Repeated-run results for SimpleAudit.
+- [simpleaudit.results](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_results/): Results handling for SimpleAudit.
+- [simpleaudit.single_turn](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_single_turn/): Single-turn auditing.
+- [simpleaudit.stats](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_stats/): Pure statistics over audit verdicts.
+- [simpleaudit.targets.base](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_targets_base/): Core Target protocol and shared data types.
+- [simpleaudit.targets.callable](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_targets_callable/): CallableTarget — an in-process Python callable as an audit target.
+- [simpleaudit.targets.decision](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_targets_decision/): DecisionTarget — audit a decision model through a System One endpoint.
+- [simpleaudit.targets.http](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_targets_http/): HTTPAppTarget — audit an external application over HTTP (black-box).
+- [simpleaudit.targets.model](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_targets_model/): ModelTarget — an LLM endpoint target backed by AnyLLM.
 - [simpleaudit.judges.abstention](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_abstention/): Abstention judge configuration.
 - [simpleaudit.judges.binary_abstention](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_binary_abstention/): Binary abstention judge — language-agnostic.
+- [simpleaudit.judges.checklist](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_checklist/): Evidence-anchored checklist judge configuration.
+- [simpleaudit.judges.choice_match](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_choice_match/): Choice-match judge: grade a closed question by exact option match, in code.
+- [simpleaudit.judges.compose](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_compose/): Compose judges from criteria and an output format.
+- [simpleaudit.judges.default](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_default/): SimpleAudit's default judge: what grades a run when no judge config is named.
+- [simpleaudit.judges.fact_check](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_fact_check/): Fact-check judge — deterministic severity for declared facts.
 - [simpleaudit.judges.factuality](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_factuality/): Factuality judge configuration.
+- [simpleaudit.judges.groundedness](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_groundedness/): Groundedness judge for marked context.
 - [simpleaudit.judges.harm](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_harm/): Harm categorisation judge configuration.
 - [simpleaudit.judges.helpfulness](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helpfulness/): Helpfulness judge configuration.
 - [simpleaudit.judges.helsedir_sexhealth_no](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no/): Helsedirektoratet sexual-health judge — generic variant.
 - [simpleaudit.judges.helsedir_sexhealth_no_rag](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_helsedir_sexhealth_no_rag/): Helsedirektoratet sexual-health judge — RAG variant.
 - [simpleaudit.judges.safety](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_judges_safety/): Safety judge configuration.
-- [simpleaudit.model_auditor](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_model_auditor/): ModelAuditor for direct API-based model auditing.
-- [simpleaudit.repeated_results](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_repeated_results/): Repeated-run results for SimpleAudit.
-- [simpleaudit.results](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_results/): Results handling for SimpleAudit.
-- [simpleaudit.scenarios](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios/): Built-in scenario packs for SimpleAudit.
+- [simpleaudit.context_attribution](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_context_attribution/): Attributing an answer's claims to the documents it was given — mechanically.
+- [simpleaudit.context_derivations](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_context_derivations/): Set-level properties derived from document marks.
+- [simpleaudit.context_findings](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_context_findings/): Groundedness findings, derived from what the response did with each document.
+- [simpleaudit.context_marks](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_context_marks/): Document marks for context-grounding scenarios.
+- [simpleaudit.cross_judge](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_cross_judge/): Cross-judge stability analysis for SimpleAudit.
+- [simpleaudit.perturbations](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_perturbations/): Deterministic style perturbations for stored transcripts.
+- [simpleaudit.reframing](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_reframing/): Re-grade stored transcripts with the judge only, varying one thing at a time.
+- [simpleaudit.spans](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_spans/): Locate quoted spans in stored transcripts.
+- [simpleaudit.scenarios.arbeidstilsynet_arbeidstid](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_arbeidstilsynet_arbeidstid/): Arbeidstilsynet arbeidstid (working hours) scenario pack.
 - [simpleaudit.scenarios.bullshitbench_health](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_health/): Bullshitbench health scenarios for SimpleAudit
 - [simpleaudit.scenarios.bullshitbench_v1_v2](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_bullshitbench_v1_v2/): BullshitBench Scenario Pack for SimpleAudit
+- [simpleaudit.scenarios.context_grounding](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_context_grounding/): Context-grounding scenario pack — marked retrieval context, three conflict classes.
 - [simpleaudit.scenarios.health](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_health/): Healthcare domain scenarios.
+- [simpleaudit.scenarios.healthbench_behaviours](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_healthbench_behaviours/): HealthBench behaviours scenario pack.
+- [simpleaudit.scenarios.healthbench_loader](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_healthbench_loader/): Load OpenAI's HealthBench as SimpleAudit scenarios at run time.
 - [simpleaudit.scenarios.hei_refusal](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_hei_refusal/): Hei refusal scenario pack.
+- [simpleaudit.scenarios.helfo](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_helfo/): Helfo (Helseøkonomiforvaltningen) scenario pack.
 - [simpleaudit.scenarios.helpmed](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_helpmed/): HelpMed domain scenarios.
+- [simpleaudit.scenarios.human_rights_education](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_human_rights_education/): Human rights / right to education scenario pack (international human rights law).
+- [simpleaudit.scenarios.human_rights_fair_trial](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_human_rights_fair_trial/): Human rights / fair trial and due process scenario pack (international human rights law).
+- [simpleaudit.scenarios.human_rights_water](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_human_rights_water/): Human rights / right to water scenario pack (international human rights law).
+- [simpleaudit.scenarios.lanekassen](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_lanekassen/): Lånekassen (Statens lånekasse for utdanning) scenario pack.
 - [simpleaudit.scenarios.nav_aap](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_nav_aap/): NAV AAP (Arbeidsavklaringspenger) scenario pack.
+- [simpleaudit.scenarios.nb_kryss_ordning](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_nb_kryss_ordning/): NB kryss-ordning (Nasjonalbiblioteket cross-scheme) scenario pack.
+- [simpleaudit.scenarios.nb_rag_kontekst](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_nb_rag_kontekst/): NB RAG-kontekst (Nasjonalbiblioteket, støyende hentekontekst) — ett scenario.
 - [simpleaudit.scenarios.rag](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_rag/): RAG-specific scenarios.
 - [simpleaudit.scenarios.safety](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_safety/): General AI safety scenarios.
 - [simpleaudit.scenarios.skatteetaten](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_skatteetaten/): Skatteetaten (Norwegian Tax Administration) scenario pack.
+- [simpleaudit.scenarios.skatteetaten_legitimasjon](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_skatteetaten_legitimasjon/): Skatteetaten legitimasjon (identification at in-person attendance) scenario pack.
 - [simpleaudit.scenarios.system_prompt](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_system_prompt/): System prompt testing scenarios.
-- [simpleaudit.scenarios.ung](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_ung/): ung scenarios
+- [simpleaudit.scenarios.toll_reisegodskvote](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_toll_reisegodskvote/): Tolletaten reisegodskvote (traveller allowance) scenario pack.
+- [simpleaudit.scenarios.ung](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_ung/): ung scenario pack.
+- [simpleaudit.scenarios.vision_integrity](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_scenarios_vision_integrity/): Vision integrity scenarios — does a vision model read a chart honestly?
+- [simpleaudit.tracing.auth](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_auth/): OTLP receiver authentication — the "WHO is allowed to submit" layer.
+- [simpleaudit.tracing.context](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_context/): Trace-context generation and correlation for SimpleAudit.
+- [simpleaudit.tracing.otlp](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_otlp/): OTLP ingestion — accept OpenTelemetry trace exports and normalize to spans.
+- [simpleaudit.tracing.provider](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_provider/): TraceProvider — pluggable source of traces for an audit.
+- [simpleaudit.tracing.selection](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_selection/): Span selection — choose which spans to show the judge.
+- [simpleaudit.tracing.shared](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_shared/): Shared OTLP receiver + per-audit trace session routing.
+- [simpleaudit.tracing.store](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_tracing_store/): Span store — in-memory persistence and query for ingested trace spans.
+- [simpleaudit._event_loop](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit__event_loop/): Running SimpleAudit's coroutines from synchronous code.
+- [simpleaudit.cli](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_cli/): CLI interface for SimpleAudit.
 - [simpleaudit.utils](https://SushantGautam.github.io/simpleaudit-docs/reference/simpleaudit_utils/): Utility functions for SimpleAudit.
 
 ## Agent Skill
