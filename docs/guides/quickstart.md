@@ -46,6 +46,8 @@ def my_agent(user: str, **kwargs):
 auditor = Auditor(
     target=CallableTarget(my_agent
     # NOTE: fn is required (no default)
+,
+    # NOTE: fn is required (no default)
 ),
     judge_model="gpt-4o",
     judge_provider="openai",

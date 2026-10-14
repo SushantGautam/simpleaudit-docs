@@ -12,20 +12,20 @@ pip install simpleaudit
 
 ### Getting Started
 
-- [Installation](guides/installation.md) — Install SimpleAudit via pip and verify the CLI entry point.
-- [Quickstart](guides/quickstart.md) — Run your first single-turn audit and inspect the resulting report.
+- Installation (not yet available) — Install SimpleAudit via pip and verify the CLI entry point.
+- Quickstart (not yet available) — Run your first single-turn audit and inspect the resulting report.
 
 ### Core Concepts
 
-- [Auditing Basics](guides/auditing-basics.md) — Understand the audit loop, experiment configuration, and perturbation strategies.
-- [Targets And Judges](guides/targets-and-judges.md) — Configure local or API model targets and select built-in evaluation judges.
-- [Scenarios](guides/scenarios.md) — Explore predefined test scenarios for health, safety, and RAG contexts.
+- Auditing Basics (not yet available) — Understand the audit loop, experiment configuration, and perturbation strategies.
+- Targets And Judges (not yet available) — Configure local or API model targets and select built-in evaluation judges.
+- Scenarios (not yet available) — Explore predefined test scenarios for health, safety, and RAG contexts.
 
 ### Advanced Usage
 
 - [Context Analysis](guides/context-analysis.md) — Analyze context attribution, derivations, and span-level findings in responses.
-- [Tracing And Observability](guides/tracing-and-observability.md) — Enable OpenTelemetry tracing and aggregate statistical metrics from audits.
-- [Custom Judges](guides/custom-judges.md) — Build custom composite judges using checklists and cross-validation logic.
+- Tracing And Observability (not yet available) — Enable OpenTelemetry tracing and aggregate statistical metrics from audits.
+- Custom Judges (not yet available) — Build custom composite judges using checklists and cross-validation logic.
 
 ## API Reference
 
