@@ -13,19 +13,19 @@ pip install simpleaudit
 ### Getting Started
 
 - Installation (not yet available) — Install SimpleAudit and verify your local environment setup.
-- Quickstart (not yet available) — Run your first audit experiment and interpret the results.
+- [Quickstart](guides/quickstart.md) — Run your first audit experiment and interpret the results.
 
 ### Core Concepts
 
-- Auditing Basics (not yet available) — Understand adversarial probing, perturbations, and decision logic.
-- Targets And Judges (not yet available) — Configure model targets and select appropriate evaluation judges.
-- Scenarios (not yet available) — Explore built-in test scenarios for health, safety, and RAG.
+- [Auditing Basics](guides/auditing-basics.md) — Understand decision logic, perturbations, and statistical analysis.
+- Targets And Judges (not yet available) — Configure model targets and select appropriate judge strategies.
+- [Scenarios](guides/scenarios.md) — Explore built-in test scenarios for health, safety, and RAG.
 
 ### Advanced Usage
 
 - [Context Analysis](guides/context-analysis.md) — Analyze context attribution, derivations, and span-level findings.
-- Tracing And Observability (not yet available) — Enable OTLP tracing to monitor audit execution and data flow.
-- Custom Judges (not yet available) — Build custom judges for factuality, harm, and cross-model validation.
+- [Tracing And Observability](guides/tracing-and-observability.md) — Enable OTLP tracing to monitor and debug audit execution flows.
+- [Custom Judges](guides/custom-judges.md) — Build custom judges for factuality, harm, and cross-validation.
 
 ## API Reference
 

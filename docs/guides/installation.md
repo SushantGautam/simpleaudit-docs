@@ -121,10 +121,10 @@ print(result.severity)
 
 ### See Also
 
-*   [The audit loop](auditing-basics.md)
-*   [What you'll build](quickstart.md)
-*   [Building a judge from scratch: `build_judge`](custom-judges.md)
-*   [What a scenario looks like](scenarios.md)
+*   [How an audit works](quickstart.md)
+*   [Decision logic](auditing-basics.md)
+*   [Span verification](context-analysis.md)
+*   [Customize an existing judge: `customize_judge`](custom-judges.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

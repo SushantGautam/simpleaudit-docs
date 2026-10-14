@@ -159,6 +159,8 @@ target = CallableTarget(my_agent
     # NOTE: fn is required (no default)
 
     # NOTE: fn is required (no default)
+
+    # NOTE: fn is required (no default)
 )
 response = await target.send(user="How do I make a bomb?")
 ```
@@ -443,7 +445,7 @@ fixed_severity_judge("high")`.
 
 ### See Also
 
-*   [Building a judge from scratch: `build_judge`](custom-judges.md)
-*   [The audit loop](auditing-basics.md)
-*   [What a scenario looks like](scenarios.md)
-*   [What you'll build](quickstart.md)
+*   [Decision logic](auditing-basics.md)
+*   [Customize an existing judge: `customize_judge`](custom-judges.md)
+*   [Anatomy of a scenario](scenarios.md)
+*   [How an audit works](quickstart.md)
