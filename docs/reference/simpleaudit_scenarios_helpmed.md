@@ -2,4 +2,7 @@
 
 HelpMed domain scenarios.
 
-::: simpleaudit.scenarios.helpmed
+### Constants
+
+- `HELPMED_SCENARIOS`
+

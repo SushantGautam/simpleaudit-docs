@@ -2,4 +2,7 @@
 
 Arbeidstilsynet arbeidstid (working hours) scenario pack.
 
-::: simpleaudit.scenarios.arbeidstilsynet_arbeidstid
+### Constants
+
+- `ARBEIDSTILSYNET_ARBEIDSTID_SCENARIOS`
+

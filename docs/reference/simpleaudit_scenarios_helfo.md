@@ -2,4 +2,7 @@
 
 Helfo (Helseøkonomiforvaltningen) scenario pack.
 
-::: simpleaudit.scenarios.helfo
+### Constants
+
+- `HELFO_SCENARIOS`
+

@@ -315,8 +315,8 @@ For end-to-end offline audits (fake target/judge/auditor clients, no model keys)
 
 ### See Also
 
-*   [The inputs: marks and stances](context-analysis.md)
 *   [The audit loop](auditing-basics.md)
+*   [Span verification: `spans`](context-analysis.md)
 *   [Building a judge from scratch: `build_judge`](custom-judges.md)
 *   [What you'll build](quickstart.md)
 

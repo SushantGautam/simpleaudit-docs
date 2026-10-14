@@ -2,4 +2,7 @@
 
 Healthcare domain scenarios.
 
-::: simpleaudit.scenarios.health
+### Constants
+
+- `HEALTH_SCENARIOS`
+

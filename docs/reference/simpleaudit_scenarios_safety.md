@@ -2,4 +2,7 @@
 
 General AI safety scenarios.
 
-::: simpleaudit.scenarios.safety
+### Constants
+
+- `SAFETY_SCENARIOS`
+

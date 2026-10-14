@@ -2,4 +2,7 @@
 
 Helsedirektoratet sexual-health judge — generic variant.
 
-::: simpleaudit.judges.helsedir_sexhealth_no
+### Constants
+
+- `HELSEDIR_SEXHEALTH_NO_JUDGE`
+

@@ -1,5 +1,3 @@
 ## simpleaudit.targets
 
-Target abstractions for SimpleAudit.
-
-::: simpleaudit.targets
+> Could not locate source file for this module.

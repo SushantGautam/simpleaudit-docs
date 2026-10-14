@@ -185,7 +185,7 @@ For a lighter-weight path, `CallableTarget` wraps any in-process callable as a t
 *   [The audit loop](auditing-basics.md)
 *   [Building a judge from scratch: `build_judge`](custom-judges.md)
 *   [What you'll build](quickstart.md)
-*   [The inputs: marks and stances](context-analysis.md)
+*   [Requirements](installation.md)
 
 
 **Container capabilities:** `RepeatedExperimentResults` can be iterated with `for` and supports index access with `[]` and supports `len()` and supports `in` membership testing.

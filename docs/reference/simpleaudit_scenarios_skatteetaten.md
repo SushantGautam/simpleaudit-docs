@@ -2,4 +2,7 @@
 
 Skatteetaten (Norwegian Tax Administration) scenario pack.
 
-::: simpleaudit.scenarios.skatteetaten
+### Constants
+
+- `SKATTEETATEN_SCENARIOS`
+

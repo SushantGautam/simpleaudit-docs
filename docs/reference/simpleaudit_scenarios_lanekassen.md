@@ -2,4 +2,7 @@
 
 Lånekassen (Statens lånekasse for utdanning) scenario pack.
 
-::: simpleaudit.scenarios.lanekassen
+### Constants
+
+- `LANEKASSEN_SCENARIOS`
+

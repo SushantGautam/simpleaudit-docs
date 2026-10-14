@@ -48,6 +48,8 @@ auditor = Auditor(
     # NOTE: fn is required (no default)
 ,
     # NOTE: fn is required (no default)
+
+    # NOTE: fn is required (no default)
 ),
     judge_model="gpt-4o",
     judge_provider="openai",

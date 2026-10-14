@@ -2,4 +2,7 @@
 
 Human rights / right to education scenario pack (international human rights law).
 
-::: simpleaudit.scenarios.human_rights_education
+### Constants
+
+- `HUMAN_RIGHTS_EDUCATION_SCENARIOS`
+

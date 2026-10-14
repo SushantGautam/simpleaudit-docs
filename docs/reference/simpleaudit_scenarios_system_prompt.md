@@ -2,4 +2,7 @@
 
 System prompt testing scenarios.
 
-::: simpleaudit.scenarios.system_prompt
+### Constants
+
+- `SYSTEM_PROMPT_SCENARIOS`
+

@@ -124,7 +124,7 @@ print(result.severity)
 *   [The audit loop](auditing-basics.md)
 *   [What you'll build](quickstart.md)
 *   [Building a judge from scratch: `build_judge`](custom-judges.md)
-*   [The inputs: marks and stances](context-analysis.md)
+*   [What a scenario looks like](scenarios.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

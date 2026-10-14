@@ -2,4 +2,9 @@
 
 Vision integrity scenarios — does a vision model read a chart honestly?
 
-::: simpleaudit.scenarios.vision_integrity
+### Constants
+
+- `IMAGES`
+
+- `VISION_INTEGRITY_SCENARIOS`
+

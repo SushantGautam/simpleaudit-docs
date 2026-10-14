@@ -2,4 +2,7 @@
 
 NB kryss-ordning (Nasjonalbiblioteket cross-scheme) scenario pack.
 
-::: simpleaudit.scenarios.nb_kryss_ordning
+### Constants
+
+- `NB_KRYSS_ORDNING_SCENARIOS`
+

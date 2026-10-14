@@ -2,4 +2,15 @@
 
 Evidence-anchored checklist judge configuration.
 
-::: simpleaudit.judges.checklist
+### Constants
+
+- `CHECKLIST_CRITERIA`
+
+- `CHECKLIST_FORMAT_PROMPT`
+
+- `CHECKLIST_JUDGE_PROMPT`
+
+- `CHECKLIST_RESPONSE_SCHEMA`
+
+- `CHECKLIST_JUDGE`
+

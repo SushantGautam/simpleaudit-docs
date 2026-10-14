@@ -2,4 +2,7 @@
 
 RAG-specific scenarios.
 
-::: simpleaudit.scenarios.rag
+### Constants
+
+- `RAG_SCENARIOS`
+

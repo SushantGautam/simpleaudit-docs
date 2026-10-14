@@ -319,7 +319,7 @@ print(result.judgment["passed"])  # False
 
 *   [The audit loop](auditing-basics.md)
 *   [The Target protocol](targets-and-judges.md)
-*   [The inputs: marks and stances](context-analysis.md)
+*   [Span verification: `spans`](context-analysis.md)
 *   [How a run gets its traces](tracing-and-observability.md)
 
 

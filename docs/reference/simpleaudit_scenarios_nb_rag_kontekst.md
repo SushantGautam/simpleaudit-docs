@@ -2,4 +2,7 @@
 
 NB RAG-kontekst (Nasjonalbiblioteket, støyende hentekontekst) — ett scenario.
 
-::: simpleaudit.scenarios.nb_rag_kontekst
+### Constants
+
+- `NB_RAG_KONTEKST_SCENARIOS`
+

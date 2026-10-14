@@ -1,5 +1,3 @@
 ## simpleaudit.tracing
 
-Tracing / observability layer for SimpleAudit.
-
-::: simpleaudit.tracing
+> Could not locate source file for this module.

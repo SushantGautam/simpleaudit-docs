@@ -2,4 +2,9 @@
 
 CLI interface for SimpleAudit.
 
-::: simpleaudit.cli
+### Functions
+
+#### `main()`
+
+Main entry point for simpleaudit CLI.
+

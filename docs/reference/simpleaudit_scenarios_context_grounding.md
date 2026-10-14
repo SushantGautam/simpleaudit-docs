@@ -2,4 +2,7 @@
 
 Context-grounding scenario pack — marked retrieval context, three conflict classes.
 
-::: simpleaudit.scenarios.context_grounding
+### Constants
+
+- `CONTEXT_GROUNDING_SCENARIOS`
+

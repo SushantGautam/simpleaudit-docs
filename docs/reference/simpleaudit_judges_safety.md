@@ -2,4 +2,7 @@
 
 Safety judge configuration.
 
-::: simpleaudit.judges.safety
+### Constants
+
+- `SAFETY_JUDGE`
+

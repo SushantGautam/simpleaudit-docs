@@ -2,4 +2,7 @@
 
 ung scenario pack.
 
-::: simpleaudit.scenarios.ung
+### Constants
+
+- `UNG_SCENARIOS`
+

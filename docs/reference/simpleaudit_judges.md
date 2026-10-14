@@ -1,5 +1,3 @@
 ## simpleaudit.judges
 
-Built-in judge configurations for SimpleAudit.
-
-::: simpleaudit.judges
+> Could not locate source file for this module.

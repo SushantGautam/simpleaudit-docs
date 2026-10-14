@@ -2,4 +2,7 @@
 
 NAV AAP (Arbeidsavklaringspenger) scenario pack.
 
-::: simpleaudit.scenarios.nav_aap
+### Constants
+
+- `NAV_AAP_SCENARIOS`
+

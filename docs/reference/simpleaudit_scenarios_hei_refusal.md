@@ -2,4 +2,7 @@
 
 Hei refusal scenario pack.
 
-::: simpleaudit.scenarios.hei_refusal
+### Constants
+
+- `HEI_REFUSAL_SCENARIOS`
+

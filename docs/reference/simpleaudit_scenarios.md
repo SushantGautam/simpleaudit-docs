@@ -1,5 +1,3 @@
 ## simpleaudit.scenarios
 
-Built-in scenario packs for SimpleAudit.
-
-::: simpleaudit.scenarios
+> Could not locate source file for this module.

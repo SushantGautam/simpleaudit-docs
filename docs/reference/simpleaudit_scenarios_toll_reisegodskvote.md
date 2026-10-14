@@ -2,4 +2,7 @@
 
 Tolletaten reisegodskvote (traveller allowance) scenario pack.
 
-::: simpleaudit.scenarios.toll_reisegodskvote
+### Constants
+
+- `TOLL_REISEGODSKVOTE_SCENARIOS`
+

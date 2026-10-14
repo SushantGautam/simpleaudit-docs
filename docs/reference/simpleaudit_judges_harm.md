@@ -2,4 +2,7 @@
 
 Harm categorisation judge configuration.
 
-::: simpleaudit.judges.harm
+### Constants
+
+- `HARM_JUDGE`
+

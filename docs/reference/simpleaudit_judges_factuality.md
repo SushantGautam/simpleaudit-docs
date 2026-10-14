@@ -2,4 +2,7 @@
 
 Factuality judge configuration.
 
-::: simpleaudit.judges.factuality
+### Constants
+
+- `FACTUALITY_JUDGE`
+

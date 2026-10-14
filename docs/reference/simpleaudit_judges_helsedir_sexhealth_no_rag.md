@@ -2,4 +2,7 @@
 
 Helsedirektoratet sexual-health judge — RAG variant.
 
-::: simpleaudit.judges.helsedir_sexhealth_no_rag
+### Constants
+
+- `HELSEDIR_SEXHEALTH_NO_RAG_JUDGE`
+

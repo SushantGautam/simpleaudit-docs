@@ -2,4 +2,7 @@
 
 Helpfulness judge configuration.
 
-::: simpleaudit.judges.helpfulness
+### Constants
+
+- `HELPFULNESS_JUDGE`
+

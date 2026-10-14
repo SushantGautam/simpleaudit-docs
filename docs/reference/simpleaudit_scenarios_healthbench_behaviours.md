@@ -2,4 +2,7 @@
 
 HealthBench behaviours scenario pack.
 
-::: simpleaudit.scenarios.healthbench_behaviours
+### Constants
+
+- `HEALTHBENCH_BEHAVIOURS_SCENARIOS`
+

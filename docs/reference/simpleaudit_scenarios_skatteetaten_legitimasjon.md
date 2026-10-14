@@ -2,4 +2,7 @@
 
 Skatteetaten legitimasjon (identification at in-person attendance) scenario pack.
 
-::: simpleaudit.scenarios.skatteetaten_legitimasjon
+### Constants
+
+- `SKATTEETATEN_LEGITIMASJON_SCENARIOS`
+

@@ -2,4 +2,5 @@
 
 SimpleAudit - Lightweight AI Safety Auditing Framework
 
-::: simpleaudit
+_No public members found._
+

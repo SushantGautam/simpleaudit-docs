@@ -2,4 +2,7 @@
 
 Abstention judge configuration.
 
-::: simpleaudit.judges.abstention
+### Constants
+
+- `ABSTENTION_JUDGE`
+

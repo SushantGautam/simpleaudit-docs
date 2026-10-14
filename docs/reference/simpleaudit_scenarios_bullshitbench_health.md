@@ -2,4 +2,7 @@
 
 Bullshitbench health scenarios for SimpleAudit
 
-::: simpleaudit.scenarios.bullshitbench_health
+### Constants
+
+- `BROKEN_PREMISE_SCENARIOS`
+

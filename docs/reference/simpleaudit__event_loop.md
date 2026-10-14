@@ -2,4 +2,9 @@
 
 Running SimpleAudit's coroutines from synchronous code.
 
-::: simpleaudit._event_loop
+### Functions
+
+#### `run_sync(coro: Coroutine[Any, Any, Any]) -> Any`
+
+`asyncio.run(coro)`, minus the stale-client message described above.
+
