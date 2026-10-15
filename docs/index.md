@@ -12,7 +12,7 @@ pip install simpleaudit
 
 ### Getting Started
 
-- Installation (not yet available) — Install SimpleAudit and verify your local environment setup.
+- [Installation](guides/installation.md) — Install SimpleAudit and verify your local environment setup.
 - [Quickstart](guides/quickstart.md) — Run your first audit experiment and interpret the results.
 
 ### Core Concepts
