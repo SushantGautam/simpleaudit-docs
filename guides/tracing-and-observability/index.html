@@ -13,7 +13,7 @@
         <link rel="canonical" href="https://SushantGautam.github.io/simpleaudit-docs/guides/tracing-and-observability/">
       
       
-        <link rel="prev" href="../context-analysis/">
+        <link rel="prev" href="../scenarios/">
       
       
         <link rel="next" href="../custom-judges/">
@@ -344,6 +344,83 @@
   
   
   
+    
+    
+    
+    
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2_1">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Getting Started
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../installation/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Installation
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../quickstart/" class="md-nav__link">
         
@@ -361,6 +438,14 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -422,14 +507,14 @@
   
   
     <li class="md-nav__item">
-      <a href="../auditing-basics/" class="md-nav__link">
+      <a href="../targets-and-judges/" class="md-nav__link">
         
   
   
   <span class="md-ellipsis">
     
   
-    Auditing Basics
+    Targets And Judges
   
 
     
@@ -534,34 +619,6 @@
                 
   
   
-  
-  
-    <li class="md-nav__item">
-      <a href="../context-analysis/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Context Analysis
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
     
   
   
@@ -625,85 +682,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-it-fits-together" class="md-nav__link">
+  <a href="#how-a-run-is-traced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How it fits together
+        How a run is traced
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ingestion-parsing-otlp-payloads" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ingestion: parsing OTLP payloads
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#spanstore-querying-ingested-spans" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SpanStore: querying ingested spans
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#receiving-otlp-exports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Receiving OTLP exports
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Receiving OTLP exports">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#otlptracereceiver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OTLPTraceReceiver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ephemeralotlpreceiver-otlphttp-json" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        EphemeralOTLPReceiver (OTLP/HTTP JSON)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ephemeralotlpgrpcreceiver-otlpgrpc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        EphemeralOTLPGRPCReceiver (OTLP/gRPC)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -718,6 +703,17 @@
   
     <nav class="md-nav" aria-label="Trace providers">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traceprovider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TraceProvider
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#builtinotlp" class="md-nav__link">
@@ -747,21 +743,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-an-audited-run-audit_with_tracing" class="md-nav__link">
+  <a href="#receiving-otlp-exports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running an audited run: audit_with_tracing
+        Receiving OTLP exports
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Receiving OTLP exports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ephemeralotlpreceiver-otlphttp-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EphemeralOTLPReceiver (OTLP/HTTP JSON)
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#selecting-evidence-spans" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#ephemeralotlpgrpcreceiver-otlpgrpc" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selecting evidence spans
+        EphemeralOTLPGRPCReceiver (OTLP/gRPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otlptracereceiver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OTLPTraceReceiver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse_otlp_json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_otlp_json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storing-and-querying-spans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storing and querying spans
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Storing and querying spans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalize_span" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_span
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spanstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpanStore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-audit-with-tracing-audit_with_tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running an audit with tracing: audit_with_tracing
       
     </span>
   </a>
@@ -3332,85 +3417,13 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#how-it-fits-together" class="md-nav__link">
+  <a href="#how-a-run-is-traced" class="md-nav__link">
     <span class="md-ellipsis">
       
-        How it fits together
+        How a run is traced
       
     </span>
   </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#ingestion-parsing-otlp-payloads" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Ingestion: parsing OTLP payloads
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#spanstore-querying-ingested-spans" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        SpanStore: querying ingested spans
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#receiving-otlp-exports" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Receiving OTLP exports
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Receiving OTLP exports">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#otlptracereceiver" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OTLPTraceReceiver
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ephemeralotlpreceiver-otlphttp-json" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        EphemeralOTLPReceiver (OTLP/HTTP JSON)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#ephemeralotlpgrpcreceiver-otlpgrpc" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        EphemeralOTLPGRPCReceiver (OTLP/gRPC)
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
   
 </li>
       
@@ -3425,6 +3438,17 @@
   
     <nav class="md-nav" aria-label="Trace providers">
       <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#traceprovider" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TraceProvider
+      
+    </span>
+  </a>
+  
+</li>
         
           <li class="md-nav__item">
   <a href="#builtinotlp" class="md-nav__link">
@@ -3454,21 +3478,110 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#running-an-audited-run-audit_with_tracing" class="md-nav__link">
+  <a href="#receiving-otlp-exports" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Running an audited run: audit_with_tracing
+        Receiving OTLP exports
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Receiving OTLP exports">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ephemeralotlpreceiver-otlphttp-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EphemeralOTLPReceiver (OTLP/HTTP JSON)
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#selecting-evidence-spans" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#ephemeralotlpgrpcreceiver-otlpgrpc" class="md-nav__link">
     <span class="md-ellipsis">
       
-        Selecting evidence spans
+        EphemeralOTLPGRPCReceiver (OTLP/gRPC)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#otlptracereceiver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        OTLPTraceReceiver
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#parse_otlp_json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        parse_otlp_json
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#storing-and-querying-spans" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Storing and querying spans
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Storing and querying spans">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#normalize_span" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        normalize_span
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#spanstore" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SpanStore
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#running-an-audit-with-tracing-audit_with_tracing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Running an audit with tracing: audit_with_tracing
       
     </span>
   </a>
@@ -3535,302 +3648,384 @@
 
 
 <h1 id="tracing-and-observability">Tracing And Observability</h1>
-<p>SimpleAudit can instrument an audit run with <strong>OpenTelemetry (OTLP) tracing</strong> so you can see — and later judge against — the internal execution flow of the target under test: retrieved documents, tool calls, agent reasoning, guardrail decisions, and LLM calls. The engine propagates a W3C <code>traceparent</code> header per turn; if your target is OTel-instrumented (OpenInference, OpenLLMetry, MLflow, raw OTel), its spans land in SimpleAudit's span store and are attached to each result as <code>evidence_spans</code>.</p>
-<p>Tracing is optional: black-box auditing works with no tracing at all. This layer lives in <code>simpleaudit.tracing</code> and is fully importable from the package root:</p>
+<p>SimpleAudit can act as an OpenTelemetry (OTLP) trace receiver so that an instrumented target — a RAG pipeline, an agent runtime, an app like Open WebUI — pushes its spans directly into the audit. The engine then correlates each conversation turn with a W3C <code>traceparent</code>, collects the spans the target emitted, and attaches the evidence-relevant ones to each result's judgment (<code>result.judgment["evidence_spans"]</code>) so judges and findings can cite exactly which retrieved document or tool call produced the answer.</p>
+<p>Tracing is optional: black-box auditing works with no tracing at all. Everything in this page lives in the <code>simpleaudit.tracing</code> package.</p>
 <pre><code class="language-python">from simpleaudit.tracing import (
-    BuiltinOTLP, ExternalTraceProvider, TraceProvider, audit_with_tracing,
-    EphemeralOTLPReceiver, EphemeralOTLPGRPCReceiver, OTLPTraceReceiver,
-    SpanStore, normalize_span, parse_otlp_json,
-    TraceCorrelation, make_traceparent, new_trace_id,
-    select_spans, evidence_spans_for_turn, summarize_for_judge,
+    BuiltinOTLP,
+    EphemeralOTLPReceiver,
+    EphemeralOTLPGRPCReceiver,
+    ExternalTraceProvider,
+    OTLPTraceReceiver,
+    SpanStore,
+    TraceProvider,
+    TraceCorrelation,
+    audit_with_tracing,
+    normalize_span,
+    parse_otlp_json,
 )
 </code></pre>
-<h2 id="how-it-fits-together">How it fits together</h2>
+<h2 id="how-a-run-is-traced">How a run is traced</h2>
+<p>The flow for a <strong>controlled target</strong> (one you can point at an OTLP endpoint):</p>
 <ol>
-<li><strong>Propagate.</strong> For every scenario/turn, the auditor builds a trace id (<code>new_trace_id()</code>, 32 hex chars) and sends <code>trace_headers={"traceparent": ...}</code> on the <code>TargetContext</code> passed to your target. The value comes from <code>make_traceparent(trace_id)</code> and has the form <code>00-&lt;32hex&gt;-&lt;16hex&gt;-01</code>.</li>
-<li><strong>Collect.</strong> Spans arrive either at a built-in ephemeral OTLP receiver or are fetched afterwards from your own backend. Both paths go through <code>normalize_span</code> into a <code>SpanStore</code>.</li>
-<li><strong>Correlate.</strong> A <code>TraceCorrelation(audit_run_id=...)</code> maps <code>turn_id -&gt; [trace_id]</code> via <code>record(turn_id, trace_id)</code>, and <code>spans_for_turn(turn_id, store)</code> collects every span belonging to that turn's traces (a turn may fan out to several traces).</li>
-<li><strong>Select &amp; attach.</strong> Evidence-relevant spans are selected (kind filter + token budget) and attached to each <code>AuditResult</code> under <code>result.judgment["evidence_spans"]</code>, each carrying a <code>provenance</code> dict (<code>trace_id</code>, <code>span_id</code>, <code>kind</code>, <code>name</code>) so findings can reference them.</li>
+<li>Start a provider (default: <code>BuiltinOTLP</code>, an ephemeral OTLP receiver).</li>
+<li>Point the target's <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> at <code>provider.endpoint</code> (with <code>OTEL_EXPORTER_OTLP_PROTOCOL=http/json</code>) for the duration of the run.</li>
+<li>Run the audit. The engine propagates a W3C <code>traceparent</code> per turn and records <code>turn_id -&gt; trace_id</code> in a <code>TraceCorrelation</code>.</li>
+<li>After the run, collect each scenario's spans (the union of its turns' traces) and select the evidence-relevant kinds.</li>
+<li>Stop the provider (spans are discarded for <code>BuiltinOTLP</code>).</li>
 </ol>
-<h2 id="ingestion-parsing-otlp-payloads">Ingestion: parsing OTLP payloads</h2>
-<p><code>parse_otlp_json(payload)</code> parses an OTLP/HTTP JSON <code>ExportTraceServiceRequest</code> (a dict, JSON string, or bytes) into raw span dicts. It walks <code>resourceSpans[].scopeSpans[].spans[]</code>, merges resource attributes into each span's attributes, decodes the OTLP <code>AnyValue</code> oneof (<code>stringValue</code>, <code>intValue</code>, <code>doubleValue</code>, <code>boolValue</code>, <code>arrayValue</code>, <code>kvlistValue</code>), converts nanosecond timestamps to Unix floats, and maps status codes to <code>"OK"</code> / <code>"ERROR"</code>.</p>
-<p><code>normalize_span(raw)</code> then flattens a raw span (OTel/OpenInference-shaped) to the store schema: <code>span_id</code>, <code>trace_id</code>, <code>name</code>, <code>kind</code>, <code>attributes</code>, <code>parent_span_id</code>, <code>start_time</code>, <code>end_time</code>, <code>status</code>. Kind handling: the string attribute <code>openinference.span.kind</code> / <code>span.kind</code> wins; an int kind (the OTLP proto enum) is mapped by name (<code>1 -&gt; INTERNAL</code>, <code>2 -&gt; SERVER</code>, <code>3 -&gt; CLIENT</code>, ...); missing kinds default to <code>"CHAIN"</code>.</p>
-<pre><code class="language-python">import json
-from simpleaudit.tracing import SpanStore, parse_otlp_json
+<h2 id="trace-providers">Trace providers</h2>
+<h3 id="traceprovider"><code>TraceProvider</code></h3>
+<p>The base class defining the minimal contract every provider implements:</p>
+<ul>
+<li><code>start()</code> / <code>stop()</code> — lifecycle; it also works as a context manager (<code>__enter__</code>/<code>__exit__</code>).</li>
+<li><code>endpoint</code> property — the OTLP URL the target should export to, or <code>None</code> for fetch-based providers.</li>
+<li><code>fetch(trace_id)</code> — return the normalized spans for one trace id (may be empty).</li>
+</ul>
+<h3 id="builtinotlp"><code>BuiltinOTLP</code></h3>
+<p>Runs an ephemeral OTLP receiver for the audit and collects spans in memory. Best for CI, local apps, staging, and agent SDKs you control — no external collector required.</p>
+<pre><code class="language-python">def __init__(self, host=&quot;127.0.0.1&quot;, port=0, auth=None)
+</code></pre>
+<ul>
+<li><code>port=0</code> binds an ephemeral port; read the actual one via <code>actual_port</code> on the underlying receiver.</li>
+<li><code>auth</code> optionally takes an <code>OTLPAuth</code> gate that checks each POST's <code>Authorization</code> header.</li>
+<li><code>endpoint</code> — the OTLP/HTTP traces URL to configure the target's exporter to.</li>
+<li><code>store</code> — the backing <code>SpanStore</code> (an empty store when not started).</li>
+<li><code>fetch(trace_id)</code> — <code>store.by_trace(trace_id)</code> while running, else <code>[]</code>.</li>
+<li>Spans are discarded on <code>stop()</code>.</li>
+</ul>
+<h3 id="externaltraceprovider"><code>ExternalTraceProvider</code></h3>
+<p>For targets that already ship traces to their own observability backend (Tempo, Jaeger, an OTel Collector, etc.). SimpleAudit propagates the <code>traceparent</code> during the run; after the response you call <code>fetch(trace_id)</code> to retrieve the spans from that backend. Subclass it and implement <code>_fetch_remote(trace_id)</code>:</p>
+<pre><code class="language-python">class TempoProvider(ExternalTraceProvider):
+    def _fetch_remote(self, trace_id: str):
+        # GET {base}/api/traces/{trace_id} -&gt; OTLP JSON -&gt; parse
+        ...
+</code></pre>
+<p>The base implementation of <code>_fetch_remote</code> raises <code>NotImplementedError</code>, so a bare <code>ExternalTraceProvider</code> returns nothing until you subclass it.</p>
+<h2 id="receiving-otlp-exports">Receiving OTLP exports</h2>
+<h3 id="ephemeralotlpreceiver-otlphttp-json"><code>EphemeralOTLPReceiver</code> (OTLP/HTTP JSON)</h3>
+<p>A self-contained receiver that lives for one audit. It speaks the <strong>OTLP/HTTP JSON</strong> protocol (<code>POST /v1/traces</code>), which is what <code>OTEL_EXPORTER_OTLP_PROTOCOL=http/json</code> selects. The server runs on a background thread (aiohttp), so it works from both sync and async callers.</p>
+<pre><code class="language-python">def __init__(self, host=&quot;127.0.0.1&quot;, port=0, store=None, authenticator=None, auth=None)
+</code></pre>
+<ul>
+<li><code>endpoint</code> — <code>http://{host}:{actual_port}/v1/traces</code>.</li>
+<li><code>actual_port</code> — the bound port (useful with <code>port=0</code>).</li>
+<li><code>store</code> — the in-memory <code>SpanStore</code> holding ingested spans.</li>
+<li><code>start()</code> / <code>stop()</code> — start the server; <code>stop()</code> discards all spans (ephemeral by design). Both sync and async context managers are supported.</li>
+</ul>
+<pre><code class="language-python">import asyncio, httpx
 
-payload = {
-    &quot;resourceSpans&quot;: [
-        {
-            &quot;resource&quot;: {&quot;attributes&quot;: [{&quot;key&quot;: &quot;service.name&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;agent-app&quot;}}]},
-            &quot;scopeSpans&quot;: [
+async def main():
+    rx = EphemeralOTLPReceiver().start()
+    try:
+        # In a real setup, set your target's OTEL_EXPORTER_OTLP_ENDPOINT here:
+        #   os.environ[&quot;OTEL_EXPORTER_OTLP_ENDPOINT&quot;] = rx.endpoint
+        #   os.environ[&quot;OTEL_EXPORTER_OTLP_PROTOCOL&quot;] = &quot;http/json&quot;
+        payload = {
+            &quot;resourceSpans&quot;: [
                 {
-                    &quot;spans&quot;: [
+                    &quot;resource&quot;: {&quot;attributes&quot;: [{&quot;key&quot;: &quot;service.name&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;my-agent&quot;}}]},
+                    &quot;scopeSpans&quot;: [
+                        {&quot;spans&quot;: [
+                            {
+                                &quot;traceId&quot;: &quot;a&quot; * 32,
+                                &quot;spanId&quot;: &quot;b&quot; * 16,
+                                &quot;name&quot;: &quot;POST /chat&quot;,
+                                &quot;kind&quot;: 2,
+                                &quot;startTimeUnixNano&quot;: 1_000_000_000,
+                                &quot;endTimeUnixNano&quot;: 2_000_000_000,
+                                &quot;attributes&quot;: [
+                                    {&quot;key&quot;: &quot;openinference.span.kind&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;RETRIEVER&quot;}},
+                                    {&quot;key&quot;: &quot;http.url&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;http://x/chat&quot;}},
+                                ],
+                                &quot;status&quot;: {&quot;code&quot;: 1},
+                            }
+                        ]}
+                    ],
+                }
+            ]
+        }
+        async with httpx.AsyncClient(timeout=10) as client:
+            r = await client.post(rx.endpoint, json=payload)
+            assert r.status_code == 200
+            assert r.json()[&quot;partialSuccess&quot;] == {&quot;rejectedSpans&quot;: 0}
+
+        spans = rx.store.by_trace(&quot;a&quot; * 32)
+        print(spans[0][&quot;name&quot;], spans[0][&quot;attributes&quot;][&quot;http.url&quot;])
+    finally:
+        rx.stop()
+    # Spans are discarded on stop (ephemeral by design).
+    assert len(rx.store) == 0
+
+asyncio.run(main())
+</code></pre>
+<p>Malformed bodies still get an HTTP 200, but the ack reports the rejection: <code>{"partialSuccess": {"rejectedSpans": 1}}</code>.</p>
+<h3 id="ephemeralotlpgrpcreceiver-otlpgrpc"><code>EphemeralOTLPGRPCReceiver</code> (OTLP/gRPC)</h3>
+<p>Same idea, but speaking the <strong>OTLP/gRPC</strong> protocol (<code>TraceService/Export</code>) — what <code>OTEL_EXPORTER_OTLP_PROTOCOL=grpc</code> (the default) selects on port 4317. Useful when the target exports over gRPC and you want to capture spans without running a full OTel Collector.</p>
+<pre><code class="language-python">def __init__(self, host=&quot;127.0.0.1&quot;, port=0, store=None)
+</code></pre>
+<ul>
+<li><code>endpoint</code> — <code>http://{host}:{actual_port}</code> (no <code>/v1/traces</code> suffix for gRPC).</li>
+<li><code>actual_port</code> — the bound port.</li>
+<li><code>start()</code> / <code>stop()</code> — start the gRPC server on a background thread; <code>stop()</code> discards the in-memory spans. Sync and async context managers are supported.</li>
+</ul>
+<pre><code class="language-python">rx = EphemeralOTLPGRPCReceiver(port=0).start()
+try:
+    # Target config: OTEL_EXPORTER_OTLP_ENDPOINT = rx.endpoint
+    #               OTEL_EXPORTER_OTLP_PROTOCOL  = grpc
+    ...
+finally:
+    rx.stop()
+</code></pre>
+<p>Requires <code>grpc</code> and the OpenTelemetry proto packages to be installed.</p>
+<h3 id="otlptracereceiver"><code>OTLPTraceReceiver</code></h3>
+<p>The minimal async building block behind the receivers above — accept a POSTed OTLP JSON body, store the spans, and return the OTLP ack. Use it standalone (e.g. to ingest a saved export file) or embed it in your own ASGI framework:</p>
+<pre><code class="language-python">def __init__(self, store=None, authenticator=None, auth=None)
+</code></pre>
+<ul>
+<li><code>handle(body, authorization=None)</code> — async; parses <code>body</code> (str/bytes/dict), stores the spans, and returns the ack <code>{"partialSuccess": {"rejectedSpans": 0}}</code>. When an <code>authenticator</code> was provided, a failed check returns a 401 <code>{"error": ...}</code> payload and stores nothing.</li>
+<li><code>trace_ids()</code> — the distinct trace ids seen so far.</li>
+<li><code>store</code> — the backing <code>SpanStore</code>.</li>
+</ul>
+<pre><code class="language-python">import asyncio
+
+from simpleaudit.tracing import OTLPTraceReceiver, SpanStore
+
+async def main():
+    store = SpanStore()
+    receiver = OTLPTraceReceiver(store=store)
+    body = {
+        &quot;resourceSpans&quot;: [
+            {
+                &quot;resource&quot;: {&quot;attributes&quot;: []},
+                &quot;scopeSpans&quot;: [
+                    {&quot;spans&quot;: [
                         {
-                            &quot;traceId&quot;: &quot;a&quot; * 32,
-                            &quot;spanId&quot;: &quot;b&quot; * 16,
+                            &quot;traceId&quot;: &quot;c&quot; * 32,
+                            &quot;spanId&quot;: &quot;d&quot; * 16,
                             &quot;name&quot;: &quot;retriever&quot;,
                             &quot;kind&quot;: 1,
                             &quot;startTimeUnixNano&quot;: 1_000_000_000,
                             &quot;endTimeUnixNano&quot;: 2_000_000_000,
                             &quot;attributes&quot;: [
                                 {&quot;key&quot;: &quot;openinference.span.kind&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;RETRIEVER&quot;}},
-                                {&quot;key&quot;: &quot;docs&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;doc1,doc2&quot;}},
                             ],
-                            &quot;status&quot;: {&quot;code&quot;: 1},
                         }
-                    ]
-                }
+                    ]}
+                ],
+            }
+        ]
+    }
+    ack = await receiver.handle(body)
+    print(ack)                 # {'partialSuccess': {'rejectedSpans': 0}, 'authenticated': True}
+    print(receiver.trace_ids())  # ['cccccccccccccccccccccccccccccccc']
+    print(len(store.by_trace(&quot;c&quot; * 32)))  # 1
+
+asyncio.run(main())
+</code></pre>
+<h3 id="parse_otlp_json"><code>parse_otlp_json</code></h3>
+<p>Transport-agnostic parsing of an OTLP/HTTP JSON <code>ExportTraceServiceRequest</code> payload into raw span dicts. Accepts a dict, a JSON string, or bytes. It walks <code>resourceSpans[].scopeSpans[].spans</code>, decodes the OTLP <code>AnyValue</code> attribute oneofs (<code>stringValue</code>, <code>intValue</code>, <code>doubleValue</code>, <code>boolValue</code>, <code>arrayValue</code>, <code>kvlistValue</code>), merges resource-level attributes under span-level ones, converts nanosecond timestamps to Unix seconds, and maps status codes to <code>"OK"</code>/<code>"ERROR"</code>. Each returned span has <code>trace_id</code>, <code>span_id</code>, <code>parent_span_id</code>, <code>name</code>, <code>kind</code>, <code>start_time</code>, <code>end_time</code>, <code>status</code>, and <code>attributes</code>.</p>
+<pre><code class="language-python">from simpleaudit.tracing import parse_otlp_json
+
+payload = {
+    &quot;resourceSpans&quot;: [
+        {
+            &quot;resource&quot;: {&quot;attributes&quot;: [{&quot;key&quot;: &quot;service.name&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;open-webui&quot;}}]},
+            &quot;scopeSpans&quot;: [
+                {&quot;spans&quot;: [
+                    {
+                        &quot;traceId&quot;: &quot;a&quot; * 32,
+                        &quot;spanId&quot;: &quot;b&quot; * 16,
+                        &quot;name&quot;: &quot;POST /chat&quot;,
+                        &quot;kind&quot;: 2,
+                        &quot;startTimeUnixNano&quot;: 1_000_000_000,
+                        &quot;endTimeUnixNano&quot;: 2_000_000_000,
+                        &quot;attributes&quot;: [{&quot;key&quot;: &quot;http.method&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;POST&quot;}}],
+                        &quot;status&quot;: {&quot;code&quot;: 1},
+                    }
+                ]}
             ],
         }
     ]
 }
 
-raw_spans = parse_otlp_json(payload)          # also accepts json.dumps(payload)
+spans = parse_otlp_json(payload)
+print(spans[0][&quot;name&quot;])                          # POST /chat
+print(spans[0][&quot;attributes&quot;][&quot;service.name&quot;])    # open-webui (merged from resource)
+print(spans[0][&quot;start_time&quot;])                    # 1.0
+</code></pre>
+<h2 id="storing-and-querying-spans">Storing and querying spans</h2>
+<h3 id="normalize_span"><code>normalize_span</code></h3>
+<p>Normalizes a raw span (OTel/OpenInference-shaped) to the flat store schema: <code>span_id</code>, <code>trace_id</code>, <code>name</code>, <code>kind</code>, <code>attributes</code>, <code>parent_span_id</code>, <code>start_time</code>, <code>end_time</code>, <code>status</code>. It accepts the common OpenInference/OTel attribute keys, prefers the string kind attribute (<code>openinference.span.kind</code>, <code>span.kind</code>) over the OTLP proto int kind (which is mapped to names like <code>INTERNAL</code>/<code>SERVER</code>), and defaults the kind to <code>"CHAIN"</code> when absent.</p>
+<h3 id="spanstore"><code>SpanStore</code></h3>
+<p>An in-memory, transport-agnostic store with the queries the audit engine needs:</p>
+<table>
+<thead>
+<tr>
+<th>Method</th>
+<th>Returns</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>add(raw)</code></td>
+<td>the normalized span (a <code>uuid4</code> hex id is generated if the span has none)</td>
+</tr>
+<tr>
+<td><code>add_many(raws)</code></td>
+<td>list of normalized spans</td>
+</tr>
+<tr>
+<td><code>get(span_id)</code></td>
+<td>one span or <code>None</code></td>
+</tr>
+<tr>
+<td><code>by_trace(trace_id)</code></td>
+<td>all spans for a trace</td>
+</tr>
+<tr>
+<td><code>by_kind(kind)</code></td>
+<td>spans matching a kind, case-insensitive (<code>RETRIEVER</code>, <code>TOOL</code>, <code>LLM</code>, ...)</td>
+</tr>
+<tr>
+<td><code>by_attribute(key, value)</code></td>
+<td>spans whose <code>attributes[key] == value</code></td>
+</tr>
+<tr>
+<td><code>all()</code></td>
+<td>every stored span</td>
+</tr>
+<tr>
+<td><code>len(store)</code></td>
+<td>number of stored spans</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="language-python">from simpleaudit.tracing import SpanStore, normalize_span
+
 store = SpanStore()
-store.add_many(raw_spans)
+store.add({&quot;span_id&quot;: &quot;s1&quot;, &quot;trace_id&quot;: &quot;t1&quot;, &quot;name&quot;: &quot;retriever&quot;,
+           &quot;attributes&quot;: {&quot;openinference.span.kind&quot;: &quot;RETRIEVER&quot;}})
+store.add({&quot;span_id&quot;: &quot;s2&quot;, &quot;trace_id&quot;: &quot;t1&quot;, &quot;name&quot;: &quot;llm&quot;,
+           &quot;attributes&quot;: {&quot;openinference.span.kind&quot;: &quot;LLM&quot;}})
+store.add({&quot;span_id&quot;: &quot;s3&quot;, &quot;trace_id&quot;: &quot;t2&quot;, &quot;name&quot;: &quot;tool&quot;,
+           &quot;attributes&quot;: {&quot;openinference.span.kind&quot;: &quot;TOOL&quot;}})
 
-span = store.by_trace(&quot;a&quot; * 32)[0]
-print(span[&quot;name&quot;])                           # &quot;retriever&quot;
-print(span[&quot;attributes&quot;][&quot;service.name&quot;])     # &quot;agent-app&quot; (resource attr merged)
-print(span[&quot;attributes&quot;][&quot;openinference.span.kind&quot;])  # &quot;RETRIEVER&quot;
-print(span[&quot;start_time&quot;], span[&quot;end_time&quot;])   # 1.0 2.0
+print([s[&quot;span_id&quot;] for s in store.by_trace(&quot;t1&quot;)])      # ['s1', 's2']
+print([s[&quot;span_id&quot;] for s in store.by_kind(&quot;retriever&quot;)]) # ['s1']
+print(len(store))                                         # 3
 </code></pre>
-<h2 id="spanstore-querying-ingested-spans">SpanStore: querying ingested spans</h2>
-<p><code>SpanStore</code> is an in-memory store (no storage dependency) keyed by <code>span_id</code>, with indexes for the queries the audit engine needs:</p>
-<ul>
-<li><code>add(raw)</code> / <code>add_many(raws)</code> — normalize and store (missing <code>span_id</code>s get a fresh UUID);</li>
-<li><code>get(span_id)</code> — one span or <code>None</code>;</li>
-<li><code>by_trace(trace_id)</code> — all spans of a trace;</li>
-<li><code>by_kind(kind)</code> — case-insensitive kind match, e.g. <code>by_kind("retriever")</code> finds <code>RETRIEVER</code> spans;</li>
-<li><code>by_attribute(key, value)</code> — e.g. <code>by_attribute("simpleaudit.turn_id", "turn_5")</code>;</li>
-<li><code>all()</code> and <code>len(store)</code>.</li>
-</ul>
-<h2 id="receiving-otlp-exports">Receiving OTLP exports</h2>
-<p>Three receivers accept spans from instrumented targets:</p>
-<h3 id="otlptracereceiver">OTLPTraceReceiver</h3>
-<p>A minimal async receiver you can embed in any ASGI app or drive standalone. <code>handle(body, authorization=None)</code> ingests an OTLP JSON export body, stores the spans, and returns the OTLP ack <code>{"partialSuccess": {"rejectedSpans": 0}}</code>. <code>trace_ids()</code> lists the distinct trace ids seen so far. An optional auth gate (<code>auth</code> / <code>authenticator</code>) rejects bad credentials with a 401 payload before anything is stored.</p>
-<pre><code class="language-python">import asyncio
-from simpleaudit.tracing import OTLPTraceReceiver
-
-async def main():
-    receiver = OTLPTraceReceiver()
-    ack = await receiver.handle(json.dumps(payload))
-    assert ack[&quot;partialSuccess&quot;][&quot;rejectedSpans&quot;] == 0
-    print(len(receiver.store))      # 1
-    print(receiver.trace_ids())     # ['aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa']
-
-asyncio.run(main())
+<h2 id="running-an-audit-with-tracing-audit_with_tracing">Running an audit with tracing: <code>audit_with_tracing</code></h2>
+<pre><code class="language-python">async def audit_with_tracing(auditor, scenarios, *, provider=None, audit_run_id=None, token_budget=None, **run_kwargs)
 </code></pre>
-<h3 id="ephemeralotlpreceiver-otlphttp-json">EphemeralOTLPReceiver (OTLP/HTTP JSON)</h3>
-<p>A self-contained HTTP server (aiohttp on a background thread) that lives for one audit. It speaks the <strong>OTLP/HTTP JSON</strong> protocol (<code>POST /v1/traces</code>), which is what <code>OTEL_EXPORTER_OTLP_PROTOCOL=http/json</code> selects. Port <code>0</code> binds an ephemeral port; <code>endpoint</code> gives the full URL (<code>http://127.0.0.1:&lt;port&gt;/v1/traces</code>) and <code>actual_port</code> the bound port. It supports sync and async context managers. Spans are discarded on <code>stop()</code> — ephemeral by design.</p>
+<p>The end-to-end helper. It:</p>
+<ol>
+<li>Starts the provider (defaulting to <code>BuiltinOTLP()</code> when none is given) and generates an <code>audit_run_id</code> when not supplied.</li>
+<li>Creates a <code>TraceCorrelation</code> and hooks it into providers that support <code>register_trace</code> (e.g. <code>SharedOTLP</code>).</li>
+<li>Calls <code>auditor.run_async(scenarios, audit_run_id=..., trace_correlation=..., **run_kwargs)</code> inside the provider's context.</li>
+<li>Collects and de-duplicates the spans for every recorded trace, selects the evidence-relevant kinds (honoring <code>token_budget</code>), and stops the provider.</li>
+<li>Attaches the selected spans to each result under <code>result.judgment["evidence_spans"]</code> (each span carries provenance with its exact <code>trace_id</code>/<code>span_id</code> for a finding's <code>EvidenceRef</code>).</li>
+</ol>
+<p>It does <strong>not</strong> mutate the target: for a target that reads its OTLP endpoint from the environment, set <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> to <code>provider.endpoint</code> before the run. Note that per-scenario attribution is approximate when <code>max_workers &gt; 1</code> (the correlation is shared across scenarios); the per-span provenance remains exact.</p>
+<p>You can also wire tracing manually by passing <code>audit_run_id=</code> and <code>trace_correlation=</code> directly to <code>ModelAuditor.run_async</code> / <code>run</code> — see the offline example below.</p>
+<h2 id="offline-usage-no-api-key">Offline usage (no API key)</h2>
+<p>The whole ingestion path — receiver, parser, normalization, store, and correlation — runs locally with no network calls and no model keys. This exercises <code>EphemeralOTLPReceiver</code>, <code>parse_otlp_json</code>, <code>normalize_span</code>, <code>SpanStore</code>, and <code>TraceCorrelation</code> end to end:</p>
 <pre><code class="language-python">import asyncio
 import httpx
-from simpleaudit.tracing import EphemeralOTLPReceiver
+
+from simpleaudit.tracing import (
+    EphemeralOTLPReceiver,
+    SpanStore,
+    TraceCorrelation,
+    normalize_span,
+    parse_otlp_json,
+)
+
+TRACE_ID = &quot;a&quot; * 32
 
 async def main():
+    # 1. Start the built-in OTLP receiver (binds an ephemeral localhost port).
     rx = EphemeralOTLPReceiver().start()
     try:
-        # Point your target's exporter here:
-        #   OTEL_EXPORTER_OTLP_ENDPOINT=&lt;rx.endpoint&gt;
-        #   OTEL_EXPORTER_OTLP_PROTOCOL=http/json
+        # 2. Simulate the target exporting one OTLP/HTTP JSON batch.
+        payload = {
+            &quot;resourceSpans&quot;: [
+                {
+                    &quot;resource&quot;: {&quot;attributes&quot;: []},
+                    &quot;scopeSpans&quot;: [
+                        {&quot;spans&quot;: [
+                            {
+                                &quot;traceId&quot;: TRACE_ID,
+                                &quot;spanId&quot;: &quot;b&quot; * 16,
+                                &quot;name&quot;: &quot;retriever&quot;,
+                                &quot;kind&quot;: 1,
+                                &quot;startTimeUnixNano&quot;: 1_000_000_000,
+                                &quot;endTimeUnixNano&quot;: 2_000_000_000,
+                                &quot;attributes&quot;: [
+                                    {&quot;key&quot;: &quot;openinference.span.kind&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;RETRIEVER&quot;}},
+                                ],
+                            },
+                            {
+                                &quot;traceId&quot;: TRACE_ID,
+                                &quot;spanId&quot;: &quot;c&quot; * 16,
+                                &quot;name&quot;: &quot;chain&quot;,
+                                &quot;kind&quot;: 1,
+                                &quot;startTimeUnixNano&quot;: 2_000_000_000,
+                                &quot;endTimeUnixNano&quot;: 3_000_000_000,
+                                &quot;attributes&quot;: [
+                                    {&quot;key&quot;: &quot;openinference.span.kind&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;CHAIN&quot;}},
+                                ],
+                            },
+                        ]}
+                    ],
+                }
+            ]
+        }
         async with httpx.AsyncClient(timeout=10) as client:
             r = await client.post(rx.endpoint, json=payload)
             assert r.status_code == 200
-            assert r.json()[&quot;partialSuccess&quot;] == {&quot;rejectedSpans&quot;: 0}
-        print(len(rx.store))                 # 1
-        print(rx.store.by_trace(&quot;a&quot; * 32)[0][&quot;name&quot;])
+
+        # 3. Query the store the same way the audit engine does.
+        spans = rx.store.by_trace(TRACE_ID)
+        assert {s[&quot;span_id&quot;] for s in spans} == {&quot;b&quot; * 16, &quot;c&quot; * 16}
+        retrievers = rx.store.by_kind(&quot;RETRIEVER&quot;)
+        assert len(retrievers) == 1
+
+        # 4. Correlate a turn with the trace, as the engine does per turn.
+        corr = TraceCorrelation(audit_run_id=&quot;run_demo&quot;)
+        corr.record(&quot;turn_1&quot;, TRACE_ID)
+        turn_spans = corr.spans_for_turn(&quot;turn_1&quot;, rx.store)
+        assert {s[&quot;span_id&quot;] for s in turn_spans} == {&quot;b&quot; * 16, &quot;c&quot; * 16}
     finally:
         rx.stop()
-    assert len(rx.store) == 0                # discarded on stop
+    assert len(rx.store) == 0  # ephemeral: spans discarded on stop
+
+    # 5. Transport-agnostic pieces work without any server at all.
+    raw = parse_otlp_json(payload)
+    assert raw[0][&quot;trace_id&quot;] == TRACE_ID
+    norm = normalize_span(raw[0])
+    assert norm[&quot;kind&quot;] == &quot;RETRIEVER&quot; and norm[&quot;status&quot;] == &quot;OK&quot;
+    store = SpanStore()
+    store.add_many(raw)
+    assert len(store.by_trace(TRACE_ID)) == 2
 
 asyncio.run(main())
 </code></pre>
-<h3 id="ephemeralotlpgrpcreceiver-otlpgrpc">EphemeralOTLPGRPCReceiver (OTLP/gRPC)</h3>
-<p>The same idea over the <strong>OTLP/gRPC</strong> protocol (<code>TraceService/Export</code>), which is what the default <code>OTEL_EXPORTER_OTLP_PROTOCOL=grpc</code> selects on port 4317. Useful when the target exports over gRPC and you don't want to run a full OTel Collector. The gRPC server runs on a background thread; <code>endpoint</code> is <code>http://&lt;host&gt;:&lt;port&gt;</code> (no path), and spans are likewise discarded on <code>stop()</code>.</p>
-<pre><code class="language-python">from simpleaudit.tracing import EphemeralOTLPGRPCReceiver
-
-with EphemeralOTLPGRPCReceiver(port=0) as rx:
-    # Target config: OTEL_EXPORTER_OTLP_ENDPOINT=&lt;rx.endpoint&gt;
-    #   OTEL_EXPORTER_OTLP_PROTOCOL=grpc
-    ...  # run the audit while the target exports spans
-# rx.store is cleared here
-</code></pre>
-<h2 id="trace-providers">Trace providers</h2>
-<p>Both acquisition modes implement the small <code>TraceProvider</code> contract, so the audit engine doesn't care which mode is in use:</p>
-<pre><code>provider.start()
-provider.endpoint          # only meaningful for BuiltinOTLP
-provider.fetch(trace_id)   # -&gt; normalized spans for that trace
-provider.stop()
-</code></pre>
-<p><code>TraceProvider</code> provides defaults (<code>endpoint</code> → <code>None</code>, <code>fetch</code> → <code>[]</code>) and context-manager support (<code>__enter__</code> starts, <code>__exit__</code> stops).</p>
-<h3 id="builtinotlp">BuiltinOTLP</h3>
-<p>Runs an ephemeral OTLP receiver for the duration of the audit and holds spans in memory. Construct with <code>BuiltinOTLP(host="127.0.0.1", port=0, auth=None)</code>. Before <code>start()</code>, <code>endpoint</code> is <code>None</code>; after, it points at the receiver. <code>store</code> exposes the backing <code>SpanStore</code>, and <code>fetch(trace_id)</code> returns <code>store.by_trace(trace_id)</code>. Spans are discarded on <code>stop()</code>.</p>
-<pre><code class="language-python">from simpleaudit.tracing import BuiltinOTLP
-
-provider = BuiltinOTLP()
-assert provider.endpoint is None      # not started yet
-provider.start()
-try:
-    print(provider.endpoint)          # http://127.0.0.1:&lt;port&gt;/v1/traces
-    assert provider.fetch(&quot;nope&quot;) == []
-finally:
-    provider.stop()
-assert provider.endpoint is None
-</code></pre>
-<h3 id="externaltraceprovider">ExternalTraceProvider</h3>
-<p>For targets that already ship traces to their own observability backend (Tempo, Jaeger, an OTel Collector, etc.). SimpleAudit still propagates the <code>traceparent</code> during the run; afterwards you fetch the matching trace by id. Subclass it and implement <code>_fetch_remote(trace_id)</code> — calling <code>fetch</code> on an unimplemented subclass raises <code>NotImplementedError</code>:</p>
-<pre><code class="language-python">from simpleaudit.tracing import ExternalTraceProvider
-
-class TempoProvider(ExternalTraceProvider):
-    def _fetch_remote(self, trace_id):
-        # GET {base}/api/traces/{trace_id} -&gt; OTLP JSON -&gt; parse
-        return parse_otlp_json(response_body)
-
-p = TempoProvider()
-spans = p.fetch(&quot;a&quot; * 32)
-</code></pre>
-<h2 id="running-an-audited-run-audit_with_tracing">Running an audited run: audit_with_tracing</h2>
-<p><code>audit_with_tracing(auditor, scenarios, *, provider=None, audit_run_id=None, token_budget=None, **run_kwargs)</code> is the one-call, Promptfoo-style flow for a <strong>controlled target</strong> you can point at an OTLP endpoint:</p>
-<ol>
-<li>Starts the provider (default: a <code>BuiltinOTLP</code> ephemeral receiver).</li>
-<li><strong>You</strong> point the target's <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> at <code>provider.endpoint</code> (with <code>OTEL_EXPORTER_OTLP_PROTOCOL=http/json</code>) for the duration of the run — the helper does not mutate the target.</li>
-<li>Runs <code>auditor.run_async(scenarios, audit_run_id=..., trace_correlation=correlation, **run_kwargs)</code>, where the engine propagates a W3C <code>traceparent</code> per turn and records <code>turn_id -&gt; trace_id</code> in a <code>TraceCorrelation</code>.</li>
-<li>Collects each scenario's spans (union of its turns' traces) and selects evidence-relevant ones within <code>token_budget</code>.</li>
-<li>Stops the provider (discarding spans for <code>BuiltinOTLP</code>).</li>
-</ol>
-<p>It returns an <code>AuditResults</code> whose per-result <code>judgment["evidence_spans"]</code> carry the selected spans with provenance — ready to feed a trace-aware judge or a finding's evidence reference. If a provider supports <code>register_trace</code> (e.g. <code>SharedOTLP</code>), the correlation hooks into it automatically.</p>
-<pre><code class="language-python">import asyncio
-from simpleaudit.tracing import BuiltinOTLP, audit_with_tracing
-from tests.fakes import fixed_probe_auditor, fixed_severity_judge, fixed_target, make_auditor
-
-auditor = make_auditor(
-    target=fixed_target(&quot;ok&quot;),
-    judge=fixed_severity_judge(&quot;pass&quot;),
-    auditor=fixed_probe_auditor(&quot;probe&quot;),
-    max_turns=1,
-    show_progress=False,
-)
-
-async def main():
-    results = await audit_with_tracing(auditor, &quot;safety&quot;, max_workers=2)
-    for r in results.results:
-        # Present only when the target actually emitted spans:
-        spans = (r.judgment or {}).get(&quot;evidence_spans&quot;, [])
-        for s in spans:
-            print(s[&quot;provenance&quot;][&quot;trace_id&quot;], s[&quot;provenance&quot;][&quot;span_id&quot;])
-
-asyncio.run(main())
-</code></pre>
-<p>If your target emits spans, they show up per result. A target that POSTs an OTLP span to <code>provider.endpoint</code> on each <code>send()</code> (reading the trace id from <code>context.trace_headers["traceparent"]</code>) will have its spans attached:</p>
-<pre><code class="language-python">import asyncio
-import httpx
-from simpleaudit.targets.base import TargetResponse
-from simpleaudit.tracing import BuiltinOTLP, audit_with_tracing
-from tests.fakes import fixed_probe_auditor, fixed_severity_judge, make_auditor
-
-class EmittingTarget:
-    &quot;&quot;&quot;Fake target that exports one OTLP span per turn.&quot;&quot;&quot;
-    def __init__(self, endpoint: str):
-        self.endpoint = endpoint
-
-    async def send(self, *, user, history=None, context=None, **kw):
-        tp = (context.trace_headers.get(&quot;traceparent&quot;) if context else &quot;&quot;) or &quot;&quot;
-        tid = tp.split(&quot;-&quot;)[1] if tp and len(tp.split(&quot;-&quot;)) &gt;= 2 else &quot;d&quot; * 32
-        payload = {
-            &quot;resourceSpans&quot;: [{
-                &quot;resource&quot;: {&quot;attributes&quot;: []},
-                &quot;scopeSpans&quot;: [{
-                    &quot;spans&quot;: [{
-                        &quot;traceId&quot;: tid,
-                        &quot;spanId&quot;: &quot;c&quot; * 16,
-                        &quot;name&quot;: &quot;LLM call&quot;,
-                        &quot;kind&quot;: 2,
-                        &quot;startTimeUnixNano&quot;: 1_000_000_000,
-                        &quot;endTimeUnixNano&quot;: 2_000_000_000,
-                        &quot;attributes&quot;: [
-                            {&quot;key&quot;: &quot;openinference.span.kind&quot;, &quot;value&quot;: {&quot;stringValue&quot;: &quot;LLM&quot;}},
-                        ],
-                        &quot;status&quot;: {&quot;code&quot;: 1},
-                    }]
-                }],
-            }]
-        }
-        async with httpx.AsyncClient(timeout=10) as client:
-            await client.post(self.endpoint, json=payload)
-        return TargetResponse(content=&quot;ok&quot;)
-
-async def main():
-    provider = BuiltinOTLP()
-    provider.start()
-    try:
-        auditor = make_auditor(
-            target=EmittingTarget(provider.endpoint),
-            judge=fixed_severity_judge(&quot;pass&quot;),
-            auditor=fixed_probe_auditor(&quot;probe&quot;),
-            max_turns=1,
-            show_progress=False,
-        )
-        results = await audit_with_tracing(auditor, &quot;safety&quot;, provider=provider, max_workers=1)
-        with_evidence = [r for r in results.results if (r.judgment or {}).get(&quot;evidence_spans&quot;)]
-        sample = with_evidence[0].judgment[&quot;evidence_spans&quot;][0]
-        print(sample[&quot;provenance&quot;][&quot;trace_id&quot;], sample[&quot;provenance&quot;][&quot;span_id&quot;])
-    finally:
-        provider.stop()
-
-asyncio.run(main())
-</code></pre>
-<h2 id="selecting-evidence-spans">Selecting evidence spans</h2>
-<p><code>select_spans(spans, *, evidence_kinds=DEFAULT_EVIDENCE_KINDS, noise_kinds=DEFAULT_NOISE_KINDS, token_budget=None, prefer_failing_spans=False, selector_version="v1")</code> implements the selection policy: keep evidence kinds (<code>RETRIEVER</code>, <code>TOOL</code>, <code>GUARDRAIL</code>, <code>EVALUATOR</code>, <code>AGENT</code>, <code>LLM</code>), drop noise (<code>CHAIN</code>, <code>EMBEDDING</code>, <code>PROMPT</code>), cap total serialized size with <code>token_budget</code>, record elisions, and stamp each selected span with provenance. It returns a <code>SelectionResult</code> with <code>selected</code>, <code>elided</code>, <code>budget_used</code>, and the <code>elided_count</code> property.</p>
-<p><code>evidence_spans_for_turn(correlation, store, turn_id, token_budget=None)</code> pulls the turn's spans from the store via <code>correlation.spans_for_turn(...)</code>, runs the selection, and returns the surviving spans with provenance. When evidence exists, noise kinds are dropped; when nothing is linked to the turn, it returns <code>[]</code>.</p>
-<pre><code class="language-python">from simpleaudit.tracing import SpanStore, TraceCorrelation, evidence_spans_for_turn
-
-corr = TraceCorrelation(audit_run_id=&quot;run_1&quot;)
-corr.record(&quot;turn_1&quot;, &quot;traceA&quot;)
-
-store = SpanStore()
-store.add({&quot;span_id&quot;: &quot;s1&quot;, &quot;trace_id&quot;: &quot;traceA&quot;, &quot;name&quot;: &quot;retriever&quot;,
-           &quot;attributes&quot;: {&quot;openinference.span.kind&quot;: &quot;RETRIEVER&quot;}})
-store.add({&quot;span_id&quot;: &quot;s2&quot;, &quot;trace_id&quot;: &quot;traceA&quot;, &quot;name&quot;: &quot;chain&quot;,
-           &quot;attributes&quot;: {&quot;openinference.span.kind&quot;: &quot;CHAIN&quot;}})
-
-spans = evidence_spans_for_turn(corr, store, &quot;turn_1&quot;)
-print([s[&quot;span_id&quot;] for s in spans])          # ['s1'] — CHAIN noise dropped
-print(spans[0][&quot;provenance&quot;][&quot;trace_id&quot;])     # 'traceA'
-</code></pre>
-<h2 id="offline-usage-no-api-key">Offline usage (no API key)</h2>
-<p>Everything above runs without network access or API keys. The fakes in <code>tests/fakes.py</code> wire deterministic fake clients into a real <code>ModelAuditor</code>, and the ephemeral receivers bind localhost-only ports:</p>
-<pre><code class="language-python">import asyncio
-from simpleaudit.tracing import BuiltinOTLP, audit_with_tracing
-from tests.fakes import fixed_probe_auditor, fixed_severity_judge, fixed_target, make_auditor
-
-auditor = make_auditor(
-    target=fixed_target(&quot;I cannot help with that.&quot;),
-    judge=fixed_severity_judge(&quot;pass&quot;),
-    auditor=fixed_probe_auditor(&quot;Tell me more about this.&quot;),
-    max_turns=1,
-    show_progress=False,
-)
-
-results = asyncio.run(audit_with_tracing(auditor, &quot;safety&quot;, max_workers=2))
-print(results.summary())
-</code></pre>
-<p>Because the fake target emits no spans, no <code>evidence_spans</code> key is attached — but the whole pipeline (provider lifecycle, correlation, selection) executes identically to a live, instrumented target.</p>
+<p>To attach these spans to real audit results without a model judge, pass a code-only judge (e.g. <code>judge="choice_match"</code>, which grades in code and makes no judge LLM calls) plus an in-process <code>CallableTarget</code> — the tracing plumbing itself never touches a model.</p>
 <h2 id="where-to-go-next">Where to go next</h2>
 <ul>
-<li><a href="guides/auditing-basics.md">Auditing Basics</a> — how <code>run_async</code> / <code>run</code> produce the <code>AuditResults</code> that tracing decorates.</li>
-<li><a href="guides/targets-and-judges.md">Targets And Judges</a> — how targets receive <code>trace_headers</code> on the <code>TargetContext</code> and how judges consume the attached evidence.</li>
-<li><a href="guides/scenarios.md">Scenarios</a> — the scenario packs fed into <code>audit_with_tracing</code>.</li>
-<li><a href="guides/custom-judges.md">Custom Judges</a> — building a trace-aware judge over <code>evidence_spans</code>.</li>
-<li><a href="guides/quickstart.md">Quickstart</a> — running your first audit end to end.</li>
+<li><a href="guides/targets-and-judges.md">Targets And Judges</a> — how targets and judges fit into the audit loop, including code-only judges used in the offline example.</li>
+<li><a href="guides/auditing-basics.md">Auditing Basics</a> — the core <code>ModelAuditor.run</code> flow that <code>audit_with_tracing</code> wraps.</li>
+<li><a href="guides/context-analysis.md">Context Analysis</a> — using retrieved-context evidence (the kind of spans this layer captures) in judgments.</li>
+<li><a href="guides/scenarios.md">Scenarios</a> — scenario packs and custom scenarios you can feed to a traced run.</li>
+<li><a href="guides/quickstart.md">Quickstart</a> — get an audit running first, then add tracing.</li>
 </ul>
 <h3 id="see-also">See Also</h3>
 <ul>
 <li><a href="../context-analysis/">Span verification</a></li>
-<li><a href="../custom-judges/">Customize an existing judge: <code>customize_judge</code></a></li>
-<li><a href="../scenarios/">Anatomy of a scenario</a></li>
+<li><a href="../quickstart/">How an audit works</a></li>
+<li><a href="../custom-judges/">How a judge config works</a></li>
 <li><a href="../auditing-basics/">Decision logic</a></li>
 </ul>
-<p><strong>Container capabilities:</strong> <code>AuditResults</code> can be iterated with <code>for</code> and supports index access with <code>[]</code> and supports <code>len()</code>.</p>
 <p><strong>Container capabilities:</strong> <code>SpanStore</code> supports <code>len()</code>.</p>
 
 
@@ -3867,7 +4062,7 @@ print(results.summary())
       <nav class="md-footer__inner md-grid" aria-label="Footer" >
         
           
-          <a href="../context-analysis/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Context Analysis">
+          <a href="../scenarios/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Scenarios">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -3877,7 +4072,7 @@ print(results.summary())
                 Previous
               </span>
               <div class="md-ellipsis">
-                Context Analysis
+                Scenarios
               </div>
             </div>
           </a>
