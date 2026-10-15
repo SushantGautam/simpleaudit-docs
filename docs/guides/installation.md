@@ -1,44 +1,51 @@
 # Installation
 
-SimpleAudit is a lightweight AI safety auditing framework that red-teams AI systems using LLMs as auditor and judge. This page covers installing the package from PyPI (or GitHub) and verifying that both the Python import and the `simpleaudit` CLI entry point work.
+Install SimpleAudit and verify your local environment setup.
+
+SimpleAudit is a lightweight AI safety auditing framework that red-teams AI systems using LLMs as auditor and judge. It supports Anthropic (default), OpenAI, Grok (xAI), Ollama, vLLM, and any OpenAI-compatible API.
 
 ## Requirements
 
-- **Python 3.11, 3.12, or 3.13** — the project declares `requires-python = ">=3.11,<3.14"` in `pyproject.toml`.
+- **Python 3.11, 3.12, or 3.13** — the package declares `requires-python = ">=3.11,<3.14"`.
 - Runtime dependencies are pulled in automatically: `any-llm-sdk`, `fsspec`, and `tqdm`.
+- An API key for at least one supported provider (see [API keys](#api-keys)). You can also run fully offline with no keys — see [Offline usage](#offline-usage-no-api-key).
 
-## Install from PyPI (recommended)
-
-```bash
-pip install -U simpleaudit
-```
-
-With plotting support (for `AuditResults.plot()`):
+## Install from PyPI
 
 ```bash
-pip install -U simpleaudit[plot]
+pip install simpleaudit
 ```
 
-Optional extras available in `pyproject.toml`:
+The current release on PyPI is **0.4.1**.
 
-| Extra | Adds |
-| --- | --- |
-| `simpleaudit[tracing]` | OTLP trace ingestion (`aiohttp`, `grpcio`, `opentelemetry-proto`) for the builtin OTLP receiver in `simpleaudit.tracing` |
-| `simpleaudit[plot]` | `matplotlib` for result charts |
-| `simpleaudit[dev]` | pytest, black, ruff, and other development tools |
-| `simpleaudit[all]` | `plot` + `dev` |
+### Optional extras
 
-## Install from GitHub (latest development features)
+Install these only if you need the corresponding feature:
 
 ```bash
-pip install -U git+https://github.com/simulamet/simpleaudit.git
+# Builtin OTLP trace ingestion (simpleaudit.tracing) — HTTP-JSON and gRPC receivers
+pip install "simpleaudit[tracing]"
+
+# matplotlib-based result plotting (AuditResults.plot)
+pip install "simpleaudit[plot]"
+
+# Development tooling (pytest, pytest-asyncio, pytest-cov, black, ruff, ...)
+pip install "simpleaudit[dev]"
 ```
+
+## Install from source
+
+```bash
+git clone https://github.com/simulamet/simpleaudit.git
+cd simpleaudit
+pip install -e .
+```
+
+This installs the package in editable mode so code changes take effect immediately.
 
 ## Verify the installation
 
-### 1. Check the version
-
-The package exposes `__version__`, which is read from installed package metadata via `importlib.metadata.version("simpleaudit")` (falling back to `"0.0.0+unknown"` if the distribution is not found):
+Run this in a Python shell to confirm the package imports and check its version:
 
 ```python
 import simpleaudit
@@ -46,22 +53,49 @@ import simpleaudit
 print(simpleaudit.__version__)
 ```
 
-### 2. Check the CLI entry point
+`__version__` is read from installed package metadata via `importlib.metadata.version("simpleaudit")`; it falls back to `"0.0.0+unknown"` if the distribution metadata is not found (for example, when running straight from a source checkout without installing).
 
-The console script `simpleaudit` is declared in `pyproject.toml` as:
+You can also sanity-check that the core entry points are importable:
 
-```toml
-[project.scripts]
-simpleaudit = "simpleaudit.cli:main"
+```python
+from simpleaudit import ModelAuditor, get_scenarios, list_scenario_packs
+
+# List every built-in scenario pack and how many scenarios each contains
+print(list_scenario_packs())
 ```
 
-It points at [`simpleaudit.cli.main`](https://github.com/simulamet/simpleaudit/blob/main/simpleaudit/cli.py), defined in `simpleaudit/cli.py` as `def main()`. Running it verifies the entry point resolves and executes:
+`list_scenario_packs()` returns a dict mapping pack names (such as `"safety"`, `"rag"`, `"health"`, `"nav_aap"`, and `"all"`) to their scenario counts. `get_scenarios(pack_name)` returns the scenario dicts for one pack and raises `ValueError` listing the available packs if the name is unknown.
+
+## API keys
+
+SimpleAudit talks to model providers through the `any-llm-sdk` client. Set the environment variable for the provider you use before constructing an auditor, e.g.:
 
 ```bash
-simpleaudit
+export ANTHROPIC_API_KEY="sk-ant-..."   # Anthropic (default provider)
+# or
+export OPENAI_API_KEY="sk-..."          # OpenAI
 ```
 
-Expected output (the web visualizer has moved to SimpleAudit Studio, so `main()` prints a pointer and exits with status code 1):
+A minimal live smoke test (uses two Anthropic models):
+
+```python
+from simpleaudit import ModelAuditor, get_scenarios
+
+auditor = ModelAuditor(
+    model="claude-sonnet-4-6",
+    provider="anthropic",
+    judge_model="claude-opus-4-7",
+    judge_provider="anthropic",
+)
+results = auditor.run(get_scenarios("safety"), max_turns=1)
+results.summary()
+```
+
+For the full walkthrough of building an auditor and reading results, continue with the [Quickstart](guides/quickstart.md).
+
+## The `simpleaudit` CLI
+
+Installing the package registers a `simpleaudit` console script (`simpleaudit.cli:main`). Note that the web visualizer has moved out of the main package into **SimpleAudit Studio**: running `simpleaudit` today prints a notice pointing you to Studio and exits with status 1:
 
 ```text
 The `simpleaudit` CLI no longer includes the web visualizer.
@@ -69,62 +103,67 @@ The `simpleaudit` CLI no longer includes the web visualizer.
 To visualize audit results, use SimpleAudit Studio:
 
     uvx simpleaudit-studio --visualize-only --results_dir ./my_audit_results
-
-This starts a local web server (no audit worker) that browses a folder
-of SimpleAudit JSON results, and can export a standalone HTML file.
-
-See: https://github.com/SimulaMet/SimpleAuditStudio
 ```
 
-Seeing this message confirms the `simpleaudit` command is on your PATH and wired to `simpleaudit.cli:main`. The non-zero exit status is intentional — the CLI's only remaining job is to redirect you to [SimpleAudit Studio](https://github.com/SimulaMet/SimpleAuditStudio) for visualization.
+So to browse results locally, run Studio instead:
 
-### 3. Smoke-test the public API
-
-A quick import of the top-level names confirms the package structure is intact:
-
-```python
-from simpleaudit import ModelAuditor, get_scenarios, list_scenario_packs
-
-print(list_scenario_packs())
+```bash
+uvx simpleaudit-studio --visualize-only --results_dir ./my_audit_results
 ```
 
-`list_scenario_packs()` returns a dict mapping built-in pack names to their scenario counts (e.g. `"safety": <n>`), and `get_scenarios(pack_name)` loads any of them by name.
+or start a full Studio instance with `uvx simpleaudit-studio`.
 
 ## Offline usage (no API key)
 
-You can exercise the full audit pipeline without any API keys or network access by wiring fake LLM clients into `ModelAuditor`. The repository ships fakes in `tests/fakes.py` (used throughout the test suite and demonstrated in `examples/fake_audit.py`). From a checkout of the repo:
+You can exercise the whole audit pipeline without any network access or API keys by wiring fake clients into a `ModelAuditor`. The repository ships ready-made fakes in `tests/fakes.py`:
 
 ```python
 import asyncio
 
-from tests.fakes import fixed_probe_auditor, fixed_severity_judge, fixed_target, make_auditor
-
-auditor = make_auditor(
-    target=fixed_target("I cannot help with that."),
-    judge=fixed_severity_judge("pass"),
-    auditor=fixed_probe_auditor("Tell me more about this topic."),
-    max_turns=1,
+from tests.fakes import (
+    cycling_severity_judge,
+    fixed_probe_auditor,
+    random_length_target,
+    make_auditor,
 )
 
-result = asyncio.run(auditor.run_scenario(name="Test", description="A smoke-test scenario."))
-print(result.severity)
+auditor = make_auditor(
+    target=random_length_target(200, 500),
+    judge=cycling_severity_judge(["critical", "pass"]),
+    auditor=fixed_probe_auditor("Tell me more about this."),
+    max_turns=2,
+)
+results = asyncio.run(auditor.run_async(scenarios=[
+    {"name": "Test", "description": "A test scenario."},
+]))
+results.summary()
 ```
 
-`make_auditor(target=..., judge=..., auditor=...)` patches client creation during `ModelAuditor.__init__` so no network call is ever made; the three fakes stand in for the target model, the judge, and the probe generator respectively. For a multi-scenario run, pass a list of `{"name": ..., "description": ...}` dicts to `auditor.run_async(scenarios=[...], max_turns=1)` and call `results.summary()` on the returned `AuditResults`.
+`make_auditor(target, judge, auditor=None, *, max_turns=1, ...)` patches the internal client factory during construction and then replaces the three client attributes (`target_client`, `judge_client`, `auditor_client`) with your fakes, so no real requests are made. Individual factories:
+
+- `fixed_target(text)` / `random_length_target(min_chars, max_chars)` / `cycling_target(responses)` — the model being audited;
+- `fixed_severity_judge(severity)` / `cycling_severity_judge(severities)` — the judge, where severity is one of `"critical"`, `"high"`, `"medium"`, `"low"`, `"pass"`;
+- `fixed_probe_auditor(probe)` / `cycling_probe_auditor(probes)` — the probe generator.
+
+You can also swap a single client on an existing auditor (for example, stub only the judge while keeping a real target):
+
+```python
+auditor.judge_client = fixed_severity_judge("high")
+```
 
 ## Where to go next
 
-- [Quickstart](guides/quickstart.md) — run your first real audit with `ModelAuditor`.
-- [Auditing Basics](guides/auditing-basics.md) — understand scenarios, severities, and how results are graded.
-- [Targets And Judges](guides/targets-and-judges.md) — configure providers, targets, and judge models.
-- [Tracing And Observability](guides/tracing-and-observability.md) — capture spans with the `simpleaudit[tracing]` extra.
+- [Quickstart](guides/quickstart.md) — build your first auditor and run a real audit end to end.
+- [Auditing Basics](guides/auditing-basics.md) — understand the auditor/judge/target roles and what a run produces.
+- [Targets And Judges](guides/targets-and-judges.md) — configure different targets and judge configurations.
+- [Scenarios](guides/scenarios.md) — explore the built-in scenario packs and write your own.
 
 ### See Also
 
 *   [How an audit works](quickstart.md)
 *   [Decision logic](auditing-basics.md)
 *   [Span verification](context-analysis.md)
-*   [Customize an existing judge: `customize_judge`](custom-judges.md)
+*   [How a judge config works](custom-judges.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

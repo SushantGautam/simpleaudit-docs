@@ -248,10 +248,10 @@ Because the fakes are deterministic, `aggregate_severities`, `wilson_interval`, 
 
 ### See Also
 
-*   [Anatomy of a scenario](scenarios.md)
-*   [The Target protocol](targets-and-judges.md)
-*   [Customize an existing judge: `customize_judge`](custom-judges.md)
 *   [How an audit works](quickstart.md)
+*   [The Target protocol](targets-and-judges.md)
+*   [Scenario structure](scenarios.md)
+*   [How a judge config works](custom-judges.md)
 
 
 **Container capabilities:** `RepeatedExperimentResults` can be iterated with `for` and supports index access with `[]` and supports `len()` and supports `in` membership testing.

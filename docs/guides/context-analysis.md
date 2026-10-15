@@ -237,7 +237,7 @@ Everything on this page is pure computation over plain data — no network, no m
 
 ### See Also
 
-*   [Customize an existing judge: `customize_judge`](custom-judges.md)
-*   [How it fits together](tracing-and-observability.md)
+*   [How a run is traced](tracing-and-observability.md)
+*   [How a judge config works](custom-judges.md)
 *   [Decision logic](auditing-basics.md)
 *   [Requirements](installation.md)
