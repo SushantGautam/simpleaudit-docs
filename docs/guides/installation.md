@@ -91,7 +91,7 @@ results = auditor.run(get_scenarios("safety"), max_turns=1)
 results.summary()
 ```
 
-For the full walkthrough of building an auditor and reading results, continue with the [Quickstart](guides/quickstart.md).
+For the full walkthrough of building an auditor and reading results, continue with the [Quickstart](quickstart.md).
 
 ## The `simpleaudit` CLI
 
@@ -153,17 +153,17 @@ auditor.judge_client = fixed_severity_judge("high")
 
 ## Where to go next
 
-- [Quickstart](guides/quickstart.md) — build your first auditor and run a real audit end to end.
-- [Auditing Basics](guides/auditing-basics.md) — understand the auditor/judge/target roles and what a run produces.
-- [Targets And Judges](guides/targets-and-judges.md) — configure different targets and judge configurations.
-- [Scenarios](guides/scenarios.md) — explore the built-in scenario packs and write your own.
+- [Quickstart](quickstart.md) — build your first auditor and run a real audit end to end.
+- [Auditing Basics](auditing-basics.md) — understand the auditor/judge/target roles and what a run produces.
+- [Targets And Judges](targets-and-judges.md) — configure different targets and judge configurations.
+- [Scenarios](scenarios.md) — explore the built-in scenario packs and write your own.
 
 ### See Also
 
-*   [How an audit works](quickstart.md)
+*   [1. Run a single-model audit](quickstart.md)
 *   [Decision logic](auditing-basics.md)
-*   [Span verification](context-analysis.md)
-*   [How a judge config works](custom-judges.md)
+*   [Document marks](context-analysis.md)
+*   [Anatomy of a judge config](custom-judges.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

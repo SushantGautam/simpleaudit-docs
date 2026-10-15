@@ -66,7 +66,7 @@ call sites can pass a bare context or `None`:
 
 When the engine runs a scenario with tracing enabled, it generates a W3C
 `traceparent` per turn and puts it on `context.trace_headers`; see
-[Tracing And Observability](guides/tracing-and-observability.md) for the rest of
+[Tracing And Observability](tracing-and-observability.md) for the rest of
 that machinery.
 
 ## Configuring a model target: `ModelTarget`
@@ -128,6 +128,8 @@ from simpleaudit import ModelAuditor, CallableTarget
 auditor = ModelAuditor(model="gpt-4o-mini", provider="openai",
                        judge_model="gpt-4o", judge_provider="openai")
 auditor.set_target(CallableTarget(lambda **kw: "I cannot help with that.")
+    # NOTE: fn is required (no default)
+,
     # NOTE: fn is required (no default)
 )
 assert isinstance(auditor.target, CallableTarget)
@@ -220,7 +222,7 @@ Every judge config declares an `output` kind — `"severity"`, `"score"`,
 `"binary"`, `"checklist"` or `"grounding"` — along with `criteria` (what to
 evaluate) and `format_prompt` (the output contract); its `judge_prompt` is the
 two joined. For deeper authoring techniques — regrading stored results,
-reframing checks, panels — see [Custom Judges](guides/custom-judges.md).
+reframing checks, panels — see [Custom Judges](custom-judges.md).
 
 ## Composing judges
 
@@ -355,14 +357,13 @@ mt = ModelTarget(transport=transport)
 r = asyncio.run(mt.send(user="x"))
 print(r.content, r.input_tokens, r.output_tokens)  # from-transport 1 2
 or a
-`ModelTarget` transport — neither touches the network:
-
-```python
-import asyncio
+`ModelTarget` transport import asyncio
 from simpleaudit import CallableTarget, ModelTarget, TargetResponse
 
 # A callable target: sync or async, returning str or TargetResponse.
-t = CallableTarget(lambda **kw: "echo: " + kw["user"])
+t = CallableTarget(lambda **kw: "echo: " + kw["user"]
+    # NOTE: fn is required (no default)
+)
 print(asyncio.run(t.send(user="hi")).content)  # echo: hi
 
 # A ModelTarget in transport mode: no client, no model, no network.
@@ -372,6 +373,7 @@ async def transport(**kw):
 mt = ModelTarget(transport=transport)
 r = asyncio.run(mt.send(user="x"))
 print(r.content, r.input_tokens, r.output_tokens)  # from-transport 1 2
+s, r.output_tokens)  # from-transport 1 2
 ```
 
 For a fully offline end-to-end audit (fake target, judge and probe clients),
@@ -391,23 +393,23 @@ result = asyncio.run(auditor.run_scenario(name="Test", description="desc"))
 print(result.severity)  # pass
 ```
 
-See [Quickstart](guides/quickstart.md) for running these fakes against real
-scenario packs, and [Auditing Basics](guides/auditing-basics.md) for how the
+See [Quickstart](quickstart.md) for running these fakes against real
+scenario packs, and [Auditing Basics](auditing-basics.md) for how the
 auditor drives the target turn by turn.
 
 ## Where to go next
 
-- [Installation](guides/installation.md) — get SimpleAudit installed and providers configured.
-- [Quickstart](guides/quickstart.md) — your first audit end to end.
-- [Auditing Basics](guides/auditing-basics.md) — scenarios, turns and results in detail.
-- [Scenarios](guides/scenarios.md) — the scenario packs you feed to a target.
-- [Context Analysis](guides/context-analysis.md) — grounding and document-mark based judging.
-- [Tracing And Observability](guides/tracing-and-observability.md) — how `TargetContext.trace_headers` feeds trace correlation.
-- [Custom Judges](guides/custom-judges.md) — reframing, rejudging and judge panels built on the configs from this page.
+- [Installation](installation.md) — get SimpleAudit installed and providers configured.
+- [Quickstart](quickstart.md) — your first audit end to end.
+- [Auditing Basics](auditing-basics.md) — scenarios, turns and results in detail.
+- [Scenarios](scenarios.md) — the scenario packs you feed to a target.
+- [Context Analysis](context-analysis.md) — grounding and document-mark based judging.
+- [Tracing And Observability](tracing-and-observability.md) — how `TargetContext.trace_headers` feeds trace correlation.
+- [Custom Judges](custom-judges.md) — reframing, rejudging and judge panels built on the configs from this page.
 
 ### See Also
 
 *   [Decision logic](auditing-basics.md)
-*   [How a judge config works](custom-judges.md)
-*   [Scenario structure](scenarios.md)
-*   [Span verification](context-analysis.md)
+*   [Anatomy of a judge config](custom-judges.md)
+*   [Scenario shape](scenarios.md)
+*   [1. Run a single-model audit](quickstart.md)

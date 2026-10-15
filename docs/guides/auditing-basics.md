@@ -78,7 +78,7 @@ except ValueError as e:
     print(e)  # decision has unknown keys ['acepted']; allowed: [...]
 ```
 
-Note that code-graded judges (e.g. `choice_match`) grade against this block, which is why the answer key must stay out of what the target sees. See [Targets And Judges](guides/targets-and-judges.md) for how targets consume the block.
+Note that code-graded judges (e.g. `choice_match`) grade against this block, which is why the answer key must stay out of what the target sees. See [Targets And Judges](targets-and-judges.md) for how targets consume the block.
 
 ---
 
@@ -131,7 +131,7 @@ print(perturbed[1]["content"])
 
 `perturbation_variants(judge_prompt, language="English", names=None, baseline_label="baseline", response_schema=None, postprocess=None, requires_expected_behavior=False)` returns a `List[PromptVariant]` containing the baseline plus one perturbed variant per chosen perturbation (all five by default). Every variant shares the same `judge_prompt`, `response_schema`, and judge hooks, so the only axis that varies is the transcript's surface. Unknown names raise `ValueError`, as does a `baseline_label` that collides with a perturbation name.
 
-Feed the list to `reframing_check` and read `results.effects()` for the flip rate and net direction of each perturbation against the baseline (see [Custom Judges](guides/custom-judges.md) for judge configuration, and the reframing module docs for `reframing_check` itself):
+Feed the list to `reframing_check` and read `results.effects()` for the flip rate and net direction of each perturbation against the baseline (see [Custom Judges](custom-judges.md) for judge configuration, and the reframing module docs for `reframing_check` itself):
 
 ```python
 from simpleaudit.judges import get_judge
@@ -240,18 +240,18 @@ Because the fakes are deterministic, `aggregate_severities`, `wilson_interval`, 
 
 ## Where to go next
 
-- [Quickstart](guides/quickstart.md) — run your first end-to-end audit.
-- [Targets And Judges](guides/targets-and-judges.md) — how targets receive decision blocks and how judges are configured.
-- [Scenarios](guides/scenarios.md) — writing scenarios, including `decision` blocks and documents.
-- [Custom Judges](guides/custom-judges.md) — composing judges and running reframing checks with `reframing_check`.
-- [Tracing And Observability](guides/tracing-and-observability.md) — inspecting the spans behind each audited turn.
+- [Quickstart](quickstart.md) — run your first end-to-end audit.
+- [Targets And Judges](targets-and-judges.md) — how targets receive decision blocks and how judges are configured.
+- [Scenarios](scenarios.md) — writing scenarios, including `decision` blocks and documents.
+- [Custom Judges](custom-judges.md) — composing judges and running reframing checks with `reframing_check`.
+- [Tracing And Observability](tracing-and-observability.md) — inspecting the spans behind each audited turn.
 
 ### See Also
 
-*   [How an audit works](quickstart.md)
 *   [The Target protocol](targets-and-judges.md)
-*   [Scenario structure](scenarios.md)
-*   [How a judge config works](custom-judges.md)
+*   [Anatomy of a judge config](custom-judges.md)
+*   [Scenario shape](scenarios.md)
+*   [1. Run a single-model audit](quickstart.md)
 
 
 **Container capabilities:** `RepeatedExperimentResults` can be iterated with `for` and supports index access with `[]` and supports `len()` and supports `in` membership testing.
