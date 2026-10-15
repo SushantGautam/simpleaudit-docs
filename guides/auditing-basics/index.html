@@ -338,83 +338,6 @@
   
   
   
-    
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_1" >
-        
-          
-          <label class="md-nav__link" for="__nav_2_1" id="__nav_2_1_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Getting Started
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_1_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_1">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Getting Started
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../installation/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Installation
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
     <li class="md-nav__item">
       <a href="../quickstart/" class="md-nav__link">
         
@@ -424,91 +347,6 @@
     
   
     Quickstart
-  
-
-    
-  </span>
-  
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    
-    
-    
-    
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2_2" >
-        
-          
-          <label class="md-nav__link" for="__nav_2_2" id="__nav_2_2_label" tabindex="0">
-            
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Core Concepts
-  
-
-    
-  </span>
-  
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_2_2_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_2_2">
-            <span class="md-nav__icon md-icon"></span>
-            
-  
-    Core Concepts
-  
-
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../targets-and-judges/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    Targets And Judges
   
 
     
@@ -545,14 +383,6 @@
   
 
       </a>
-    </li>
-  
-
-              
-            
-          </ul>
-        </nav>
-      
     </li>
   
 
@@ -606,6 +436,34 @@
 
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../context-analysis/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Context Analysis
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
             
               
                 
@@ -3454,7 +3312,7 @@ try:
 except ValueError as e:
     print(e)  # decision has unknown keys ['acepted']; allowed: [...]
 </code></pre>
-<p>Note that code-graded judges (e.g. <code>choice_match</code>) grade against this block, which is why the answer key must stay out of what the target sees. See <a href="guides/targets-and-judges.md">Targets And Judges</a> for how targets consume the block.</p>
+<p>Note that code-graded judges (e.g. <code>choice_match</code>) grade against this block, which is why the answer key must stay out of what the target sees. See <a href="../targets-and-judges/">Targets And Judges</a> for how targets consume the block.</p>
 <hr />
 <h2 id="perturbations">Perturbations</h2>
 <p>Safety judges are known to move on style rather than substance: apologetic phrasing alone can swing which of two responses a judge calls safer, and persuasive framing embedded in a graded answer inflates scores for incorrect content. Each perturbation in <code>simpleaudit.perturbations</code> is therefore a <strong>fixed string prepended or appended to every assistant turn</strong> of a stored conversation. User turns, roles, turn count, and any <code>file_uri</code> attachment are left untouched — the transcript's substance is the same, only its surface changes. Grading the perturbed transcript next to the original, with the same judge and prompt, measures how much of the verdict rests on that surface.</p>
@@ -3515,7 +3373,7 @@ print(perturbed[1][&quot;content&quot;])
 </code></pre>
 <h3 id="building-variant-sets">Building variant sets</h3>
 <p><code>perturbation_variants(judge_prompt, language="English", names=None, baseline_label="baseline", response_schema=None, postprocess=None, requires_expected_behavior=False)</code> returns a <code>List[PromptVariant]</code> containing the baseline plus one perturbed variant per chosen perturbation (all five by default). Every variant shares the same <code>judge_prompt</code>, <code>response_schema</code>, and judge hooks, so the only axis that varies is the transcript's surface. Unknown names raise <code>ValueError</code>, as does a <code>baseline_label</code> that collides with a perturbation name.</p>
-<p>Feed the list to <code>reframing_check</code> and read <code>results.effects()</code> for the flip rate and net direction of each perturbation against the baseline (see <a href="guides/custom-judges.md">Custom Judges</a> for judge configuration, and the reframing module docs for <code>reframing_check</code> itself):</p>
+<p>Feed the list to <code>reframing_check</code> and read <code>results.effects()</code> for the flip rate and net direction of each perturbation against the baseline (see <a href="../custom-judges/">Custom Judges</a> for judge configuration, and the reframing module docs for <code>reframing_check</code> itself):</p>
 <pre><code class="language-python">from simpleaudit.judges import get_judge
 from simpleaudit.perturbations import perturbation_variants
 
@@ -3600,18 +3458,18 @@ results.summary()
 <hr />
 <h2 id="where-to-go-next">Where to go next</h2>
 <ul>
-<li><a href="guides/quickstart.md">Quickstart</a> — run your first end-to-end audit.</li>
-<li><a href="guides/targets-and-judges.md">Targets And Judges</a> — how targets receive decision blocks and how judges are configured.</li>
-<li><a href="guides/scenarios.md">Scenarios</a> — writing scenarios, including <code>decision</code> blocks and documents.</li>
-<li><a href="guides/custom-judges.md">Custom Judges</a> — composing judges and running reframing checks with <code>reframing_check</code>.</li>
-<li><a href="guides/tracing-and-observability.md">Tracing And Observability</a> — inspecting the spans behind each audited turn.</li>
+<li><a href="../quickstart/">Quickstart</a> — run your first end-to-end audit.</li>
+<li><a href="../targets-and-judges/">Targets And Judges</a> — how targets receive decision blocks and how judges are configured.</li>
+<li><a href="../scenarios/">Scenarios</a> — writing scenarios, including <code>decision</code> blocks and documents.</li>
+<li><a href="../custom-judges/">Custom Judges</a> — composing judges and running reframing checks with <code>reframing_check</code>.</li>
+<li><a href="../tracing-and-observability/">Tracing And Observability</a> — inspecting the spans behind each audited turn.</li>
 </ul>
 <h3 id="see-also">See Also</h3>
 <ul>
-<li><a href="../quickstart/">How an audit works</a></li>
 <li><a href="../targets-and-judges/">The Target protocol</a></li>
-<li><a href="../scenarios/">Scenario structure</a></li>
-<li><a href="../custom-judges/">How a judge config works</a></li>
+<li><a href="../custom-judges/">Anatomy of a judge config</a></li>
+<li><a href="../scenarios/">Scenario shape</a></li>
+<li><a href="../quickstart/">1. Run a single-model audit</a></li>
 </ul>
 <p><strong>Container capabilities:</strong> <code>RepeatedExperimentResults</code> can be iterated with <code>for</code> and supports index access with <code>[]</code> and supports <code>len()</code> and supports <code>in</code> membership testing.</p>
 
