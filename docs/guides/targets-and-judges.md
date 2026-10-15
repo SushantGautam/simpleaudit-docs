@@ -131,6 +131,8 @@ auditor.set_target(CallableTarget(lambda **kw: "I cannot help with that.")
     # NOTE: fn is required (no default)
 ,
     # NOTE: fn is required (no default)
+
+    # NOTE: fn is required (no default)
 )
 assert isinstance(auditor.target, CallableTarget)
 ```

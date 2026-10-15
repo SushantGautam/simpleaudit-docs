@@ -250,8 +250,8 @@ For running audits offline, the test suite wires `ModelAuditor` with fake client
 
 *   [The Target protocol](targets-and-judges.md)
 *   [How it fits together](tracing-and-observability.md)
-*   [Decision logic](auditing-basics.md)
 *   [Document marks](context-analysis.md)
+*   [1. Run a single-model audit](quickstart.md)
 
 
 **Container capabilities:** `CrossJudgeResults` supports index access with `[]` and supports `in` membership testing.

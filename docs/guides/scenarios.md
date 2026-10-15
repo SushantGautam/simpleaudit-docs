@@ -203,8 +203,8 @@ results.summary()
 
 ### See Also
 
-*   [The Target protocol](targets-and-judges.md)
 *   [Decision logic](auditing-basics.md)
+*   [The Target protocol](targets-and-judges.md)
 *   [Anatomy of a judge config](custom-judges.md)
 *   [How it fits together](tracing-and-observability.md)
 

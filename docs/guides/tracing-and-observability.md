@@ -334,8 +334,8 @@ To exercise the threaded `EphemeralOTLPReceiver` end-to-end without any external
 
 *   [Document marks](context-analysis.md)
 *   [Anatomy of a judge config](custom-judges.md)
-*   [Decision logic](auditing-basics.md)
 *   [1. Run a single-model audit](quickstart.md)
+*   [Scenario shape](scenarios.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

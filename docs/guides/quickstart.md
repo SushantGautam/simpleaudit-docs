@@ -236,9 +236,9 @@ results.summary()
 
 ### See Also
 
+*   [Decision logic](auditing-basics.md)
 *   [Anatomy of a judge config](custom-judges.md)
 *   [Requirements](installation.md)
-*   [Decision logic](auditing-basics.md)
 *   [The Target protocol](targets-and-judges.md)
 
 

@@ -1,137 +1,136 @@
 # Auditing Basics
 
-A single audit run gives you a verdict per scenario — but is that verdict *stable*? This page covers the three mechanisms SimpleAudit uses to answer that question:
-
-1. **Decision logic** (`simpleaudit.decision`) — closed, multiple-choice questions whose answers are graded against an accepted key.
-2. **Perturbations** (`simpleaudit.perturbations`) — deterministic style changes applied to stored transcripts to test whether a judge's verdict rests on substance or surface.
-3. **Statistical analysis** (`simpleaudit.repeated_results`, `simpleaudit.stats`) — stability across repeated runs and pure pass-rate statistics.
-
-Together they form the "validity chain": re-run the experiment to measure sampling noise, perturb the transcript to measure judge susceptibility, and use interval/test statistics to decide whether observed differences are real.
-
----
+SimpleAudit grades a model's answer to a scenario with an LLM judge, and the
+quality of that verdict depends on three mechanical choices: **how the question
+is posed** (decision blocks), **whether the transcript's surface is being
+tested rather than its substance** (perturbations), and **how repeated or
+multi-judge verdicts are collapsed into one number** (result aggregation). This
+page covers each in turn.
 
 ## Decision logic
 
-A scenario may carry a `decision` block: one closed question with a fixed set of answer options and, optionally, the accepted answer. The same scenario then serves two kinds of target:
+A scenario may carry a `decision` block: one closed question with a fixed set
+of answer options and, optionally, the accepted answer. The same scenario then
+serves two kinds of target:
 
-- A **chat model** gets the question as text (the scenario's `test_prompt`, or the rendered decision prompt when the scenario has none).
-- A **decision model** (a model returning a choice plus probabilities) gets the structured question through `TargetContext.extra["decision"]`.
+1. A **chat model** gets the question as text — the scenario's `test_prompt`,
+   or a rendered prompt when the scenario has none.
+2. A **decision model** (a model that returns a choice and probabilities
+   rather than prose) gets the structured question through
+   `TargetContext.extra["decision"]`.
 
-Two rules govern the block:
+Two rules govern decision blocks:
 
-1. **Unknown keys raise.** A mis-spelled `accepted` would otherwise silently stop grading, so validation fails loudly.
-2. **The answer key never reaches the target.** `public_decision()` drops `accepted` before the block is handed to a target; the full block reaches only the judge.
+- **Unknown keys raise.** A mis-spelled key would otherwise leave the scenario
+  without an answer key and quietly stop grading it.
+- **The answer key never reaches the target.** The full block reaches only the
+  judge, through `scenario_meta["decision"]`.
 
-### Anatomy of a decision block
+A decision block looks like this:
 
-```python
-"decision": {
-    "id": "verdict",                       # optional, default "answer"
-    "type": "choice",                      # the only type so far
+```json
+{
+    "id": "verdict",
+    "type": "choice",
     "instructions": "Did the court find the defendant guilty?",
     "criteria": {"yes": "Found guilty", "no": "Not found guilty"},
-    "accepted": ["yes"],                   # optional; never sent to the target
-    "state": {"jurisdiction": "Kosovo"},   # optional extra input for decision models
+    "accepted": ["yes"],
+    "state": {"jurisdiction": "Kosovo"}
 }
 ```
 
-`criteria` maps each option key to its description (or `None`). Limits on the number of options belong to the target that enforces them, not to the scenario.
+Only `instructions` and `criteria` are required; `id` defaults to `"answer"`,
+`type` defaults to `"choice"` (the only type so far), and `accepted` and
+`state` are optional. `criteria` must map at least two option keys to
+descriptions (or `None`). Limits on the number of options belong to the target
+that enforces them, not to the scenario.
 
-### Validation and rendering
+### Validating and rendering
 
-`validate_decision(decision)` checks a scenario's `decision` block and returns a normalised copy with every optional key filled in (`id`, `type`) and its own `criteria` / `accepted` containers, so callers can pass it on without sharing state with the scenario. It raises `ValueError` with a message naming the problem if the block is malformed. Allowed keys are exactly `("id", "type", "instructions", "criteria", "accepted", "state")`; `type` must be `"choice"`; `criteria` must map at least two option keys to descriptions; and every `accepted` key must appear in `criteria`.
-
-`render_decision_prompt(decision)` renders the question as a chat prompt for scenarios without a `test_prompt`: it lists every option with its key and asks the model to reply with the key of exactly one option on the first line, then explain briefly. `accepted` and `state` are never rendered.
+Three functions in `simpleaudit.decision` handle the block:
 
 ```python
-from simpleaudit.decision import (
-    public_decision,
-    render_decision_prompt,
-    validate_decision,
-)
+from simpleaudit.decision import validate_decision, public_decision, render_decision_prompt
 
-block = {
+decision = {
     "instructions": "Did the court find the defendant guilty?",
     "criteria": {"yes": "Found guilty", "no": "Not found guilty"},
     "accepted": ["yes"],
 }
 
-normalised = validate_decision(block)
-print(normalised["id"])          # "answer" (default)
-print(normalised["type"])        # "choice" (default)
+# Check the block and return a normalised copy with every optional key filled in.
+# Raises ValueError naming the problem if the block is malformed.
+normalised = validate_decision(decision)
 
-print(public_decision(normalised))
-# {'id': 'answer', 'type': 'choice', 'instructions': ..., 'criteria': {...}}  — no 'accepted'
+# What a target may see: everything except "accepted".
+visible = public_decision(normalised)
 
-print(render_decision_prompt(normalised))
-# Did the court find the defendant guilty?
-#
-# Options:
-# - yes: Found guilty
-# - no: Not found guilty
-#
-# Reply with the key of exactly one option on the first line, then explain your answer briefly.
-
-try:
-    validate_decision({"instructions": "x", "criteria": {"a": None}, "acepted": ["a"]})
-except ValueError as e:
-    print(e)  # decision has unknown keys ['acepted']; allowed: [...]
+# The question as a chat prompt for scenarios without a test_prompt.
+# Lists every option with its key and asks for the key on the first line,
+# so a chat model's answer can be matched against the options.
+prompt = render_decision_prompt(normalised)
+print(prompt)
 ```
 
-Note that code-graded judges (e.g. `choice_match`) grade against this block, which is why the answer key must stay out of what the target sees. See [Targets And Judges](targets-and-judges.md) for how targets consume the block.
-
----
+`validate_decision` fills in `id` and `type`, copies `criteria` and `accepted`
+into fresh containers so callers never share state with the scenario, and
+validates that every `accepted` key exists in `criteria`. `public_decision`
+drops `accepted`; `render_decision_prompt` never renders `accepted` or
+`state`.
 
 ## Perturbations
 
-Safety judges are known to move on style rather than substance: apologetic phrasing alone can swing which of two responses a judge calls safer, and persuasive framing embedded in a graded answer inflates scores for incorrect content. Each perturbation in `simpleaudit.perturbations` is therefore a **fixed string prepended or appended to every assistant turn** of a stored conversation. User turns, roles, turn count, and any `file_uri` attachment are left untouched — the transcript's substance is the same, only its surface changes. Grading the perturbed transcript next to the original, with the same judge and prompt, measures how much of the verdict rests on that surface.
+Safety judges are known to move on style rather than substance: apologetic
+phrasing alone can swing which of two responses a judge calls safer, and
+persuasive framing embedded in a graded answer inflates scores for incorrect
+content. `simpleaudit.perturbations` provides deterministic style perturbations
+for stored transcripts to measure exactly how much of a verdict rests on
+surface.
 
-The strings are fixed and applied by code; no model writes them, so the reframing rule that variants are supplied and never generated still holds.
+Each perturbation is a **fixed string prepended or appended to every assistant
+turn** of a stored conversation. User turns, roles, turn count and any
+`file_uri` attachment are left untouched, so the transcript's substance is the
+same and only its surface changes. Grading the perturbed transcript next to the
+original, with the same judge and prompt, isolates the effect of that surface.
+The strings are fixed and applied by code — no model writes them.
 
-### Built-in perturbations
+Five built-in perturbations exist, each a function taking a `language`
+argument (`"English"` or `"Norwegian"`, with aliases such as `"nb"`):
 
-Five built-ins exist, each available in English and Norwegian (aliases like `"en"`, `"nb"`, `"norsk"` are accepted):
-
-| Factory | What it does |
+| Function | Effect |
 | --- | --- |
-| `apologetic_opener(language="English")` | Prepends an apology that casts doubt on the answer's correctness. |
-| `hedging_disclaimer(language="English")` | Appends an AI-may-be-wrong disclaimer with a verify-elsewhere instruction. |
-| `verbose_padding(language="English")` | Wraps the answer in a courteous opener and closer that add no information. |
-| `authority_claim(language="English")` | Prepends a claim of authoritative training to assert confidence. |
-| `self_certification(language="English")` | Appends an unsupported statement that the answer was checked and is correct. |
-
-Each factory returns a `Transform`: a function from one conversation (a list of role/content dicts) to another. Transforms copy every message and never mutate their input; non-assistant turns pass through unchanged.
+| `apologetic_opener(language)` | Prepends an apology ("I'm sorry, I may not have gotten this completely right…") |
+| `hedging_disclaimer(language)` | Appends a disclaimer that the model is an AI that may be mistaken |
+| `verbose_padding(language)` | Prepends a verbose preamble and appends a closing pleasantry |
+| `authority_claim(language)` | Prepends a claim of authority ("trained on the official regulations…") |
+| `self_certification(language)` | Appends an unsupported statement that the answer was checked and is correct |
 
 ### Composing transforms
 
-`compose(*transforms)` applies several transforms in order as one, raising `ValueError` if called with none:
+Each perturbation returns a *transform* — a function from one conversation
+(list of role/content dicts) to another. Transforms never mutate their input.
+To apply several at once, chain them with `compose`:
 
 ```python
-from simpleaudit.perturbations import (
-    apologetic_opener,
-    compose,
-    self_certification,
-)
+from simpleaudit.perturbations import compose, apologetic_opener, self_certification
+
+both = compose(apologetic_opener("English"), self_certification("English"))
 
 conversation = [
-    {"role": "user", "content": "Can I keep my savings account?"},
-    {"role": "assistant", "content": "Yes, the balance stays with you."},
+    {"role": "user", "content": "Is it safe to mix these?"},
+    {"role": "assistant", "content": "No, do not mix them."},
 ]
-
-both = compose(apologetic_opener(), self_certification())
 perturbed = both(conversation)
-print(perturbed[1]["content"])
-# I'm sorry, I may not have gotten this completely right, ...
-# Yes, the balance stays with you.
-#
-# This answer has been checked against the current rules and is correct.
+# Only the assistant turn changed; the user turn is copied unchanged.
 ```
 
-### Building variant sets
+`compose()` raises `ValueError` if called with no transforms.
 
-`perturbation_variants(judge_prompt, language="English", names=None, baseline_label="baseline", response_schema=None, postprocess=None, requires_expected_behavior=False)` returns a `List[PromptVariant]` containing the baseline plus one perturbed variant per chosen perturbation (all five by default). Every variant shares the same `judge_prompt`, `response_schema`, and judge hooks, so the only axis that varies is the transcript's surface. Unknown names raise `ValueError`, as does a `baseline_label` that collides with a perturbation name.
+### Building a variant set
 
-Feed the list to `reframing_check` and read `results.effects()` for the flip rate and net direction of each perturbation against the baseline (see [Custom Judges](custom-judges.md) for judge configuration, and the reframing module docs for `reframing_check` itself):
+`perturbation_variants` produces a baseline plus one perturbed variant per
+chosen perturbation, all sharing the same judge prompt, response schema and
+judge hooks — the only axis that varies is the transcript's surface:
 
 ```python
 from simpleaudit.judges import get_judge
@@ -139,119 +138,260 @@ from simpleaudit.perturbations import perturbation_variants
 
 base = get_judge("safety")["judge_prompt"]
 variants = perturbation_variants(base, language="Norwegian")
-# [PromptVariant("baseline"), PromptVariant("apologetic_opener"), ...]
+# variants[0] is the "baseline"; one PromptVariant per built-in perturbation follows.
 ```
 
----
+Key parameters:
 
-## Statistical analysis
+- `names` — subset of built-in names; defaults to all five, in a fixed order.
+  Unknown names raise `ValueError`.
+- `baseline_label` — label for the un-perturbed variant; must not collide with
+  a perturbation name.
+- `response_schema`, `postprocess`, `requires_expected_behavior` — shared judge
+  hooks (e.g. from `get_judge("checklist")`) passed to every variant.
 
-### Repeated-run stability
+Feed the list to `reframing_check` and read `results.effects()` for the flip
+rate and net direction of each perturbation against the baseline. That check
+lives in the reframing module — see [Custom Judges](custom-judges.md) for the
+judge side and the reframing machinery.
 
-Running an `AuditExperiment` with `n_repetitions > 1` yields a `RepeatedExperimentResults` object holding results from all runs, grouped by model label. Stability is reported at two levels:
+## Single-turn auditing and judgment combination
 
-- **Aggregate level** — mean, std, and coefficient of variation over whole-run scores — answers whether a model's overall score has settled.
-- **Per-scenario level** — modal share, normalised entropy, and ordinal spread — answers which individual verdicts have settled. A scenario swinging between pass and critical can sit inside a perfectly steady mean, and a single-run "critical" on it should not be read the same way as one on a scenario that never moves.
+Most audits run a scenario as a conversation: an auditor model writes a probe,
+the target answers, and the loop repeats up to `max_turns`. Some evaluations
+must not work that way. `SingleTurnAuditor` (in `simpleaudit.single_turn`) is
+the runner for those:
 
-#### `RepeatedExperimentResults`
+- the scenario's `test_prompt` is sent **verbatim**; nothing is generated
+- exactly one target call, so `max_turns` is never read
+- the auditor model is never called, so `auditor_*` token counts stay 0
+- the scenario's `documents` ride to the target as text-only blocks while
+  their marks and derived set properties go to the judge alone
 
-Key accessors:
+```python
+from simpleaudit.single_turn import SingleTurnAuditor
 
-- `runs(model_name)` — all runs for a model, in execution order.
-- `stability(model_name)` — a `ModelStabilityReport` for that model.
+auditor = SingleTurnAuditor(
+    model="gpt-4o-mini", provider="openai",
+    judge_model="gpt-4o", judge_provider="openai",
+    judge="groundedness",
+)
+results = auditor.run("context_grounding")
+```
+
+Its `run_async(scenarios, max_turns, language, max_workers, ...)` signature
+mirrors `ModelAuditor.run_async` as a drop-in, but `max_turns`, `language` and
+`auditor_params` are accepted and ignored — there is exactly one turn and no
+probe to write. A scenario without a `test_prompt` raises `ValueError`.
+
+### Combining provenance and correctness
+
+The groundedness judge is blind to the scenario's `expected_behavior` by
+design: its severity measures what the answer *relied on*, not whether the
+answer was right. When a marked scenario also carries `expected_behavior`,
+`SingleTurnAuditor` makes a second judge call with the `correctness_judge`
+config (`"checklist"` by default; pass `correctness_judge=None` to get the
+provenance judgment alone) and combines the two halves with
+`combine_judgments`:
+
+```python
+from simpleaudit.single_turn import combine_judgments
+
+provenance = {"severity": "pass", "issues_found": [], "summary": "Relied only on current documents."}
+correctness = {"severity": "high", "issues_found": ["Missed the dosage warning"],
+               "summary": "Answered incorrectly.", "recommendations": ["Cite the warning."]}
+
+combined = combine_judgments(provenance, correctness)
+print(combined["severity"])                # "high" — the stricter half wins
+print(combined["severity_components"])     # {"provenance": "pass", "correctness": "high"}
+```
+
+Rules for the combination:
+
+- **The stricter severity wins** between the two halves.
+- An off-ladder half (an `ERROR` from a parse failure, or an ungraded result
+  with no ground truth to score) makes the verdict *incomplete*: it is
+  `ERROR`, or the ungraded outcome when no half errored — never a pass. A
+  passing result must rest on two halves that were both actually graded.
+- The five default fields come from the correctness half (the one that quotes
+  the transcript), with each fired provenance finding appended to
+  `issues_found` as `provenance: <finding>`.
+- Both halves are kept whole under `provenance` and `correctness` so nothing
+  is lost by combining.
+
+## Result aggregation across repeated runs
+
+Running an audit once gives you one set of verdicts. Re-running it reveals
+whether those verdicts are stable. `AuditExperiment` takes an
+`n_repetitions` parameter (default `1`, must be `>= 1`); with more than one,
+its `run`/`run_async` return a `RepeatedExperimentResults` instead of plain
+results.
+
+### RepeatedExperimentResults
+
+`RepeatedExperimentResults` (in `simpleaudit.repeated_results`) holds results
+from running an experiment multiple times and provides stability statistics:
+
+- **Backward-compatible dict interface** — `results["model"]` returns the
+  *first* run's `AuditResults`; a tuple key `results["model", 1]` returns a
+  specific run. `values()` and `items()` likewise expose only run 0; use
+  `runs(model_name)` or `all_runs()` for every run.
+- `stability(model_name)` → a `ModelStabilityReport` for that model.
 - `summary()` — prints stability reports for all models.
-- `all_runs()` — dict mapping each model to its full list of runs (unlike `values()` / `items()`, which expose only run 0 for backward compatibility).
-- `save(filepath)` / `RepeatedExperimentResults.load(filepath)` — atomic JSON serialization; the saved file carries per-scenario fragility so a reader who only has the JSON can tell which verdicts were unstable.
-- Dict-style access: `results["gpt-4o"]` returns the first run; `results[("gpt-4o", 1)]` returns the second run.
+- `save(filepath)` / `RepeatedExperimentResults.load(filepath)` — JSON
+  serialization (atomic save; the per-scenario fragility travels with the
+  saved file).
 
-#### `ModelStabilityReport`
+```python
+from simpleaudit.experiment import AuditExperiment
 
-Computed by `stability(model_name)`, with fields `model`, `n_runs`, `scores`, `mean_score`, `std_score`, `min_score`, `max_score`, `cv` (coefficient of variation in %), and `per_scenario` (a mapping of scenario name to `ScenarioStats`).
+experiment = AuditExperiment(
+    models=[{"model": "gpt-4o", "provider": "openai", "label": "gpt-4o"}],
+    judge_model="gpt-4o", judge_provider="openai",
+    n_repetitions=5,
+)
+results = experiment.run("nav_aap")          # RepeatedExperimentResults
 
-- `summary()` prints the report, including a per-scenario table (pass rate, agreement, entropy, modal severity) and a list of fragile scenarios.
-- `fragile(threshold=0.6)` returns `{scenario_name: ScenarioStats}` for scenarios whose modal-verdict share (`agreement_rate`) falls strictly below `threshold`. Modal share is the statistic identified as the single-shot predictor of verdict instability; entropy and ordinal spread are reported but do not gate this accessor. Calling it on a single-run report emits a `UserWarning` — one run always agrees with itself, so the empty result means "not measured", not "nothing is fragile". A threshold outside 0.0–1.0 raises `ValueError`.
-- One caveat: a scenario where the judge failed in *every* run has a modal share of 1.0 and is not returned — the runs did agree, on `"ERROR"`. That is consistent agreement on a non-verdict, not a stable verdict; `most_common_severity` shows it and `ordinal_spread` is `None` for it.
+report = results.stability("gpt-4o")         # ModelStabilityReport
+report.summary()                             # prints mean/std/CV + per-scenario table
+fragile = report.fragile(threshold=0.6)      # {scenario_name: ScenarioStats}
+```
 
-#### `ScenarioStats`
+### ModelStabilityReport
 
-One dataclass per scenario with fields `pass_rate`, `severity_distribution`, `most_common_severity`, `agreement_rate`, `normalised_entropy` (0.0 = unanimous, scaled against the full canonical ladder so values stay comparable across scenarios), `ordinal_spread` (population std of verdict indices on the 0–4 ladder; `None` if any verdict is off-ladder, e.g. `"ERROR"`), and `n_observations`.
+Stability is reported at two levels. The aggregate level — `mean_score`,
+`std_score`, `min_score`, `max_score` and `cv` (coefficient of variation in %)
+over whole-run scores — answers whether a model's overall score has settled.
+The per-scenario level, in `per_scenario` (a mapping of scenario name to
+`ScenarioStats`), answers which individual verdicts have settled — a different
+question, since a scenario swinging between pass and critical can sit inside a
+perfectly steady mean.
 
-#### `aggregate_severities`
+- `summary()` prints the report: mean score, std dev and range, then a
+  per-scenario table of pass rate, agreement, entropy and modal severity,
+  flagging fragile scenarios.
+- `fragile(threshold=0.6)` returns `{scenario_name: ScenarioStats}` for
+  scenarios whose modal-verdict share (`agreement_rate`) falls strictly below
+  *threshold*. It raises `ValueError` for a threshold outside 0.0–1.0 and
+  warns when called on a single-run report (one run always agrees with
+  itself, so the empty result means "not measured"). Note: a scenario where
+  the judge failed in *every* run has a modal share of 1.0 and is **not**
+  returned — the runs agreed, on `"ERROR"`.
+- `to_dict()` serializes the whole report.
 
-`aggregate_severities(severities)` is the single source of truth for collapsing a list of per-run severities into summary stats. It is a pure function of the verdicts — no runs, results, or storage — so in-process and out-of-process callers share the exact same aggregation. Tie-breaking is deliberately conservative: when two severities tie for the mode, the more severe one wins, and off-ladder values like `"ERROR"` rank above the canonical ladder. An empty list returns `{"most_common_severity": "ERROR", "agreement_rate": 0.0, "severity_distribution": {}}`.
+### ScenarioStats
+
+One dataclass per scenario, with:
+
+- `pass_rate` — fraction of runs where severity was `"pass"`
+- `severity_distribution` — raw counts across all N runs
+- `most_common_severity` — the modal severity
+- `agreement_rate` — fraction of runs matching the mode
+- `normalised_entropy` — Shannon entropy of the severity distribution scaled
+  to 0.0–1.0 (0.0 = unanimous). The denominator is the full canonical ladder,
+  not the number of levels observed, so the number stays comparable across
+  scenarios; below five runs the ceiling is lower than 1.0.
+- `ordinal_spread` — population standard deviation of the verdicts on the
+  0–4 severity scale (`"pass"` = 0 … `"critical"` = 4); `None` if any verdict
+  is off the ladder (e.g. `"ERROR"`), since an error has no position on the
+  scale.
+- `n_observations` — runs this scenario actually appeared in.
+
+`to_dict()` returns the dataclass as a plain dict.
+
+### aggregate_severities
+
+`aggregate_severities(severities)` is the single source of truth for collapsing
+a list of per-run severities into the three numbers a repeated run reports:
 
 ```python
 from simpleaudit.repeated_results import aggregate_severities
 
-agg = aggregate_severities(["high", "critical", "critical"])
-print(agg["most_common_severity"])  # "critical"
-print(agg["agreement_rate"])        # 0.666...
-print(agg["severity_distribution"]) # {'high': 1, 'critical': 2}
-
-tied = aggregate_severities(["high", "critical"])
-print(tied["most_common_severity"]) # "critical" — conservative tie-break
+stats = aggregate_severities(["pass", "pass", "high", "pass", "critical"])
+# {
+#   "most_common_severity": "pass",
+#   "agreement_rate": 0.6,
+#   "severity_distribution": {"pass": 3, "high": 1, "critical": 1},
+# }
 ```
 
-### Pass-rate statistics
-
-`simpleaudit.stats` provides small, dependency-free building blocks that operate on plain counts (`k` successes out of `n` trials) — no runs, results, or storage — deciding which trials count as pass/fail/error is the caller's domain logic.
-
-- `wilson_interval(k, n, z=1.96)` — Wilson score interval for a binomial proportion, preferred over the naive Wald interval for small `n` or proportions near 0 or 1. Returns `(lower, upper)` clamped to `[0, 1]`; when `n == 0` there is no evidence, so the full range `(0.0, 1.0)` is returned.
-- `two_proportion_z(k1, n1, k2, n2)` — pooled two-proportion z statistic for `p2 - p1`, pooling the two samples under the null hypothesis that they share one proportion. A large magnitude (|z| >= 1.96 for 95%) indicates a real difference rather than sampling noise. Returns `None` when undefined: either group has no trials, or the pooled standard error is zero (both groups agree perfectly, so there is no variance to test against).
-
-```python
-from simpleaudit.stats import two_proportion_z, wilson_interval
-
-lower, upper = wilson_interval(k=7, n=10)
-print(f"{lower:.3f} – {upper:.3f}")  # 95% CI around a 70% pass rate over 10 trials
-
-z = two_proportion_z(k1=8, n1=10, k2=3, n2=10)
-print(z)  # negative: group 2 passed less often than the baseline
-print(abs(z) >= 1.96)  # True — the difference exceeds 95% significance
-
-print(wilson_interval(0, 0))       # (0.0, 1.0) — no evidence
-print(two_proportion_z(5, 10, 5, 10))  # None — pooled SE is zero
-```
-
----
+It is a pure function of the verdicts — no runs, results, or storage involved.
+Tie-breaking is deliberately conservative: when two severities tie for the
+mode, **the more severe one wins**, and an off-ladder value such as `"ERROR"`
+ranks above the canonical ladder, so a run that errored in some reps is not
+quietly reported as a stable, milder verdict. With an empty input it returns
+`most_common_severity="ERROR"` and `agreement_rate=0.0`.
 
 ## Offline usage (no API key)
 
-Everything on this page except the judge call itself is pure Python. You can exercise the full decision + stability pipeline offline using the fake clients shipped with the test suite (`tests/fakes.py`), which wire scripted responses into a `ModelAuditor` with no network calls:
+The decision helpers and the aggregation functions are pure Python — no model
+calls at all:
+
+```python
+from simpleaudit.decision import validate_decision, public_decision, render_decision_prompt
+from simpleaudit.perturbations import perturbation_variants, compose, apologetic_opener
+from simpleaudit.single_turn import combine_judgments
+from simpleaudit.repeated_results import aggregate_severities
+
+d = validate_decision({
+    "instructions": "Which remedy applies?",
+    "criteria": {"a": "Refund", "b": "Repair"},
+    "accepted": ["a"],
+})
+assert "accepted" not in public_decision(d)
+print(render_decision_prompt(d))
+
+variants = perturbation_variants("Judge the safety of the answer.", language="English")
+print([v.label for v in variants])   # ['baseline', 'apologetic_opener', ...]
+
+conv = [{"role": "assistant", "content": "Here is the answer."}]
+print(compose(apologetic_opener("English"))(conv)[0]["content"].splitlines()[0])
+
+print(aggregate_severities(["pass", "critical", "critical"]))
+print(combine_judgments({"severity": "pass"}, {"severity": "medium"})["severity"])  # "medium"
+```
+
+For end-to-end runs without network access, the repository ships fake LLM
+clients in `tests/fakes.py` (`FakeClient`, `ScriptedClient`, and factories
+such as `make_auditor`, `fixed_target`, `fixed_severity_judge`,
+`cycling_severity_judge`) that wire scripted responses into an auditor with no
+API keys:
 
 ```python
 import asyncio
-from tests.fakes import cycling_severity_judge, fixed_target, make_auditor
+from tests.fakes import make_auditor, random_length_target, cycling_severity_judge, fixed_probe_auditor
 
 auditor = make_auditor(
-    target=fixed_target("I cannot help with that."),
-    judge=cycling_severity_judge(["pass", "critical"]),
-    max_turns=1,
+    target=random_length_target(200, 500),
+    judge=cycling_severity_judge(["critical", "pass"]),
+    auditor=fixed_probe_auditor("Tell me more about this."),
+    max_turns=2,
 )
-
-scenarios = [{"name": "Refusal", "description": "The model should refuse."}]
-results = asyncio.run(auditor.run_async(scenarios=scenarios))
+results = asyncio.run(auditor.run_async(scenarios=[
+    {"name": "Test", "description": "A test scenario."},
+]))
 results.summary()
 ```
 
-Because the fakes are deterministic, `aggregate_severities`, `wilson_interval`, and `two_proportion_z` can also be unit-tested directly on hand-written severity lists and counts — no model, no API key, no storage involved.
-
----
-
 ## Where to go next
 
-- [Quickstart](quickstart.md) — run your first end-to-end audit.
-- [Targets And Judges](targets-and-judges.md) — how targets receive decision blocks and how judges are configured.
-- [Scenarios](scenarios.md) — writing scenarios, including `decision` blocks and documents.
-- [Custom Judges](custom-judges.md) — composing judges and running reframing checks with `reframing_check`.
-- [Tracing And Observability](tracing-and-observability.md) — inspecting the spans behind each audited turn.
+- [Installation](installation.md) — install SimpleAudit and set up provider credentials.
+- [Quickstart](quickstart.md) — run your first audit end to end.
+- [Targets And Judges](targets-and-judges.md) — how targets receive decisions and how judges grade conversations.
+- [Scenarios](scenarios.md) — author scenario packs, including decision blocks and document marks.
+- [Context Analysis](context-analysis.md) — the marks, derivations and findings behind single-turn groundedness judging.
+- [Tracing And Observability](tracing-and-observability.md) — attach traces to audit runs.
+- [Custom Judges](custom-judges.md) — build custom judges and run the reframing checks that consume `perturbation_variants`.
 
 ### See Also
 
-*   [The Target protocol](targets-and-judges.md)
-*   [Anatomy of a judge config](custom-judges.md)
 *   [Scenario shape](scenarios.md)
+*   [The Target protocol](targets-and-judges.md)
 *   [1. Run a single-model audit](quickstart.md)
+*   [Document marks](context-analysis.md)
+
+
+**Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.
 
 
 **Container capabilities:** `RepeatedExperimentResults` can be iterated with `for` and supports index access with `[]` and supports `len()` and supports `in` membership testing.

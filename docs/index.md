@@ -17,7 +17,7 @@ pip install simpleaudit
 
 ### Core Concepts
 
-- Auditing Basics (not yet available) — Understand decision logic, perturbations, and result aggregation.
+- [Auditing Basics](guides/auditing-basics.md) — Understand decision logic, perturbations, and result aggregation.
 - Targets And Judges (not yet available) — Configure model targets and select appropriate judge strategies.
 - [Scenarios](guides/scenarios.md) — Explore built-in test scenarios for health, safety, and RAG.
 
