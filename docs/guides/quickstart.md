@@ -239,7 +239,7 @@ results.summary()
 *   [Decision logic](auditing-basics.md)
 *   [Anatomy of a judge config](custom-judges.md)
 *   [Requirements](installation.md)
-*   [The Target protocol](targets-and-judges.md)
+*   [How it fits together](tracing-and-observability.md)
 
 
 **Container capabilities:** `AuditResults` can be iterated with `for` and supports index access with `[]` and supports `len()`.

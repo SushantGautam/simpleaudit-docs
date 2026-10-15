@@ -385,8 +385,8 @@ results.summary()
 
 ### See Also
 
-*   [Scenario shape](scenarios.md)
 *   [The Target protocol](targets-and-judges.md)
+*   [Scenario shape](scenarios.md)
 *   [1. Run a single-model audit](quickstart.md)
 *   [Document marks](context-analysis.md)
 
